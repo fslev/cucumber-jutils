@@ -7,11 +7,10 @@ Feature: Example2
 
 #Scenario with AND
   Scenario Outline: 1
-    Examples:
-      | a1  | a2   |
-      | bah | test |
-
     When blah <a1> and <a2>
+    Examples:
+      | a1  | a2  |
+      | bah | kkk |
 
 
   Scenario: 2
@@ -19,4 +18,7 @@ Feature: Example2
       | b1 | b2 | b3 |
       | 1  | 2  | 3  |
 
+  Scenario: 3
+    When save asta
+    When use data
 
