@@ -1,4 +1,4 @@
-Feature: Example2
+Feature: Zone Transfer OUT with transfer loose type
 #This is how background can be used to eliminate duplicate steps
 
   Background:
@@ -6,19 +6,17 @@ Feature: Example2
   I am on Facebook login page
 
 #Scenario with AND
-  Scenario Outline: 1
+  Scenario Outline: Yet, this is the first test scenario.Hope it will work
     When blah <a1> and <a2>
     Examples:
-      | a1  | a2  |
-      | bah | kkk |
+      | a1  | a2 |
+      | bah | k  |
 
-
-  Scenario: 2
+  Scenario: Test scenario two, from some time. And this is just a prototype test scenario.Please ignore it
     When blah2
       | b1 | b2 | b3 |
       | 1  | 2  | 3  |
 
   Scenario: 3
     When save asta
-    When use data
 

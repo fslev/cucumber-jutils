@@ -1,4 +1,4 @@
-Feature: Example1
+Feature: One Hoster DNS RaaS
 #This is how background can be used to eliminate duplicate steps
 
   Background:
@@ -6,7 +6,7 @@ Feature: Example1
   I am on Facebook login page
 
 #Scenario with AND
-  Scenario: 1
+  Scenario: wow, what a scenario
     When I enter username as
     """
     {"da":"1",

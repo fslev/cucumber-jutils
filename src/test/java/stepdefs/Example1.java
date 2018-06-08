@@ -20,6 +20,7 @@ public class Example1 {
     @When("^I enter username as$")
     public void enterUsername(String arg1) {
         System.out.println("Enter username " + arg1);
+//        assertEquals("{\"test\":100}", arg1);
     }
 
     @When("^I enter password as \"(.*)\"$")
