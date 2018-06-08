@@ -1,19 +1,23 @@
-package annotation;
+package stepdefs;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.runtime.junit.Assertions;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 
-public class Annotation {
-    @Given("^I am on Facebook login page$")
+public class Example1 {
 
-    public void goToFacebook() {
-        System.out.println("Given 1");
+    {
+        System.out.println("-------- Instance 1 -----------");
     }
 
-    @When("^I enter username as \"(.*)\"$")
+    @Given("^I am on Facebook login page$")
+    public void goToFacebook() {
+        throw new PendingException();
+    }
+
+    @When("^I enter username as$")
     public void enterUsername(String arg1) {
         System.out.println("Enter username " + arg1);
     }
@@ -21,16 +25,17 @@ public class Annotation {
     @When("^I enter password as \"(.*)\"$")
     public void enterPassword(String arg1) {
         System.out.println("Enter pass " + arg1);
-        Assert.assertEquals("ZEST", arg1);
+        // Assert.assertEquals("ZEST", arg1);
     }
 
     @Then("^Login should fail$")
     public void checkFail() {
-        System.out.println("Test1 Pass");
+        assertEquals(1, 1);
+        System.out.println("da");
     }
 
     @Then("^Relogin option should be available$")
     public void checkRelogin() {
-        System.out.println("Test2 Pass");
+        assertEquals(1, 1);
     }
 }
