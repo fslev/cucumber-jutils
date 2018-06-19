@@ -5,21 +5,47 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ro.qa.cucumber</groupId>
-    <artifactId>cucumber-prototype</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>cucumber-poc</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>
+        <!--Cucumber-->
         <dependency>
-            <groupId>info.cukes</groupId>
+            <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
-            <version>1.2.5</version>
+            <version>3.0.2</version>
         </dependency>
         <dependency>
-            <groupId>info.cukes</groupId>
+            <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>1.2.5</version>
+            <version>3.0.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-guice</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <!--Apache-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.5</version>
+        </dependency>
+
+        <!--JSON compare-->
+        <dependency>
+            <groupId>com.github.fslev</groupId>
+            <artifactId>json-compare</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -49,7 +75,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceJsonReportDirectory>${project.build.directory}/cucumber-report</sourceJsonReportDirectory>
+                    <sourceJsonReportDirectory>${project.build.directory}/cucumber-html-report
+                    </sourceJsonReportDirectory>
                     <generatedHtmlReportDirectory>${project.build.directory}/generated-report
                     </generatedHtmlReportDirectory>
                 </configuration>

@@ -1,9 +1,13 @@
 package stepdefs;
 
-import cucumber.api.DataTable;
+import com.google.inject.Inject;
 import cucumber.api.java.en.When;
+import io.cucumber.datatable.DataTable;
 
 public class Example2 {
+
+    @Inject
+    AbstractExample example;
 
     Data data;
 
@@ -28,8 +32,8 @@ public class Example2 {
     }
 
     @When("blah2")
-    public void blah2(DataTable z) {
-        System.out.println("Test: " + z.getGherkinRows().get(0).getCells());
+    public void blah2() {
+        System.out.println("GOT this: " + example.s);
         // Assert.assertEquals("ZEST", arg1);
     }
 
