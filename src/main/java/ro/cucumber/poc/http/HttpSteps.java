@@ -81,7 +81,6 @@ public class HttpSteps {
 
     @Then("^HTTP compare response body with$")
     public void compareResponseBodyWith(String expected) {
-        System.out.println(scenario);
         scenario.write(expected);
     }
 
