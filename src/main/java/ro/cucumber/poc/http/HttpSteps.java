@@ -1,4 +1,4 @@
-package stepdefs.http;
+package ro.cucumber.poc.http;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -8,14 +8,16 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.datatable.DataTable;
-import ro.cucumber.poc.http.HttpBaseStepDefs;
-import ro.cucumber.poc.http.HttpVerb;
-import static org.junit.Assert.assertEquals;
+import java.util.List;
+import java.util.Map;
+import com.google.inject.Inject;
 
 @ScenarioScoped
-public class HttpSteps extends HttpBaseStepDefs {
+public class HttpSteps {
 
     private Scenario scenario;
+    @Inject
+    private HttpClient client;
 
     @Before
     public void initScenario(Scenario scenario) {
@@ -24,59 +26,65 @@ public class HttpSteps extends HttpBaseStepDefs {
 
     @Given("HTTP REST service at address {string}")
     public void setAddress(String address) {
-        super.init();
-        super.setAddress(address);
+        client.setAddress(address);
     }
 
     @And("HTTP path {string}")
     public void setPath(String path) {
-        super.setPath(path);
+        client.setPath(path);
     }
 
     @And("^HTTP headers$")
-    public void setHeaders(DataTable headers) {
-        super.setHeaders(headers);
+    public void setHeaders(DataTable table) {
+        List<Map<String, String>> list = table.asMaps();
+        if (!list.isEmpty()) {
+            for (Map.Entry<String, String> e : list.get(list.size() - 1).entrySet()) {
+                client.addHeader(e.getKey(), e.getValue());
+            }
+        }
     }
 
     @And("^HTTP query params$")
-    public void setQueryParams(DataTable params) {
-        super.setQueryParams(params);
+    public void setQueryParams(DataTable table) {
+        List<Map<String, String>> list = table.asMaps();
+        if (!list.isEmpty()) {
+            for (Map.Entry<String, String> e : list.get(list.size() - 1).entrySet()) {
+                client.addQueryParam(e.getKey(), e.getValue());
+            }
+        }
     }
 
     @And("HTTP method {verb}")
     public void setMethod(HttpVerb verb) {
-        super.setMethod(verb);
+        client.setMethod(verb);
     }
 
     @And("HTTP entity {string}")
     public void setEntity(String entity) {
-        super.setEntity(entity);
+        client.setEntity(entity);
     }
 
     @And("HTTP proxy host {string} port {int} and scheme {string}")
     public void useProxy(String host, int port, String scheme) {
-        super.useProxy(host, port, scheme);
+        client.useProxy(host, port, scheme);
     }
 
     @And("HTTP timeout {int}")
     public void setTimeout(int timeout) {
-        super.setTimeout(timeout);
+        client.setTimeout(timeout);
     }
 
     @When("^HTTP execute$")
     public void execute() {
-        super.execute();
+        client.execute();
     }
 
     @Then("^HTTP compare response body with$")
     public void compareResponseBodyWith(String expected) {
-        System.out.println("waa");
-        // execute();
+        System.out.println(scenario);
+        scenario.write(expected);
     }
 
     @And("HTTP compare response status code with {int}")
-    public void compareResponseStatusCodeWith(int expected) {
-        System.out.println("waasss");
-        assertEquals(expected, response.getStatusLine().getStatusCode());
-    }
+    public void compareResponseStatusCodeWith(int expected) {}
 }

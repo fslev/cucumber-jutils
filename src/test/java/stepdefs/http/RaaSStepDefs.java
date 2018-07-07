@@ -4,22 +4,27 @@ import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import ro.cucumber.poc.http.HttpVerb;
+import ro.cucumber.poc.http.HttpClient;
 import com.google.inject.Inject;
 
 public class RaaSStepDefs {
 
     private Scenario scenario;
-
+    @Inject
+    HttpClient client;
 
     @Before
     public void initScenario(Scenario scenario) {
         this.scenario = scenario;
     }
 
-    @Given("Raas service")
-    public void setRaasService() {}
+    @Given("RaaS service")
+    public void setRaasService() {
+        client.setAddress("http://euronews.com");
+    }
 
-    @Then("make call")
-    public void execute() {}
+    @Then("RaaS make call")
+    public void execute() {
+        client.execute();
+    }
 }

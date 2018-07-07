@@ -15,8 +15,8 @@ import org.apache.http.entity.StringEntity;
 public class HttpRequestBuilder {
 
     private Map<String, String> headers;
-    private String address;
     private URIBuilder uriBuilder;
+    private String address;
     private String entity;
     private HttpVerb verb;
 
@@ -29,9 +29,6 @@ public class HttpRequestBuilder {
         if (verb == null) {
             throw new RuntimeException("Define HTTP method");
         }
-        if (address == null) {
-            throw new RuntimeException("Define HTTP address");
-        }
         HttpRequestBase request = getHttpRequestBase();
         setHeaders(request);
         return request;
@@ -40,7 +37,7 @@ public class HttpRequestBuilder {
     private HttpRequestBase getHttpRequestBase() {
         String url;
         try {
-            url = address + uriBuilder.build().toString();
+            url = address + "/" + uriBuilder.build();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
