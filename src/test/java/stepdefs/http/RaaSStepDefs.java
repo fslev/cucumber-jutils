@@ -7,11 +7,12 @@ import cucumber.api.java.en.Then;
 import ro.cucumber.poc.http.HttpClient;
 import com.google.inject.Inject;
 
-public class RaaSStepDefs {
+public class RaaSStepDefs extends Base {
 
     private Scenario scenario;
+
     @Inject
-    HttpClient client;
+    protected HttpClient client;
 
     @Before
     public void initScenario(Scenario scenario) {
@@ -20,11 +21,12 @@ public class RaaSStepDefs {
 
     @Given("RaaS service")
     public void setRaasService() {
+        // System.out.println("Aici: " + greeter.da());
         client.setAddress("http://euronews.com");
     }
 
-    @Then("RaaS make call")
-    public void execute() {
-        client.execute();
+    @Then("RaaS make call {zest}")
+    public void execute(String test) {
+        // client.execute();
     }
 }

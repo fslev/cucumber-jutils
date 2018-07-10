@@ -3,6 +3,8 @@ package config;
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.cucumberexpressions.ParameterType;
+import io.cucumber.cucumberexpressions.Transformer;
+import ro.cucumber.poc.http.HttpClient;
 import ro.cucumber.poc.http.HttpVerb;
 import java.util.Locale;
 import static java.util.Locale.ENGLISH;
@@ -37,6 +39,16 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                             return HttpVerb.TRACE;
                         default:
                             return null;
+                    }
+                }));
+
+        typeRegistry.defineParameterType(
+                new ParameterType<>("zest", ".*", String.class, new Transformer<String>() {
+                    @Override
+                    public String transform(String s) throws Throwable {
+                        System.out.println("TypeREG: " + CustomInjectorSource.getContextInjector()
+                                .getInstance(HttpClient.class));
+                        return s;
                     }
                 }));
     }

@@ -1,6 +1,7 @@
 package ro.cucumber.poc.http;
 
-//import cucumber.runtime.java.guice.ScenarioScoped;
+// import cucumber.runtime.java.guice.ScenarioScoped;
+import cucumber.runtime.java.guice.ScenarioScoped;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
@@ -18,7 +19,7 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
-//@ScenarioScoped
+@ScenarioScoped
 public class HttpClientBuilder {
 
     private SSLContext ctx;
