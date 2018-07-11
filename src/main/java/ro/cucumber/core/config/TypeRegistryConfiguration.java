@@ -1,11 +1,11 @@
-package config;
+package ro.cucumber.core.config;
 
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.cucumberexpressions.ParameterType;
 import io.cucumber.cucumberexpressions.Transformer;
-import ro.cucumber.poc.http.HttpClient;
-import ro.cucumber.poc.http.HttpVerb;
+import ro.cucumber.core.http.HttpClient;
+import ro.cucumber.core.http.HttpVerb;
 import java.util.Locale;
 import static java.util.Locale.ENGLISH;
 
@@ -31,8 +31,6 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                             return HttpVerb.DELETE;
                         case "HEAD":
                             return HttpVerb.HEAD;
-                        case "CONNECT":
-                            return HttpVerb.CONNECT;
                         case "OPTIONS":
                             return HttpVerb.OPTIONS;
                         case "TRACE":

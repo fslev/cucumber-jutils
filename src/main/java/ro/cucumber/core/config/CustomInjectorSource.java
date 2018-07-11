@@ -1,4 +1,4 @@
-package config;
+package ro.cucumber.core.config;
 
 import cucumber.api.guice.CucumberModules;
 import cucumber.runtime.java.guice.InjectorSource;

@@ -7,8 +7,6 @@ Feature: First HTTP test
   Scenario: Simple test
     #HTTP RESTful Service for test
 #    Given HTTP REST service at address "http://google.ro"
-    Given test za d${var1}ea
-    Given test za d${var1}ea
     And HTTP path "lol"
     And HTTP entity "wafds"
     And HTTP path "lols"

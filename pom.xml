@@ -41,7 +41,6 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-expressions</artifactId>
             <version>${cucumber.expressions.version}</version>
-            <scope>test</scope>
         </dependency>
         <!--Apache-->
         <dependency>
