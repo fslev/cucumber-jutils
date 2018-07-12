@@ -8,10 +8,11 @@ public class XmlUtils {
 
     public static final String STYLE_XSL = "<?xml version=\"1.0\"?>\n"
             + "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n"
-            + "    <xsl:output indent=\"no\" />\n" + "    <xsl:strip-space elements=\"*\"/>\n"
-            + "    <xsl:template match=\"@*|node()\">\n" + "        <xsl:copy>\n"
-            + "            <xsl:apply-templates select=\"@*|node()\"/>\n" + "        </xsl:copy>\n"
-            + "    </xsl:template>\n" + "</xsl:stylesheet>";
+            + "<xsl:text disable-output-escaping=\"yes\">" + "</xsl:text>"
+            + "    <xsl:output encoding=\"UTF-8\" indent=\"no\" />\n"
+            + "    <xsl:strip-space elements=\"*\"/>\n" + "    <xsl:template match=\"@*|node()\">\n"
+            + "        <xsl:copy>\n" + "            <xsl:apply-templates select=\"@*|node()\"/>\n"
+            + "        </xsl:copy>\n" + "    </xsl:template>\n" + "</xsl:stylesheet>";
 
     public static String toSingleLineString(String xml) {
         Source source = Input.fromString(xml).build();
