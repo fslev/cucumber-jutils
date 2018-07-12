@@ -22,9 +22,10 @@ public class SymbolParser {
             return symbols;
         }
         for (String name : symbolNames) {
-            source = source.replaceAll(SYMBOL_ASSIGN_START + name + SYMBOL_ASSIGN_END, "(.*?)");
+            source = source.replaceAll(SYMBOL_ASSIGN_START + name + SYMBOL_ASSIGN_END,
+                    "\\\\E(.*?)\\\\Q");
         }
-        System.out.println(source);
+        source = "\\Q" + source + "\\E";
         Pattern pattern = Pattern.compile(source,
                 Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(dest);
@@ -51,16 +52,6 @@ public class SymbolParser {
 
 
     public static void main(String[] args) throws TransformerException {
-
-        String a =
-                "\\Q<?xml version=\"1.0\" encoding=\"UTF-8\"?><Emp id=\"1\"><name> Pankaj</name><age>25</age><role>Deve \\E(.*?)\\Qoper</role><gen>Ma\\E(.*?)\\Qfds</gen></Emp>\\E";
-        String b =
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Emp id=\"1\"><name> Pankaj</name><age>25</age><role>Deve zarzvavatloper</role><gen>Male&gt;wafds</gen></Emp>";
-        Pattern pattern =
-                Pattern.compile(a, Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
-        Matcher matcher = pattern.matcher(b);
-        System.out.println(matcher.find());
-
 
         String source = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
                 + "   <Emp id=\"1\"><name> Pankaj</name>   <age>25</age>\n"
