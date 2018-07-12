@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class SymbolParser {
 
-    private static String SYMBOL_NAME_REGEX = "\\$\\{(.*?)\\}";
+    private static String SYMBOL_NAME_REGEX = "&\\[(.*?)\\]";
 
     private static List<String> extractSymbolNames(String source) {
         List<String> symbolList = new ArrayList<>();
@@ -30,6 +30,6 @@ public class SymbolParser {
                 + "   <Emp id=\"1\"><name> Pankaj</name>   <age>25</age>\n"
                 + "              <role>Deve loper</role><gen>Male</gen></Emp>";
         System.out.println(XmlUtils.toSingleLineString(xmlStr));
-        System.out.println(extractSymbolNames("ds${dds}sgfdgfd${k}a"));
+        System.out.println(extractSymbolNames("ds&[dds]sgfdgfd${k}a"));
     }
 }

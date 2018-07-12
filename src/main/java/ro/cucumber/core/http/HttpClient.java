@@ -1,6 +1,5 @@
 package ro.cucumber.core.http;
 
-import cucumber.runtime.java.guice.ScenarioScoped;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
