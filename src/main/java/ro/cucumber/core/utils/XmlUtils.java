@@ -6,13 +6,14 @@ import org.xmlunit.builder.Transform;
 
 public class XmlUtils {
 
-    public static final String STYLE_XSL = "<?xml version=\"1.0\"?>\n"
-            + "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n"
-            + "<xsl:text disable-output-escaping=\"yes\">" + "</xsl:text>"
-            + "    <xsl:output encoding=\"UTF-8\" indent=\"no\" />\n"
-            + "    <xsl:strip-space elements=\"*\"/>\n" + "    <xsl:template match=\"@*|node()\">\n"
-            + "        <xsl:copy>\n" + "            <xsl:apply-templates select=\"@*|node()\"/>\n"
-            + "        </xsl:copy>\n" + "    </xsl:template>\n" + "</xsl:stylesheet>";
+    public static final String STYLE_XSL = "<?xml version=\"1.0\"?>"
+            + "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">"
+            + "<xsl:output method=\"xml\" encoding=\"UTF-8\" indent=\"no\" />"
+            + "<xsl:strip-space elements=\"*\"/><xsl:template match=\"@*|node()\"><xsl:copy>"
+            + "<xsl:apply-templates select=\"@*|node()\"></xsl:apply-templates></xsl:copy></xsl:template>"
+            + "<xsl:template match=\"*/text()\">"
+            + "    <xsl:value-of select=\".\" disable-output-escaping=\"yes\"/>\n"
+            + "</xsl:template></xsl:stylesheet>";
 
     public static String toSingleLineString(String xml) {
         Source source = Input.fromString(xml).build();
