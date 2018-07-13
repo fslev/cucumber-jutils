@@ -38,6 +38,13 @@
             <artifactId>json-compare</artifactId>
             <version>${jsoncompare.version}</version>
         </dependency>
+        <!--Others-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
