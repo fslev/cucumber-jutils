@@ -1,4 +1,4 @@
-package ro.cucumber.core.utils;
+package ro.cucumber.core.symbols;
 
 
 import java.util.ArrayList;
@@ -42,16 +42,16 @@ public class SymbolsAssignParser {
     }
 
     public void setAssignSymbols() {
-        List<String> symbolNames = getAssignSymbolNames();
+        List<String> symbolNames = getAssignSymbolNames(stringWithSymbols);
         if (symbolNames.isEmpty()) {
             return;
         }
-        String quotedStringWithSymbols = "\\Q" + stringWithSymbols + "\\E";
+        String str = "\\Q" + stringWithSymbols + "\\E";
         for (String name : symbolNames) {
-            quotedStringWithSymbols = quotedStringWithSymbols
+            str = str
                     .replaceAll(SYMBOL_ASSIGN_START + name + SYMBOL_ASSIGN_END, "\\\\E(.*)\\\\Q");
         }
-        Pattern pattern = Pattern.compile(quotedStringWithSymbols,
+        Pattern pattern = Pattern.compile(str,
                 Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(stringWithValues);
         while (matcher.find()) {
@@ -61,9 +61,9 @@ public class SymbolsAssignParser {
         }
     }
 
-    private List<String> getAssignSymbolNames() {
+    public static List<String> getAssignSymbolNames(String str) {
         List<String> names = new ArrayList<>();
-        Matcher matcher = SYMBOL_ASSIGN_PATTERN.matcher(stringWithSymbols);
+        Matcher matcher = SYMBOL_ASSIGN_PATTERN.matcher(str);
         while (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 names.add(matcher.group(i));
