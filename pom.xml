@@ -10,7 +10,7 @@
 
     <properties>
         <httpclient.version>4.5.5</httpclient.version>
-        <jsoncompare.version>1.1.2</jsoncompare.version>
+        <jsoncompare.version>2.0.0</jsoncompare.version>
         <xmlunit.version>2.6.0</xmlunit.version>
     </properties>
 
