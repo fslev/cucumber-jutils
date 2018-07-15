@@ -154,8 +154,6 @@ public class XmlUnitTests {
                 if (controlNode instanceof Attr && testNode instanceof Attr) {
                     Attr attr = (Attr) controlNode;
                     if (attr.getValue().contains("mostly")) {
-                        System.out.println(attr);
-                        System.out.println(testNode);
                         return ComparisonResult.SIMILAR;
                     }
                 }
