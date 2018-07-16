@@ -32,71 +32,32 @@ public class XmlUnitUsageTests {
 
     @Test
     public void whenControlXmlIsIncludedInTextXml_thenCorrect() {
-        String controlXml = "<struct><skra>foobar</skra></struct>";
-        String testXml = "<struct><a><b>content</b></a><skra>foobar</skra></struct>";
-
-        Diff myDiff = DiffBuilder
-                .compare(controlXml)
-                .withTest(testXml).checkForSimilar()
-                .withComparisonController(ComparisonControllers.StopWhenDifferent)
-                .build();
-
-        Iterator<Difference> iter = myDiff.getDifferences().iterator();
-        while (iter.hasNext()) {
-            System.out.println(iter.next().getComparison().getType());
-        }
-    }
-
-    @Test
-    public void given2XMLS_whenSimilar_withDiffs() {
-        String myControlXML = "<struct><int>3</int><boolean>false</boolean></struct>";
+        String myControlXML = "<struct><boolean>false</boolean></struct>";
         String myTestXML = "<struct><boolean>false</boolean><int>3</int></struct>";
 
         Diff myDiff = DiffBuilder
                 .compare(myControlXML)
-                .withTest(myTestXML).checkForSimilar()
-                .withComparisonController(ComparisonControllers.StopWhenDifferent)
-                .build();
+                .withTest(myTestXML)
+                .withDifferenceEvaluator(DifferenceEvaluators.chain(DifferenceEvaluators.Default, new DifferenceEvaluator() {
+                    @Override
+                    public ComparisonResult evaluate(Comparison comparison, ComparisonResult comparisonResult) {
+                        if (comparisonResult == ComparisonResult.EQUAL)
+                            return comparisonResult;
+                        if (comparison.getType() == ComparisonType.CHILD_NODELIST_LENGTH
+                                || comparison.getControlDetails().getTarget() == null) {
+                            return ComparisonResult.SIMILAR;
+                        }
+                        return ComparisonResult.DIFFERENT;
+                    }
+                })).checkForSimilar().withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName)).build();
 
         Iterator<Difference> iter = myDiff.getDifferences().iterator();
         int size = 0;
         while (iter.hasNext()) {
-            System.out.println(iter.next().getComparison().getType());
+            Difference diff = iter.next();
             size++;
         }
-        assertThat(size, equalTo(1));
-    }
-
-    @Test
-    public void given2XMLsWithDifferences_whenTestsSimilarWithDifferenceEvaluator_thenCorrect() {
-        final String control = "<a><z>test</z><b attr=\"abc\">waa</b></a>";
-        final String test = "<a><b attr=\"xyz\">waa</b><z>test</z></a>";
-        class IgnoreAttributeDifferenceEvaluator implements DifferenceEvaluator {
-            private String attributeName;
-
-            public IgnoreAttributeDifferenceEvaluator(String attributeName) {
-                this.attributeName = attributeName;
-            }
-
-            @Override
-            public ComparisonResult evaluate(Comparison comparison, ComparisonResult outcome) {
-                if (outcome == ComparisonResult.EQUAL)
-                    return outcome;
-                final Node controlNode = comparison.getControlDetails().getTarget();
-                if (controlNode instanceof Attr) {
-                    Attr attr = (Attr) controlNode;
-                    if (attr.getName().equals(attributeName)) {
-                        return ComparisonResult.SIMILAR;
-                    }
-                }
-                return outcome;
-            }
-        }
-
-        assertThat(test, isSimilarTo(control)
-                .withDifferenceEvaluator(DifferenceEvaluators
-                        .chain(DifferenceEvaluators.Default, new IgnoreAttributeDifferenceEvaluator("attr")))
-                .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName)));
+        assertThat(size, equalTo(0));
     }
 
     @Test
