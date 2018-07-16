@@ -2,20 +2,20 @@ package ro.cucumber.core.comparison;
 
 import java.util.Map;
 import static org.junit.Assert.fail;
+import com.fasterxml.jackson.databind.JsonNode;
 
-public class Comparison {
-    protected Object expected;
-    protected Object actual;
+public class JsonComparison extends Comparison {
 
-    public Comparison(Object expected, Object actual) {
-        this.expected = expected;
-        this.actual = actual;
+    private JsonNode expected;
+
+    public JsonComparison(Object expected, Object actual) {
+        super(expected, actual);
     }
 
     /**
      * 
      * @return A map of assign symbols<br>
-     *         Empty, if not assign symbols are defined inside expected
+     *         Empty map, if not assign symbols are defined inside expected
      */
     Map<String, String> evaluate() {
         if ((actual == null) != (expected == null)) {
