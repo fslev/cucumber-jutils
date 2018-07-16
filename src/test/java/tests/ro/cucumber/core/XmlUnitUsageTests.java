@@ -49,7 +49,7 @@ public class XmlUnitUsageTests {
                         }
                         return ComparisonResult.DIFFERENT;
                     }
-                })).checkForSimilar().withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName)).build();
+                })).checkForSimilar().withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText)).build();
 
         Iterator<Difference> iter = myDiff.getDifferences().iterator();
         int size = 0;
