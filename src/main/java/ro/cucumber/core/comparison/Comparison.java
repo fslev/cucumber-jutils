@@ -1,8 +1,9 @@
 package ro.cucumber.core.comparison;
 
 import java.util.Map;
-import static org.junit.Assert.fail;
 
+import static org.junit.Assert.fail;
+//TO do: change name
 public class Comparison {
     protected Object expected;
     protected Object actual;
@@ -13,9 +14,8 @@ public class Comparison {
     }
 
     /**
-     * 
      * @return A map of assign symbols<br>
-     *         Empty, if not assign symbols are defined inside expected
+     * Empty, if no assign symbols are defined inside expected
      */
     Map<String, String> evaluate() {
         if ((actual == null) != (expected == null)) {
