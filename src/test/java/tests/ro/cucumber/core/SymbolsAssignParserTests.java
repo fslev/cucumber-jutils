@@ -17,6 +17,15 @@ public class SymbolsAssignParserTests {
     }
 
     @Test
+    public void testSymbolAssignFromSimpleTextWithRegex() {
+        String a = ".*~[sym1].*";
+        String b = "Moon";
+        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        assertEquals("Moon", parser.getAssignSymbols().get("sym1"));
+        assertEquals(1, parser.getAssignSymbols().size());
+    }
+
+    @Test
     public void testSymbolAssignFromRandomText() {
         String a = "The ~[var1] is ru.*n(ning through the ~[var2]";
         String b = "something here The rab\nbit is ru.*n(ning through the forest";
