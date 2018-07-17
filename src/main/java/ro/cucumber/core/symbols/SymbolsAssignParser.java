@@ -43,7 +43,7 @@ public class SymbolsAssignParser {
         return this.assignSymbols;
     }
 
-    public void setAssignSymbols() {
+    private void setAssignSymbols() {
         List<String> symbolNames = getAssignSymbolNames(stringWithSymbols);
         if (symbolNames.isEmpty()) {
             return;
@@ -57,14 +57,14 @@ public class SymbolsAssignParser {
         Pattern pattern = Pattern.compile(str,
                 Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(stringWithValues);
-        while (matcher.find()) {
+        if (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 assignSymbols.put(symbolNames.get(i - 1), matcher.group(i));
             }
         }
     }
 
-    public static List<String> getAssignSymbolNames(String str) {
+    private static List<String> getAssignSymbolNames(String str) {
         List<String> names = new ArrayList<>();
         Matcher matcher = SYMBOL_ASSIGN_PATTERN.matcher(str);
         while (matcher.find()) {
