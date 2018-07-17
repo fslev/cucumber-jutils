@@ -18,6 +18,16 @@ public class SymbolsAssignParserTests {
     }
 
     @Test
+    public void testSymbolAssignFromRegex() {
+        String a = ".* The ~[var1] is ru\\Q.*\\En.*g through ~[var2] .*";
+        String b = "something here The rab\nbit is ru.*nning through the forest";
+        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        assertEquals("rab\nbit", parser.getAssignSymbols().get("var1"));
+        assertEquals("the", parser.getAssignSymbols().get("var2"));
+        assertEquals(parser.getStringWithAssignValues(), ".* The rab\nbit is ru\\Q.*\\En.*g through the .*", parser.getStringWithAssignValues());
+    }
+
+    @Test
     public void testSymbolAssignFromSimpleJson() {
         String a = "{\"a\":[1,~[var1],3,4,5],\"b\":{\"k\":\"i\"}}";
         String b = "{\"a\":[1,2,3,4,5],\"b\":{\"k\":\"i\"}}";
