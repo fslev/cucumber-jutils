@@ -1,23 +1,19 @@
-package ro.cucumber.core.comparison;
+package ro.cucumber.core.matchers;
 
 import java.util.Map;
-
 import static org.junit.Assert.fail;
-//TO do: change name
-public class Comparison {
+
+public class Matcher extends AbstractMatcher {
     protected Object expected;
     protected Object actual;
 
-    public Comparison(Object expected, Object actual) {
+    public Matcher(Object expected, Object actual) throws MatcherException {
         this.expected = expected;
         this.actual = actual;
     }
 
-    /**
-     * @return A map of assign symbols<br>
-     * Empty, if no assign symbols are defined inside expected
-     */
-    Map<String, String> evaluate() {
+    @Override
+    protected Map<String, String> matches() {
         if ((actual == null) != (expected == null)) {
             fail(String.format("Expected: [%s] But found: [%s]", expected, actual));
         }
