@@ -4,7 +4,7 @@ import java.util.Map;
 
 import static org.junit.Assert.fail;
 
-public class Matcher extends MatcherWithAssignableSymbols {
+public class Matcher implements MatcherWithAssignableSymbols {
     protected Object expected;
     protected Object actual;
 
