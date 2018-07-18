@@ -2,7 +2,6 @@ package tests.ro.cucumber.core;
 
 import ro.cucumber.core.matchers.JsonMatcher;
 import ro.cucumber.core.matchers.MatcherException;
-import ro.cucumber.core.matchers.MatcherWithAssignableSymbols;
 import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -18,10 +17,22 @@ public class JsonMatcherTests {
     }
 
     @Test
+    public void compareJsonWithAssignSymbolsAndInvalidRegex() throws MatcherException {
+        String expected = "{\"b\":\"(~[sym1]\"}";
+        String actual = "{\"a\":\"val2\",\"b\":\"(val1\"}";
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
+        assertTrue(matcher.getAssignSymbols().isEmpty());
+        matcher.matches();
+        Map<String, String> symbols = matcher.getAssignSymbols();
+        assertEquals("val1", symbols.get("sym1"));
+        assertEquals(1, matcher.getAssignSymbols().size());
+    }
+
+    @Test
     public void compareSimpleJson() throws MatcherException {
         String expected = "{\"!b\":\"val1\",\"a\":\"val2\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
-        MatcherWithAssignableSymbols matcher = new JsonMatcher(expected, actual);
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
         assertTrue(matcher.getAssignSymbols().isEmpty());
         matcher.matches();
         assertTrue(matcher.getAssignSymbols().isEmpty());
@@ -31,7 +42,7 @@ public class JsonMatcherTests {
     public void compareSimpleJsonWithAssignSymbols() throws MatcherException {
         String expected = "{\"!b\":\"~[sym1]\",\"a\":\"~[sym2]\",\"c\":\"~[sym3]\"}";
         String actual = "{\"a\":\"val2\",\"d\":\"val3\",\"c\":\"val1\"}";
-        MatcherWithAssignableSymbols matcher = new JsonMatcher(expected, actual);
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
         assertTrue(matcher.getAssignSymbols().isEmpty());
         matcher.matches();
         Map<String, String> symbols = matcher.getAssignSymbols();
@@ -44,7 +55,7 @@ public class JsonMatcherTests {
     public void compareJsonArray() throws MatcherException {
         String expected = "{\"b\":\"val1\",\"a\":[1,2,3,4]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        MatcherWithAssignableSymbols matcher = new JsonMatcher(expected, actual);
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
         assertTrue(matcher.getAssignSymbols().isEmpty());
         matcher.matches();
         assertTrue(matcher.getAssignSymbols().isEmpty());
@@ -54,7 +65,7 @@ public class JsonMatcherTests {
     public void compareJsonArrayWithAssignSymbols() throws MatcherException {
         String expected = "{\"b\":\"val1\",\"a\":[2,\"~[sym1]\",4,\"~[sym2]\"]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        MatcherWithAssignableSymbols matcher = new JsonMatcher(expected, actual);
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
         assertTrue(matcher.getAssignSymbols().isEmpty());
         matcher.matches();
         Map<String, String> symbols = matcher.getAssignSymbols();
@@ -67,7 +78,7 @@ public class JsonMatcherTests {
     public void compareJsonArrayWithAssignSymbols_negative() throws MatcherException {
         String expected = "{\"b\":\"val1\",\"a\":[\"~[sym1]\",2,3,5]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        MatcherWithAssignableSymbols matcher = new JsonMatcher(expected, actual);
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
         assertTrue(matcher.getAssignSymbols().isEmpty());
         matcher.matches();
     }
@@ -76,7 +87,7 @@ public class JsonMatcherTests {
     public void compareJsonWithAssignSymbolsAndDoNotFind() throws MatcherException {
         String expected = "{\"b\":\"!t~[sym1]1\"}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        MatcherWithAssignableSymbols matcher = new JsonMatcher(expected, actual);
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
         assertTrue(matcher.getAssignSymbols().isEmpty());
         matcher.matches();
         assertTrue(matcher.getAssignSymbols().isEmpty());
@@ -86,7 +97,7 @@ public class JsonMatcherTests {
     public void compareJsonWithAssignSymbolsAndDoNotFind_negative() throws MatcherException {
         String expected = "{\"b\":\"!v~[sym1]1\"}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        MatcherWithAssignableSymbols matcher = new JsonMatcher(expected, actual);
+        JsonMatcher matcher = new JsonMatcher(expected, actual);
         matcher.matches();
     }
 }
