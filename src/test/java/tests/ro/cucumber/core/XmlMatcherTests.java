@@ -20,6 +20,21 @@ public class XmlMatcherTests {
     @Test
     public void compareXmlWithAssignSymbolsAndInvalidRegex() throws MatcherException {
         String expected =
+                "<struct><int a=\"~[sym1]\">some 1text here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";
+        String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
+                + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";
+        XmlMatcher matcher = new XmlMatcher(expected, actual);
+        assertTrue(matcher.getAssignSymbols().isEmpty());
+        matcher.matches();
+        Map<String, String> symbols = matcher.getAssignSymbols();
+        assertEquals("(attrValue1", symbols.get("sym1"));
+        assertEquals("olAttrVal", symbols.get("sym2"));
+        assertEquals(2, matcher.getAssignSymbols().size());
+    }
+
+    @Test
+    public void compareXmlWithAssignSymbolsAndInvalidRegex_negative() throws MatcherException {
+        String expected =
                 "<struct><int a=\"~[sym1]\">some text here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
                 + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";

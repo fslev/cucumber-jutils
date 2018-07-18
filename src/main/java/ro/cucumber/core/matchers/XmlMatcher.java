@@ -26,11 +26,10 @@ public class XmlMatcher implements SymbolAssignable, Matchable {
 
     @Override
     public void matches() {
-        assertThat(actual,
-                isSimilarTo(expected)
-                        .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
-                        .withDifferenceEvaluator(DifferenceEvaluators
-                                .chain(DifferenceEvaluators.Default, new CustomXmlComparator())));
+        assertThat(actual, isSimilarTo(expected)
+                .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndText))
+                .withDifferenceEvaluator(
+                        DifferenceEvaluators.chain(DifferenceEvaluators.Default, comparator)));
     }
 
     @Override

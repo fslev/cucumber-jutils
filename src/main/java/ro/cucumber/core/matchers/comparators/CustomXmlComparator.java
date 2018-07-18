@@ -18,24 +18,33 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
 
     private Map<String, String> assignSymbols = new HashMap<>();
 
-
     @Override
     public ComparisonResult evaluate(Comparison comparison, ComparisonResult comparisonResult) {
-        if (comparison.getType() == ComparisonType.CHILD_NODELIST_LENGTH
+        ComparisonType comparisonType = comparison.getType();
+        if (comparisonType == ComparisonType.CHILD_NODELIST_LENGTH
                 || comparison.getControlDetails().getTarget() == null) {
             return ComparisonResult.SIMILAR;
         }
-        Node expectedNode = comparison.getControlDetails().getTarget();
-        Node actualNode = comparison.getTestDetails().getTarget();
-        if (expectedNode instanceof Attr && actualNode instanceof Attr) {
-            String expected = ((Attr) expectedNode).getValue();
-            String actual = ((Attr) actualNode).getValue();
-            return compare(expected, actual);
+        if (comparisonType == ComparisonType.CHILD_NODELIST_SEQUENCE) {
+            return ComparisonResult.SIMILAR;
         }
-        if (expectedNode instanceof Text && actualNode instanceof Text) {
-            String expected = ((Text) expectedNode).getData();
-            String actual = ((Text) actualNode).getData();
-            return compare(expected, actual);
+
+        if (comparisonType == ComparisonType.CHILD_LOOKUP
+                || comparisonType == ComparisonType.ATTR_VALUE) {
+            Node expectedNode = comparison.getControlDetails().getTarget();
+            Node actualNode = comparison.getTestDetails().getTarget();
+            if (expectedNode instanceof Attr && actualNode instanceof Attr) {
+                String expected = ((Attr) expectedNode).getValue();
+                String actual = ((Attr) actualNode).getValue();
+                return compare(expected, actual);
+            }
+            if (expectedNode instanceof Text && actualNode instanceof Text) {
+                System.out.println();
+                String expected = ((Text) expectedNode).getData();
+                String actual = ((Text) actualNode).getData();
+                System.out.println("Expected: " + expected);
+                return compare(expected, actual);
+            }
         }
         if (comparisonResult == ComparisonResult.EQUAL) {
             return comparisonResult;
@@ -46,11 +55,9 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
     private ComparisonResult compare(String expected, String actual) {
         SymbolsAssignParser parser = new SymbolsAssignParser(expected, actual);
         boolean hasSymbols = !parser.getAssignSymbols().isEmpty();
-        if (hasSymbols) {
-            expected = parser.getStringWithAssignValues();
-        }
+        String parsedExpected = hasSymbols ? parser.getStringWithAssignValues() : expected;
         try {
-            Pattern pattern = Pattern.compile(expected);
+            Pattern pattern = Pattern.compile(parsedExpected);
             if (pattern.matcher(actual).matches()) {
                 if (hasSymbols) {
                     this.assignSymbols.putAll(parser.getAssignSymbols());
@@ -60,7 +67,7 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
                 return ComparisonResult.DIFFERENT;
             }
         } catch (PatternSyntaxException e) {
-            if (expected.equals(actual)) {
+            if (parsedExpected.equals(actual)) {
                 if (hasSymbols) {
                     this.assignSymbols.putAll(parser.getAssignSymbols());
                 }
