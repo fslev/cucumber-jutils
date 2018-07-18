@@ -1,8 +1,9 @@
 package tests.ro.cucumber.core;
 
-import ro.cucumber.core.symbols.SymbolsAssignParser;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import ro.cucumber.core.symbols.SymbolsAssignParser;
+
+import static org.junit.Assert.assertEquals;
 
 public class SymbolsAssignParserTests {
 

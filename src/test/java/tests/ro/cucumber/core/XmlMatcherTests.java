@@ -1,8 +1,8 @@
 package tests.ro.cucumber.core;
 
 import org.junit.Test;
-import ro.cucumber.core.matchers.exceptions.MatcherException;
 import ro.cucumber.core.matchers.XmlMatcher;
+import ro.cucumber.core.matchers.exceptions.MatcherException;
 
 import java.util.Map;
 
