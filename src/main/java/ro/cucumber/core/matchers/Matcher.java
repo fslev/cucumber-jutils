@@ -1,10 +1,10 @@
 package ro.cucumber.core.matchers;
 
+import ro.cucumber.core.symbols.SymbolAssignable;
 import java.util.Map;
-
 import static org.junit.Assert.fail;
 
-public class Matcher implements MatcherWithAssignableSymbols {
+public class Matcher implements SymbolAssignable, Matchable {
     protected Object expected;
     protected Object actual;
 

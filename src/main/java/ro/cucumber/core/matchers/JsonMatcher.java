@@ -1,30 +1,32 @@
 package ro.cucumber.core.matchers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import ro.cucumber.core.matchers.comparators.CustomJsonComparator;
+import ro.cucumber.core.symbols.SymbolAssignable;
 import ro.skyah.comparator.JSONCompare;
-
 import java.io.IOException;
 import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonMatcher implements MatcherWithAssignableSymbols {
+public class JsonMatcher implements SymbolAssignable, Matchable {
 
-    private JsonNode expectedNode;
-    private JsonNode actualNode;
+    private JsonNode expected;
+    private JsonNode actual;
     private CustomJsonComparator comparator = new CustomJsonComparator();
 
     public JsonMatcher(Object expected, Object actual) throws MatcherException {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            expectedNode = mapper.readTree(expected.toString());
-            actualNode = mapper.readTree(actual.toString());
+            this.expected = mapper.readTree(expected.toString());
+            this.actual = mapper.readTree(actual.toString());
         } catch (IOException e) {
             throw new MatcherException("Malformed JSON");
         }
     }
 
+    @Override
     public void matches() {
-        JSONCompare.assertEquals(expectedNode, actualNode, comparator);
+        JSONCompare.assertEquals(expected, actual, comparator);
     }
 
     @Override

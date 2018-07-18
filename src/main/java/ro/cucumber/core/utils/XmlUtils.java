@@ -1,6 +1,15 @@
 package ro.cucumber.core.utils;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
+import java.io.IOException;
+import java.io.StringReader;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.xmlunit.builder.Input;
 import org.xmlunit.builder.Transform;
 
@@ -19,5 +28,28 @@ public class XmlUtils {
         Source source = Input.fromString(xml).build();
         return Transform.source(source).withStylesheet(Input.fromString(STYLE_XSL).build()).build()
                 .toString();
+    }
+
+    public static boolean isValid(String xml) {
+        DocumentBuilder builder = null;
+        try {
+            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            builder.setErrorHandler(new ErrorHandler() {
+                @Override
+                public void warning(SAXParseException exception) throws SAXException {}
+
+                @Override
+                public void error(SAXParseException exception) throws SAXException {}
+
+                @Override
+                public void fatalError(SAXParseException exception) throws SAXException {}
+            });
+            builder.parse(new InputSource(new StringReader(xml)));
+        } catch (SAXException | IOException e) {
+            return false;
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
 }
