@@ -52,7 +52,7 @@ public class SymbolRetrieveParserTests {
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
         assertEquals("The #[animal] is running through the #[location]", parser.parse(values));
-        assertEquals(Arrays.asList("animal", "location"), parser.getSymbolNames());
+        assertEquals(new HashSet<>(Arrays.asList("animal", "location")), parser.getSymbolNames());
     }
 
     @Test
