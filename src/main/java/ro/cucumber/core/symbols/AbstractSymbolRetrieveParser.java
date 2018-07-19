@@ -15,9 +15,9 @@ public abstract class AbstractSymbolRetrieveParser {
         this.stringWithSymbols = stringWithSymbols;
     }
 
-    public String parse(Map<String, String> symbols) {
+    public String parse(Map<String, String> symbolValues) {
         String str = stringWithSymbols;
-        for (Map.Entry<String, String> e : symbols.entrySet()) {
+        for (Map.Entry<String, String> e : symbolValues.entrySet()) {
             str = str.replaceAll(getSymbolStart() + e.getKey() + getSymbolEnd(),
                     e.getValue());
         }
