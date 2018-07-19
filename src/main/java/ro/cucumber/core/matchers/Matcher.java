@@ -8,7 +8,7 @@ public class Matcher implements SymbolsAssignMatchable {
     protected Object expected;
     protected Object actual;
 
-    public Matcher(Object expected, Object actual) throws MatcherException {
+    public Matcher(Object expected, Object actual) {
         this.expected = expected;
         this.actual = actual;
     }
