@@ -1,4 +1,4 @@
-package tests.ro.cucumber.core;
+package tests.ro.cucumber.core.matchers;
 
 import org.junit.Test;
 import ro.cucumber.core.matchers.Matcher;

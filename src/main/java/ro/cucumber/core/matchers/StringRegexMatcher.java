@@ -1,6 +1,6 @@
 package ro.cucumber.core.matchers;
 
-import ro.cucumber.core.symbols.SymbolsAssignParser;
+import ro.cucumber.core.symbols.SymbolAssignParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class StringRegexMatcher implements SymbolsAssignMatchable {
     @Override
     public Map<String, String> match() {
 
-        SymbolsAssignParser parser = new SymbolsAssignParser(expected, actual);
+        SymbolAssignParser parser = new SymbolAssignParser(expected, actual);
         boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {

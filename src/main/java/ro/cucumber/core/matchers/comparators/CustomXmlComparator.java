@@ -7,7 +7,7 @@ import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DifferenceEvaluator;
-import ro.cucumber.core.symbols.SymbolsAssignParser;
+import ro.cucumber.core.symbols.SymbolAssignParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +52,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     }
 
     private ComparisonResult compare(String expected, String actual) {
-        SymbolsAssignParser parser = new SymbolsAssignParser(expected, actual);
+        SymbolAssignParser parser = new SymbolAssignParser(expected, actual);
         boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
         String parsedExpected = hasAssignSymbols ? parser.parse() : expected;
         try {
