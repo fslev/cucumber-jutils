@@ -22,7 +22,11 @@ public class Matcher implements SymbolsAssignMatchable {
         try {
             matcher = new JsonMatcher(expected, actual);
         } catch (MatcherException e) {
-            matcher = new StringRegexMatcher(expected, actual);
+            try {
+                matcher = new XmlMatcher(expected, actual);
+            } catch (MatcherException e1) {
+                matcher = new StringRegexMatcher(expected, actual);
+            }
         }
         return matcher.match();
     }
