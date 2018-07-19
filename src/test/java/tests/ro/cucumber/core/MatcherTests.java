@@ -1,11 +1,37 @@
 package tests.ro.cucumber.core;
 
-import ro.cucumber.core.matchers.Matcher;
-import java.util.Map;
-import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import ro.cucumber.core.matchers.Matcher;
+
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MatcherTests {
+
+    @Test
+    public void compareNulls() {
+        String expected = null;
+        String actual = null;
+        Matcher matcher = new Matcher(expected, actual);
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareNulls_negative() {
+        String expected = "text";
+        String actual = null;
+        new Matcher(expected, actual).match();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareNulls_negative1() {
+        String expected = null;
+        String actual = "text";
+        new Matcher(expected, actual).match();
+    }
 
     @Test
     public void compareJsonWithAssignSymbols() {
