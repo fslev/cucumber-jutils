@@ -26,6 +26,15 @@ public class SymbolAssignParserTests {
     }
 
     @Test
+    public void testSymbolAssignDuplicated() {
+        String a = "~[sym1] ~[sym1]";
+        String b = "Moon Sun";
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
+        assertEquals("Sun", parser.getAssignSymbols().get("sym1"));
+        assertEquals(1, parser.getAssignSymbols().size());
+    }
+
+    @Test
     public void testSymbolAssignFromSimpleTextWithRegex() {
         String a = ".*M~[sym1]n.*";
         String b = "Moon";
