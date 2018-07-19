@@ -2,7 +2,6 @@ package ro.cucumber.core.symbols;
 
 
 import ro.cucumber.core.utils.RegexUtils;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -51,11 +50,11 @@ public class SymbolsAssignParser {
         boolean isRegex = RegexUtils.isRegex(stringWithSymbols);
         String str = !isRegex ? "\\Q" + stringWithSymbols + "\\E" : stringWithSymbols;
         for (String name : symbolNames) {
-            str = str
-                    .replaceAll(SYMBOL_ASSIGN_START + name + SYMBOL_ASSIGN_END, !isRegex ? "\\\\E(.*)\\\\Q" : "(.*)");
+            str = str.replaceAll(SYMBOL_ASSIGN_START + name + SYMBOL_ASSIGN_END,
+                    !isRegex ? "\\\\E(.*)\\\\Q" : "(.*)");
         }
-        Pattern pattern = Pattern.compile(str,
-                Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
+        Pattern pattern =
+                Pattern.compile(str, Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
         Matcher matcher = pattern.matcher(stringWithValues);
         if (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
