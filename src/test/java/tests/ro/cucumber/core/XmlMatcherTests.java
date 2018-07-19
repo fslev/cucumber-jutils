@@ -37,7 +37,7 @@ public class XmlMatcherTests {
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
                 + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";
         XmlMatcher matcher = new XmlMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        matcher.match();
     }
 
     @Test
