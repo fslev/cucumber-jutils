@@ -1,4 +1,4 @@
-package ro.cucumber.stepdefs;
+package ro.cucumber.core.stepdefs;
 
 import com.google.inject.Inject;
 import cucumber.api.Scenario;

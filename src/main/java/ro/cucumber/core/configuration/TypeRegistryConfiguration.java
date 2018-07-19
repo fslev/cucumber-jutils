@@ -1,4 +1,4 @@
-package ro.cucumber.configuration;
+package ro.cucumber.core.configuration;
 
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
