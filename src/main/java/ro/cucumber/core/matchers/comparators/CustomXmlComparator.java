@@ -1,6 +1,5 @@
 package ro.cucumber.core.matchers.comparators;
 
-import ro.cucumber.core.symbols.SymbolAssignable;
 import ro.cucumber.core.symbols.SymbolsAssignParser;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +13,7 @@ import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DifferenceEvaluator;
 
-public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluator {
+public class CustomXmlComparator implements DifferenceEvaluator {
 
     private Map<String, String> assignSymbols = new HashMap<>();
 
@@ -77,7 +76,6 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
         }
     }
 
-    @Override
     public Map<String, String> getAssignSymbols() {
         return assignSymbols;
     }

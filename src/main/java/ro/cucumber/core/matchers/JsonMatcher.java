@@ -2,14 +2,13 @@ package ro.cucumber.core.matchers;
 
 import ro.cucumber.core.matchers.comparators.CustomJsonComparator;
 import ro.cucumber.core.matchers.exceptions.MatcherException;
-import ro.cucumber.core.symbols.SymbolAssignable;
 import ro.skyah.comparator.JSONCompare;
 import java.io.IOException;
 import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonMatcher implements SymbolAssignable, Matchable {
+public class JsonMatcher implements SymbolsAssignMatchable {
 
     private JsonNode expected;
     private JsonNode actual;
@@ -26,12 +25,8 @@ public class JsonMatcher implements SymbolAssignable, Matchable {
     }
 
     @Override
-    public void matches() {
+    public Map<String, String> match() {
         JSONCompare.assertEquals(expected, actual, comparator);
-    }
-
-    @Override
-    public Map<String, String> getAssignSymbols() {
         return comparator.getAssignSymbols();
     }
 }

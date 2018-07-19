@@ -21,11 +21,9 @@ public class JsonMatcherTests {
         String expected = "{\"b\":\"(~[sym1]\"}";
         String actual = "{\"a\":\"val2\",\"b\":\"(val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
-        Map<String, String> symbols = matcher.getAssignSymbols();
+        Map<String, String> symbols = matcher.match();
         assertEquals("val1", symbols.get("sym1"));
-        assertEquals(1, matcher.getAssignSymbols().size());
+        assertEquals(1, symbols.size());
     }
 
     @Test
@@ -33,9 +31,8 @@ public class JsonMatcherTests {
         String expected = "{\"!b\":\"val1\",\"a\":\"val2\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
-        assertTrue(matcher.getAssignSymbols().isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test
@@ -43,9 +40,7 @@ public class JsonMatcherTests {
         String expected = "{\"!b\":\"~[sym1]\",\"a\":\"~[sym2]\",\"c\":\"~[sym3]\"}";
         String actual = "{\"a\":\"val2\",\"d\":\"val3\",\"c\":\"val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
-        Map<String, String> symbols = matcher.getAssignSymbols();
+        Map<String, String> symbols = matcher.match();
         assertEquals("val2", symbols.get("sym2"));
         assertEquals("val1", symbols.get("sym3"));
         assertEquals(2, symbols.size());
@@ -56,9 +51,8 @@ public class JsonMatcherTests {
         String expected = "{\"b\":\"val1\",\"a\":[1,2,3,4]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
-        assertTrue(matcher.getAssignSymbols().isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test
@@ -66,9 +60,7 @@ public class JsonMatcherTests {
         String expected = "{\"b\":\"val1\",\"a\":[2,\"~[sym1]\",4,\"~[sym2]\"]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
-        Map<String, String> symbols = matcher.getAssignSymbols();
+        Map<String, String> symbols = matcher.match();
         assertEquals("5", symbols.get("sym1"));
         assertEquals("3", symbols.get("sym2"));
         assertEquals(2, symbols.size());
@@ -79,8 +71,9 @@ public class JsonMatcherTests {
         String expected = "{\"b\":\"val1\",\"a\":[\"~[sym1]\",2,3,5]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
+        matcher.match();
     }
 
     @Test
@@ -88,9 +81,8 @@ public class JsonMatcherTests {
         String expected = "{\"b\":\"!t~[sym1]1\"}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
-        assertTrue(matcher.getAssignSymbols().isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test(expected = AssertionError.class)
@@ -98,7 +90,7 @@ public class JsonMatcherTests {
         String expected = "{\"b\":\"!v~[sym1]1\"}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        matcher.matches();
+        matcher.match();
     }
 
     @Test
@@ -137,9 +129,7 @@ public class JsonMatcherTests {
                 + "    \"greeting\": \"Hello, Holly Hawkins! You have 1 unread messages.\",\n"
                 + "    \"favoriteFruit\": \"banana\"\n" + "  }\n" + "]";
         JsonMatcher matcher = new JsonMatcher(expected, actual);
-        assertTrue(matcher.getAssignSymbols().isEmpty());
-        matcher.matches();
-        Map<String, String> symbols = matcher.getAssignSymbols();
+        Map<String, String> symbols = matcher.match();
         assertEquals("1", symbols.get("friendId"));
         assertEquals("-90.447286", symbols.get("longitude"));
         assertEquals(2, symbols.size());

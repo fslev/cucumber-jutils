@@ -2,7 +2,6 @@ package ro.cucumber.core.matchers;
 
 import ro.cucumber.core.matchers.comparators.CustomXmlComparator;
 import ro.cucumber.core.matchers.exceptions.MatcherException;
-import ro.cucumber.core.symbols.SymbolAssignable;
 import java.util.Map;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isSimilarTo;
@@ -11,7 +10,7 @@ import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.DifferenceEvaluators;
 import org.xmlunit.diff.ElementSelectors;
 
-public class XmlMatcher implements SymbolAssignable, Matchable {
+public class XmlMatcher implements SymbolsAssignMatchable {
 
     private String expected;
     private String actual;
@@ -26,15 +25,11 @@ public class XmlMatcher implements SymbolAssignable, Matchable {
     }
 
     @Override
-    public void matches() {
+    public Map<String, String> match() {
         assertThat(actual, isSimilarTo(expected).ignoreWhitespace()
                 .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName))
                 .withDifferenceEvaluator(
                         DifferenceEvaluators.chain(DifferenceEvaluators.Default, comparator)));
-    }
-
-    @Override
-    public Map<String, String> getAssignSymbols() {
         return comparator.getAssignSymbols();
     }
 }

@@ -1,6 +1,5 @@
 package ro.cucumber.core.matchers;
 
-import ro.cucumber.core.symbols.SymbolAssignable;
 import ro.cucumber.core.symbols.SymbolsAssignParser;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +7,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import static org.junit.Assert.fail;
 
-public class StringRegexMatcher implements SymbolAssignable, Matchable {
+public class StringRegexMatcher implements SymbolsAssignMatchable {
 
     private String expected;
     private String actual;
@@ -20,7 +19,7 @@ public class StringRegexMatcher implements SymbolAssignable, Matchable {
     }
 
     @Override
-    public void matches() {
+    public Map<String, String> match() {
 
         SymbolsAssignParser parser = new SymbolsAssignParser(expected, actual);
         boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
@@ -46,10 +45,6 @@ public class StringRegexMatcher implements SymbolAssignable, Matchable {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));
             }
         }
-    }
-
-    @Override
-    public Map<String, String> getAssignSymbols() {
-        return this.assignSymbols;
+        return assignSymbols;
     }
 }

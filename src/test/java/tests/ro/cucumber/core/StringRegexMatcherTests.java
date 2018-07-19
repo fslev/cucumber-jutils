@@ -13,9 +13,8 @@ public class StringRegexMatcherTests {
         String expected = "value";
         String actual = "value";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertTrue(assignSymbols.isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test
@@ -23,9 +22,8 @@ public class StringRegexMatcherTests {
         int expected = 1;
         int actual = 1;
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertTrue(assignSymbols.isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test
@@ -33,10 +31,9 @@ public class StringRegexMatcherTests {
         String expected = "~[sym1]";
         int actual = 10;
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertEquals("10", assignSymbols.get("sym1"));
-        assertEquals(1, assignSymbols.size());
+        Map<String, String> symbols = matcher.match();
+        assertEquals("10", symbols.get("sym1"));
+        assertEquals(1, symbols.size());
     }
 
     @Test(expected = AssertionError.class)
@@ -44,7 +41,7 @@ public class StringRegexMatcherTests {
         int expected = 1;
         int actual = 2;
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
+        matcher.match();
     }
 
     @Test
@@ -52,9 +49,8 @@ public class StringRegexMatcherTests {
         Integer expected = 1;
         int actual = 1;
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertTrue(assignSymbols.isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test
@@ -62,9 +58,8 @@ public class StringRegexMatcherTests {
         boolean expected = true;
         Boolean actual = true;
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertTrue(assignSymbols.isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test(expected = AssertionError.class)
@@ -72,7 +67,7 @@ public class StringRegexMatcherTests {
         boolean expected = true;
         Boolean actual = false;
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
+        matcher.match();
     }
 
     @Test(expected = AssertionError.class)
@@ -80,7 +75,7 @@ public class StringRegexMatcherTests {
         String expected = "val";
         String actual = "value";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
+        matcher.match();
     }
 
     @Test
@@ -88,9 +83,8 @@ public class StringRegexMatcherTests {
         String expected = "va(lue";
         String actual = "va(lue";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertTrue(assignSymbols.isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test
@@ -98,9 +92,8 @@ public class StringRegexMatcherTests {
         String expected = "va.*ue";
         String actual = "va(lue";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertTrue(assignSymbols.isEmpty());
+        Map<String, String> symbols = matcher.match();
+        assertTrue(symbols.isEmpty());
     }
 
     @Test(expected = AssertionError.class)
@@ -108,7 +101,7 @@ public class StringRegexMatcherTests {
         String expected = "va.*ue";
         String actual = "va(le";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
+        matcher.match();
     }
 
     @Test
@@ -116,11 +109,10 @@ public class StringRegexMatcherTests {
         String expected = "The ~[sym1] is running through the ~[sym2]";
         String actual = "The rabbit is running through the forest";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertEquals("rabbit", assignSymbols.get("sym1"));
-        assertEquals("forest", assignSymbols.get("sym2"));
-        assertEquals(2, assignSymbols.size());
+        Map<String, String> symbols = matcher.match();
+        assertEquals("rabbit", symbols.get("sym1"));
+        assertEquals("forest", symbols.get("sym2"));
+        assertEquals(2, symbols.size());
     }
 
     @Test
@@ -128,10 +120,9 @@ public class StringRegexMatcherTests {
         String expected = ".* Rabbit ~[sym1] in the .*";
         String actual = "The Rabbit is running in the forest";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
-        Map<String, String> assignSymbols = matcher.getAssignSymbols();
-        assertEquals("is running", assignSymbols.get("sym1"));
-        assertEquals(1, assignSymbols.size());
+        Map<String, String> symbols = matcher.match();
+        assertEquals("is running", symbols.get("sym1"));
+        assertEquals(1, symbols.size());
     }
 
     @Test(expected = AssertionError.class)
@@ -139,6 +130,6 @@ public class StringRegexMatcherTests {
         String expected = ".* Fox ~[sym1] in the .*";
         String actual = "The Rabbit is running in the forest";
         StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
-        matcher.matches();
+        matcher.match();
     }
 }
