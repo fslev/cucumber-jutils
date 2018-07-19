@@ -6,7 +6,9 @@ import io.cucumber.cucumberexpressions.ParameterType;
 import io.cucumber.cucumberexpressions.Transformer;
 import ro.cucumber.core.clients.http.HttpClient;
 import ro.cucumber.core.clients.http.HttpVerb;
+
 import java.util.Locale;
+
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {

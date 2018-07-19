@@ -1,10 +1,12 @@
 package tests.ro.cucumber.core;
 
+import org.junit.Test;
 import ro.cucumber.core.matchers.StringRegexMatcher;
+
 import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 
 public class StringRegexMatcherTests {
 

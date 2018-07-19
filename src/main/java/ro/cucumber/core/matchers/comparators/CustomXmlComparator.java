@@ -1,10 +1,5 @@
 package ro.cucumber.core.matchers.comparators;
 
-import ro.cucumber.core.symbols.SymbolsAssignParser;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -12,6 +7,12 @@ import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DifferenceEvaluator;
+import ro.cucumber.core.symbols.SymbolsAssignParser;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class CustomXmlComparator implements DifferenceEvaluator {
 

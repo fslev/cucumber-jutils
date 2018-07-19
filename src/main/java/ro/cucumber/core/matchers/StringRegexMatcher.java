@@ -1,10 +1,12 @@
 package ro.cucumber.core.matchers;
 
 import ro.cucumber.core.symbols.SymbolsAssignParser;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
 import static org.junit.Assert.fail;
 
 public class StringRegexMatcher implements SymbolsAssignMatchable {
