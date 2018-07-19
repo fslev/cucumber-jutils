@@ -1,11 +1,11 @@
-package tests.ro.cucumber.core;
+package tests.ro.cucumber.core.symbols;
 
 import org.junit.Test;
 import ro.cucumber.core.symbols.SymbolAssignParser;
 
 import static org.junit.Assert.assertEquals;
 
-public class SymbolsAssignParserTests {
+public class SymbolAssignParserTests {
 
     @Test
     public void testSymbolAssignFromSimpleText() {
