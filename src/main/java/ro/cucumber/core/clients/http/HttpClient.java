@@ -1,4 +1,4 @@
-package ro.cucumber.core.http;
+package ro.cucumber.core.clients.http;
 
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
