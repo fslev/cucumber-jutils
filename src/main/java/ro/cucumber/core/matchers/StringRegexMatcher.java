@@ -37,7 +37,7 @@ public class StringRegexMatcher implements SymbolsAssignMatchable {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));
             }
         } catch (PatternSyntaxException e) {
-            if (expected.equals(actual)) {
+            if (parsedString.equals(actual)) {
                 if (hasAssignSymbols) {
                     this.assignSymbols.putAll(parser.getAssignSymbols());
                 }
