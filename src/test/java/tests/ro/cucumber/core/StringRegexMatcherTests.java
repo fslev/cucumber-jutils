@@ -122,4 +122,23 @@ public class StringRegexMatcherTests {
         assertEquals("forest", assignSymbols.get("sym2"));
         assertEquals(2, assignSymbols.size());
     }
+
+    @Test
+    public void compareRegexWithAssignSymbols() {
+        String expected = ".* Rabbit ~[sym1] in the .*";
+        String actual = "The Rabbit is running in the forest";
+        StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
+        matcher.matches();
+        Map<String, String> assignSymbols = matcher.getAssignSymbols();
+        assertEquals("is running", assignSymbols.get("sym1"));
+        assertEquals(1, assignSymbols.size());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareRegexWithAssignSymbols_negative() {
+        String expected = ".* Fox ~[sym1] in the .*";
+        String actual = "The Rabbit is running in the forest";
+        StringRegexMatcher matcher = new StringRegexMatcher(expected, actual);
+        matcher.matches();
+    }
 }
