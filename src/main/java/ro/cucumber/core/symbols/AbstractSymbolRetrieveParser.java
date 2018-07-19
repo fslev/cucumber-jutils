@@ -1,9 +1,9 @@
 package ro.cucumber.core.symbols;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,8 +30,8 @@ public abstract class AbstractSymbolRetrieveParser {
 
     protected abstract Pattern getSymbolRetrievePattern();
 
-    public List<String> getSymbolNames() {
-        List<String> names = new ArrayList<>();
+    public Set<String> getSymbolNames() {
+        Set<String> names = new HashSet<>();
         Matcher matcher = getSymbolRetrievePattern().matcher(stringWithSymbols);
         while (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
