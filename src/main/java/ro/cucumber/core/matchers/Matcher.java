@@ -1,7 +1,10 @@
 package ro.cucumber.core.matchers;
 
 import ro.cucumber.core.matchers.exceptions.MatcherException;
+
+import java.util.HashMap;
 import java.util.Map;
+
 import static org.junit.Assert.fail;
 
 public class Matcher implements SymbolsAssignMatchable {
@@ -15,8 +18,8 @@ public class Matcher implements SymbolsAssignMatchable {
 
     @Override
     public Map<String, String> match() {
-        if ((actual == null) != (expected == null)) {
-            fail(String.format("Expected: [%s] But found: [%s]", expected, actual));
+        if (nullsMatch()) {
+            return new HashMap<>();
         }
         SymbolsAssignMatchable matcher;
         try {
@@ -29,5 +32,14 @@ public class Matcher implements SymbolsAssignMatchable {
             }
         }
         return matcher.match();
+    }
+
+    private boolean nullsMatch() {
+        if (expected == null ^ actual == null) {
+            fail(String.format("Expected: [%s] But found: [%s]", expected, actual));
+        } else if (expected == null && actual == null) {
+            return true;
+        }
+        return false;
     }
 }
