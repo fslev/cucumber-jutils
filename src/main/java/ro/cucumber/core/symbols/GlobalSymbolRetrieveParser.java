@@ -5,8 +5,8 @@ import java.util.regex.Pattern;
 
 public class GlobalSymbolRetrieveParser extends AbstractSymbolRetrieveParser {
 
-    private static final String SYMBOL_START = "\\${";
-    private static final String SYMBOL_END = "}";
+    private static final String SYMBOL_START = "\\$\\{";
+    private static final String SYMBOL_END = "\\}";
     private static final String SYMBOL_REGEX =
             SYMBOL_START + "(.*?)" + SYMBOL_END;
 
