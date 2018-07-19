@@ -1,5 +1,11 @@
 package ro.cucumber.core.matchers.comparators;
 
+import ro.cucumber.core.symbols.SymbolAssignable;
+import ro.cucumber.core.symbols.SymbolsAssignParser;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -7,13 +13,6 @@ import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DifferenceEvaluator;
-import ro.cucumber.core.symbols.SymbolAssignable;
-import ro.cucumber.core.symbols.SymbolsAssignParser;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluator {
 
@@ -22,13 +21,13 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
     @Override
     public ComparisonResult evaluate(Comparison comparison, ComparisonResult comparisonResult) {
         ComparisonType comparisonType = comparison.getType();
-        if (comparisonType == ComparisonType.CHILD_NODELIST_LENGTH ||
-                comparisonType == ComparisonType.CHILD_NODELIST_SEQUENCE ||
-                comparisonType == ComparisonType.XML_ENCODING ||
-                comparisonType == ComparisonType.XML_VERSION ||
-                comparisonType == ComparisonType.XML_STANDALONE ||
-                comparisonType == ComparisonType.NO_NAMESPACE_SCHEMA_LOCATION ||
-                comparison.getControlDetails().getTarget() == null) {
+        if (comparisonType == ComparisonType.CHILD_NODELIST_LENGTH
+                || comparisonType == ComparisonType.CHILD_NODELIST_SEQUENCE
+                || comparisonType == ComparisonType.XML_ENCODING
+                || comparisonType == ComparisonType.XML_VERSION
+                || comparisonType == ComparisonType.XML_STANDALONE
+                || comparisonType == ComparisonType.NO_NAMESPACE_SCHEMA_LOCATION
+                || comparison.getControlDetails().getTarget() == null) {
             return ComparisonResult.SIMILAR;
         }
 
@@ -44,7 +43,8 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
             String actual = ((Text) actualNode).getData();
             return compare(expected, actual);
         }
-        if (comparisonResult == ComparisonResult.EQUAL || comparisonResult == ComparisonResult.SIMILAR) {
+        if (comparisonResult == ComparisonResult.EQUAL
+                || comparisonResult == ComparisonResult.SIMILAR) {
             return comparisonResult;
         }
 
@@ -53,12 +53,12 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
 
     private ComparisonResult compare(String expected, String actual) {
         SymbolsAssignParser parser = new SymbolsAssignParser(expected, actual);
-        boolean hasSymbols = !parser.getAssignSymbols().isEmpty();
-        String parsedExpected = hasSymbols ? parser.getStringWithAssignValues() : expected;
+        boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
+        String parsedExpected = hasAssignSymbols ? parser.getStringWithAssignValues() : expected;
         try {
             Pattern pattern = Pattern.compile(parsedExpected);
             if (pattern.matcher(actual).matches()) {
-                if (hasSymbols) {
+                if (hasAssignSymbols) {
                     this.assignSymbols.putAll(parser.getAssignSymbols());
                 }
                 return ComparisonResult.SIMILAR;
@@ -67,7 +67,7 @@ public class CustomXmlComparator implements SymbolAssignable, DifferenceEvaluato
             }
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual)) {
-                if (hasSymbols) {
+                if (hasAssignSymbols) {
                     this.assignSymbols.putAll(parser.getAssignSymbols());
                 }
                 return ComparisonResult.EQUAL;

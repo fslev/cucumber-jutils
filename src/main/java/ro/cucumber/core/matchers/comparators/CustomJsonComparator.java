@@ -3,7 +3,6 @@ package ro.cucumber.core.matchers.comparators;
 import ro.cucumber.core.symbols.SymbolAssignable;
 import ro.cucumber.core.symbols.SymbolsAssignParser;
 import ro.skyah.comparator.JsonComparator;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -18,14 +17,14 @@ public class CustomJsonComparator implements SymbolAssignable, JsonComparator {
         String actualString = actual.toString();
         SymbolsAssignParser parser = new SymbolsAssignParser(expectedString, actualString);
 
-        boolean hasSymbols = !parser.getAssignSymbols().isEmpty();
-        if (hasSymbols) {
+        boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
+        if (hasAssignSymbols) {
             expectedString = parser.getStringWithAssignValues();
         }
         try {
             Pattern pattern = Pattern.compile(expectedString);
             if (pattern.matcher(actualString).matches()) {
-                if (hasSymbols) {
+                if (hasAssignSymbols) {
                     this.assignSymbols.putAll(parser.getAssignSymbols());
                 }
                 return true;
@@ -34,7 +33,7 @@ public class CustomJsonComparator implements SymbolAssignable, JsonComparator {
             }
         } catch (PatternSyntaxException e) {
             if (expectedString.equals(actual.toString())) {
-                if (hasSymbols) {
+                if (hasAssignSymbols) {
                     this.assignSymbols.putAll(parser.getAssignSymbols());
                 }
                 return true;
