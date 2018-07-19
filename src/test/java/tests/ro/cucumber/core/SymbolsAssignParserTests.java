@@ -60,7 +60,7 @@ public class SymbolsAssignParserTests {
         assertEquals("rab\nbit", parser.getAssignSymbols().get("var1"));
         assertEquals("forest", parser.getAssignSymbols().get("var2"));
         assertEquals("The rab\nbit is ru.*n(ning through the forest",
-                parser.getStringWithAssignValues());
+                parser.parse());
     }
 
     @Test
@@ -70,9 +70,9 @@ public class SymbolsAssignParserTests {
         SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
         assertEquals("rab\nbit", parser.getAssignSymbols().get("var1"));
         assertEquals("the", parser.getAssignSymbols().get("var2"));
-        assertEquals(parser.getStringWithAssignValues(),
+        assertEquals(parser.parse(),
                 ".* The rab\nbit is ru\\Q.*\\En.*g through the .*",
-                parser.getStringWithAssignValues());
+                parser.parse());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class SymbolsAssignParserTests {
         String b = "{\"a\":[1,2,3,4,5],\"b\":{\"k\":\"i\"}}";
         SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
         assertEquals("2", parser.getAssignSymbols().get("var1"));
-        assertEquals(b, parser.getStringWithAssignValues());
+        assertEquals(b, parser.parse());
     }
 
     @Test
@@ -137,6 +137,6 @@ public class SymbolsAssignParserTests {
         assertEquals("favoriteFruit", parser.getAssignSymbols().get("var2"));
         assertEquals("consect(etur", parser.getAssignSymbols().get("var3"));
         assertEquals("na \nSo", parser.getAssignSymbols().get("var4"));
-        assertEquals(b, parser.getStringWithAssignValues());
+        assertEquals(b, parser.parse());
     }
 }

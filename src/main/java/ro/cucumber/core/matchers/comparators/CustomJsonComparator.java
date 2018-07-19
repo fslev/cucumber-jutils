@@ -19,7 +19,7 @@ public class CustomJsonComparator implements JsonComparator {
 
         boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
         if (hasAssignSymbols) {
-            expectedString = parser.getStringWithAssignValues();
+            expectedString = parser.parse();
         }
         try {
             Pattern pattern = Pattern.compile(expectedString);

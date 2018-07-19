@@ -54,7 +54,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     private ComparisonResult compare(String expected, String actual) {
         SymbolsAssignParser parser = new SymbolsAssignParser(expected, actual);
         boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
-        String parsedExpected = hasAssignSymbols ? parser.getStringWithAssignValues() : expected;
+        String parsedExpected = hasAssignSymbols ? parser.parse() : expected;
         try {
             Pattern pattern = Pattern.compile(parsedExpected);
             if (pattern.matcher(actual).matches()) {

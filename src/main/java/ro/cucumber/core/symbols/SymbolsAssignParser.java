@@ -30,7 +30,7 @@ public class SymbolsAssignParser {
         setAssignSymbols();
     }
 
-    public String getStringWithAssignValues() {
+    public String parse() {
         String str = stringWithSymbols;
         for (Map.Entry<String, String> e : assignSymbols.entrySet()) {
             str = str.replaceAll(SYMBOL_ASSIGN_START + e.getKey() + SYMBOL_ASSIGN_END,

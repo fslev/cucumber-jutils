@@ -27,7 +27,7 @@ public class StringRegexMatcher implements SymbolsAssignMatchable {
         boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {
-            parsedString = parser.getStringWithAssignValues();
+            parsedString = parser.parse();
         }
         try {
             Pattern pattern = Pattern.compile(parsedString, Pattern.DOTALL | Pattern.MULTILINE);
