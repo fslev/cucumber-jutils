@@ -1,7 +1,7 @@
 package tests.ro.cucumber.core;
 
 import org.junit.Test;
-import ro.cucumber.core.symbols.SymbolsAssignParser;
+import ro.cucumber.core.symbols.SymbolAssignParser;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,7 +11,7 @@ public class SymbolsAssignParserTests {
     public void testSymbolAssignFromSimpleText() {
         String a = "~[sym1]";
         String b = "Moon";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("Moon", parser.getAssignSymbols().get("sym1"));
         assertEquals(1, parser.getAssignSymbols().size());
     }
@@ -20,7 +20,7 @@ public class SymbolsAssignParserTests {
     public void testSymbolAssignFromSimpleText_negative() {
         String a = "foo ~[sym1] bar";
         String b = "foo some bra";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals(null, parser.getAssignSymbols().get("sym1"));
         assertEquals(0, parser.getAssignSymbols().size());
     }
@@ -29,7 +29,7 @@ public class SymbolsAssignParserTests {
     public void testSymbolAssignFromSimpleTextWithRegex() {
         String a = ".*M~[sym1]n.*";
         String b = "Moon";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("oo", parser.getAssignSymbols().get("sym1"));
         assertEquals(1, parser.getAssignSymbols().size());
     }
@@ -38,7 +38,7 @@ public class SymbolsAssignParserTests {
     public void testEmptySymbolAssignFromSimpleText() {
         String a = "~[sym1]Moon";
         String b = "Moon";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("", parser.getAssignSymbols().get("sym1"));
         assertEquals(1, parser.getAssignSymbols().size());
     }
@@ -47,7 +47,7 @@ public class SymbolsAssignParserTests {
     public void testEmptySymbolAssignFromSimpleTextWithRegex() {
         String a = ".*~[sym1]n.*";
         String b = "Moon";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("", parser.getAssignSymbols().get("sym1"));
         assertEquals(1, parser.getAssignSymbols().size());
     }
@@ -56,7 +56,7 @@ public class SymbolsAssignParserTests {
     public void testSymbolAssignFromInvalidRegex() {
         String a = "The ~[var1] is ru.*n(ning through the ~[var2]";
         String b = "something here The rab\nbit is ru.*n(ning through the forest";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("rab\nbit", parser.getAssignSymbols().get("var1"));
         assertEquals("forest", parser.getAssignSymbols().get("var2"));
         assertEquals("The rab\nbit is ru.*n(ning through the forest",
@@ -67,7 +67,7 @@ public class SymbolsAssignParserTests {
     public void testSymbolAssignFromRegex() {
         String a = ".* The ~[var1] is ru\\Q.*\\En.*g through ~[var2] .*";
         String b = "something here The rab\nbit is ru.*nning through the forest";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("rab\nbit", parser.getAssignSymbols().get("var1"));
         assertEquals("the", parser.getAssignSymbols().get("var2"));
         assertEquals(parser.parse(),
@@ -79,7 +79,7 @@ public class SymbolsAssignParserTests {
     public void testSymbolAssignFromSimpleJson() {
         String a = "{\"a\":[1,~[var1],3,4,5],\"b\":{\"k\":\"i\"}}";
         String b = "{\"a\":[1,2,3,4,5],\"b\":{\"k\":\"i\"}}";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("2", parser.getAssignSymbols().get("var1"));
         assertEquals(b, parser.parse());
     }
@@ -132,7 +132,7 @@ public class SymbolsAssignParserTests {
                 + "        \"name\": \"Dena \nSosa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"favoriteFruit\": \"banana\"\n" + "  }\n" + "]";
-        SymbolsAssignParser parser = new SymbolsAssignParser(a, b);
+        SymbolAssignParser parser = new SymbolAssignParser(a, b);
         assertEquals("Levine", parser.getAssignSymbols().get("var1"));
         assertEquals("favoriteFruit", parser.getAssignSymbols().get("var2"));
         assertEquals("consect(etur", parser.getAssignSymbols().get("var3"));

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SymbolsAssignParser {
+public class SymbolAssignParser {
 
     private static final String SYMBOL_ASSIGN_START = "~\\[";
     private static final String SYMBOL_ASSIGN_END = "\\]";
@@ -24,7 +24,7 @@ public class SymbolsAssignParser {
     private String stringWithValues;
     private Map<String, String> assignSymbols = new LinkedHashMap<>();
 
-    public SymbolsAssignParser(String stringWithSymbols, String stringWithValues) {
+    public SymbolAssignParser(String stringWithSymbols, String stringWithValues) {
         this.stringWithSymbols = stringWithSymbols;
         this.stringWithValues = stringWithValues;
         setAssignSymbols();
@@ -44,7 +44,7 @@ public class SymbolsAssignParser {
     }
 
     private void setAssignSymbols() {
-        List<String> symbolNames = getAssignSymbolNames(stringWithSymbols);
+        List<String> symbolNames = getSymbolNames(stringWithSymbols);
         if (symbolNames.isEmpty()) {
             return;
         }
@@ -64,7 +64,7 @@ public class SymbolsAssignParser {
         }
     }
 
-    private static List<String> getAssignSymbolNames(String str) {
+    private static List<String> getSymbolNames(String str) {
         List<String> names = new ArrayList<>();
         Matcher matcher = SYMBOL_ASSIGN_PATTERN.matcher(str);
         while (matcher.find()) {
