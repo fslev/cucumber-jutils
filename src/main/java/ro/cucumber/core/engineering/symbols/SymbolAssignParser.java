@@ -2,7 +2,6 @@ package ro.cucumber.core.engineering.symbols;
 
 
 import ro.cucumber.core.engineering.utils.RegexUtils;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -44,7 +43,7 @@ public class SymbolAssignParser {
     }
 
     private void setAssignSymbols() {
-        List<String> symbolNames = getSymbolNames(stringWithSymbols);
+        List<String> symbolNames = searchForSymbols();
         if (symbolNames.isEmpty()) {
             return;
         }
@@ -64,9 +63,9 @@ public class SymbolAssignParser {
         }
     }
 
-    private static List<String> getSymbolNames(String str) {
+    private List<String> searchForSymbols() {
         List<String> names = new ArrayList<>();
-        Matcher matcher = SYMBOL_ASSIGN_PATTERN.matcher(str);
+        Matcher matcher = SYMBOL_ASSIGN_PATTERN.matcher(stringWithSymbols);
         while (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 names.add(matcher.group(i));

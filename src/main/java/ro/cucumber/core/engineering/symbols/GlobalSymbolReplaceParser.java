@@ -3,10 +3,10 @@ package ro.cucumber.core.engineering.symbols;
 
 import java.util.regex.Pattern;
 
-public class ScenarioSymbolRetrieveParser extends AbstractSymbolRetrieveParser {
+public class GlobalSymbolReplaceParser extends AbstractSymbolReplaceParser {
 
-    private static final String SYMBOL_START = "#\\[";
-    private static final String SYMBOL_END = "\\]";
+    private static final String SYMBOL_START = "\\$\\{";
+    private static final String SYMBOL_END = "\\}";
     private static final String SYMBOL_REGEX =
             SYMBOL_START + "(.*?)" + SYMBOL_END;
 
@@ -14,7 +14,7 @@ public class ScenarioSymbolRetrieveParser extends AbstractSymbolRetrieveParser {
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
 
-    public ScenarioSymbolRetrieveParser(String stringWithSymbols) {
+    public GlobalSymbolReplaceParser(String stringWithSymbols) {
         super(stringWithSymbols);
     }
 
