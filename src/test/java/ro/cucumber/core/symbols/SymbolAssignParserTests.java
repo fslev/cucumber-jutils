@@ -1,4 +1,4 @@
-package tests.ro.cucumber.core.symbols;
+package ro.cucumber.core.symbols;
 
 import org.junit.Test;
 import ro.cucumber.core.engineering.symbols.SymbolAssignParser;

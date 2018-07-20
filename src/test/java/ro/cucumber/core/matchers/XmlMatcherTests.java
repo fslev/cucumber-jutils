@@ -1,4 +1,4 @@
-package tests.ro.cucumber.core.matchers;
+package ro.cucumber.core.matchers;
 
 import org.junit.Test;
 import ro.cucumber.core.engineering.matchers.XmlMatcher;
