@@ -1,7 +1,7 @@
 package tests.ro.cucumber.core.symbols;
 
 import org.junit.Test;
-import ro.cucumber.core.symbols.SymbolAssignParser;
+import ro.cucumber.core.engineering.symbols.SymbolAssignParser;
 
 import static org.junit.Assert.assertEquals;
 

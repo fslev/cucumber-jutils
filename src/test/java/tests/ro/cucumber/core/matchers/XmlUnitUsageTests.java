@@ -5,7 +5,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.xmlunit.builder.DiffBuilder;
 import org.xmlunit.diff.*;
-import ro.cucumber.core.utils.XmlUtils;
+import ro.cucumber.core.engineering.utils.XmlUtils;
 
 import java.util.Iterator;
 

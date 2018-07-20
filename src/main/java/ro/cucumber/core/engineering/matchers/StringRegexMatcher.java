@@ -1,6 +1,6 @@
-package ro.cucumber.core.matchers;
+package ro.cucumber.core.engineering.matchers;
 
-import ro.cucumber.core.symbols.SymbolAssignParser;
+import ro.cucumber.core.engineering.symbols.SymbolAssignParser;
 
 import java.util.HashMap;
 import java.util.Map;

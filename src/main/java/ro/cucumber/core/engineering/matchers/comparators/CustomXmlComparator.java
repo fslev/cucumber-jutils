@@ -1,4 +1,4 @@
-package ro.cucumber.core.matchers.comparators;
+package ro.cucumber.core.engineering.matchers.comparators;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -7,7 +7,7 @@ import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DifferenceEvaluator;
-import ro.cucumber.core.symbols.SymbolAssignParser;
+import ro.cucumber.core.engineering.symbols.SymbolAssignParser;
 
 import java.util.HashMap;
 import java.util.Map;

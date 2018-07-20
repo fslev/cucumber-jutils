@@ -1,7 +1,7 @@
 package tests.ro.cucumber.core.matchers;
 
 import org.junit.Test;
-import ro.cucumber.core.matchers.StringRegexMatcher;
+import ro.cucumber.core.engineering.matchers.StringRegexMatcher;
 
 import java.util.Map;
 

@@ -1,9 +1,9 @@
 package tests.ro.cucumber.core.symbols;
 
 import org.junit.Test;
-import ro.cucumber.core.symbols.AbstractSymbolRetrieveParser;
-import ro.cucumber.core.symbols.GlobalSymbolRetrieveParser;
-import ro.cucumber.core.symbols.ScenarioSymbolRetrieveParser;
+import ro.cucumber.core.engineering.symbols.AbstractSymbolRetrieveParser;
+import ro.cucumber.core.engineering.symbols.GlobalSymbolRetrieveParser;
+import ro.cucumber.core.engineering.symbols.ScenarioSymbolRetrieveParser;
 
 import java.util.Arrays;
 import java.util.HashMap;

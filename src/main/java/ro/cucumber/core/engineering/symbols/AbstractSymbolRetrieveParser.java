@@ -1,4 +1,4 @@
-package ro.cucumber.core.symbols;
+package ro.cucumber.core.engineering.symbols;
 
 
 import java.util.HashSet;

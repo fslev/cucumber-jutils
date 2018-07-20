@@ -1,8 +1,8 @@
 package tests.ro.cucumber.core.matchers;
 
 import org.junit.Test;
-import ro.cucumber.core.matchers.JsonMatcher;
-import ro.cucumber.core.matchers.exceptions.MatcherException;
+import ro.cucumber.core.engineering.matchers.JsonMatcher;
+import ro.cucumber.core.engineering.matchers.exceptions.MatcherException;
 
 import java.util.Map;
 

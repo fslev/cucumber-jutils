@@ -1,6 +1,6 @@
-package ro.cucumber.core.matchers;
+package ro.cucumber.core.engineering.matchers;
 
-import ro.cucumber.core.matchers.exceptions.MatcherException;
+import ro.cucumber.core.engineering.matchers.exceptions.MatcherException;
 
 import java.util.HashMap;
 import java.util.Map;

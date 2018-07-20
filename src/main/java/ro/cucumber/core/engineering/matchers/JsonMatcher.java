@@ -1,9 +1,9 @@
-package ro.cucumber.core.matchers;
+package ro.cucumber.core.engineering.matchers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ro.cucumber.core.matchers.comparators.CustomJsonComparator;
-import ro.cucumber.core.matchers.exceptions.MatcherException;
+import ro.cucumber.core.engineering.matchers.comparators.CustomJsonComparator;
+import ro.cucumber.core.engineering.matchers.exceptions.MatcherException;
 import ro.skyah.comparator.JSONCompare;
 
 import java.io.IOException;

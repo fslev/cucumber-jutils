@@ -1,7 +1,7 @@
 package tests.ro.cucumber.core.matchers;
 
 import org.junit.Test;
-import ro.cucumber.core.matchers.Matcher;
+import ro.cucumber.core.engineering.matchers.Matcher;
 
 import java.util.Map;
 

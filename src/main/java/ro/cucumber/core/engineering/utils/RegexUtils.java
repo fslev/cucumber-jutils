@@ -1,4 +1,4 @@
-package ro.cucumber.core.utils;
+package ro.cucumber.core.engineering.utils;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;

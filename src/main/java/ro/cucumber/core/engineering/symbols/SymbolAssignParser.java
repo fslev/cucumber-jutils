@@ -1,7 +1,7 @@
-package ro.cucumber.core.symbols;
+package ro.cucumber.core.engineering.symbols;
 
 
-import ro.cucumber.core.utils.RegexUtils;
+import ro.cucumber.core.engineering.utils.RegexUtils;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

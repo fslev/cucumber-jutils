@@ -1,4 +1,4 @@
-package ro.cucumber.core.utils;
+package ro.cucumber.core.engineering.utils;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
