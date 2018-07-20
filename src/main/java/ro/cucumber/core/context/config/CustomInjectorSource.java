@@ -1,4 +1,4 @@
-package ro.cucumber.core.context.configuration;
+package ro.cucumber.core.context.config;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
