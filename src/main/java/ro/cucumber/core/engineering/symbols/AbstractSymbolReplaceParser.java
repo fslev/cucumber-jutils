@@ -12,6 +12,9 @@ public abstract class AbstractSymbolReplaceParser {
     protected String stringWithSymbols;
 
     public AbstractSymbolReplaceParser(String stringWithSymbols) {
+        if (stringWithSymbols == null) {
+            throw new RuntimeException("I don't do NULLs here...");
+        }
         this.stringWithSymbols = stringWithSymbols;
     }
 

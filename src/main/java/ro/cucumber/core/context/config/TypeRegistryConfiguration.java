@@ -4,18 +4,16 @@ import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.cucumberexpressions.ParameterType;
 import io.cucumber.cucumberexpressions.Transformer;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.datatable.DataTableType;
 import ro.cucumber.core.clients.http.HttpVerb;
-import ro.cucumber.core.context.GlobalProps;
-import ro.cucumber.core.context.ScenarioProps;
-import ro.cucumber.core.engineering.symbols.GlobalSymbolReplaceParser;
-import ro.cucumber.core.engineering.symbols.ScenarioSymbolReplaceParser;
+import ro.cucumber.core.context.props.SymbolParser;
+
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 import java.util.regex.Pattern;
+
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
@@ -23,11 +21,11 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     private static final List<String> HTTP_VERB_REGEXPS = Collections
             .singletonList(Pattern.compile("(GET|POST|PUT|DELETE|OPTIONS|HEAD|TRACE)").pattern());
 
-    private static final List<String> STRING_REGEXPS = Collections.singletonList(
-            Pattern.compile("\"([^\"\\\\]*(\\\\.[^\"\\\\]*)*)\"|'([^'\\\\]*(\\\\.[^'\\\\]*)*)'")
+    private static final List<String> CSTRING_REGEXPS = Collections.singletonList(
+            Pattern.compile(".+")
                     .pattern());
 
-    private static final String STRING_WITH_SYMBOLS_PARAM_NAME = "symString";
+    private static final String CUSTOM_STRING = "cstring";
 
     @Override
     public Locale locale() {
@@ -58,49 +56,24 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                     }
                 }));
 
-        typeRegistry.defineParameterType(new ParameterType<>(STRING_WITH_SYMBOLS_PARAM_NAME,
-                STRING_REGEXPS, String.class, new StringWithPropertiesTransformer()));
+        typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING,
+                CSTRING_REGEXPS, String.class, new CustomStringTransformer()));
+
+        // DataTable cell (0,0) is assigned to a String
+        // Works also for doc strings
+        typeRegistry.defineDataTableType(new DataTableType(String.class, (DataTable dataTable) -> (
+                dataTable.cell(0, 0)))
+        );
     }
 
-    private static class StringWithPropertiesTransformer implements Transformer<String> {
+    private static class CustomStringTransformer implements Transformer<String> {
 
         @Override
         public String transform(String s) {
             if (s == null) {
                 return null;
             }
-            s = s.replaceAll("\\\\\"", "\"").replaceAll("\\\\'", "'");
-            return getParsedStringWithScenarioValues(getParsedStringWithGlobalValues(s));
-        }
-
-        private String getParsedStringWithGlobalValues(String s) {
-            GlobalSymbolReplaceParser parser = new GlobalSymbolReplaceParser(s);
-            Set<String> symbols = parser.searchForSymbols();
-            Map<String, String> values = new HashMap();
-            symbols.forEach((String name) -> {
-                String val = GlobalProps.get(name);
-                if (val != null) {
-                    values.put(name, val);
-                }
-            });
-            return parser.parse(values);
-        }
-
-        private String getParsedStringWithScenarioValues(String s) {
-            ScenarioSymbolReplaceParser parser = new ScenarioSymbolReplaceParser(s);
-            Set<String> symbols = parser.searchForSymbols();
-            Map<String, String> values = new HashMap();
-            symbols.forEach((String name) -> {
-                Object val = getScenarioProps().get(name);
-                if (val != null) {
-                    values.put(name, val.toString());
-                }
-            });
-            return parser.parse(values);
-        }
-
-        private ScenarioProps getScenarioProps() {
-            return CustomInjectorSource.getContextInjector().getInstance(ScenarioProps.class);
+            return SymbolParser.parse(s);
         }
     }
 }

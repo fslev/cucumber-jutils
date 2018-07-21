@@ -10,7 +10,7 @@
 
     <properties>
         <httpclient.version>4.5.5</httpclient.version>
-        <jsoncompare.version>2.0.2</jsoncompare.version>
+        <jsoncompare.version>2.0.3</jsoncompare.version>
         <xmlunit.version>2.6.0</xmlunit.version>
         <cucumber.version>3.0.2</cucumber.version>
         <cucumber.expressions.version>6.0.1</cucumber.expressions.version>
@@ -23,6 +23,12 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>${httpclient.version}</version>
+        </dependency>
+        <!--Mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
         </dependency>
         <!--XmlUnit-->
         <dependency>

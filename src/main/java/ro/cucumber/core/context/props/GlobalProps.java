@@ -1,4 +1,4 @@
-package ro.cucumber.core.context;
+package ro.cucumber.core.context.props;
 
 import java.io.IOException;
 import java.util.Properties;

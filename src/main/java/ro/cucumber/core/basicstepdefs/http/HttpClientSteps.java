@@ -87,5 +87,6 @@ public class HttpClientSteps {
     }
 
     @And("HTTP compare response status code with {int}")
-    public void compareResponseStatusCodeWith(int expected) {}
+    public void compareResponseStatusCodeWith(int expected) {
+    }
 }
