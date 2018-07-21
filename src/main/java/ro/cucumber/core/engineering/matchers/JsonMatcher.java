@@ -1,5 +1,6 @@
 package ro.cucumber.core.engineering.matchers;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ro.cucumber.core.engineering.matchers.comparators.CustomJsonComparator;
@@ -17,6 +18,7 @@ public class JsonMatcher implements SymbolsAssignMatchable {
 
     public JsonMatcher(Object expected, Object actual) throws MatcherException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         try {
             this.expected = mapper.readTree(expected.toString());
             this.actual = mapper.readTree(actual.toString());
