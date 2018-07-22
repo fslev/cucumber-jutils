@@ -6,12 +6,11 @@ import io.cucumber.cucumberexpressions.ParameterType;
 import io.cucumber.cucumberexpressions.Transformer;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
+import io.cucumber.datatable.TableTransformer;
 import ro.cucumber.core.clients.http.HttpVerb;
 import ro.cucumber.core.context.props.SymbolParser;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import static java.util.Locale.ENGLISH;
@@ -64,6 +63,18 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
         typeRegistry.defineDataTableType(new DataTableType(String.class, (DataTable dataTable) -> (
                 dataTable.cell(0, 0)))
         );
+
+        typeRegistry.defineDataTableType(new DataTableType(CustomDataTable.class,
+                (TableTransformer<CustomDataTable>) dataTable -> {
+                    List<Map<String, String>> list = new ArrayList<>();
+                    List<Map<String, String>> listData = dataTable.asMaps();
+                    listData.forEach((Map<String, String> mapData) -> {
+                        Map<String, String> map = new HashMap<>();
+                        mapData.forEach((k, v) -> map.put(k, SymbolParser.parse(v)));
+                        list.add(map);
+                    });
+                    return new CustomDataTable(list);
+                }));
     }
 
     private static class CustomStringTransformer implements Transformer<String> {

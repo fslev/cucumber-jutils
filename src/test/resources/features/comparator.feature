@@ -25,3 +25,16 @@ Feature: Test comparator
     """
     Then compare #[json1] with #[json2]
     And compare #[car] with BMW
+    Then compare #[json1] with
+    """
+  {
+	"name": "John",
+	"age": 30,
+	"cars": ["BMW","Ford","Fiat"]
+  }
+    """
+    Given param a = test
+    Then compare {cstring} against table
+      | firstName | lastName |
+      | #[a]      | travolta |
+      | sam       | carter   |
