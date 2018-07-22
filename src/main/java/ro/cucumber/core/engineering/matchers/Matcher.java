@@ -1,7 +1,5 @@
 package ro.cucumber.core.engineering.matchers;
 
-import ro.cucumber.core.engineering.matchers.exceptions.MatcherException;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,10 +22,10 @@ public class Matcher implements SymbolsAssignMatchable {
         SymbolsAssignMatchable matcher;
         try {
             matcher = new JsonMatcher(expected, actual);
-        } catch (MatcherException e) {
+        } catch (Exception e) {
             try {
                 matcher = new XmlMatcher(expected, actual);
-            } catch (MatcherException e1) {
+            } catch (Exception e1) {
                 matcher = new StringRegexMatcher(expected, actual);
             }
         }
