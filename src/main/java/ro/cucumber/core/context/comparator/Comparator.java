@@ -11,7 +11,8 @@ public class Comparator {
     public static void compare(Object expected, Object actual) {
         Matcher matcher = new Matcher(expected, actual);
         Map<String, String> assignProps = matcher.match();
-        getScenarioProps().putAll(assignProps);
+        ScenarioProps props = getScenarioProps();
+        assignProps.forEach((k, v) -> props.put(k, v));
     }
 
     private static ScenarioProps getScenarioProps() {
