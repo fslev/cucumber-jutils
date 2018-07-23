@@ -1,35 +1,39 @@
-package ro.cucumber.core.engineering.matchers;
+package ro.cucumber.core.engineering.compare;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.fail;
 
-public class Matcher implements SymbolsAssignMatchable {
+public class Compare implements SymbolsAssignComparable {
     protected Object expected;
     protected Object actual;
 
-    public Matcher(Object expected, Object actual) {
+    public Compare(Object expected, Object actual) {
         this.expected = expected;
         this.actual = actual;
     }
 
     @Override
-    public Map<String, String> match() {
+    public Map<String, String> compare() {
         if (nullsMatch()) {
             return new HashMap<>();
         }
-        SymbolsAssignMatchable matcher;
+        SymbolsAssignComparable matcher;
         try {
-            matcher = new JsonMatcher(expected, actual);
+            matcher = new JsonCompare(expected, actual);
         } catch (Exception e) {
             try {
-                matcher = new XmlMatcher(expected, actual);
+                matcher = new XmlCompare(expected, actual);
             } catch (Exception e1) {
-                matcher = new StringRegexMatcher(expected, actual);
+                try {
+                    matcher = new JsonConvertibleObjectCompare(expected, actual);
+                } catch (Exception e2) {
+                    matcher = new StringRegexCompare(expected, actual);
+                }
             }
         }
-        return matcher.match();
+        return matcher.compare();
     }
 
     private boolean nullsMatch() {

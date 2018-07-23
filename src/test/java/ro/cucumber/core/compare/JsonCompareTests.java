@@ -1,102 +1,102 @@
-package ro.cucumber.core.matchers;
+package ro.cucumber.core.compare;
 
 import org.junit.Test;
-import ro.cucumber.core.engineering.matchers.JsonMatcher;
-import ro.cucumber.core.engineering.matchers.exceptions.MatcherException;
+import ro.cucumber.core.engineering.compare.JsonCompare;
+import ro.cucumber.core.engineering.compare.exceptions.CompareException;
 
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class JsonMatcherTests {
+public class JsonCompareTests {
 
-    @Test(expected = MatcherException.class)
-    public void compareMalformedJson() throws MatcherException {
+    @Test(expected = CompareException.class)
+    public void compareMalformedJson() throws CompareException {
         String expected = "{\"!b\":val1\",\"a\":\"val2\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
-        new JsonMatcher(expected, actual);
+        new JsonCompare(expected, actual);
     }
 
     @Test
-    public void compareJsonWithAssignSymbolsAndInvalidRegex() throws MatcherException {
+    public void compareJsonWithAssignSymbolsAndInvalidRegex() throws CompareException {
         String expected = "{\"b\":\"(~[sym1]\"}";
         String actual = "{\"a\":\"val2\",\"b\":\"(val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertEquals("val1", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
 
     @Test
-    public void compareSimpleJson() throws MatcherException {
+    public void compareSimpleJson() throws CompareException {
         String expected = "{\"!b\":\"val1\",\"a\":\"val2\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
     @Test
-    public void compareSimpleJsonWithAssignSymbols() throws MatcherException {
+    public void compareSimpleJsonWithAssignSymbols() throws CompareException {
         String expected = "{\"!b\":\"~[sym1]\",\"a\":\"~[sym2]\",\"c\":\"~[sym3]\"}";
         String actual = "{\"a\":\"val2\",\"d\":\"val3\",\"c\":\"val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertEquals("val2", symbols.get("sym2"));
         assertEquals("val1", symbols.get("sym3"));
         assertEquals(2, symbols.size());
     }
 
     @Test
-    public void compareJsonArray() throws MatcherException {
+    public void compareJsonArray() throws CompareException {
         String expected = "{\"b\":\"val1\",\"a\":[1,2,3,4]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
     @Test
-    public void compareJsonArrayWithAssignSymbols() throws MatcherException {
+    public void compareJsonArrayWithAssignSymbols() throws CompareException {
         String expected = "{\"b\":\"val1\",\"a\":[2,\"~[sym1]\",4,\"~[sym2]\"]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertEquals("5", symbols.get("sym1"));
         assertEquals("3", symbols.get("sym2"));
         assertEquals(2, symbols.size());
     }
 
     @Test(expected = AssertionError.class)
-    public void compareJsonArrayWithAssignSymbols_negative() throws MatcherException {
+    public void compareJsonArrayWithAssignSymbols_negative() throws CompareException {
         String expected = "{\"b\":\"val1\",\"a\":[\"~[sym1]\",2,3,5]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
-        matcher.match();
+        matcher.compare();
     }
 
     @Test
-    public void compareJsonWithAssignSymbolsAndDoNotFind() throws MatcherException {
+    public void compareJsonWithAssignSymbolsAndDoNotFind() throws CompareException {
         String expected = "{\"b\":\"!t~[sym1]1\"}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
     @Test(expected = AssertionError.class)
-    public void compareJsonWithAssignSymbolsAndDoNotFind_negative() throws MatcherException {
+    public void compareJsonWithAssignSymbolsAndDoNotFind_negative() throws CompareException {
         String expected = "{\"b\":\"!v~[sym1]1\"}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        matcher.compare();
     }
 
     @Test
-    public void compareBigJsonWithAssignSymbols() throws MatcherException {
+    public void compareBigJsonWithAssignSymbols() throws CompareException {
         String expected = "[\n" + "  {\n" + "    \"_id\": \"5b4fa3f8c2741fde34e4d5c8\",\n"
                 + "    \"index\": 0,\n" + "    \"latitude\": -73.952152,\n"
                 + "    \"longitude\": \"~[longitude]\",\n" + "    \"tags\": [\n"
@@ -130,8 +130,8 @@ public class JsonMatcherTests {
                 + "        \"name\": \"Sloan Yang\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Holly Hawkins! You have 1 unread messages.\",\n"
                 + "    \"favoriteFruit\": \"banana\"\n" + "  }\n" + "]";
-        JsonMatcher matcher = new JsonMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertEquals("1", symbols.get("friendId"));
         assertEquals("-90.447286", symbols.get("longitude"));
         assertEquals(2, symbols.size());

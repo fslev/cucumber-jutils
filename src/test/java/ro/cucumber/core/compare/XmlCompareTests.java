@@ -1,31 +1,31 @@
-package ro.cucumber.core.matchers;
+package ro.cucumber.core.compare;
 
 import org.junit.Test;
-import ro.cucumber.core.engineering.matchers.XmlMatcher;
-import ro.cucumber.core.engineering.matchers.exceptions.MatcherException;
+import ro.cucumber.core.engineering.compare.XmlCompare;
+import ro.cucumber.core.engineering.compare.exceptions.CompareException;
 
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class XmlMatcherTests {
+public class XmlCompareTests {
 
-    @Test(expected = MatcherException.class)
-    public void compareMalformedXml() throws MatcherException {
+    @Test(expected = CompareException.class)
+    public void compareMalformedXml() throws CompareException {
         String expected = "<struct><int a=2>3da</int><boolean>false</boolean></struct>";
         String actual = "<struct><int a=2>3da</int><boolean>false</boolean></struct>";
-        new XmlMatcher(expected, actual);
+        new XmlCompare(expected, actual);
     }
 
     @Test
-    public void compareXmlWithAssignSymbolsAndInvalidRegex() throws MatcherException {
+    public void compareXmlWithAssignSymbolsAndInvalidRegex() throws CompareException {
         String expected =
                 "<struct><int a=\"~[sym1]\">some ~[sym3] here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
                 + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";
-        XmlMatcher matcher = new XmlMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        XmlCompare matcher = new XmlCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertEquals("(attrValue1", symbols.get("sym1"));
         assertEquals("olAttrVal", symbols.get("sym2"));
         assertEquals("text", symbols.get("sym3"));
@@ -33,36 +33,36 @@ public class XmlMatcherTests {
     }
 
     @Test(expected = AssertionError.class)
-    public void compareXmlWithAssignSymbolsAndInvalidRegex_negative() throws MatcherException {
+    public void compareXmlWithAssignSymbolsAndInvalidRegex_negative() throws CompareException {
         String expected =
                 "<struct><int a=\"X~[sym1]\">some ~[sym3] here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
                 + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";
-        XmlMatcher matcher = new XmlMatcher(expected, actual);
-        matcher.match();
+        XmlCompare matcher = new XmlCompare(expected, actual);
+        matcher.compare();
     }
 
     @Test
-    public void compareEmptyXml() throws MatcherException {
+    public void compareEmptyXml() throws CompareException {
         String expected = "<struct></struct>";
         String actual = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><struct></struct>";
-        XmlMatcher matcher = new XmlMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        XmlCompare matcher = new XmlCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
     @Test
-    public void compareSimpleXml() throws MatcherException {
+    public void compareSimpleXml() throws CompareException {
         String expected = "<struct><int>test</int><boolean>false</boolean></struct>";
         String actual =
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><struct><boolean>false</boolean><int>test</int></struct>";
-        XmlMatcher matcher = new XmlMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        XmlCompare matcher = new XmlCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
     @Test
-    public void compareComplexXmlWithAssignSymbols() throws MatcherException {
+    public void compareComplexXmlWithAssignSymbols() throws CompareException {
         String expected = "<bookstore>\n"
                 + "    <book price=\"730.54\" ISBN=\"string\" publicationdate=\"~[pubDate]\">\n"
                 + "        <author>\n" + "            <last-name>test~[lastName]</last-name>"
@@ -86,8 +86,8 @@ public class XmlMatcherTests {
                 + "            <first-name>string</first-name>\n"
                 + "            <last-name>string</last-name>\n" + "        </author>\n"
                 + "    </book>\n" + "</bookstore>";
-        XmlMatcher matcher = new XmlMatcher(expected, actual);
-        Map<String, String> symbols = matcher.match();
+        XmlCompare matcher = new XmlCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
         assertEquals("2016-02-27", symbols.get("pubDate"));
         assertEquals("string", symbols.get("lastName"));
         assertEquals("6738.774", symbols.get("price"));

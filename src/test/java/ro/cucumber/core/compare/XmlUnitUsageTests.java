@@ -1,4 +1,4 @@
-package ro.cucumber.core.matchers;
+package ro.cucumber.core.compare;
 
 import org.junit.Test;
 import org.w3c.dom.Attr;

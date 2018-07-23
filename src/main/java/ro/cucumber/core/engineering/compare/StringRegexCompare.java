@@ -1,4 +1,4 @@
-package ro.cucumber.core.engineering.matchers;
+package ro.cucumber.core.engineering.compare;
 
 import ro.cucumber.core.engineering.symbols.SymbolAssignParser;
 
@@ -9,19 +9,19 @@ import java.util.regex.PatternSyntaxException;
 
 import static org.junit.Assert.fail;
 
-public class StringRegexMatcher implements SymbolsAssignMatchable {
+public class StringRegexCompare implements SymbolsAssignComparable {
 
     private String expected;
     private String actual;
     private Map<String, String> assignSymbols = new HashMap<>();
 
-    public StringRegexMatcher(Object expected, Object actual) {
+    public StringRegexCompare(Object expected, Object actual) {
         this.expected = expected.toString();
         this.actual = actual.toString();
     }
 
     @Override
-    public Map<String, String> match() {
+    public Map<String, String> compare() {
 
         SymbolAssignParser parser = new SymbolAssignParser(expected, actual);
         boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();

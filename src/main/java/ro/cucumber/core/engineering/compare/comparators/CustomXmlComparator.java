@@ -1,4 +1,4 @@
-package ro.cucumber.core.engineering.matchers.comparators;
+package ro.cucumber.core.engineering.compare.comparators;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;

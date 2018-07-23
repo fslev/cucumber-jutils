@@ -1,4 +1,4 @@
-package ro.cucumber.core.engineering.matchers.comparators;
+package ro.cucumber.core.engineering.compare.comparators;
 
 import ro.cucumber.core.engineering.symbols.SymbolAssignParser;
 import ro.skyah.comparator.JsonComparator;
