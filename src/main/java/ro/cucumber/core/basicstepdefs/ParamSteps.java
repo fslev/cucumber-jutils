@@ -11,12 +11,12 @@ public class ParamSteps {
     @Inject
     ScenarioProps props;
 
-    @Given("param {cstring} =")
+    @Given("param {cstring}=")
     public void setParamDocString(String name, String value) {
         props.put(name, value);
     }
 
-    @Given("param {cstring} = {cstring}")
+    @Given("param {cstring}={cstring}")
     public void setParamString(String name, String value) {
         props.put(name, value);
     }

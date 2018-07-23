@@ -9,10 +9,13 @@ import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
 import ro.cucumber.core.clients.http.HttpVerb;
 import ro.cucumber.core.context.props.SymbolParser;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
-
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
@@ -20,9 +23,8 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     private static final List<String> HTTP_VERB_REGEXPS = Collections
             .singletonList(Pattern.compile("(GET|POST|PUT|DELETE|OPTIONS|HEAD|TRACE)").pattern());
 
-    private static final List<String> CSTRING_REGEXPS = Collections.singletonList(
-            Pattern.compile(".+")
-                    .pattern());
+    private static final List<String> CSTRING_REGEXPS =
+            Collections.singletonList(Pattern.compile("\\s*.+").pattern());
 
     private static final String CUSTOM_STRING = "cstring";
 
@@ -55,14 +57,13 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                     }
                 }));
 
-        typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING,
-                CSTRING_REGEXPS, String.class, new CustomStringTransformer()));
+        typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING, CSTRING_REGEXPS,
+                String.class, new CustomStringTransformer()));
 
         // DataTable cell (0,0) is assigned to a String
         // Works also for doc strings
-        typeRegistry.defineDataTableType(new DataTableType(String.class, (DataTable dataTable) -> (
-                dataTable.cell(0, 0)))
-        );
+        typeRegistry.defineDataTableType(new DataTableType(String.class,
+                (DataTable dataTable) -> (dataTable.cell(0, 0).trim())));
 
         typeRegistry.defineDataTableType(new DataTableType(CustomDataTable.class,
                 (TableTransformer<CustomDataTable>) dataTable -> {
@@ -84,7 +85,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             if (s == null) {
                 return null;
             }
-            return SymbolParser.parse(s);
+            return SymbolParser.parse(s.trim());
         }
     }
 }
