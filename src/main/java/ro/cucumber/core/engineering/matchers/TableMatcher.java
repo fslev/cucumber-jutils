@@ -1,10 +1,8 @@
 package ro.cucumber.core.engineering.matchers;
 
 import ro.cucumber.core.engineering.matchers.exceptions.MatcherException;
-
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.fail;
 
 public class TableMatcher implements SymbolsAssignMatchable {
@@ -34,12 +32,9 @@ public class TableMatcher implements SymbolsAssignMatchable {
 
     @Override
     public Map<String, String> match() {
-        if (expected.isEmpty() ^ !actual.isEmpty()) {
-            fail(String.format("One list is empty. Expected: %s But got: %s", expected, actual));
-        }
-        if (expected.size() > actual.size()) {
-            fail(String.format("Expected list has more elements than the actual one. Size: %s But got: %s",
-                    expected.size(), actual.size()));
+        if (expected.size() != actual.size()) {
+            fail(String.format("Sizes differ. Expected: %s But got: %s", expected.size(),
+                    actual.size()));
         }
         for (int i = 0; i < expected.size(); i++) {
             Map<String, String> expectedMap = expected.get(i);
@@ -60,7 +55,9 @@ public class TableMatcher implements SymbolsAssignMatchable {
                         break;
                     }
                 }
-                foundExpectedMap = false;
+            }
+            if (!foundExpectedMap){
+                fail("");
             }
         }
     }
