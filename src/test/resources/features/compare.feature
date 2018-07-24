@@ -50,7 +50,7 @@ Feature: Test comparator
     And COMPARE #[name] with willis
 
   Scenario: Compare empty data tables
-    Given param empty_table=
+    Given table empty_table=
       |  |
     Then COMPARE #[empty_table] against table
       |  |
