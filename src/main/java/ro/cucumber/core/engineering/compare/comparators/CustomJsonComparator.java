@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare.comparators;
 
-import ro.cucumber.core.engineering.symbols.SymbolAssignParser;
+import ro.cucumber.core.engineering.placeholder.PlaceholderFillFromMatch;
 import ro.skyah.comparator.JsonComparator;
 
 import java.util.HashMap;
@@ -15,17 +15,17 @@ public class CustomJsonComparator implements JsonComparator {
     public boolean compareValues(Object expected, Object actual) {
         String expectedString = expected.toString();
         String actualString = actual.toString();
-        SymbolAssignParser parser = new SymbolAssignParser(expectedString, actualString);
+        PlaceholderFillFromMatch parser = new PlaceholderFillFromMatch(expectedString, actualString);
 
-        boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
+        boolean hasAssignSymbols = !parser.getPlaceholderValues().isEmpty();
         if (hasAssignSymbols) {
-            expectedString = parser.parse();
+            expectedString = parser.getResult();
         }
         try {
             Pattern pattern = Pattern.compile(expectedString);
             if (pattern.matcher(actualString).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getAssignSymbols());
+                    this.assignSymbols.putAll(parser.getPlaceholderValues());
                 }
                 return true;
             } else {
@@ -34,7 +34,7 @@ public class CustomJsonComparator implements JsonComparator {
         } catch (PatternSyntaxException e) {
             if (expectedString.equals(actual.toString())) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getAssignSymbols());
+                    this.assignSymbols.putAll(parser.getPlaceholderValues());
                 }
                 return true;
             } else {

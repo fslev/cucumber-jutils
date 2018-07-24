@@ -8,14 +8,11 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
 import ro.cucumber.core.clients.http.HttpVerb;
-import ro.cucumber.core.context.props.SymbolParser;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import ro.cucumber.core.context.props.PlaceholderFill;
+
+import java.util.*;
 import java.util.regex.Pattern;
+
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
@@ -58,7 +55,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                 }));
 
         typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING, CSTRING_REGEXPS,
-                String.class, new CustomStringTransformer()));
+                Object.class, new FillPlaceholdersTransformer()));
 
         // DataTable cell (0,0) is assigned to a String
         // Works also for doc strings
@@ -71,21 +68,21 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                     List<Map<String, String>> listData = dataTable.asMaps();
                     listData.forEach((Map<String, String> mapData) -> {
                         Map<String, String> map = new HashMap<>();
-                        mapData.forEach((k, v) -> map.put(k, SymbolParser.parse(v)));
+                        mapData.forEach((k, v) -> map.put(k, new PlaceholderFill(v).getResult().toString()));
                         list.add(map);
                     });
                     return new CustomDataTable(list);
                 }));
     }
 
-    private static class CustomStringTransformer implements Transformer<String> {
+    private static class FillPlaceholdersTransformer implements Transformer<Object> {
 
         @Override
-        public String transform(String s) {
+        public Object transform(String s) {
             if (s == null) {
                 return null;
             }
-            return SymbolParser.parse(s.trim());
+            return new PlaceholderFill(s.trim()).getResult();
         }
     }
 }

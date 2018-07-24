@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare;
 
-import ro.cucumber.core.engineering.symbols.SymbolAssignParser;
+import ro.cucumber.core.engineering.placeholder.PlaceholderFillFromMatch;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,17 +23,17 @@ public class StringRegexCompare implements SymbolsAssignComparable {
     @Override
     public Map<String, String> compare() {
 
-        SymbolAssignParser parser = new SymbolAssignParser(expected, actual);
-        boolean hasAssignSymbols = !parser.getAssignSymbols().isEmpty();
+        PlaceholderFillFromMatch parser = new PlaceholderFillFromMatch(expected, actual);
+        boolean hasAssignSymbols = !parser.getPlaceholderValues().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {
-            parsedString = parser.parse();
+            parsedString = parser.getResult();
         }
         try {
             Pattern pattern = Pattern.compile(parsedString, Pattern.DOTALL | Pattern.MULTILINE);
             if (pattern.matcher(actual).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getAssignSymbols());
+                    this.assignSymbols.putAll(parser.getPlaceholderValues());
                 }
             } else {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));
@@ -41,7 +41,7 @@ public class StringRegexCompare implements SymbolsAssignComparable {
         } catch (PatternSyntaxException e) {
             if (parsedString.equals(actual)) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getAssignSymbols());
+                    this.assignSymbols.putAll(parser.getPlaceholderValues());
                 }
             } else {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));

@@ -35,6 +35,8 @@ public class JsonConvertibleObjectCompare implements SymbolsAssignComparable {
                     && !this.actual.getNodeType().equals(JsonNodeType.ARRAY)) {
                 throw new CompareException("No JSON string representation");
             }
+            System.out.println(this.expected);
+            System.out.println(this.actual);
         } catch (IOException e) {
             throw new CompareException("No JSON string representation");
         }

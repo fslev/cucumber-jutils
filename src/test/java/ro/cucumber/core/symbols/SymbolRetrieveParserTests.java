@@ -1,9 +1,9 @@
 package ro.cucumber.core.symbols;
 
 import org.junit.Test;
-import ro.cucumber.core.engineering.symbols.AbstractSymbolReplaceParser;
-import ro.cucumber.core.engineering.symbols.GlobalSymbolReplaceParser;
-import ro.cucumber.core.engineering.symbols.ScenarioSymbolReplaceParser;
+import ro.cucumber.core.engineering.placeholder.AbstractPlaceholderFill;
+import ro.cucumber.core.engineering.placeholder.GlobalPlaceholderFill;
+import ro.cucumber.core.engineering.placeholder.ScenarioPlaceholderFill;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,53 +17,53 @@ public class SymbolRetrieveParserTests {
     @Test
     public void testGlobalSymbolRetrieveInSimpleText() {
         String a = "The ${animal} is running through the ${location}";
-        AbstractSymbolReplaceParser parser = new GlobalSymbolReplaceParser(a);
+        AbstractPlaceholderFill parser = new GlobalPlaceholderFill(a);
         Map<String, String> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        assertEquals("The chupacabra is running through the forest", parser.parse(values));
+        assertEquals("The chupacabra is running through the forest", parser.fill(values));
     }
 
     @Test
     public void testGlobalSymbolRetrieveInSimpleTextAndInvalidParameters() {
         String a = "The ${animal} is running through the ${location}";
-        AbstractSymbolReplaceParser parser = new GlobalSymbolReplaceParser(a);
+        AbstractPlaceholderFill parser = new GlobalPlaceholderFill(a);
         Map<String, String> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
-        assertEquals("The ${animal} is running through the ${location}", parser.parse(values));
+        assertEquals("The ${animal} is running through the ${location}", parser.fill(values));
     }
 
     @Test
     public void testScenarioSymbolRetrieveInSimpleText() {
         String a = "The #[animal] is running through the #[location]";
-        AbstractSymbolReplaceParser parser = new ScenarioSymbolReplaceParser(a);
+        AbstractPlaceholderFill parser = new ScenarioPlaceholderFill(a);
         Map<String, String> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        assertEquals("The chupacabra is running through the forest", parser.parse(values));
+        assertEquals("The chupacabra is running through the forest", parser.fill(values));
     }
 
     @Test
     public void testScenarioSymbolRetrieveInSimpleTextAndInvalidParameters() {
         String a = "The #[animal] is running through the #[location]";
-        AbstractSymbolReplaceParser parser = new ScenarioSymbolReplaceParser(a);
+        AbstractPlaceholderFill parser = new ScenarioPlaceholderFill(a);
         Map<String, String> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
-        assertEquals("The #[animal] is running through the #[location]", parser.parse(values));
-        assertEquals(new HashSet<>(Arrays.asList("animal", "location")), parser.searchForSymbols());
+        assertEquals("The #[animal] is running through the #[location]", parser.fill(values));
+        assertEquals(new HashSet<>(Arrays.asList("animal", "location")), parser.searchForPlaceholders());
     }
 
     @Test
     public void testGlobalAndScenarioSymbolRetrieveInSimpleText() {
         String a = "The ${animal} is running through the #[location]";
-        AbstractSymbolReplaceParser globalParser = new GlobalSymbolReplaceParser(a);
+        AbstractPlaceholderFill globalParser = new GlobalPlaceholderFill(a);
         Map<String, String> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        AbstractSymbolReplaceParser scenarioParser = new ScenarioSymbolReplaceParser(globalParser.parse(values));
-        assertEquals("The chupacabra is running through the forest", scenarioParser.parse(values));
+        AbstractPlaceholderFill scenarioParser = new ScenarioPlaceholderFill(globalParser.fill(values));
+        assertEquals("The chupacabra is running through the forest", scenarioParser.fill(values));
     }
 
     @Test
@@ -120,11 +120,11 @@ public class SymbolRetrieveParserTests {
                 + "        \"name\": \"De~[var4]sa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"~[val1]\": \"banana\"\n" + "  }\n" + "]";
-        AbstractSymbolReplaceParser globalParser = new GlobalSymbolReplaceParser(actual);
-        AbstractSymbolReplaceParser scenarioParser = new ScenarioSymbolReplaceParser(globalParser.parse(values));
-        String result = scenarioParser.parse(values);
+        AbstractPlaceholderFill globalParser = new GlobalPlaceholderFill(actual);
+        AbstractPlaceholderFill scenarioParser = new ScenarioPlaceholderFill(globalParser.fill(values));
+        String result = scenarioParser.fill(values);
         assertEquals(result, expected, result);
-        assertEquals(new HashSet<>(Arrays.asList("val3", "val2", "val1")), scenarioParser.searchForSymbols());
-        assertEquals(new HashSet<>(Arrays.asList("val2", "val1")), globalParser.searchForSymbols());
+        assertEquals(new HashSet<>(Arrays.asList("val3", "val2", "val1")), scenarioParser.searchForPlaceholders());
+        assertEquals(new HashSet<>(Arrays.asList("val2", "val1")), globalParser.searchForPlaceholders());
     }
 }
