@@ -33,8 +33,16 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
-    Given param a = test
-    Then compare {cstring} against table
+
+  Scenario: compare data tables
+    Given param a= replaced_value
+    And table expectedTable=
       | firstName | lastName |
       | #[a]      | travolta |
       | sam       | carter   |
+
+    Then compare #[expectedTable] against table
+      | firstName      | lastName |
+      | replaced_value | travolta |
+      | sam            | carter   |
+

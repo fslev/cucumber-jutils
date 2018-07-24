@@ -18,8 +18,6 @@ public class CustomDataTable implements Serializable {
 
     @Override
     public String toString() {
-        return "CustomDataTable{" +
-                "data=" + data +
-                '}';
+        return "CustomDataTable{" + "data=" + data + '}';
     }
 }
