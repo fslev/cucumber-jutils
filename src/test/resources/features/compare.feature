@@ -34,7 +34,7 @@ Feature: Test comparator
   }
     """
 
-  Scenario: compare data tables
+  Scenario: Compare data tables
     Given param a=replaced_value
     And table expectedTable=
       | firstName | lastName |
@@ -48,4 +48,10 @@ Feature: Test comparator
       | sam            | carter   |
       | bruce          | willis   |
     And COMPARE #[name] with willis
+
+  Scenario: Compare empty data tables
+    Given param empty_table=
+      |  |
+    Then COMPARE #[empty_table] against table
+      |  |
 
