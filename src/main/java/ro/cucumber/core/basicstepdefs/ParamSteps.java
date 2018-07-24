@@ -12,13 +12,13 @@ public class ParamSteps {
     @Inject
     ScenarioProps scenarioProps;
 
-    @Given("param {cstring}=")
-    public void setParamDocString(String name, String value) {
+    @Given("param {cstring}={cstring}")
+    public void setParamString(String name, String value) {
         scenarioProps.put(name, value);
     }
 
-    @Given("param {cstring}={cstring}")
-    public void setParamString(String name, String value) {
+    @Given("param {cstring}=")
+    public void setParamDocString(String name, String value) {
         scenarioProps.put(name, value);
     }
 

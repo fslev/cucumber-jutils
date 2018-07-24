@@ -22,14 +22,9 @@ public class PlaceholderFill {
     }
 
     public Object getResult() {
-        ScenarioPlaceholderFill scenarioFill = new ScenarioPlaceholderFill(target);
-        Set<String> placeholders = scenarioFill.searchForPlaceholders();
-        if (!placeholders.isEmpty()) {
-            String element = placeholders.iterator().next();
-            if ((ScenarioPlaceholderFill.PLACEHOLDER_START + element +
-                    ScenarioPlaceholderFill.PLACEHOLDER_END).equals(target)) {
-                return scenarioProps.get(target);
-            }
+        String placeholder = getStandaloneScenarioPlaceholder();
+        if (placeholder != null) {
+            return scenarioProps.get(placeholder);
         }
         return getFilledStringWithGlobalValues(getFilledStringWithScenarioValues(target));
     }
@@ -58,5 +53,18 @@ public class PlaceholderFill {
             }
         });
         return scenarioFill.fill(values);
+    }
+
+    private String getStandaloneScenarioPlaceholder() {
+        ScenarioPlaceholderFill scenarioFill = new ScenarioPlaceholderFill(target);
+        Set<String> placeholders = scenarioFill.searchForPlaceholders();
+        if (!placeholders.isEmpty()) {
+            String element = placeholders.iterator().next();
+            if ((ScenarioPlaceholderFill.PLACEHOLDER_START + element +
+                    ScenarioPlaceholderFill.PLACEHOLDER_END).equals(target)) {
+                return element;
+            }
+        }
+        return null;
     }
 }

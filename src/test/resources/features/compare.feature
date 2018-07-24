@@ -3,15 +3,15 @@ Feature: Test comparator
   Scenario: Compare simple values
     Given param a = 1
     And param b = 1
-    Then compare #[a] with #[b]
-    And compare 1 with 1
+    Then COMPARE #[a] with #[b]
+    And COMPARE 1 with 1
 
   Scenario: Compare jsons
     Given param json1 =
     """
   {
     "name": "J.*n",
-    "age": "\\\\d+",
+    "age": "\\d+",
     "cars": ["Ford", "~[car]", "Fiat"]
   }
     """
@@ -23,9 +23,9 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
-    Then compare #[json1] with #[json2]
-    And compare #[car] with BMW
-    Then compare #[json1] with
+    Then COMPARE #[json1] with #[json2]
+    And COMPARE #[car] with BMW
+    Then COMPARE #[json1] with
     """
   {
 	"name": "John",
@@ -35,14 +35,17 @@ Feature: Test comparator
     """
 
   Scenario: compare data tables
-    Given param a= replaced_value
+    Given param a=replaced_value
     And table expectedTable=
       | firstName | lastName |
       | #[a]      | travolta |
-      | sam       | carter   |
+      | sam       | .*       |
+      | bruce     | ~[name]  |
 
-    Then compare #[expectedTable] against table
+    Then COMPARE #[expectedTable] against table
       | firstName      | lastName |
       | replaced_value | travolta |
       | sam            | carter   |
+      | bruce          | willis   |
+    And COMPARE #[name] with willis
 

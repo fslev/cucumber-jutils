@@ -82,7 +82,8 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             if (s == null) {
                 return null;
             }
-            return new PlaceholderFill(s.trim()).getResult();
+            Object result = new PlaceholderFill(s.trim()).getResult();
+            return result;
         }
     }
 }
