@@ -24,7 +24,8 @@ public class PlaceholderFill {
     public Object getResult() {
         String placeholder = getStandaloneScenarioPlaceholder();
         if (placeholder != null) {
-            return scenarioProps.get(placeholder);
+            Object val = scenarioProps.get(placeholder);
+            return val != null ? val : target;
         }
         return getFilledStringWithGlobalValues(getFilledStringWithScenarioValues(target));
     }
