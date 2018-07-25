@@ -7,34 +7,34 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractPlaceholderFill {
+public abstract class AbstractSymbolParser {
 
     protected String stringWithPlaceholders;
 
-    public AbstractPlaceholderFill(String stringWithPlaceholders) {
+    public AbstractSymbolParser(String stringWithPlaceholders) {
         if (stringWithPlaceholders == null) {
             throw new RuntimeException("I don't do NULLs here...");
         }
         this.stringWithPlaceholders = stringWithPlaceholders;
     }
 
-    public String fill(Map<String, String> values) {
+    public String parse(Map<String, String> values) {
         String str = stringWithPlaceholders;
         for (Map.Entry<String, String> e : values.entrySet()) {
-            str = str.replaceAll(getPlaceholderStart() + e.getKey() + getPlaceholderEnd(), e.getValue());
+            str = str.replaceAll(getSymbolStart() + e.getKey() + getSymbolEnd(), e.getValue());
         }
         return str;
     }
 
-    protected abstract String getPlaceholderStart();
+    protected abstract String getSymbolStart();
 
-    protected abstract String getPlaceholderEnd();
+    protected abstract String getSymbolEnd();
 
-    protected abstract Pattern getPlaceholderFillPattern();
+    protected abstract Pattern getSymbolPattern();
 
-    public Set<String> searchForPlaceholders() {
+    public Set<String> searchForSymbols() {
         Set<String> names = new HashSet<>();
-        Matcher matcher = getPlaceholderFillPattern().matcher(stringWithPlaceholders);
+        Matcher matcher = getSymbolPattern().matcher(stringWithPlaceholders);
         while (matcher.find()) {
             for (int i = 1; i <= matcher.groupCount(); i++) {
                 names.add(matcher.group(i));

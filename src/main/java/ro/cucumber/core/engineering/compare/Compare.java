@@ -2,10 +2,9 @@ package ro.cucumber.core.engineering.compare;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import static org.junit.Assert.fail;
 
-public class Compare implements SymbolsAssignComparable {
+public class Compare implements SymbolsDefineComparable {
     protected Object expected;
     protected Object actual;
 
@@ -19,7 +18,7 @@ public class Compare implements SymbolsAssignComparable {
         if (nullsMatch()) {
             return new HashMap<>();
         }
-        SymbolsAssignComparable matcher;
+        SymbolsDefineComparable matcher;
         try {
             matcher = new JsonCompare(expected, actual);
         } catch (Exception e) {

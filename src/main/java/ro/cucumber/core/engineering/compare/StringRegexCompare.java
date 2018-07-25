@@ -1,15 +1,13 @@
 package ro.cucumber.core.engineering.compare;
 
-import ro.cucumber.core.engineering.placeholder.PlaceholderFillFromMatch;
-
+import ro.cucumber.core.engineering.placeholder.SymbolDefineFromMatch;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
 import static org.junit.Assert.fail;
 
-public class StringRegexCompare implements SymbolsAssignComparable {
+public class StringRegexCompare implements SymbolsDefineComparable {
 
     private String expected;
     private String actual;
@@ -23,17 +21,17 @@ public class StringRegexCompare implements SymbolsAssignComparable {
     @Override
     public Map<String, String> compare() {
 
-        PlaceholderFillFromMatch parser = new PlaceholderFillFromMatch(expected, actual);
-        boolean hasAssignSymbols = !parser.getPlaceholderValues().isEmpty();
+        SymbolDefineFromMatch parser = new SymbolDefineFromMatch(expected, actual);
+        boolean hasAssignSymbols = !parser.getSymbolValues().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {
-            parsedString = parser.getResult();
+            parsedString = parser.parse();
         }
         try {
             Pattern pattern = Pattern.compile(parsedString, Pattern.DOTALL | Pattern.MULTILINE);
             if (pattern.matcher(actual).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholderValues());
+                    this.assignSymbols.putAll(parser.getSymbolValues());
                 }
             } else {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));
@@ -41,7 +39,7 @@ public class StringRegexCompare implements SymbolsAssignComparable {
         } catch (PatternSyntaxException e) {
             if (parsedString.equals(actual)) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholderValues());
+                    this.assignSymbols.putAll(parser.getSymbolValues());
                 }
             } else {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));

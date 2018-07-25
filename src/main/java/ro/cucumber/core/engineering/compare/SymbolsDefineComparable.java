@@ -2,7 +2,7 @@ package ro.cucumber.core.engineering.compare;
 
 import java.util.Map;
 
-public interface SymbolsAssignComparable {
+public interface SymbolsDefineComparable {
 
     /**
      * @return A Map of assign placeholder

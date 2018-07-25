@@ -1,18 +1,16 @@
 package ro.cucumber.core.engineering.compare;
 
-import org.xmlunit.diff.DefaultNodeMatcher;
-import org.xmlunit.diff.DifferenceEvaluators;
-import org.xmlunit.diff.ElementSelectors;
-import ro.cucumber.core.engineering.compare.exceptions.CompareException;
 import ro.cucumber.core.engineering.compare.comparators.CustomXmlComparator;
-
+import ro.cucumber.core.engineering.compare.exceptions.CompareException;
 import java.util.Map;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isSimilarTo;
 import static ro.cucumber.core.engineering.utils.XmlUtils.isValid;
+import org.xmlunit.diff.DefaultNodeMatcher;
+import org.xmlunit.diff.DifferenceEvaluators;
+import org.xmlunit.diff.ElementSelectors;
 
-public class XmlCompare implements SymbolsAssignComparable {
+public class XmlCompare implements SymbolsDefineComparable {
 
     private String expected;
     private String actual;

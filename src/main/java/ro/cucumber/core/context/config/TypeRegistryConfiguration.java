@@ -8,11 +8,14 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
 import ro.cucumber.core.clients.http.HttpVerb;
-import ro.cucumber.core.context.props.PlaceholderFill;
-
-import java.util.*;
+import ro.cucumber.core.context.props.SymbolsParser;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
-
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
@@ -68,7 +71,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                     List<Map<String, String>> listData = dataTable.asMaps();
                     listData.forEach((Map<String, String> mapData) -> {
                         Map<String, String> map = new HashMap<>();
-                        mapData.forEach((k, v) -> map.put(k, new PlaceholderFill(v).getResult().toString()));
+                        mapData.forEach((k, v) -> map.put(k, new SymbolsParser(v).parse().toString()));
                         list.add(map);
                     });
                     return new CustomDataTable(list);
@@ -82,7 +85,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             if (s == null) {
                 return null;
             }
-            Object result = new PlaceholderFill(s.trim()).getResult();
+            Object result = new SymbolsParser(s.trim()).parse();
             return result;
         }
     }

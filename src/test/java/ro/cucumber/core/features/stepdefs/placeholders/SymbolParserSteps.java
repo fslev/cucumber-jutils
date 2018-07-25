@@ -7,7 +7,7 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import static org.junit.Assert.assertEquals;
 
 @ScenarioScoped
-public class PlaceholderSteps {
+public class SymbolParserSteps {
 
     private String str;
 

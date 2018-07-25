@@ -1,6 +1,5 @@
 package ro.cucumber.core.basicstepdefs.http;
 
-import com.google.inject.Inject;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -11,9 +10,9 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.datatable.DataTable;
 import ro.cucumber.core.clients.http.HttpClient;
 import ro.cucumber.core.clients.http.HttpVerb;
-
 import java.util.List;
 import java.util.Map;
+import com.google.inject.Inject;
 
 @ScenarioScoped
 public class HttpClientSteps {

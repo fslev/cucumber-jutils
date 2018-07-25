@@ -3,7 +3,6 @@ package ro.cucumber.core.context.compare;
 import ro.cucumber.core.context.config.CustomInjectorSource;
 import ro.cucumber.core.context.props.ScenarioProps;
 import ro.cucumber.core.engineering.compare.Compare;
-
 import java.util.Map;
 
 public class CompareCucumbers {

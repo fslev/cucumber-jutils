@@ -1,18 +1,17 @@
 package ro.cucumber.core.engineering.utils;
 
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
-import org.xmlunit.builder.Input;
-import org.xmlunit.builder.Transform;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import java.io.IOException;
 import java.io.StringReader;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xmlunit.builder.Input;
+import org.xmlunit.builder.Transform;
 
 public class XmlUtils {
 

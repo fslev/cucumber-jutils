@@ -1,19 +1,18 @@
 package ro.cucumber.core.engineering.compare;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeType;
 import ro.cucumber.core.engineering.compare.comparators.CustomJsonComparator;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
 import ro.skyah.comparator.CompareMode;
 import ro.skyah.comparator.JSONCompare;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 
-public class JsonConvertibleObjectCompare implements SymbolsAssignComparable {
+public class JsonConvertibleObjectCompare implements SymbolsDefineComparable {
 
     private JsonNode expected;
     private JsonNode actual;

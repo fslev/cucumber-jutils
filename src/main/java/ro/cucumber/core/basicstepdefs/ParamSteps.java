@@ -1,10 +1,10 @@
 package ro.cucumber.core.basicstepdefs;
 
-import com.google.inject.Inject;
 import cucumber.api.java.en.Given;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import ro.cucumber.core.context.config.CustomDataTable;
 import ro.cucumber.core.context.props.ScenarioProps;
+import com.google.inject.Inject;
 
 @ScenarioScoped
 public class ParamSteps {

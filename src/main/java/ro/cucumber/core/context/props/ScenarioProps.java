@@ -1,7 +1,6 @@
 package ro.cucumber.core.context.props;
 
 import cucumber.runtime.java.guice.ScenarioScoped;
-
 import java.util.HashMap;
 import java.util.Map;
 

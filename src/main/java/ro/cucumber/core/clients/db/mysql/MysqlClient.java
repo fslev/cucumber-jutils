@@ -1,6 +1,10 @@
 package ro.cucumber.core.clients.db.mysql;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class MysqlClient {
     private String url;

@@ -1,5 +1,10 @@
 package ro.cucumber.core.engineering.compare.comparators;
 
+import ro.cucumber.core.engineering.placeholder.SymbolDefineFromMatch;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -7,12 +12,6 @@ import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DifferenceEvaluator;
-import ro.cucumber.core.engineering.placeholder.PlaceholderFillFromMatch;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 public class CustomXmlComparator implements DifferenceEvaluator {
 
@@ -52,14 +51,14 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     }
 
     private ComparisonResult compare(String expected, String actual) {
-        PlaceholderFillFromMatch parser = new PlaceholderFillFromMatch(expected, actual);
-        boolean hasAssignSymbols = !parser.getPlaceholderValues().isEmpty();
-        String parsedExpected = hasAssignSymbols ? parser.getResult() : expected;
+        SymbolDefineFromMatch parser = new SymbolDefineFromMatch(expected, actual);
+        boolean hasAssignSymbols = !parser.getSymbolValues().isEmpty();
+        String parsedExpected = hasAssignSymbols ? parser.parse() : expected;
         try {
             Pattern pattern = Pattern.compile(parsedExpected);
             if (pattern.matcher(actual).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholderValues());
+                    this.assignSymbols.putAll(parser.getSymbolValues());
                 }
                 return ComparisonResult.SIMILAR;
             } else {
@@ -68,7 +67,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual)) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholderValues());
+                    this.assignSymbols.putAll(parser.getSymbolValues());
                 }
                 return ComparisonResult.EQUAL;
             } else {
