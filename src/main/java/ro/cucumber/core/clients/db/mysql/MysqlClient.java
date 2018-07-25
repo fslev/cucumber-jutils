@@ -3,8 +3,13 @@ package ro.cucumber.core.clients.db.mysql;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MysqlClient {
     private String url;
@@ -19,39 +24,65 @@ public class MysqlClient {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.conn = DriverManager.getConnection(url, user, pwd);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ResultSet executeQuery(String sql) {
+    public List<Map<String, String>> executeQuery(String sql) {
+        Statement st = null;
+        ResultSet rs = null;
         try {
-            Statement st = conn.createStatement();
-            return st.executeQuery(sql);
+            st = conn.createStatement();
+            st.setMaxRows(100);
+            rs = st.executeQuery(sql);
+            ResultSetMetaData md = rs.getMetaData();
+            int columns = md.getColumnCount();
+            List<Map<String, String>> tableData = new ArrayList<>();
+            while (rs.next()) {
+                Map<String, String> rowData = new HashMap<>();
+                for (int i = 1; i <= columns; i++) {
+                    Object value = rs.getObject(i);
+                    rowData.put(md.getColumnName(i), value != null ? value.toString() : null);
+                }
+                tableData.add(rowData);
+            }
+            return tableData;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (st != null) {
+                    st.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-
-    public void closeConnection() {
-        try {
-            this.conn.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     public static class Builder {
         private String url;
         private String user;
         private String pwd;
 
-        public Builder url(String url, String user, String pwd) {
+        public Builder url(String url) {
             this.url = url;
+            return this;
+        }
+
+        public Builder user(String user) {
             this.user = user;
+            return this;
+        }
+
+        public Builder pwd(String pwd) {
             this.pwd = pwd;
             return this;
         }
