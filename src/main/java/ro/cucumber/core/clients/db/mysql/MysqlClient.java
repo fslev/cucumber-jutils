@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MysqlClient {
+    private static int MAX_ROWS = 100;
     private String url;
     private String user;
     private String pwd;
@@ -34,7 +35,7 @@ public class MysqlClient {
         ResultSet rs = null;
         try {
             st = conn.createStatement();
-            st.setMaxRows(100);
+            st.setMaxRows(MAX_ROWS);
             rs = st.executeQuery(sql);
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
