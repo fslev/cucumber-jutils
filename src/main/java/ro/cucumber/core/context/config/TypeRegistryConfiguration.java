@@ -58,7 +58,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                 }));
 
         typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING, CSTRING_REGEXPS,
-                Object.class, new FillPlaceholdersTransformer()));
+                Object.class, new SymbolsTransformer()));
 
         // DataTable cell (0,0) is assigned to a String
         // Works also for doc strings
@@ -67,18 +67,25 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
         typeRegistry.defineDataTableType(new DataTableType(CustomDataTable.class,
                 (TableTransformer<CustomDataTable>) dataTable -> {
-                    List<Map<String, String>> list = new ArrayList<>();
-                    List<Map<String, String>> listData = dataTable.asMaps();
-                    listData.forEach((Map<String, String> mapData) -> {
-                        Map<String, String> map = new HashMap<>();
-                        mapData.forEach((k, v) -> map.put(k, new SymbolsParser(v).parse().toString()));
-                        list.add(map);
-                    });
+                    List list = new ArrayList<>();
+                    List<Map<String, String>> mapsWithDataList = dataTable.asMaps();
+                    if (!mapsWithDataList.isEmpty()) {
+                        mapsWithDataList.forEach((Map<String, String> mapData) -> {
+                            Map<String, String> map = new HashMap<>();
+                            mapData.forEach(
+                                    (k, v) -> map.put(k, new SymbolsParser(v).parse().toString()));
+                            list.add(map);
+                        });
+                    } else {
+                        List<String> dataList = dataTable.asList();
+                        dataList.forEach(
+                                (String el) -> list.add(new SymbolsParser(el).parse().toString()));
+                    }
                     return new CustomDataTable(list);
                 }));
     }
 
-    private static class FillPlaceholdersTransformer implements Transformer<Object> {
+    private static class SymbolsTransformer implements Transformer<Object> {
 
         @Override
         public Object transform(String s) {

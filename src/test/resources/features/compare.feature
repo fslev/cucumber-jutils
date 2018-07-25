@@ -55,3 +55,23 @@ Feature: Test comparator
     Then COMPARE #[empty_table] against table
       |  |
 
+  Scenario: Compare lists
+    Given param a=replaced_value
+    And table expectedTable1=
+      | pineapples | cherries | .* | strawberries |
+    And table expectedTable2=
+      | fruits       |
+      | pineapples   |
+      | cherries     |
+      | .*           |
+      | strawberries |
+
+    Then COMPARE #[expectedTable1] against table
+      | apples | strawberries | pineapples | cherries |
+    And COMPARE #[expectedTable2] against table
+      | fruits       |
+      | apples       |
+      | strawberries |
+      | pineapples   |
+      | cherries     |
+
