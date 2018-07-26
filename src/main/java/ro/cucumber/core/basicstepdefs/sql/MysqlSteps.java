@@ -1,22 +1,38 @@
 package ro.cucumber.core.basicstepdefs.sql;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
-import io.cucumber.datatable.DataTable;
+import ro.cucumber.core.clients.database.mysql.MysqlClient;
+import ro.cucumber.core.context.compare.CompareCucumbers;
+import ro.cucumber.core.context.config.CustomDataTable;
+
+import java.io.IOException;
+import java.util.Properties;
 
 @ScenarioScoped
 public class MysqlSteps {
-    private Scenario scenario;
 
-    @Before
-    public void initScenario(Scenario scenario) {
-        this.scenario = scenario;
+    private MysqlClient client;
+    private Properties dataSource;
+    private CustomDataTable result;
+
+    @Given("MYSQL data source {cstring}")
+    public void setDataSource(String filePath) throws IOException {
+        result = null;
+        dataSource = new Properties();
+        dataSource.load(this.getClass().getClassLoader().getResourceAsStream(filePath));
+        MysqlClient.Builder builder = new MysqlClient.Builder();
+        builder.driver(dataSource.getProperty("driver").trim())
+                .user(dataSource.getProperty("username"))
+                .pwd(dataSource.getProperty("password"))
+                .url(dataSource.getProperty("url"));
+        client = builder.build();
     }
 
-    @Then("^MYSQL compare result with$")
-    public void setAddress(DataTable dataTable) {
-        System.out.println(dataTable.asLists());
+    @Then("MYSQL execute query {cstring} and compare result with")
+    public void executeQuery(String query, Object actual) {
+        result = client.executeQuery(query);
+        CompareCucumbers.compare(result, actual);
     }
 }

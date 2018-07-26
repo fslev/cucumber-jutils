@@ -1,11 +1,8 @@
 package ro.cucumber.core.clients.database.mysql;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import ro.cucumber.core.context.config.CustomDataTable;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +29,7 @@ public class MysqlClient {
         }
     }
 
-    public List<Map<String, String>> executeQuery(String sql) {
+    public CustomDataTable executeQuery(String sql) {
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -50,7 +47,7 @@ public class MysqlClient {
                 }
                 tableData.add(rowData);
             }
-            return tableData;
+            return new CustomDataTable(tableData);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
