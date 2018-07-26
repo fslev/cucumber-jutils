@@ -13,10 +13,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -32,6 +35,7 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 
 public class HttpClient {
     private Integer timeout;
@@ -199,8 +203,32 @@ public class HttpClient {
             return this;
         }
 
+        public Builder setHeader(String name, String value) {
+            this.headers.clear();
+            this.headers.put(name, value);
+            return this;
+        }
+
+        public Builder setHeaders(Map<String, String> headers) {
+            this.headers.clear();
+            this.headers.putAll(headers);
+            return this;
+        }
+
         public Builder addQueryParam(String name, String value) {
             this.uriBuilder.addParameter(name, value);
+            return this;
+        }
+
+        public Builder setQueryParam(String name, String value) {
+            this.uriBuilder.setParameter(name, value);
+            return this;
+        }
+
+        public Builder setQueryParams(Map<String, String> queryParams) {
+            List<NameValuePair> paramsList = new ArrayList();
+            queryParams.forEach((k, v) -> paramsList.add(new BasicNameValuePair(k, v)));
+            this.uriBuilder.setParameters(paramsList);
             return this;
         }
 
