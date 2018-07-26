@@ -16,14 +16,16 @@ public class MysqlClient {
     private String url;
     private String user;
     private String pwd;
+    private String driver;
     private Connection conn;
 
     private MysqlClient(Builder builder) {
         this.url = builder.url;
         this.user = builder.user;
         this.pwd = builder.pwd;
+        this.driver = builder.driver;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(driver);
             this.conn = DriverManager.getConnection(url, user, pwd);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -72,6 +74,7 @@ public class MysqlClient {
         private String url;
         private String user;
         private String pwd;
+        private String driver;
 
         public Builder url(String url) {
             this.url = url;
@@ -85,6 +88,11 @@ public class MysqlClient {
 
         public Builder pwd(String pwd) {
             this.pwd = pwd;
+            return this;
+        }
+
+        public Builder driver(String driver) {
+            this.driver = driver;
             return this;
         }
 
