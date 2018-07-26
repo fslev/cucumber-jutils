@@ -1,7 +1,7 @@
 package ro.cucumber.core.symbols;
 
 import org.junit.Test;
-import ro.cucumber.core.engineering.placeholder.SymbolDefineFromMatch;
+import ro.cucumber.core.engineering.symbols.SymbolDefineFromMatch;
 
 import static org.junit.Assert.assertEquals;
 

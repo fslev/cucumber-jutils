@@ -1,4 +1,4 @@
-package ro.cucumber.core.engineering.placeholder;
+package ro.cucumber.core.engineering.symbols;
 
 
 import java.util.regex.Pattern;

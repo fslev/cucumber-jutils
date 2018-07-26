@@ -1,8 +1,8 @@
 package ro.cucumber.core.context.props;
 
 import ro.cucumber.core.context.config.CustomInjectorSource;
-import ro.cucumber.core.engineering.placeholder.GlobalSymbolParser;
-import ro.cucumber.core.engineering.placeholder.ScenarioSymbolParser;
+import ro.cucumber.core.engineering.symbols.EnvironmentSymbolParser;
+import ro.cucumber.core.engineering.symbols.ScenarioSymbolParser;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -26,15 +26,15 @@ public class SymbolsParser {
             Object val = scenarioProps.get(standaloneSymbol);
             return val != null ? val : target;
         }
-        return getParsedStringWithGlobalValues(getParsedStringWithScenarioValues(target));
+        return getParsedStringWithEnvironmentValues(getParsedStringWithScenarioValues(target));
     }
 
-    private static String getParsedStringWithGlobalValues(String str) {
-        GlobalSymbolParser parser = new GlobalSymbolParser(str);
+    private static String getParsedStringWithEnvironmentValues(String str) {
+        EnvironmentSymbolParser parser = new EnvironmentSymbolParser(str);
         Set<String> symbolNames = parser.searchForSymbols();
         Map<String, String> values = new HashMap();
         symbolNames.forEach((String name) -> {
-            String val = GlobalProps.get(name);
+            String val = EnvProps.get(name);
             if (val != null) {
                 values.put(name, val);
             }

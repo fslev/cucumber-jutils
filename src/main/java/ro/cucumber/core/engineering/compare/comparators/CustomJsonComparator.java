@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare.comparators;
 
-import ro.cucumber.core.engineering.placeholder.SymbolDefineFromMatch;
+import ro.cucumber.core.engineering.symbols.SymbolDefineFromMatch;
 import ro.skyah.comparator.JsonComparator;
 import java.util.HashMap;
 import java.util.Map;

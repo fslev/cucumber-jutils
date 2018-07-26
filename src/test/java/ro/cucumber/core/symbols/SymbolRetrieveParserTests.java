@@ -1,9 +1,9 @@
 package ro.cucumber.core.symbols;
 
 import org.junit.Test;
-import ro.cucumber.core.engineering.placeholder.AbstractSymbolParser;
-import ro.cucumber.core.engineering.placeholder.GlobalSymbolParser;
-import ro.cucumber.core.engineering.placeholder.ScenarioSymbolParser;
+import ro.cucumber.core.engineering.symbols.AbstractSymbolParser;
+import ro.cucumber.core.engineering.symbols.EnvironmentSymbolParser;
+import ro.cucumber.core.engineering.symbols.ScenarioSymbolParser;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public class SymbolRetrieveParserTests {
     @Test
     public void testGlobalSymbolRetrieveInSimpleText() {
         String a = "The ${animal} is running through the ${location}";
-        AbstractSymbolParser parser = new GlobalSymbolParser(a);
+        AbstractSymbolParser parser = new EnvironmentSymbolParser(a);
         Map<String, String> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
@@ -27,7 +27,7 @@ public class SymbolRetrieveParserTests {
     @Test
     public void testGlobalSymbolRetrieveInSimpleTextAndInvalidParameters() {
         String a = "The ${animal} is running through the ${location}";
-        AbstractSymbolParser parser = new GlobalSymbolParser(a);
+        AbstractSymbolParser parser = new EnvironmentSymbolParser(a);
         Map<String, String> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
@@ -58,7 +58,7 @@ public class SymbolRetrieveParserTests {
     @Test
     public void testGlobalAndScenarioSymbolRetrieveInSimpleText() {
         String a = "The ${animal} is running through the #[location]";
-        AbstractSymbolParser globalParser = new GlobalSymbolParser(a);
+        AbstractSymbolParser globalParser = new EnvironmentSymbolParser(a);
         Map<String, String> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
@@ -120,7 +120,7 @@ public class SymbolRetrieveParserTests {
                 + "        \"name\": \"De~[var4]sa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"~[val1]\": \"banana\"\n" + "  }\n" + "]";
-        AbstractSymbolParser globalParser = new GlobalSymbolParser(actual);
+        AbstractSymbolParser globalParser = new EnvironmentSymbolParser(actual);
         AbstractSymbolParser scenarioParser = new ScenarioSymbolParser(globalParser.parse(values));
         String result = scenarioParser.parse(values);
         assertEquals(result, expected, result);

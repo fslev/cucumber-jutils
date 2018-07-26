@@ -1,9 +1,9 @@
-package ro.cucumber.core.engineering.placeholder;
+package ro.cucumber.core.engineering.symbols;
 
 
 import java.util.regex.Pattern;
 
-public class GlobalSymbolParser extends AbstractSymbolParser {
+public class EnvironmentSymbolParser extends AbstractSymbolParser {
 
     public static final String SYMBOL_START = "${";
     public static final String SYMBOL_END = "}";
@@ -14,7 +14,7 @@ public class GlobalSymbolParser extends AbstractSymbolParser {
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
 
-    public GlobalSymbolParser(String stringWithSymbols) {
+    public EnvironmentSymbolParser(String stringWithSymbols) {
         super(stringWithSymbols);
     }
 

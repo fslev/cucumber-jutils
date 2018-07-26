@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare;
 
-import ro.cucumber.core.engineering.placeholder.SymbolDefineFromMatch;
+import ro.cucumber.core.engineering.symbols.SymbolDefineFromMatch;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;

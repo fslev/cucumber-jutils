@@ -5,7 +5,7 @@ import java.util.Map;
 public interface SymbolsDefineComparable {
 
     /**
-     * @return A Map of assign placeholder
+     * @return A Map of assign symbols
      */
     Map<String, String> compare();
 }
