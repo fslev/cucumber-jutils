@@ -1,4 +1,4 @@
-package ro.cucumber.core.clients.db.mysql;
+package ro.cucumber.core.clients.database.mysql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
