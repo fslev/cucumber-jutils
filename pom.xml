@@ -8,6 +8,9 @@
     <artifactId>cucumber-core</artifactId>
     <version>1.0.0</version>
 
+    <name>Cucumber Core</name>
+    <description>A little helper for Cucumber</description>
+
     <properties>
         <httpclient.version>4.5.5</httpclient.version>
         <jsoncompare.version>2.0.3</jsoncompare.version>
@@ -81,6 +84,59 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>nexus-upload</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <testResources>
             <testResource>
@@ -133,4 +189,19 @@
             </plugin>
         </plugins>
     </build>
+
+    <developers>
+        <developer>
+            <name>Florin Slevoaca</name>
+            <email>slevoaca.florin@gmail.com</email>
+            <timezone>EEST</timezone>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 </project>
