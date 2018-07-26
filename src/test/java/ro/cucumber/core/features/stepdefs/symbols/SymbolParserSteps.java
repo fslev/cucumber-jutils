@@ -1,4 +1,4 @@
-package ro.cucumber.core.features.stepdefs.placeholders;
+package ro.cucumber.core.features.stepdefs.symbols;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

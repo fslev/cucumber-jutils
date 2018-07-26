@@ -1,8 +1,9 @@
 package ro.cucumber.core.context.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CustomDataTable implements Serializable {
 
