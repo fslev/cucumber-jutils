@@ -21,7 +21,7 @@ public class MysqlSteps {
     public void setDataSource(String filePath) throws IOException {
         result = null;
         dataSource = new Properties();
-        dataSource.load(this.getClass().getClassLoader().getResourceAsStream(filePath));
+        dataSource.load(this.getClass().getClassLoader().getResourceAsStream("database/" + filePath));
         MysqlClient.Builder builder = new MysqlClient.Builder();
         builder.driver(dataSource.getProperty("driver").trim())
                 .user(dataSource.getProperty("username"))
@@ -31,8 +31,8 @@ public class MysqlSteps {
     }
 
     @Then("MYSQL execute query {cstring} and compare result with")
-    public void executeQuery(String query, Object actual) {
+    public void executeQuery(String query, CustomDataTable expected) {
         result = client.executeQuery(query);
-        CompareCucumbers.compare(result, actual);
+        CompareCucumbers.compare(expected, result);
     }
 }
