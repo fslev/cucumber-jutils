@@ -9,10 +9,13 @@ import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
 import ro.cucumber.core.clients.http.HttpVerb;
 import ro.cucumber.core.context.props.SymbolsParser;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Pattern;
-
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
@@ -64,7 +67,8 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                 (DataTable dataTable) -> (dataTable.cell(0, 0).trim())));
 
         // Custom data table type
-        typeRegistry.defineDataTableType(new DataTableType(CustomDataTable.class, new CustomDataTableTransformer()));
+        typeRegistry.defineDataTableType(
+                new DataTableType(CustomDataTable.class, new CustomDataTableTransformer()));
     }
 
     private static class SymbolsTransformer implements Transformer<Object> {
@@ -80,20 +84,18 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
     private static class CustomDataTableTransformer implements TableTransformer<CustomDataTable> {
         @Override
-        public CustomDataTable transform(DataTable dataTable) throws Throwable {
+        public CustomDataTable transform(DataTable dataTable) {
             List list = new ArrayList<>();
             List<Map<String, String>> mapsWithDataList = dataTable.asMaps();
             if (!mapsWithDataList.isEmpty()) {
                 mapsWithDataList.forEach((Map<String, String> mapData) -> {
                     Map<String, String> map = new HashMap<>();
-                    mapData.forEach(
-                            (k, v) -> map.put(k, new SymbolsParser(v).parse().toString()));
+                    mapData.forEach((k, v) -> map.put(k, new SymbolsParser(v).parse().toString()));
                     list.add(map);
                 });
             } else {
                 List<String> dataList = dataTable.asList();
-                dataList.forEach(
-                        (String el) -> list.add(new SymbolsParser(el).parse().toString()));
+                dataList.forEach((String el) -> list.add(new SymbolsParser(el).parse().toString()));
             }
             return new CustomDataTable(list);
         }
