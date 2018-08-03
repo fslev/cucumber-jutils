@@ -64,7 +64,8 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
         // DataTable cell (0,0) is assigned to a String
         // Needed for doc strings
         typeRegistry.defineDataTableType(new DataTableType(String.class,
-                (DataTable dataTable) -> (dataTable.cell(0, 0).trim())));
+                (DataTable dataTable) -> (new SymbolsParser(dataTable.cell(0, 0).trim())).parse()
+                        .toString()));
 
         // Custom data table type
         typeRegistry.defineDataTableType(
