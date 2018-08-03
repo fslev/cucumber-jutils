@@ -190,7 +190,7 @@ public class HttpClient {
         }
 
         public Builder address(String address) {
-            this.address = address;
+            this.address = address.replaceFirst("/*$", "");
             return this;
         }
 
