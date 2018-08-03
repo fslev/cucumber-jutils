@@ -107,7 +107,6 @@ public class HttpClient {
 
         try {
             url = address + "/" + uriBuilder.build().toString();
-            System.out.println(url);
         } catch (URISyntaxException e) {
             throw new IllegalStateException(e.getMessage());
         }
