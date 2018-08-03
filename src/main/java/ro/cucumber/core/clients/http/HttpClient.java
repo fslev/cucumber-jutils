@@ -107,6 +107,7 @@ public class HttpClient {
 
         try {
             url = address + "/" + uriBuilder.build().toString();
+            System.out.println(url);
         } catch (URISyntaxException e) {
             throw new IllegalStateException(e.getMessage());
         }
@@ -194,7 +195,7 @@ public class HttpClient {
         }
 
         public Builder path(String path) {
-            this.uriBuilder.setPath(path);
+            this.uriBuilder.setPath(path.replaceFirst("^/*", ""));
             return this;
         }
 
