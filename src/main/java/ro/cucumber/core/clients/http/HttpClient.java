@@ -246,6 +246,13 @@ public class HttpClient {
             return new HttpClient(this);
         }
     }
+
+    @Override
+    public String toString() {
+        return "HttpClient{" + "timeout=" + timeout + ", proxyHost=" + proxyHost + ", address='"
+                + address + '\'' + ", uriBuilder=" + uriBuilder + ", headers=" + headers
+                + ", entity='" + entity + '\'' + ", verb=" + verb + '}';
+    }
 }
 
 
