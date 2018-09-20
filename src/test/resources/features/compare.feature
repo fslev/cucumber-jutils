@@ -1,8 +1,8 @@
 Feature: Test comparator
 
   Scenario: Compare simple values
-    Given param a = 1
-    And param b = 1
+    Given param a="1"
+    And param b="1"
     Then COMPARE #[a] with #[b]
     And COMPARE 1 with 1
 
@@ -35,7 +35,7 @@ Feature: Test comparator
     """
 
   Scenario: Compare data tables
-    Given param a=replaced_value
+    Given param a="replaced_value"
     And table expectedTable=
       | firstName | lastName |
       | #[a]      | travolta |
@@ -56,7 +56,7 @@ Feature: Test comparator
       |  |
 
   Scenario: Compare lists
-    Given param a=replaced_value
+    Given param a="replaced_value"
     And table expectedTable1=
       | pineapples | cherries | .* | strawberries |
     And table expectedTable2=
