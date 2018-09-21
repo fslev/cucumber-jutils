@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import static org.junit.Assert.fail;
 
-public class StringRegexCompare implements SymbolsDefineComparable {
+public class StringRegexCompare implements SymbolsExtractable {
 
     private String expected;
     private String actual;
