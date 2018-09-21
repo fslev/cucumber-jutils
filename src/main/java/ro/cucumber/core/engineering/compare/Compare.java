@@ -23,10 +23,10 @@ public class Compare implements SymbolsDefineComparable {
             matcher = new JsonCompare(expected, actual);
         } catch (Exception e) {
             try {
-                matcher = new XmlCompare(expected, actual);
+                matcher = new JsonConvertibleObjectCompare(expected, actual);
             } catch (Exception e1) {
                 try {
-                    matcher = new JsonConvertibleObjectCompare(expected, actual);
+                    matcher = new XmlCompare(expected, actual);
                 } catch (Exception e2) {
                     matcher = new StringRegexCompare(expected, actual);
                 }
