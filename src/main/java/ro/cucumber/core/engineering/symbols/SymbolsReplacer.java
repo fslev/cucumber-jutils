@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SymbolDefineFromMatch {
+public class SymbolsReplacer {
 
     private static final String SYMBOL_START = "~\\[";
     private static final String SYMBOL_END = "\\]";
@@ -23,7 +23,7 @@ public class SymbolDefineFromMatch {
     private String stringWithValues;
     private Map<String, String> symbolValues = new LinkedHashMap<>();
 
-    public SymbolDefineFromMatch(String stringWithSymbols, String stringWithValues) {
+    public SymbolsReplacer(String stringWithSymbols, String stringWithValues) {
         this.stringWithSymbols = stringWithSymbols;
         this.stringWithValues = stringWithValues;
         parseSymbols();

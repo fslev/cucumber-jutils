@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare;
 
-import ro.cucumber.core.engineering.symbols.SymbolDefineFromMatch;
+import ro.cucumber.core.engineering.symbols.SymbolsReplacer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -21,7 +21,7 @@ public class StringRegexCompare implements SymbolsDefineComparable {
     @Override
     public Map<String, String> compare() {
 
-        SymbolDefineFromMatch parser = new SymbolDefineFromMatch(expected, actual);
+        SymbolsReplacer parser = new SymbolsReplacer(expected, actual);
         boolean hasAssignSymbols = !parser.getSymbolValues().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {

@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare.comparators;
 
-import ro.cucumber.core.engineering.symbols.SymbolDefineFromMatch;
+import ro.cucumber.core.engineering.symbols.SymbolsReplacer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -51,7 +51,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     }
 
     private ComparisonResult compare(String expected, String actual) {
-        SymbolDefineFromMatch parser = new SymbolDefineFromMatch(expected, actual);
+        SymbolsReplacer parser = new SymbolsReplacer(expected, actual);
         boolean hasAssignSymbols = !parser.getSymbolValues().isEmpty();
         String parsedExpected = hasAssignSymbols ? parser.parse() : expected;
         try {

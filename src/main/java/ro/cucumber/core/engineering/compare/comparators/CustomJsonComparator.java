@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare.comparators;
 
-import ro.cucumber.core.engineering.symbols.SymbolDefineFromMatch;
+import ro.cucumber.core.engineering.symbols.SymbolsReplacer;
 import ro.skyah.comparator.JsonComparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,7 +14,7 @@ public class CustomJsonComparator implements JsonComparator {
     public boolean compareValues(Object expected, Object actual) {
         String expectedString = expected.toString();
         String actualString = actual.toString();
-        SymbolDefineFromMatch parser = new SymbolDefineFromMatch(expectedString, actualString);
+        SymbolsReplacer parser = new SymbolsReplacer(expectedString, actualString);
 
         boolean hasAssignSymbols = !parser.getSymbolValues().isEmpty();
         if (hasAssignSymbols) {
