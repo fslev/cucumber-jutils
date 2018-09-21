@@ -14,6 +14,9 @@ public class Compare implements SymbolsDefineComparable {
     }
 
     @Override
+    /**
+     * Returns a map of symbols if the expected object contains special symbols for assigning symbols to variables ('~[...]')
+     */
     public Map<String, String> compare() {
         if (nullsMatch()) {
             return new HashMap<>();
