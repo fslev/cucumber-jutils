@@ -2,6 +2,7 @@ package ro.cucumber.core.engineering.compare;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import static org.junit.Assert.fail;
 
 public class Compare implements SymbolsExtractable {
@@ -41,7 +42,7 @@ public class Compare implements SymbolsExtractable {
     private boolean nullsMatch() {
         if (expected == null ^ actual == null) {
             fail(String.format("Expected: [%s] But found: [%s]", expected, actual));
-        } else if (expected == null && actual == null) {
+        } else if (expected == null) {
             return true;
         }
         return false;
