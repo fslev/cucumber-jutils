@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
         glue = {"ro.cucumber.core.context.config", "ro.cucumber.core.basicstepdefs",
                 "ro.cucumber.core.features.stepdefs"},
         plugin = {"pretty", "html:target/cucumber-html-report",
-                "json:target/cucumber-report/report.json"})
+                "json:target/cucumber-report/report.json"}, tags = "not @Ignore")
 public class CucumberCoreTest {
 }
 
