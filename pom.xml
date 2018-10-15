@@ -6,7 +6,7 @@
 
     <groupId>ro.qa.cucumber</groupId>
     <artifactId>cucumber-core</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>Cucumber Core</name>
     <description>A little helper for Cucumber</description>
