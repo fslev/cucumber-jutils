@@ -24,9 +24,7 @@ public class MethodPoller<T> {
     }
 
     public MethodPoller<T> duration(Integer pollDurationSec, Long pollIntervalMillis) {
-        this.pollDurationSec = pollDurationSec != null ? Duration.ofSeconds(pollDurationSec) : this.pollDurationSec;
-        this.pollIntervalMillis = pollIntervalMillis != null ? pollIntervalMillis : this.pollIntervalMillis;
-        return this;
+        return duration(pollDurationSec != null ? Duration.ofSeconds(pollDurationSec) : (Duration) null, pollIntervalMillis);
     }
 
     public MethodPoller<T> duration(Duration pollDurationSec, Long pollIntervalMillis) {
