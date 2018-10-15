@@ -16,6 +16,11 @@ public class MethodPoller<T> {
     private Supplier<T> pollMethod = null;
     private Predicate<T> pollResultPredicate = null;
 
+    public MethodPoller<T> duration(int pollDurationInSeconds) {
+        this.pollDurationSec = Duration.ofSeconds(pollDurationInSeconds);
+        return this;
+    }
+
     public MethodPoller<T> duration(Duration pollDurationSec, int pollIntervalMillis) {
         this.pollDurationSec = pollDurationSec;
         this.pollIntervalMillis = pollIntervalMillis;

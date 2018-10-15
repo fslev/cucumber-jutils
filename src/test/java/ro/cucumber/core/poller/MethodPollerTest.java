@@ -33,6 +33,17 @@ public class MethodPollerTest {
         assertNotEquals(expected, result);
     }
 
+    @Test
+    @Ignore
+    public void testPollerWithDurationTimeout() {
+        int expected = 5;
+        int result = new MethodPoller<Integer>()
+                .method(() -> generateRandomNumber(4))
+                .duration(2)
+                .until(n -> n.equals(expected)).poll();
+        assertNotEquals(expected, result);
+    }
+
     private int generateRandomNumber(int maxLimit) {
         return (int) (Math.random() * maxLimit);
     }
