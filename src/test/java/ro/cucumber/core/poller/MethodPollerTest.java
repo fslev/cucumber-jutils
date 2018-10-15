@@ -1,13 +1,11 @@
 package ro.cucumber.core.poller;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import ro.cucumber.core.engineering.poller.MethodPoller;
-
 import java.time.Duration;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import org.junit.Ignore;
+import org.junit.Test;
 
 public class MethodPollerTest {
 
@@ -17,7 +15,7 @@ public class MethodPollerTest {
         int expected = 3;
         int result = new MethodPoller<Integer>()
                 .method(() -> generateRandomNumber(4))
-                .duration(Duration.ofSeconds(10), 100)
+                .duration(Duration.ofSeconds(10), 100L)
                 .until(n -> n.equals(expected)).poll();
         assertEquals(expected, result);
     }
@@ -28,18 +26,29 @@ public class MethodPollerTest {
         int expected = 5;
         int result = new MethodPoller<Integer>()
                 .method(() -> generateRandomNumber(4))
-                .duration(Duration.ofSeconds(2), 100)
+                .duration(Duration.ofSeconds(2), 100L)
                 .until(n -> n.equals(expected)).poll();
         assertNotEquals(expected, result);
     }
 
     @Test
     @Ignore
-    public void testPollerWithDurationTimeout() {
+    public void testPollerDurationTimeout() {
         int expected = 5;
         int result = new MethodPoller<Integer>()
                 .method(() -> generateRandomNumber(4))
                 .duration(2)
+                .until(n -> n.equals(expected)).poll();
+        assertNotEquals(expected, result);
+    }
+
+    @Test
+    @Ignore
+    public void testPollerInterval() {
+        int expected = 5;
+        int result = new MethodPoller<Integer>()
+                .method(() -> generateRandomNumber(4))
+                .duration(500L)
                 .until(n -> n.equals(expected)).poll();
         assertNotEquals(expected, result);
     }
