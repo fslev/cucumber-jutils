@@ -18,7 +18,7 @@ public class CompareCucumbers {
     }
 
     public static void compareWithPolling(Object expected, Supplier<Object> supplier) {
-        Object result = new MethodPoller<Object>().method(() -> supplier.get())
+        Object result = new MethodPoller<>().method(() -> supplier.get())
                 .until(p -> {
                     try {
                         compare(expected, p);
