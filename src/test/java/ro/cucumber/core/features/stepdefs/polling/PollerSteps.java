@@ -1,4 +1,4 @@
-package ro.cucumber.core.features.stepdefs.symbols;
+package ro.cucumber.core.features.stepdefs.polling;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
