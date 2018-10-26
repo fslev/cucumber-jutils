@@ -2,12 +2,11 @@ package ro.cucumber.core.basicstepdefs.sql;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
-import cucumber.api.java.BeforeStep;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import ro.cucumber.core.clients.database.mysql.MysqlClient;
-import ro.cucumber.core.context.compare.CompareCucumbers;
+import ro.cucumber.core.context.compare.Cucumbers;
 import ro.cucumber.core.context.config.CustomDataTable;
 import java.io.IOException;
 import java.util.Properties;
@@ -42,6 +41,6 @@ public class MysqlSteps {
     public void executeQuery(String query, CustomDataTable expected) {
         scenario.write("Executing query " + query);
         result = client.executeQuery(query);
-        CompareCucumbers.compare(expected, result);
+        Cucumbers.compare(expected, result);
     }
 }

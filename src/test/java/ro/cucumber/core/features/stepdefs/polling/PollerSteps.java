@@ -3,7 +3,7 @@ package ro.cucumber.core.features.stepdefs.polling;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
-import ro.cucumber.core.context.compare.CompareCucumbers;
+import ro.cucumber.core.context.compare.Cucumbers;
 
 @ScenarioScoped
 public class PollerSteps {
@@ -18,7 +18,7 @@ public class PollerSteps {
 
     @Then("poll until random generated number (\\d+) is found")
     public void pollFor(int expected) {
-        CompareCucumbers.compareWithPolling(expected, () -> generateRandom());
+        Cucumbers.compareWhilePolling(expected, () -> generateRandom());
     }
 
     public int generateRandom() {

@@ -7,9 +7,9 @@ import ro.cucumber.core.engineering.poller.MethodPoller;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class CompareCucumbers {
+public class Cucumbers {
 
-    private CompareCucumbers() {
+    private Cucumbers() {
     }
 
     public static void compare(Object expected, Object actual) {
@@ -19,19 +19,19 @@ public class CompareCucumbers {
         assignValues.forEach(scenarioProps::put);
     }
 
-    public static void compareWithPolling(Object expected, Supplier<Object> supplier) {
-        compareWithPolling(expected, null, null, supplier);
+    public static void compareWhilePolling(Object expected, Supplier<Object> supplier) {
+        compareWhilePolling(expected, null, null, supplier);
     }
 
-    public static void compareWithPolling(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
-        compareWithPolling(expected, pollDurationInSeconds, null, supplier);
+    public static void compareWhilePolling(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
+        compareWhilePolling(expected, pollDurationInSeconds, null, supplier);
     }
 
-    public static void compareWithPolling(Object expected, long pollIntervalMillis, Supplier<Object> supplier) {
-        compareWithPolling(expected, null, pollIntervalMillis, supplier);
+    public static void compareWhilePolling(Object expected, long pollIntervalMillis, Supplier<Object> supplier) {
+        compareWhilePolling(expected, null, pollIntervalMillis, supplier);
     }
 
-    public static void compareWithPolling(Object expected, Integer pollDurationInSeconds, Long pollIntervalMillis, Supplier<Object> supplier) {
+    public static void compareWhilePolling(Object expected, Integer pollDurationInSeconds, Long pollIntervalMillis, Supplier<Object> supplier) {
         Object result = new MethodPoller<>()
                 .duration(pollDurationInSeconds, pollIntervalMillis)
                 .method(supplier)
