@@ -21,7 +21,7 @@ public class ResourceUtils {
 
     /**
      * @return a list of Map<String,String> data for each file within the directory and its sub-directories
-     * A key-value pair from the map contains the file path respectively the file content
+     * A key-value pair from the map contains the file relative path respectively the file content
      */
     public static List<Map<String, String>> readDirectory(String dirPath) {
         try {
