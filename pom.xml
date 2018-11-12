@@ -4,7 +4,7 @@
 
     <groupId>ro.qa.cucumber</groupId>
     <artifactId>cucumber-core</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <name>Cucumber Core</name>
     <description>A little helper for Cucumber</description>
