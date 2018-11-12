@@ -3,7 +3,6 @@ package ro.cucumber.core.resource;
 import ro.cucumber.core.engineering.utils.JsonUtils;
 import ro.cucumber.core.engineering.utils.ResourceUtils;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,15 +25,13 @@ public class ResourceReadTests {
     }
 
     @Test
-    public void testRecursiveReaderFromDirectory() {
-        String dirpath = "foobar/dir";
-        List<Map<String, String>> actualData = ResourceUtils.readDirectory(dirpath);
+    public void testInDepthReadingFromDirectory() {
+        Map<String, String> actualData = ResourceUtils.readDirectory("foobar/dir");
         assertEquals(5, actualData.size());
-        assertTrue(actualData.contains(Map.of("foobar1.json", "1")));
-        assertTrue(actualData.contains(Map.of("foo/foo1.json", "2")));
-        assertTrue(actualData.contains(Map.of("foo/foo2.json", "3")));
-        assertTrue(actualData.contains(Map.of("foo/bar/bar1.json", "4")));
-        assertTrue(actualData.contains(Map.of("foo/bar/bar2.json", "5")));
-
+        assertTrue(actualData.get("foobar1.json").equals("1"));
+        assertTrue(actualData.get("foo/foo1.json").equals("2"));
+        assertTrue(actualData.get("foo/foo2.json").equals("3"));
+        assertTrue(actualData.get("foo/bar/bar1.json").equals("4"));
+        assertTrue(actualData.get("foo/bar/bar2.json").equals("5"));
     }
 }

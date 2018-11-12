@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -20,16 +19,15 @@ public class ResourceUtils {
     }
 
     /**
-     * @return a list of Map<String,String> data for each file within the directory and its sub-directories
-     * A key-value pair from the map contains the file relative path respectively the file content
+     * @return a Map<String,String> between corresponding file paths and file contents
      */
-    public static List<Map<String, String>> readDirectory(String dirPath) {
+    public static Map<String, String> readDirectory(String dirPath) {
         try {
-            Path base = Paths.get(Thread.currentThread().getContextClassLoader().getResource(dirPath).toURI());
-            List<Map<String, String>> dataList = Files.walk(base).filter(path -> path.toFile().isFile())
-                    .map(path -> Map.of(base.relativize(path).toString(), readFromAbsolutePath(path.toString())))
-                    .collect(Collectors.toList());
-            return dataList;
+            Path basePath = Paths.get(Thread.currentThread().getContextClassLoader().getResource(dirPath).toURI());
+            Map<String, String> map = Files.walk(basePath).filter(path -> path.toFile().isFile())
+                    .collect(Collectors.toMap(path -> basePath.relativize(path).toString(),
+                            path -> readFromAbsolutePath(path.toString())));
+            return map;
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
