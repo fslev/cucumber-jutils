@@ -55,9 +55,9 @@ public class HttpClientSteps {
         }
     }
 
-    @And("HTTP method {httpVerb}")
-    public void setMethod(Method verb) {
-        builder.method(verb);
+    @And("HTTP method {httpMethod}")
+    public void setMethod(Method method) {
+        builder.method(method);
     }
 
     @And("HTTP entity {string}")

@@ -20,7 +20,7 @@ import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
-    private static final List<String> HTTP_VERB_REGEXPS = Collections
+    private static final List<String> HTTP_METHOD_REGEXPS = Collections
             .singletonList(Pattern.compile("(GET|POST|PUT|DELETE|OPTIONS|HEAD|TRACE)").pattern());
 
     private static final List<String> CSTRING_REGEXPS =
@@ -36,7 +36,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     @Override
     public void configureTypeRegistry(TypeRegistry typeRegistry) {
         typeRegistry.defineParameterType(
-                new ParameterType<>("httpVerb", HTTP_VERB_REGEXPS, Method.class, (String s) -> {
+                new ParameterType<>("httpMethod", HTTP_METHOD_REGEXPS, Method.class, (String s) -> {
                     switch (s) {
                         case "GET":
                             return Method.GET;
