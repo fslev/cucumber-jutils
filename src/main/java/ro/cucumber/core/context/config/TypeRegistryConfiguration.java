@@ -7,7 +7,7 @@ import io.cucumber.cucumberexpressions.Transformer;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
-import ro.cucumber.core.clients.http.HttpVerb;
+import ro.cucumber.core.clients.http.Method;
 import ro.cucumber.core.context.props.SymbolsParser;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,22 +36,22 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     @Override
     public void configureTypeRegistry(TypeRegistry typeRegistry) {
         typeRegistry.defineParameterType(
-                new ParameterType<>("httpVerb", HTTP_VERB_REGEXPS, HttpVerb.class, (String s) -> {
+                new ParameterType<>("httpVerb", HTTP_VERB_REGEXPS, Method.class, (String s) -> {
                     switch (s) {
                         case "GET":
-                            return HttpVerb.GET;
+                            return Method.GET;
                         case "POST":
-                            return HttpVerb.POST;
+                            return Method.POST;
                         case "PUT":
-                            return HttpVerb.PUT;
+                            return Method.PUT;
                         case "DELETE":
-                            return HttpVerb.DELETE;
+                            return Method.DELETE;
                         case "HEAD":
-                            return HttpVerb.HEAD;
+                            return Method.HEAD;
                         case "OPTIONS":
-                            return HttpVerb.OPTIONS;
+                            return Method.OPTIONS;
                         case "TRACE":
-                            return HttpVerb.TRACE;
+                            return Method.TRACE;
                         default:
                             return null;
                     }

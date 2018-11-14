@@ -44,7 +44,7 @@ public class HttpClient {
     private URIBuilder uriBuilder;
     private Map<String, String> headers;
     private String entity;
-    private HttpVerb verb;
+    private Method method;
 
     private CloseableHttpClient client;
     private HttpRequestBase request;
@@ -56,9 +56,9 @@ public class HttpClient {
         this.uriBuilder = builder.uriBuilder;
         this.headers = builder.headers;
         this.entity = builder.entity;
-        this.verb = builder.verb;
+        this.method = builder.method;
 
-        validateVerb();
+        validateMethod();
         validateAddress();
 
         this.client = getClient();
@@ -110,7 +110,7 @@ public class HttpClient {
         } catch (URISyntaxException e) {
             throw new IllegalStateException(e.getMessage());
         }
-        switch (verb) {
+        switch (method) {
             case GET:
                 request = new HttpGet(url);
                 break;
@@ -145,7 +145,7 @@ public class HttpClient {
                 request = new HttpHead(url);
                 break;
             default:
-                throw new IllegalStateException("Invalid HTTP verb");
+                throw new IllegalStateException("Invalid HTTP method");
         }
         setHeaders(request);
         return request;
@@ -157,8 +157,8 @@ public class HttpClient {
         }
     }
 
-    private void validateVerb() {
-        if (verb == null) {
+    private void validateMethod() {
+        if (method == null) {
             throw new IllegalStateException("Define HTTP Method");
         }
     }
@@ -176,7 +176,7 @@ public class HttpClient {
         private URIBuilder uriBuilder = new URIBuilder();
         private Map<String, String> headers = new HashMap<>();
         private String entity;
-        private HttpVerb verb;
+        private Method method;
 
         public Builder useProxy(String proxyHost, int proxyPort, String proxyScheme) {
             this.proxyHost = new HttpHost(proxyHost, proxyPort, proxyScheme);
@@ -237,8 +237,8 @@ public class HttpClient {
             return this;
         }
 
-        public Builder method(HttpVerb verb) {
-            this.verb = verb;
+        public Builder method(Method method) {
+            this.method = method;
             return this;
         }
 
@@ -251,7 +251,7 @@ public class HttpClient {
     public String toString() {
         return "HttpClient{" + "timeout=" + timeout + ", proxyHost=" + proxyHost + ", address='"
                 + address + '\'' + ", uriBuilder=" + uriBuilder + ", headers=" + headers
-                + ", entity='" + entity + '\'' + ", verb=" + verb + '}';
+                + ", entity='" + entity + '\'' + ", method=" + method + '}';
     }
 }
 

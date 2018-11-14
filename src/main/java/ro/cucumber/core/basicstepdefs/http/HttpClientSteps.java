@@ -9,7 +9,7 @@ import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.datatable.DataTable;
 import ro.cucumber.core.clients.http.HttpClient;
-import ro.cucumber.core.clients.http.HttpVerb;
+import ro.cucumber.core.clients.http.Method;
 import java.util.List;
 import java.util.Map;
 import com.google.inject.Inject;
@@ -56,7 +56,7 @@ public class HttpClientSteps {
     }
 
     @And("HTTP method {httpVerb}")
-    public void setMethod(HttpVerb verb) {
+    public void setMethod(Method verb) {
         builder.method(verb);
     }
 

@@ -1,5 +1,5 @@
 package ro.cucumber.core.clients.http;
 
-public enum HttpVerb {
+public enum Method {
     GET, POST, PUT, DELETE, HEAD, OPTIONS, TRACE
 }
