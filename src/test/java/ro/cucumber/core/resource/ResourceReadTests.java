@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class ResourceReadTests {
 
     @Test
-    public void testStringReadingFromFile() {
+    public void testStringReadFromFile() {
         assertEquals("some content 1\nsome content 2\n", ResourceUtils.read("foobar/file1.txt"));
     }
 
@@ -25,7 +25,13 @@ public class ResourceReadTests {
     }
 
     @Test
-    public void testInDepthReadingFromDirectory() {
+    public void testPropertiesReadFromFile() {
+        assertEquals("some values with white spaces and new lines \n ",
+                ResourceUtils.readProps("foobar/foo.properties").get("IAmAProperty"));
+    }
+
+    @Test
+    public void testInDepthReadFromDirectory() {
         Map<String, String> actualData = ResourceUtils.readDirectory("foobar/dir");
         assertEquals(5, actualData.size());
         assertTrue(actualData.get("foobar1.json").equals("1"));
