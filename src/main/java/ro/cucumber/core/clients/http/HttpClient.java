@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -36,8 +37,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class HttpClient {
+    private Logger log = LogManager.getLogger();
     private Integer timeout;
     private HttpHost proxyHost;
     private String address;
@@ -67,7 +72,10 @@ public class HttpClient {
 
     public HttpResponse execute() {
         try {
-            return client.execute(request);
+            logRequest();
+            HttpResponse response = client.execute(request);
+            logResponse(response);
+            return response;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -92,7 +100,7 @@ public class HttpClient {
         SSLContext ctx;
         try {
             ctx = SSLContext.getInstance("TLS");
-            ctx.init(new KeyManager[0], new TrustManager[] {new DefaultTrustManager()},
+            ctx.init(new KeyManager[0], new TrustManager[]{new DefaultTrustManager()},
                     new SecureRandom());
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
@@ -159,14 +167,55 @@ public class HttpClient {
 
     private void validateMethod() {
         if (method == null) {
-            throw new IllegalStateException("Define HTTP Method");
+            throw new IllegalStateException("HTTP Method missing");
         }
     }
 
     private void validateAddress() {
         if (address == null) {
-            throw new IllegalStateException("Define HTTP Address");
+            throw new IllegalStateException("HTTP Address missing");
         }
+    }
+
+    private void logRequest() {
+        log.debug("---- HTTP REQUEST ----");
+        try {
+            log.debug("{}: {}{}", method, address, uriBuilder.build().toString());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        log.debug("Request HEADERS: {}", headers);
+        if (proxyHost != null) {
+            log.debug("PROXY host: {}", proxyHost);
+        }
+        if (entity != null) {
+            log.debug("Request BODY:{}{}", System.lineSeparator(), entity);
+        }
+    }
+
+    private void logResponse(HttpResponse response) {
+        log.debug("---- HTTP RESPONSE ----");
+        log.debug("Response STATUS: {}", response.getStatusLine());
+        log.debug("Response HEADERS: {}", response.getAllHeaders());
+        log.debug("Response BODY:{}{}", () -> System.lineSeparator(), () -> {
+            HttpEntity entity = response.getEntity();
+            if (response == null) {
+                return null;
+            }
+            String content = null;
+            try {
+                content = EntityUtils.toString(entity);
+                return content;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } finally {
+                try {
+                    response.setEntity(new StringEntity(content));
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public static class Builder {
@@ -259,12 +308,12 @@ public class HttpClient {
 class DefaultTrustManager implements X509TrustManager {
 
     @Override
-    public void checkClientTrusted(X509Certificate[] arg0, String arg1)
-            throws CertificateException {}
+    public void checkClientTrusted(X509Certificate[] arg0, String arg1) {
+    }
 
     @Override
-    public void checkServerTrusted(X509Certificate[] arg0, String arg1)
-            throws CertificateException {}
+    public void checkServerTrusted(X509Certificate[] arg0, String arg1) {
+    }
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
