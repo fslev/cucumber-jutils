@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare.comparators;
 
-import ro.cucumber.core.engineering.symbols.SymbolsReplacer;
+import ro.cucumber.core.engineering.placeholders.PlaceholdersGenerator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -51,14 +51,14 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     }
 
     private ComparisonResult compare(String expected, String actual) {
-        SymbolsReplacer parser = new SymbolsReplacer(expected, actual);
-        boolean hasAssignSymbols = !parser.getSymbolValues().isEmpty();
+        PlaceholdersGenerator parser = new PlaceholdersGenerator(expected, actual);
+        boolean hasAssignSymbols = !parser.getPlaceholdersMap().isEmpty();
         String parsedExpected = hasAssignSymbols ? parser.parse() : expected;
         try {
             Pattern pattern = Pattern.compile(parsedExpected);
             if (pattern.matcher(actual).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getSymbolValues());
+                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
                 }
                 return ComparisonResult.SIMILAR;
             } else {
@@ -67,7 +67,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual)) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getSymbolValues());
+                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
                 }
                 return ComparisonResult.EQUAL;
             } else {

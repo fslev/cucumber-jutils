@@ -57,7 +57,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                     }
                 }));
 
-        // special string type for parsing scenario and global symbols
+        // special string type for parsing scenario and global placeholders
         typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING, CSTRING_REGEXPS,
                 Object.class, new SymbolsTransformer()));
 

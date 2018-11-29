@@ -2,7 +2,6 @@ package ro.cucumber.core.engineering.compare;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import static org.junit.Assert.fail;
 
 public class Compare implements SymbolsExtractable {
@@ -16,7 +15,7 @@ public class Compare implements SymbolsExtractable {
 
     @Override
     /**
-     * Returns a map of symbols if the expected object contains special symbols for assigning symbols to variables ('~[...]')
+     * Returns a map of placeholders if the expected object contains special placeholders for assigning placeholders to variables ('~[...]')
      */
     public Map<String, String> compare() {
         if (nullsMatch()) {

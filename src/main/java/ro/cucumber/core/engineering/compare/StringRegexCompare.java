@@ -1,6 +1,6 @@
 package ro.cucumber.core.engineering.compare;
 
-import ro.cucumber.core.engineering.symbols.SymbolsReplacer;
+import ro.cucumber.core.engineering.placeholders.PlaceholdersGenerator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -21,8 +21,8 @@ public class StringRegexCompare implements SymbolsExtractable {
     @Override
     public Map<String, String> compare() {
 
-        SymbolsReplacer parser = new SymbolsReplacer(expected, actual);
-        boolean hasAssignSymbols = !parser.getSymbolValues().isEmpty();
+        PlaceholdersGenerator parser = new PlaceholdersGenerator(expected, actual);
+        boolean hasAssignSymbols = !parser.getPlaceholdersMap().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {
             parsedString = parser.parse();
@@ -31,7 +31,7 @@ public class StringRegexCompare implements SymbolsExtractable {
             Pattern pattern = Pattern.compile(parsedString, Pattern.DOTALL | Pattern.MULTILINE);
             if (pattern.matcher(actual).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getSymbolValues());
+                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
                 }
             } else {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));
@@ -39,7 +39,7 @@ public class StringRegexCompare implements SymbolsExtractable {
         } catch (PatternSyntaxException e) {
             if (parsedString.equals(actual)) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getSymbolValues());
+                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
                 }
             } else {
                 fail(String.format("Expected: %s, But got: %s", parsedString, actual));

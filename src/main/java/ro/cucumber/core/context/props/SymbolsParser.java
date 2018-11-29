@@ -1,8 +1,8 @@
 package ro.cucumber.core.context.props;
 
 import ro.cucumber.core.context.config.CustomInjectorSource;
-import ro.cucumber.core.engineering.symbols.EnvironmentSymbolParser;
-import ro.cucumber.core.engineering.symbols.ScenarioSymbolParser;
+import ro.cucumber.core.engineering.placeholders.GlobalPlaceholderFiller;
+import ro.cucumber.core.engineering.placeholders.ScenarioPlaceholderFiller;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -30,8 +30,8 @@ public class SymbolsParser {
     }
 
     private static String getParsedStringWithEnvironmentValues(String str) {
-        EnvironmentSymbolParser parser = new EnvironmentSymbolParser(str);
-        Set<String> symbolNames = parser.searchForSymbols();
+        GlobalPlaceholderFiller parser = new GlobalPlaceholderFiller(str);
+        Set<String> symbolNames = parser.searchForPlaceholders();
         Map<String, String> values = new HashMap();
         symbolNames.forEach((String name) -> {
             String val = EnvProps.get(name);
@@ -39,12 +39,12 @@ public class SymbolsParser {
                 values.put(name, val);
             }
         });
-        return parser.parse(values);
+        return parser.fill(values);
     }
 
     private String getParsedStringWithScenarioValues(String str) {
-        ScenarioSymbolParser parser = new ScenarioSymbolParser(str);
-        Set<String> symbolNames = parser.searchForSymbols();
+        ScenarioPlaceholderFiller parser = new ScenarioPlaceholderFiller(str);
+        Set<String> symbolNames = parser.searchForPlaceholders();
         Map<String, String> values = new HashMap();
         symbolNames.forEach((String name) -> {
             Object val = scenarioProps.get(name);
@@ -52,15 +52,15 @@ public class SymbolsParser {
                 values.put(name, val.toString());
             }
         });
-        return parser.parse(values);
+        return parser.fill(values);
     }
 
     private String getStandaloneScenarioSymbol() {
-        ScenarioSymbolParser parser = new ScenarioSymbolParser(target);
-        Set<String> symbolNames = parser.searchForSymbols();
+        ScenarioPlaceholderFiller parser = new ScenarioPlaceholderFiller(target);
+        Set<String> symbolNames = parser.searchForPlaceholders();
         if (!symbolNames.isEmpty()) {
             String element = symbolNames.iterator().next();
-            if ((ScenarioSymbolParser.SYMBOL_START + element + ScenarioSymbolParser.SYMBOL_END)
+            if ((ScenarioPlaceholderFiller.PLACEHOLDER_START + element + ScenarioPlaceholderFiller.PLACEHOLDER_END)
                     .equals(target)) {
                 return element;
             }
