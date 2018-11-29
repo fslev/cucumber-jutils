@@ -1,4 +1,4 @@
-package ro.cucumber.core.features.stepdefs.symbols;
+package ro.cucumber.core.features.stepdefs.placeholders;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -7,7 +7,7 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import static org.junit.Assert.assertEquals;
 
 @ScenarioScoped
-public class SymbolParserSteps {
+public class PlaceholderParserSteps {
 
     private String str;
 
