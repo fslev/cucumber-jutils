@@ -26,11 +26,9 @@ public class HttpClientTest {
                 .serviceUnavailableRetryStrategy(new ServiceUnavailableRetryStrategy() {
                     @Override
                     public boolean retryRequest(HttpResponse response, int executionCount, HttpContext context) {
-                        String content = null;
                         try {
                             log.info("SERVICE retry: {}", executionCount);
-                            content = EntityUtils.toString(response.getEntity());
-                            return executionCount < 3 && !content.equals("");
+                            return executionCount < 3 && !EntityUtils.toString(response.getEntity()).equals("");
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
