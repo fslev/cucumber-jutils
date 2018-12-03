@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class SymbolsParser {
+public class PlaceholderFiller {
 
     private String target;
     private ScenarioProps scenarioProps = getScenarioProps();
 
-    public SymbolsParser(String target) {
+    public PlaceholderFiller(String target) {
         this.target = target;
     }
 
@@ -20,16 +20,16 @@ public class SymbolsParser {
         return CustomInjectorSource.getContextInjector().getInstance(ScenarioProps.class);
     }
 
-    public Object parse() {
-        String standaloneSymbol = getStandaloneScenarioSymbol();
+    public Object fill() {
+        String standaloneSymbol = getStandaloneScenarioPlaceholder();
         if (standaloneSymbol != null) {
             Object val = scenarioProps.get(standaloneSymbol);
             return val != null ? val : target;
         }
-        return getParsedStringWithEnvironmentValues(getParsedStringWithScenarioValues(target));
+        return getFilledStringWithEnvironmentValues(getFilledStringWithScenarioValues(target));
     }
 
-    private static String getParsedStringWithEnvironmentValues(String str) {
+    private static String getFilledStringWithEnvironmentValues(String str) {
         GlobalPlaceholderFiller parser = new GlobalPlaceholderFiller(str);
         Set<String> symbolNames = parser.searchForPlaceholders();
         Map<String, String> values = new HashMap();
@@ -42,7 +42,7 @@ public class SymbolsParser {
         return parser.fill(values);
     }
 
-    private String getParsedStringWithScenarioValues(String str) {
+    private String getFilledStringWithScenarioValues(String str) {
         ScenarioPlaceholderFiller parser = new ScenarioPlaceholderFiller(str);
         Set<String> symbolNames = parser.searchForPlaceholders();
         Map<String, String> values = new HashMap();
@@ -55,7 +55,7 @@ public class SymbolsParser {
         return parser.fill(values);
     }
 
-    private String getStandaloneScenarioSymbol() {
+    private String getStandaloneScenarioPlaceholder() {
         ScenarioPlaceholderFiller parser = new ScenarioPlaceholderFiller(target);
         Set<String> symbolNames = parser.searchForPlaceholders();
         if (!symbolNames.isEmpty()) {

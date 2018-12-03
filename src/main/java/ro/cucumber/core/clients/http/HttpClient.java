@@ -16,15 +16,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpRequestRetryHandler;
+import org.apache.http.client.ServiceUnavailableRetryStrategy;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpOptions;
+import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -34,9 +36,9 @@ import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,6 +51,10 @@ public class HttpClient {
     private Map<String, String> headers;
     private String entity;
     private Method method;
+    private SSLContext sslContext;
+    private HostnameVerifier hostnameVerifier;
+    private HttpRequestRetryHandler requestRetryHandler;
+    private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
 
     private CloseableHttpClient client;
     private HttpRequestBase request;
@@ -61,6 +67,10 @@ public class HttpClient {
         this.headers = builder.headers;
         this.entity = builder.entity;
         this.method = builder.method;
+        this.sslContext = builder.sslContext;
+        this.hostnameVerifier = builder.hostnameVerifier;
+        this.requestRetryHandler = builder.requestRetryHandler;
+        this.serviceUnavailableRetryStrategy = builder.serviceUnavailableRetryStrategy;
 
         validateMethod();
         validateAddress();
@@ -71,9 +81,7 @@ public class HttpClient {
 
     public HttpResponse execute() {
         try {
-            logRequest();
             HttpResponse response = client.execute(request);
-            logResponse(response);
             return response;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -89,13 +97,22 @@ public class HttpClient {
         if (proxyHost != null) {
             configBuilder.setProxy(proxyHost);
         }
-        HostnameVerifier allowAllHosts = new NoopHostnameVerifier();
-        return HttpClients.custom()
-                .setSSLSocketFactory(new SSLConnectionSocketFactory(getSslContext(), allowAllHosts))
-                .setDefaultRequestConfig(configBuilder.build()).build();
+        HttpClientBuilder builder = HttpClients.custom()
+                .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext == null ?
+                        defaultSslContext() : sslContext, hostnameVerifier == null ?
+                        new NoopHostnameVerifier() : hostnameVerifier))
+                .setDefaultRequestConfig(configBuilder.build());
+        if (requestRetryHandler != null) {
+            builder.setRetryHandler(requestRetryHandler);
+        }
+        if (serviceUnavailableRetryStrategy != null) {
+            builder.setServiceUnavailableRetryStrategy(serviceUnavailableRetryStrategy);
+        }
+        return builder.addInterceptorLast(new HttpResponseLoggerInterceptor())
+                .addInterceptorLast(new HttpRequestLoggerInterceptor()).build();
     }
 
-    private SSLContext getSslContext() {
+    private SSLContext defaultSslContext() {
         SSLContext ctx;
         try {
             ctx = SSLContext.getInstance("TLS");
@@ -151,6 +168,9 @@ public class HttpClient {
             case HEAD:
                 request = new HttpHead(url);
                 break;
+            case PATCH:
+                request = new HttpPatch(url);
+                break;
             default:
                 throw new IllegalStateException("Invalid HTTP method");
         }
@@ -176,47 +196,6 @@ public class HttpClient {
         }
     }
 
-    private void logRequest() {
-        log.debug("---- HTTP REQUEST ----");
-        try {
-            log.debug("{}: {}{}", method, address, uriBuilder.build().toString());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        log.debug("Request HEADERS: {}", headers);
-        if (proxyHost != null) {
-            log.debug("PROXY host: {}", proxyHost);
-        }
-        if (entity != null) {
-            log.debug("Request BODY:{}{}", System.lineSeparator(), entity);
-        }
-    }
-
-    private void logResponse(HttpResponse response) {
-        log.debug("---- HTTP RESPONSE ----");
-        log.debug("Response STATUS: {}", response.getStatusLine());
-        log.debug("Response HEADERS: {}", response.getAllHeaders());
-        log.debug("Response BODY:{}{}", () -> System.lineSeparator(), () -> {
-            HttpEntity entity = response.getEntity();
-            if (response == null) {
-                return null;
-            }
-            String content = null;
-            try {
-                content = EntityUtils.toString(entity);
-                return content;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } finally {
-                try {
-                    response.setEntity(new StringEntity(content));
-                } catch (UnsupportedEncodingException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-    }
-
     public static class Builder {
         private Integer timeout;
         private HttpHost proxyHost;
@@ -225,6 +204,10 @@ public class HttpClient {
         private Map<String, String> headers = new HashMap<>();
         private String entity;
         private Method method;
+        private SSLContext sslContext;
+        private HostnameVerifier hostnameVerifier;
+        private HttpRequestRetryHandler requestRetryHandler;
+        private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
 
         public Builder useProxy(String proxyHost, int proxyPort, String proxyScheme) {
             this.proxyHost = new HttpHost(proxyHost, proxyPort, proxyScheme);
@@ -287,6 +270,26 @@ public class HttpClient {
 
         public Builder method(Method method) {
             this.method = method;
+            return this;
+        }
+
+        public Builder sslContext(SSLContext sslContext) {
+            this.sslContext = sslContext;
+            return this;
+        }
+
+        public Builder hostnameVerifier(HostnameVerifier hostnameVerifier) {
+            this.hostnameVerifier = hostnameVerifier;
+            return this;
+        }
+
+        public Builder requestRetryHandler(HttpRequestRetryHandler requestRetryHandler) {
+            this.requestRetryHandler = requestRetryHandler;
+            return this;
+        }
+
+        public Builder serviceUnavailableRetryStrategy(ServiceUnavailableRetryStrategy serviceRetryStrategy) {
+            this.serviceUnavailableRetryStrategy = serviceRetryStrategy;
             return this;
         }
 

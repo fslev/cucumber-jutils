@@ -6,9 +6,11 @@ import io.cucumber.cucumberexpressions.ParameterType;
 import io.cucumber.cucumberexpressions.Transformer;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
+import io.cucumber.datatable.TableCellByTypeTransformer;
+import io.cucumber.datatable.TableEntryByTypeTransformer;
 import io.cucumber.datatable.TableTransformer;
 import ro.cucumber.core.clients.http.Method;
-import ro.cucumber.core.context.props.SymbolsParser;
+import ro.cucumber.core.context.props.PlaceholderFiller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,6 +19,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 import static java.util.Locale.ENGLISH;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
@@ -61,15 +64,15 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
         typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING, CSTRING_REGEXPS,
                 Object.class, new SymbolsTransformer()));
 
-        // DataTable cell (0,0) is assigned to a String
-        // Needed for doc strings
-        typeRegistry.defineDataTableType(new DataTableType(String.class,
-                (DataTable dataTable) -> (new SymbolsParser(dataTable.cell(0, 0).trim())).parse()
-                        .toString()));
-
         // Custom data table type
         typeRegistry.defineDataTableType(
                 new DataTableType(CustomDataTable.class, new CustomDataTableTransformer()));
+
+        // Default data table type
+        // Needed especially for doc strings
+        JacksonTableTransformer defaultDataTableTransformer = new JacksonTableTransformer();
+        typeRegistry.setDefaultDataTableEntryTransformer(defaultDataTableTransformer);
+        typeRegistry.setDefaultDataTableCellTransformer(defaultDataTableTransformer);
     }
 
     private static class SymbolsTransformer implements Transformer<Object> {
@@ -78,12 +81,12 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             if (s == null) {
                 return null;
             }
-            Object result = new SymbolsParser(s.trim()).parse();
+            Object result = new PlaceholderFiller(s.trim()).fill();
             return result;
         }
     }
 
-    private static class CustomDataTableTransformer implements TableTransformer<CustomDataTable> {
+    private static class CustomDataTableTransformer implements TableTransformer {
         @Override
         public CustomDataTable transform(DataTable dataTable) {
             List list = new ArrayList<>();
@@ -91,14 +94,29 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             if (!mapsWithDataList.isEmpty()) {
                 mapsWithDataList.forEach((Map<String, String> mapData) -> {
                     Map<String, String> map = new HashMap<>();
-                    mapData.forEach((k, v) -> map.put(k, new SymbolsParser(v).parse().toString()));
+                    mapData.forEach((k, v) -> map.put(k, new PlaceholderFiller(v).fill().toString()));
                     list.add(map);
                 });
             } else {
                 List<String> dataList = dataTable.asList();
-                dataList.forEach((String el) -> list.add(new SymbolsParser(el).parse().toString()));
+                dataList.forEach((String el) -> list.add(new PlaceholderFiller(el).fill().toString()));
             }
             return new CustomDataTable(list);
+        }
+    }
+
+    private static final class JacksonTableTransformer implements TableEntryByTypeTransformer, TableCellByTypeTransformer {
+
+        private final ObjectMapper objectMapper = new ObjectMapper();
+
+        @Override
+        public <T> T transform(Map<String, String> entry, Class<T> type, TableCellByTypeTransformer cellTransformer) {
+            return objectMapper.convertValue(entry, type);
+        }
+
+        @Override
+        public <T> T transform(String value, Class<T> cellType) {
+            return objectMapper.convertValue(new PlaceholderFiller(value).fill(), cellType);
         }
     }
 }

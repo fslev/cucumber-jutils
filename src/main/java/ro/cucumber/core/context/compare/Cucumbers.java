@@ -13,27 +13,26 @@ public class Cucumbers {
     }
 
     public static void compare(Object expected, Object actual) {
-        Compare compare = new Compare(expected, actual);
-        Map<String, String> assignValues = compare.compare();
+        Map<String, String> placeholdersAndValues = new Compare(expected, actual).compare();
         ScenarioProps scenarioProps = getScenarioProps();
-        assignValues.forEach(scenarioProps::put);
+        placeholdersAndValues.forEach(scenarioProps::put);
     }
 
-    public static void compareWhilePolling(Object expected, Supplier<Object> supplier) {
-        compareWhilePolling(expected, null, null, supplier);
+    public static void pollAndCompare(Object expected, Supplier<Object> supplier) {
+        pollAndCompare(expected, null, null, supplier);
     }
 
-    public static void compareWhilePolling(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
-        compareWhilePolling(expected, pollDurationInSeconds, null, supplier);
+    public static void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
+        pollAndCompare(expected, pollDurationInSeconds, null, supplier);
     }
 
-    public static void compareWhilePolling(Object expected, long pollIntervalMillis, Supplier<Object> supplier) {
-        compareWhilePolling(expected, null, pollIntervalMillis, supplier);
+    public static void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
+        pollAndCompare(expected, null, pollIntervalInMillis, supplier);
     }
 
-    public static void compareWhilePolling(Object expected, Integer pollDurationInSeconds, Long pollIntervalMillis, Supplier<Object> supplier) {
+    public static void pollAndCompare(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
         Object result = new MethodPoller<>()
-                .duration(pollDurationInSeconds, pollIntervalMillis)
+                .duration(pollDurationInSeconds, pollIntervalInMillis)
                 .method(supplier)
                 .until(p -> {
                     try {

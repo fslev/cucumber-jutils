@@ -18,7 +18,7 @@ public class PollerSteps {
 
     @Then("poll until random generated number (\\d+) is found")
     public void pollFor(int expected) {
-        Cucumbers.compareWhilePolling(expected, () -> generateRandom());
+        Cucumbers.pollAndCompare(expected, () -> generateRandom());
     }
 
     public int generateRandom() {
