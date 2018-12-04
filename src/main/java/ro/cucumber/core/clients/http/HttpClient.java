@@ -49,7 +49,7 @@ public class HttpClient {
     private String address;
     private URIBuilder uriBuilder;
     private Map<String, String> headers;
-    private String entity;
+    private String requestEntity;
     private Method method;
     private SSLContext sslContext;
     private HostnameVerifier hostnameVerifier;
@@ -65,7 +65,7 @@ public class HttpClient {
         this.address = builder.address;
         this.uriBuilder = builder.uriBuilder;
         this.headers = builder.headers;
-        this.entity = builder.entity;
+        this.requestEntity = builder.requestEntity;
         this.method = builder.method;
         this.sslContext = builder.sslContext;
         this.hostnameVerifier = builder.hostnameVerifier;
@@ -141,7 +141,7 @@ public class HttpClient {
             case POST:
                 HttpPost post = new HttpPost(url);
                 try {
-                    post.setEntity(new StringEntity(entity != null ? entity : ""));
+                    post.setEntity(new StringEntity(requestEntity != null ? requestEntity : ""));
                 } catch (UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 }
@@ -150,7 +150,7 @@ public class HttpClient {
             case PUT:
                 HttpPut put = new HttpPut(url);
                 try {
-                    put.setEntity(new StringEntity(entity != null ? entity : ""));
+                    put.setEntity(new StringEntity(requestEntity != null ? requestEntity : ""));
                 } catch (UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 }
@@ -171,7 +171,7 @@ public class HttpClient {
             case PATCH:
                 HttpPatch patch = new HttpPatch(url);
                 try {
-                    patch.setEntity(new StringEntity(entity != null ? entity : ""));
+                    patch.setEntity(new StringEntity(requestEntity != null ? requestEntity : ""));
                 } catch (UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 }
@@ -208,7 +208,7 @@ public class HttpClient {
         private String address;
         private URIBuilder uriBuilder = new URIBuilder();
         private Map<String, String> headers = new HashMap<>();
-        private String entity;
+        private String requestEntity;
         private Method method;
         private SSLContext sslContext;
         private HostnameVerifier hostnameVerifier;
@@ -270,7 +270,7 @@ public class HttpClient {
         }
 
         public Builder entity(String entity) {
-            this.entity = entity;
+            this.requestEntity = entity;
             return this;
         }
 
@@ -308,7 +308,7 @@ public class HttpClient {
     public String toString() {
         return "HttpClient{" + "timeout=" + timeout + ", proxyHost=" + proxyHost + ", address='"
                 + address + '\'' + ", uriBuilder=" + uriBuilder + ", headers=" + headers
-                + ", entity='" + entity + '\'' + ", method=" + method + '}';
+                + ", requestEntity='" + requestEntity + '\'' + ", method=" + method + '}';
     }
 }
 
