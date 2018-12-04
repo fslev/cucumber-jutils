@@ -169,7 +169,13 @@ public class HttpClient {
                 request = new HttpHead(url);
                 break;
             case PATCH:
-                request = new HttpPatch(url);
+                HttpPatch patch = new HttpPatch(url);
+                try {
+                    patch.setEntity(new StringEntity(entity != null ? entity : ""));
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+                request = patch;
                 break;
             default:
                 throw new IllegalStateException("Invalid HTTP method");
