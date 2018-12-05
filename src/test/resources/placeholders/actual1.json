@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "body": {
+    "orderType": "KVM"
+  },
+  "headers": {
+    "Content-type": "application/json",
+    "Accept": "application/json"
+  }
+}

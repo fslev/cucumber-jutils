@@ -1,0 +1,8 @@
+{
+  "status": "#[status]",
+  "body": #[body],
+  "headers": {
+    "Content-type": "#[contentType]",
+    "Accept": "#[accept]"
+  }
+}

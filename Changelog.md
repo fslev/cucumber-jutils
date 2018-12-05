@@ -1,3 +1,9 @@
+### 2.0.3
+Bug fixes  
+Improve Cucumber.compare  
+Refactoring  
+
+ 
 ### 2.0.2
 Refactoring  
 Add default data table converter: JacksonTableTransformer  
