@@ -1,11 +1,13 @@
 package ro.cucumber.core.context.compare;
 
+import ro.cucumber.core.clients.http.HttpResponseWrapper;
 import ro.cucumber.core.context.config.CustomInjectorSource;
 import ro.cucumber.core.context.props.ScenarioProps;
 import ro.cucumber.core.engineering.compare.Compare;
 import ro.cucumber.core.engineering.poller.MethodPoller;
 import java.util.Map;
 import java.util.function.Supplier;
+import org.apache.http.HttpResponse;
 
 public class Cucumbers {
 
@@ -13,6 +15,7 @@ public class Cucumbers {
     }
 
     public static void compare(Object expected, Object actual) {
+        actual = adaptObjectToComparison(actual);
         Map<String, String> placeholdersAndValues = new Compare(expected, actual).compare();
         ScenarioProps scenarioProps = getScenarioProps();
         placeholdersAndValues.forEach(scenarioProps::put);
@@ -47,5 +50,9 @@ public class Cucumbers {
 
     private static ScenarioProps getScenarioProps() {
         return CustomInjectorSource.getContextInjector().getInstance(ScenarioProps.class);
+    }
+
+    private static Object adaptObjectToComparison(Object obj) {
+        return obj instanceof HttpResponse ? new HttpResponseWrapper((HttpResponse) obj) : obj;
     }
 }
