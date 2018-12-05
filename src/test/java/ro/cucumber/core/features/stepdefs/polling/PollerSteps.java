@@ -16,7 +16,7 @@ public class PollerSteps {
         this.max = max;
     }
 
-    @Then("poll until random generated number (\\d+) is found")
+    @Then("poll until random generated number {int} is found")
     public void pollFor(int expected) {
         Cucumbers.pollAndCompare(expected, () -> generateRandom());
     }

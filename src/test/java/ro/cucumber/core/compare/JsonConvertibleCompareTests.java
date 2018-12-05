@@ -1,10 +1,13 @@
 package ro.cucumber.core.compare;
 
-import org.junit.Test;
 import ro.cucumber.core.engineering.compare.JsonConvertibleObjectCompare;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.junit.Test;
 
 public class JsonConvertibleCompareTests {
 
@@ -23,23 +26,63 @@ public class JsonConvertibleCompareTests {
         compare.compare();
     }
 
+    @Test
+    public void compareLists_nonextensible() throws CompareException {
+        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
+        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, false, false);
+        compare.compare();
+    }
+
     @Test(expected = AssertionError.class)
-    public void compareLists_nonExtensible() throws CompareException {
-        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "d"});
-        List<String> actual = Arrays.asList(new String[]{"d", "a", "c", "b", "e"});
+    public void compareLists_nonextensible_negative() throws CompareException {
+        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
+        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, false, false);
+        compare.compare();
+    }
+
+    @Test
+    public void compareLists_arrays_strict_order() throws CompareException {
+        List<String> expected = Arrays.asList(new String[]{"c", "a", "c", "b"});
+        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, true, true);
+        compare.compare();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareLists_arrays_strict_order_negative() throws CompareException {
+        List<String> expected = Arrays.asList(new String[]{"c", "a", "b", "c"});
+        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, true, true);
+        compare.compare();
+    }
+
+    @Test
+    public void compareStrings() throws CompareException {
+        String expected = "{\"a\":\"some val1\"}";
+        String actual = "{\"b\":120,\"a\":\"some val1\"}";
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        compare.compare();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareStrings_negative() throws CompareException {
+        String expected = "{\"a\":\"some val1\"}";
+        String actual = "{\"b\":120,\"a\":\"some val2\"}";
         JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
         compare.compare();
     }
 
     @Test
     public void compareListsOfMaps() throws CompareException {
-        List<Map<String, String>> expected = new ArrayList<>();
-        List<Map<String, String>> actual = new ArrayList<>();
+        List<Map<String, Object>> expected = new ArrayList<>();
+        List<Map<String, Object>> actual = new ArrayList<>();
         //Fill expected
-        Map<String, String> map1 = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
         map1.put("firstName", "John");
-        map1.put("lastName", "Davids");
-        Map<String, String> map2 = new HashMap<>();
+        map1.put("lastName", null);
+        Map<String, Object> map2 = new HashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", ".+1");
         expected.add(map1);
@@ -47,7 +90,39 @@ public class JsonConvertibleCompareTests {
         //Fill actual
         map1 = new HashMap<>();
         map1.put("firstName", "John");
-        map1.put("lastName", "Davids");
+        map1.put("lastName", null);
+        map2 = new HashMap<>();
+        map2.put("firstName", "John1");
+        map2.put("lastName", "Davids1");
+        map2.put("address", "blah blah");
+        Map<String, Object> map3 = new HashMap<>();
+        map3.put("1", 2);
+        map3.put("3", 4);
+        actual.add(map1);
+        actual.add(map2);
+        actual.add(map3);
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        compare.compare();
+    }
+
+    @Test
+    public void compareListsOfMaps_nonExtensible() throws CompareException {
+        List<Map<String, Object>> expected = new ArrayList<>();
+        List<Map<String, Object>> actual = new ArrayList<>();
+        //Fill expected
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("firstName", "John");
+        map1.put("lastName", null);
+        Map<String, Object> map2 = new HashMap<>();
+        map2.put("firstName", "John1");
+        map2.put("lastName", ".+1");
+        map2.put("!.*", ".*");
+        expected.add(map1);
+        expected.add(map2);
+        //Fill actual
+        map1 = new HashMap<>();
+        map1.put("firstName", "John");
+        map1.put("lastName", null);
         map2 = new HashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", "Davids1");
@@ -58,24 +133,27 @@ public class JsonConvertibleCompareTests {
     }
 
     @Test(expected = AssertionError.class)
-    public void compareListsOfMaps_nonExtensible() throws CompareException {
-        List<Map<String, String>> expected = new ArrayList<>();
-        List<Map<String, String>> actual = new ArrayList<>();
+    public void compareListsOfMaps_nonExtensible_negative() throws CompareException {
+        List<Map<String, Object>> expected = new ArrayList<>();
+        List<Map<String, Object>> actual = new ArrayList<>();
         //Fill expected
-        Map<String, String> map1 = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
         map1.put("firstName", "John");
-        Map<String, String> map2 = new HashMap<>();
+        map1.put("lastName", null);
+        Map<String, Object> map2 = new HashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", ".+1");
+        map2.put("!.*", ".*");
         expected.add(map1);
         expected.add(map2);
         //Fill actual
         map1 = new HashMap<>();
         map1.put("firstName", "John");
-        map1.put("lastName", "Davids");
+        map1.put("lastName", null);
         map2 = new HashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", "Davids1");
+        map2.put("address", "street address");
         actual.add(map1);
         actual.add(map2);
         JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);

@@ -7,10 +7,10 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Ignore;
 import org.junit.Test;
 
+@Ignore
 public class MethodPollerTest {
 
     @Test
-    @Ignore
     public void testPollerForResult() {
         int expected = 3;
         int result = new MethodPoller<Integer>()
@@ -21,7 +21,6 @@ public class MethodPollerTest {
     }
 
     @Test
-    @Ignore
     public void testPollerTimeout() {
         int expected = 5;
         int result = new MethodPoller<Integer>()
@@ -32,7 +31,6 @@ public class MethodPollerTest {
     }
 
     @Test
-    @Ignore
     public void testPollerDurationTimeout() {
         int expected = 5;
         int result = new MethodPoller<Integer>()
@@ -43,7 +41,6 @@ public class MethodPollerTest {
     }
 
     @Test
-    @Ignore
     public void testPollerInterval() {
         int expected = 5;
         int result = new MethodPoller<Integer>()

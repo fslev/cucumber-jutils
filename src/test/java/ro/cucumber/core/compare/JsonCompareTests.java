@@ -1,13 +1,11 @@
 package ro.cucumber.core.compare;
 
-import org.junit.Test;
 import ro.cucumber.core.engineering.compare.JsonCompare;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
-
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 public class JsonCompareTests {
 
@@ -38,6 +36,24 @@ public class JsonCompareTests {
     }
 
     @Test
+    public void compareSimpleJson_checkNoExtraFieldsExist() throws CompareException {
+        String expected = "{\"a\":\"val2\",\"c\":\"val1\",\"!.*\":\".*\"}";
+        String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
+        assertTrue(symbols.isEmpty());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareSimpleJson_checkNoExtraFieldsExistNegative() throws CompareException {
+        String expected = "{\"a\":\"val2\",\"c\":\"val1\",\"!.*\":\".*\"}";
+        String actual = "{\"a\":\"val2\",\"c\":\"val1\",\"d\":\"val1\"}";
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
+        assertTrue(symbols.isEmpty());
+    }
+
+    @Test
     public void compareSimpleJsonWithAssignSymbols() throws CompareException {
         String expected = "{\"!b\":\"~[sym1]\",\"a\":\"~[sym2]\",\"c\":\"~[sym3]\"}";
         String actual = "{\"a\":\"val2\",\"d\":\"val3\",\"c\":\"val1\"}";
@@ -55,6 +71,23 @@ public class JsonCompareTests {
         JsonCompare matcher = new JsonCompare(expected, actual);
         Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
+    }
+
+    @Test
+    public void compareJsonArray_checkNoExtraElementsExist() throws CompareException {
+        String expected = "{\"b\":\"val1\",\"a\":[1,2,3,4,\"!.*\"]}";
+        String actual = "{\"a\":[4,3,2,1],\"b\":\"val1\"}";
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
+        assertTrue(symbols.isEmpty());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareJsonArray_checkNoExtraElementsExist_negative() throws CompareException {
+        String expected = "{\"b\":\"val1\",\"a\":[1,2,3,4,\"!.*\"]}";
+        String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        matcher.compare();
     }
 
     @Test

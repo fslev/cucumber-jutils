@@ -103,8 +103,8 @@ public class CompareTests {
         assertEquals(2, symbols.size());
     }
 
-    @Test(expected = AssertionError.class)
-    public void compareJsonConvertible_nonExtensible() {
+    @Test
+    public void compareJsonConvertible_extensible() {
         List<Map<String, String>> expected = new ArrayList<>();
         List<Map<String, String>> actual = new ArrayList<>();
         //Fill expected
