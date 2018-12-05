@@ -4,6 +4,7 @@ import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import ro.cucumber.core.context.compare.Cucumbers;
 import ro.cucumber.core.context.config.CustomDataTable;
+import ro.cucumber.core.context.props.PlaceholderFiller;
 import ro.cucumber.core.engineering.utils.ResourceUtils;
 
 @ScenarioScoped
@@ -15,7 +16,7 @@ public class CompareSteps {
 
     @Then("COMPARE {cstring} from file path {cstring}")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
-        Cucumbers.compare(expected, ResourceUtils.read(filePath));
+        Cucumbers.compare(expected, new PlaceholderFiller(ResourceUtils.read(filePath)).fill());
     }
 
     @Then("COMPARE {cstring} with")

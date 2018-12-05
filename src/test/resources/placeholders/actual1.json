@@ -4,7 +4,7 @@
     "orderType": "KVM"
   },
   "headers": {
-    "Content-type": "application/json",
-    "Accept": "application/json"
+    "Content-type": "#[contentType]",
+    "Accept": "#[accept]"
   }
 }
