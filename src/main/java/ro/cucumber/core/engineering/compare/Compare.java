@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import static org.junit.Assert.fail;
 
-public class Compare implements SymbolsExtractable {
+public class Compare implements Placeholdable {
     protected Object expected;
     protected Object actual;
 
@@ -21,7 +21,7 @@ public class Compare implements SymbolsExtractable {
         if (nullsMatch()) {
             return new HashMap<>();
         }
-        SymbolsExtractable matcher;
+        Placeholdable matcher;
         try {
             matcher = new JsonCompare(expected, actual);
         } catch (Exception e) {

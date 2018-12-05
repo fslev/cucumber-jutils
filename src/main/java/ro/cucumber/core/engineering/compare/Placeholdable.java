@@ -2,10 +2,10 @@ package ro.cucumber.core.engineering.compare;
 
 import java.util.Map;
 
-public interface SymbolsExtractable {
+public interface Placeholdable {
 
     /**
-     * @return A Map of symbol names with their corresponding values
+     * @return A Map of placeholders names with their corresponding values
      */
     Map<String, String> compare();
 }

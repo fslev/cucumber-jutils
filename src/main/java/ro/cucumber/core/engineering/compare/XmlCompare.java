@@ -10,7 +10,7 @@ import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.DifferenceEvaluators;
 import org.xmlunit.diff.ElementSelectors;
 
-public class XmlCompare implements SymbolsExtractable {
+public class XmlCompare implements Placeholdable {
 
     private String expected;
     private String actual;
