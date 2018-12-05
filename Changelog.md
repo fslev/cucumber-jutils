@@ -1,7 +1,8 @@
-### 2.0.3
-Bug fixes  
+### 2.1.0
+Add more step defs for reading and compare contents from files  
 Improve Cucumber.compare  
 Refactoring  
+Bug fixes
 
  
 ### 2.0.2
