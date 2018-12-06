@@ -1,3 +1,7 @@
+### 2.2.0
+Revert to cucumber-jvm 3.0.2 due to some issues. Ex:  
+https://github.com/cucumber/cucumber-jvm/issues/1515
+
 ### 2.1.0
 Add more step defs for reading and compare contents from files  
 Improve Cucumber.compare  
