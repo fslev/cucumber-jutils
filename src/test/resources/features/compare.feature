@@ -79,10 +79,11 @@ Feature: Test comparator
     Given param status=200
     And param contentType=application/json
     And param accept=application/json
+    And param orderType=KVM
     And param body=
     """
 {
-  "orderType": "KVM"
+  "orderType": "#[orderType]"
 }
     """
     And param expected from file path placeholders/expected1.json
