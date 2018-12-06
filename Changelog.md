@@ -1,6 +1,10 @@
 ### 2.2.0
-Revert to cucumber-jvm 3.0.2 due to some issues. Ex:  
-https://github.com/cucumber/cucumber-jvm/issues/1515
+Revert to cucumber-jvm 3.0.2 due to some issues on both cucumber-jvm and Idea:  
+https://github.com/cucumber/cucumber-jvm/issues/1515  
+https://github.com/cucumber/cucumber-jvm/issues/1514  
+https://youtrack.jetbrains.com/issue/IDEA-203098  
+https://youtrack.jetbrains.com/issue/IDEA-203099  
+https://youtrack.jetbrains.com/issue/IDEA-203395  
 
 ### 2.1.0
 Add more step defs for reading and compare contents from files  
