@@ -20,7 +20,6 @@ public class SqlSteps {
 
     @Given("SQL data source from file path {cstring}")
     public void setDataSource(String filePath) throws IOException {
-        result = null;
         dataSource = ResourceUtils.readProps(filePath);
         SqlClient.Builder builder = new SqlClient.Builder();
         builder.driver(dataSource.getProperty("driver").trim())
