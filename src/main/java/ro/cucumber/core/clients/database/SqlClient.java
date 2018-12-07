@@ -1,4 +1,4 @@
-package ro.cucumber.core.clients.database.mysql;
+package ro.cucumber.core.clients.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,16 +13,16 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MysqlClient {
-    private static int MAX_ROWS = 100;
-    private Logger log = LogManager.getLogger();
-    private String url;
-    private String user;
-    private String pwd;
-    private String driverClassName;
-    private Connection conn;
+public class SqlClient {
+    protected static int MAX_ROWS = 100;
+    protected Logger log = LogManager.getLogger();
+    protected String url;
+    protected String user;
+    protected String pwd;
+    protected String driverClassName;
+    protected Connection conn;
 
-    private MysqlClient(Builder builder) {
+    protected SqlClient(Builder builder) {
         this.url = builder.url;
         this.user = builder.user;
         this.pwd = builder.pwd;
@@ -36,7 +36,8 @@ public class MysqlClient {
     }
 
     public List<Map<String, String>> executeQuery(String sql) {
-        log.debug("---- MYSQL REQUEST ----");
+        log.debug("---- SQL REQUEST ----");
+        log.debug("Driver: {}", driverClassName);
         log.debug("Database url: {}", url);
         log.debug("SQL query: {}", sql);
         Statement st = null;
@@ -104,8 +105,8 @@ public class MysqlClient {
             return this;
         }
 
-        public MysqlClient build() {
-            return new MysqlClient(this);
+        public SqlClient build() {
+            return new SqlClient(this);
         }
     }
 }
