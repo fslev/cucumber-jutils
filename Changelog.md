@@ -10,7 +10,7 @@ Internal refactoring
 Add logging to Mysql client    
 
 ### 2.1.0
-Add more step defs for reading and compare contents from files  
+Add more step definitions for reading and comparing contents from files  
 Improve Cucumber.compare  
 Refactoring  
 Bug fixes
@@ -23,7 +23,7 @@ Add sslContext, requestRetryHandler and serviceRetryStrategy build methods
 HttpClient now supports PATCH
 
 ### 2.0.1
-Add interceptor logger http client  
+Add interceptor loggers to http client  
 Colorize logging
 
 ### 2.0.0
