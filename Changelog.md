@@ -1,5 +1,5 @@
 ### 2.2.0
-Revert to cucumber-jvm **3.0.2** due to some issues on both cucumber-jvm 4.2.0 and Intellij Idea Cucumber for Java plugin:  
+Revert to cucumber-jvm **3.0.2** due to some issues on both cucumber-jvm 4.2.0 and Intellij Idea:  
 https://github.com/cucumber/cucumber-jvm/issues/1515  
 https://github.com/cucumber/cucumber-jvm/issues/1514  
 https://youtrack.jetbrains.com/issue/IDEA-203098  
