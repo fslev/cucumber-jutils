@@ -5,6 +5,7 @@ https://github.com/cucumber/cucumber-jvm/issues/1514
 https://youtrack.jetbrains.com/issue/IDEA-203098  
 https://youtrack.jetbrains.com/issue/IDEA-203099  
 https://youtrack.jetbrains.com/issue/IDEA-203395  
+
 Add more helper methods to Cucumbers class    
 Internal refactoring  
 Add logging to Mysql client    
