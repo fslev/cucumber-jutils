@@ -5,9 +5,9 @@ https://github.com/cucumber/cucumber-jvm/issues/1514
 https://youtrack.jetbrains.com/issue/IDEA-203098  
 https://youtrack.jetbrains.com/issue/IDEA-203099  
 https://youtrack.jetbrains.com/issue/IDEA-203395  
-Refine Cucumbers.compare
-Refactoring  
-
+Refine Cucumbers.compare  
+Internal refactoring  
+Add logging to Mysql client    
 
 ### 2.1.0
 Add more step defs for reading and compare contents from files  
