@@ -11,7 +11,7 @@ Add logging to Mysql client
 
 ### 2.1.0
 Add more step definitions for reading and comparing contents from files  
-Improve Cucumber.compare  
+Improve Cucumbers.compare  
 Refactoring  
 Bug fixes
 
