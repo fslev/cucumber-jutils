@@ -17,15 +17,23 @@ public class JsonCompare implements Placeholdable {
     private JsonNode expected;
     private JsonNode actual;
     private CustomJsonComparator comparator = new CustomJsonComparator();
-    private boolean extensibleObject;
-    private boolean extensibleArray;
+    private boolean nonExtensibleObject;
+    private boolean nonExtensibleArray;
     private boolean arrayStrictOrder;
 
     public JsonCompare(Object extpected, Object actual) throws CompareException {
-        this(extpected, actual, true, true, false);
+        this(extpected, actual, false, false, false);
     }
 
-    public JsonCompare(Object expected, Object actual, boolean extensibleObject, boolean extensibleArray,
+    public JsonCompare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws CompareException {
+        this(expected, actual, nonExtensibleObject, nonExtensibleArray, false);
+    }
+
+    public JsonCompare(Object expected, Object actual, boolean arrayStrictOrder) throws CompareException {
+        this(expected, actual, false, false, arrayStrictOrder);
+    }
+
+    public JsonCompare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray,
                        boolean arrayStrictOrder) throws CompareException {
         try {
             this.expected = JsonUtils.toJson(expected.toString());
@@ -36,8 +44,8 @@ public class JsonCompare implements Placeholdable {
                     && !this.actual.getNodeType().equals(JsonNodeType.ARRAY)) {
                 throw new CompareException("Malformed JSON");
             }
-            this.extensibleObject = extensibleObject;
-            this.extensibleArray = extensibleArray;
+            this.nonExtensibleObject = nonExtensibleObject;
+            this.nonExtensibleArray = nonExtensibleArray;
             this.arrayStrictOrder = arrayStrictOrder;
         } catch (IOException e) {
             throw new CompareException("Malformed JSON");
@@ -52,10 +60,10 @@ public class JsonCompare implements Placeholdable {
 
     private CompareMode[] compareModes() {
         Set<CompareMode> modes = new HashSet<>();
-        if (!extensibleObject) {
+        if (nonExtensibleObject) {
             modes.add(CompareMode.JSON_OBJECT_NON_EXTENSIBLE);
         }
-        if (!extensibleArray) {
+        if (nonExtensibleArray) {
             modes.add(CompareMode.JSON_ARRAY_NON_EXTENSIBLE);
         }
         if (arrayStrictOrder) {

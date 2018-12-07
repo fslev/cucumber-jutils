@@ -30,7 +30,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_nonextensible() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, false, false);
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, true, false);
         compare.compare();
     }
 
@@ -38,7 +38,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_nonextensible_negative() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, false, false);
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, true);
         compare.compare();
     }
 
@@ -46,7 +46,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_arrays_strict_order() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"c", "a", "c", "b"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, true, true);
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, false, true);
         compare.compare();
     }
 
@@ -54,7 +54,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_arrays_strict_order_negative() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"c", "a", "b", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, true, true);
+        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, false, true);
         compare.compare();
     }
 

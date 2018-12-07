@@ -7,10 +7,18 @@ import static org.junit.Assert.fail;
 public class Compare implements Placeholdable {
     protected Object expected;
     protected Object actual;
+    private boolean nonExtensibleObject;
+    private boolean nonExtensibleArray;
 
     public Compare(Object expected, Object actual) {
+        this(expected, actual, false, false);
+    }
+
+    public Compare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         this.expected = expected;
         this.actual = actual;
+        this.nonExtensibleObject = nonExtensibleObject;
+        this.nonExtensibleArray = nonExtensibleArray;
     }
 
     @Override
@@ -23,10 +31,10 @@ public class Compare implements Placeholdable {
         }
         Placeholdable matcher;
         try {
-            matcher = new JsonCompare(expected, actual);
+            matcher = new JsonCompare(expected, actual, nonExtensibleObject, nonExtensibleArray);
         } catch (Exception e) {
             try {
-                matcher = new JsonConvertibleObjectCompare(expected, actual);
+                matcher = new JsonConvertibleObjectCompare(expected, actual, nonExtensibleObject, nonExtensibleArray);
             } catch (Exception e1) {
                 try {
                     matcher = new XmlCompare(expected, actual);

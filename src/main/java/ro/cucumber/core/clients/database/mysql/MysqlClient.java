@@ -1,6 +1,5 @@
 package ro.cucumber.core.clients.database.mysql;
 
-import ro.cucumber.core.context.config.CustomDataTable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -11,38 +10,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MysqlClient {
     private static int MAX_ROWS = 100;
+    private Logger log = LogManager.getLogger();
     private String url;
     private String user;
     private String pwd;
-    private String driver;
+    private String driverClassName;
     private Connection conn;
 
     private MysqlClient(Builder builder) {
         this.url = builder.url;
         this.user = builder.user;
         this.pwd = builder.pwd;
-        this.driver = builder.driver;
+        this.driverClassName = builder.driver;
         try {
-            Class.forName(driver);
+            Class.forName(driverClassName);
             this.conn = DriverManager.getConnection(url, user, pwd);
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public CustomDataTable executeQuery(String sql) {
+    public List<Map<String, String>> executeQuery(String sql) {
+        log.debug("---- MYSQL REQUEST ----");
+        log.debug("Database url: {}", url);
+        log.debug("SQL query: {}", sql);
         Statement st = null;
         ResultSet rs = null;
+        List<Map<String, String>> tableData = new ArrayList<>();
         try {
             st = conn.createStatement();
             st.setMaxRows(MAX_ROWS);
             rs = st.executeQuery(sql);
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
-            List<Map<String, String>> tableData = new ArrayList<>();
             while (rs.next()) {
                 Map<String, String> rowData = new HashMap<>();
                 for (int i = 1; i <= columns; i++) {
@@ -51,7 +56,7 @@ public class MysqlClient {
                 }
                 tableData.add(rowData);
             }
-            return new CustomDataTable(tableData);
+            return tableData;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -65,6 +70,8 @@ public class MysqlClient {
                 if (conn != null) {
                     conn.close();
                 }
+                log.debug("SQL result: {}", tableData);
+                log.debug("-----------------------");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -75,7 +82,7 @@ public class MysqlClient {
         private String url;
         private String user;
         private String pwd;
-        private String driver;
+        private String driver = "com.mysql.jdbc.Driver";
 
         public Builder url(String url) {
             this.url = url;

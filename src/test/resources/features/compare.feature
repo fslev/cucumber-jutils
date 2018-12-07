@@ -56,9 +56,10 @@ Feature: Test comparator
       |  |
 
   Scenario: Compare lists
-    Given param a=replaced_value
+    Given param a=cherries
+    And param header=fruits
     And table expectedTable1=
-      | pineapples | cherries | .* | strawberries |
+      | pineapples | #[a] | .* | strawberries |
     And table expectedTable2=
       | fruits       |
       | pineapples   |
@@ -69,7 +70,7 @@ Feature: Test comparator
     Then COMPARE #[expectedTable1] against table
       | apples | strawberries | pineapples | cherries |
     And COMPARE #[expectedTable2] against table
-      | fruits       |
+      | #[header]    |
       | apples       |
       | strawberries |
       | pineapples   |

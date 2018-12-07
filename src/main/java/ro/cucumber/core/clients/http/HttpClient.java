@@ -39,11 +39,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class HttpClient {
-    private Logger log = LogManager.getLogger();
     private Integer timeout;
     private HttpHost proxyHost;
     private String address;

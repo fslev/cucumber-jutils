@@ -18,16 +18,25 @@ public class JsonConvertibleObjectCompare implements Placeholdable {
     private JsonNode expected;
     private JsonNode actual;
     private CustomJsonComparator comparator = new CustomJsonComparator();
-    private boolean extensibleObject;
-    private boolean extensibleArray;
+    private boolean nonExtensibleObject;
+    private boolean nonExtensibleArray;
     private boolean arrayStrictOrder;
 
     public JsonConvertibleObjectCompare(Object expected, Object actual) throws CompareException {
-        this(expected, actual, true, true, false);
+        this(expected, actual, false, false, false);
     }
 
-    public JsonConvertibleObjectCompare(Object expected, Object actual, boolean extensibleObject,
-                                        boolean extensibleArray, boolean arrayStrictOrder) throws CompareException {
+    public JsonConvertibleObjectCompare(Object expected, Object actual, boolean nonExtensibleObject,
+                                        boolean nonExtensibleArray) throws CompareException {
+        this(expected, actual, nonExtensibleObject, nonExtensibleArray, false);
+    }
+
+    public JsonConvertibleObjectCompare(Object expected, Object actual, boolean arrayStrictOrder) throws CompareException {
+        this(expected, actual, false, false, arrayStrictOrder);
+    }
+
+    public JsonConvertibleObjectCompare(Object expected, Object actual, boolean nonExtensibleObject,
+                                        boolean nonExtensibleArray, boolean arrayStrictOrder) throws CompareException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
 
@@ -40,8 +49,8 @@ public class JsonConvertibleObjectCompare implements Placeholdable {
                     && !this.actual.getNodeType().equals(JsonNodeType.ARRAY)) {
                 throw new CompareException("No JSON string representation");
             }
-            this.extensibleObject = extensibleObject;
-            this.extensibleArray = extensibleArray;
+            this.nonExtensibleObject = nonExtensibleObject;
+            this.nonExtensibleArray = nonExtensibleArray;
             this.arrayStrictOrder = arrayStrictOrder;
         } catch (IOException e) {
             throw new CompareException("No JSON string representation");
@@ -56,10 +65,10 @@ public class JsonConvertibleObjectCompare implements Placeholdable {
 
     private CompareMode[] compareModes() {
         Set<CompareMode> modes = new HashSet<>();
-        if (!extensibleObject) {
+        if (nonExtensibleObject) {
             modes.add(CompareMode.JSON_OBJECT_NON_EXTENSIBLE);
         }
-        if (!extensibleArray) {
+        if (nonExtensibleArray) {
             modes.add(CompareMode.JSON_ARRAY_NON_EXTENSIBLE);
         }
         if (arrayStrictOrder) {

@@ -1,7 +1,5 @@
 package ro.cucumber.core.basicstepdefs.http;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -10,20 +8,15 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.datatable.DataTable;
 import ro.cucumber.core.clients.http.HttpClient;
 import ro.cucumber.core.clients.http.Method;
+import ro.cucumber.core.context.compare.Cucumbers;
 import java.util.List;
 import java.util.Map;
-import com.google.inject.Inject;
+import org.apache.http.HttpResponse;
 
 @ScenarioScoped
 public class HttpClientSteps {
-    private Scenario scenario;
-    @Inject
-    private HttpClient.Builder builder;
-
-    @Before
-    public void initScenario(Scenario scenario) {
-        this.scenario = scenario;
-    }
+    private HttpClient.Builder builder = new HttpClient.Builder();
+    private HttpResponse response;
 
     @Given("HTTP REST service at address {string}")
     public void setAddress(String address) {
@@ -77,12 +70,12 @@ public class HttpClientSteps {
 
     @When("^HTTP execute$")
     public void execute() {
-        builder.build().execute();
+        this.response = builder.build().execute();
     }
 
     @Then("^HTTP compare response body with$")
     public void compareResponseBodyWith(String expected) {
-        scenario.write(expected);
+        Cucumbers.compare(expected, response);
     }
 
     @And("HTTP compare response status code with {int}")

@@ -11,11 +11,11 @@ import ro.cucumber.core.clients.http.Method;
 import ro.cucumber.core.context.props.PlaceholderFiller;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
@@ -63,7 +63,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
         // Custom data table type
         typeRegistry.defineDataTableType(
-                new DataTableType(CustomDataTable.class, new CustomDataTableTransformer()));
+                new DataTableType(List.class, new PlaceholdersDataTableTransformer()));
 
         // Needed especially for doc strings
         typeRegistry.defineDataTableType(new DataTableType(String.class,
@@ -82,22 +82,18 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
         }
     }
 
-    private static class CustomDataTableTransformer implements TableTransformer {
+    private static class PlaceholdersDataTableTransformer implements TableTransformer {
         @Override
-        public CustomDataTable transform(DataTable dataTable) {
-            List list = new ArrayList<>();
-            List<Map<String, String>> mapsWithDataList = dataTable.asMaps();
-            if (!mapsWithDataList.isEmpty()) {
-                mapsWithDataList.forEach((Map<String, String> mapData) -> {
-                    Map<String, String> map = new HashMap<>();
-                    mapData.forEach((k, v) -> map.put(k, new PlaceholderFiller(v).fill().toString()));
-                    list.add(map);
-                });
-            } else {
-                List<String> dataList = dataTable.asList();
-                dataList.forEach((String el) -> list.add(new PlaceholderFiller(el).fill().toString()));
-            }
-            return new CustomDataTable(list);
+        public List transform(DataTable dataTable) {
+            List<Map<String, String>> list = new ArrayList<>();
+            dataTable.asMaps().forEach(map -> {
+                list.add(map.entrySet().stream().collect(Collectors.toMap(
+                        e -> new PlaceholderFiller(e.getKey()).fill().toString(),
+                        e -> new PlaceholderFiller(e.getValue()).fill().toString())));
+            });
+            return !list.isEmpty() ? list : dataTable.asList().stream()
+                    .map(el -> new PlaceholderFiller(el).fill().toString())
+                    .collect(Collectors.toList());
         }
     }
 }

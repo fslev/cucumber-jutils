@@ -3,8 +3,10 @@ package ro.cucumber.core.clients;
 import ro.cucumber.core.clients.http.HttpClient;
 import ro.cucumber.core.clients.http.Method;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ServiceUnavailableRetryStrategy;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
@@ -26,11 +28,21 @@ public class HttpClientTest {
                 .serviceUnavailableRetryStrategy(new ServiceUnavailableRetryStrategy() {
                     @Override
                     public boolean retryRequest(HttpResponse response, int executionCount, HttpContext context) {
+                        String content = null;
                         try {
                             log.info("SERVICE retry: {}", executionCount);
-                            return executionCount < 3 && !EntityUtils.toString(response.getEntity()).equals("");
+                            content = EntityUtils.toString(response.getEntity());
+                            return !content.equals("") && executionCount < 3;
                         } catch (IOException e) {
                             throw new RuntimeException(e);
+                        } finally {
+                            if (content != null) {
+                                try {
+                                    response.setEntity(new StringEntity(content));
+                                } catch (UnsupportedEncodingException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
                         }
                     }
 

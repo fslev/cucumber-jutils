@@ -1,14 +1,14 @@
 package ro.cucumber.core.basicstepdefs.sql;
 
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import ro.cucumber.core.clients.database.mysql.MysqlClient;
 import ro.cucumber.core.context.compare.Cucumbers;
-import ro.cucumber.core.context.config.CustomDataTable;
+import ro.cucumber.core.engineering.utils.ResourceUtils;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 @ScenarioScoped
@@ -16,20 +16,12 @@ public class MysqlSteps {
 
     private MysqlClient client;
     private Properties dataSource;
-    private CustomDataTable result;
-    private Scenario scenario;
+    private List<Map<String, String>> result;
 
-    @Before
-    public void init(Scenario scenario) {
-        this.scenario = scenario;
-    }
-
-    @Given("MYSQL data source {cstring}")
+    @Given("MYSQL data source from file path {cstring}")
     public void setDataSource(String filePath) throws IOException {
         result = null;
-        dataSource = new Properties();
-        dataSource
-                .load(this.getClass().getClassLoader().getResourceAsStream("database/" + filePath));
+        dataSource = ResourceUtils.readProps(filePath);
         MysqlClient.Builder builder = new MysqlClient.Builder();
         builder.driver(dataSource.getProperty("driver").trim())
                 .user(dataSource.getProperty("username")).pwd(dataSource.getProperty("password"))
@@ -37,10 +29,9 @@ public class MysqlSteps {
         client = builder.build();
     }
 
-    @Then("MYSQL execute query {cstring} and compare result with")
-    public void executeQuery(String query, CustomDataTable expected) {
-        scenario.write("Executing query " + query);
+    @Then("MYSQL execute query \"{cstring}\" and compare result with")
+    public void executeQuery(String query, List expected) {
         result = client.executeQuery(query);
-        Cucumbers.compare(expected, result);
+        Cucumbers.compare(expected, result, false, true);
     }
 }
