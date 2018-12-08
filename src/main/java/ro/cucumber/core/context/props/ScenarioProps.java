@@ -11,7 +11,8 @@ public class ScenarioProps {
 
     public Object get(String key) {
         switch (key) {
-            case "UUID":
+            case "uid":
+            case "UID":
                 return getUUID();
             default:
                 return props.get(key);
