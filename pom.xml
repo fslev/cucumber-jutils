@@ -14,7 +14,7 @@
         <jsoncompare.version>2.0.4</jsoncompare.version>
         <xmlunit.version>2.6.0</xmlunit.version>
         <cucumber.version>3.0.2</cucumber.version>
-        <cucumber.expressions.version>6.0.1</cucumber.expressions.version>
+        <cucumber.expressions.version>6.1.0</cucumber.expressions.version>
         <guice.version>4.2.1</guice.version>
     </properties>
 
