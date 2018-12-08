@@ -2,6 +2,7 @@ package ro.cucumber.core.clients.http;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
@@ -20,7 +21,7 @@ public class HttpResponseLoggerInterceptor implements HttpResponseInterceptor {
     public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
         log.debug("--- HTTP RESPONSE ---");
         log.debug("Response STATUS: {}", response.getStatusLine());
-        log.debug("Response HEADERS: {}", response.getAllHeaders());
+        log.debug("Response HEADERS: {}", Arrays.asList(response.getAllHeaders()));
         log.debug("Response BODY:{}{}", () -> System.lineSeparator(), () -> {
             HttpEntity entity = response.getEntity();
             if (response == null) {

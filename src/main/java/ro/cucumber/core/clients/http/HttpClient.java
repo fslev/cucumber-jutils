@@ -182,9 +182,7 @@ public class HttpClient {
     }
 
     private void setHeaders(HttpRequestBase request) {
-        for (Map.Entry<String, String> entry : headers.entrySet()) {
-            request.setHeader(entry.getKey(), entry.getValue());
-        }
+        headers.entrySet().forEach(e->request.setHeader(e.getKey(),e.getValue()));
     }
 
     private void validateMethod() {

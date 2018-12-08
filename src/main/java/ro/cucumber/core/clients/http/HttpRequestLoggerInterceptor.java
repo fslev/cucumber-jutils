@@ -2,6 +2,7 @@ package ro.cucumber.core.clients.http;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
@@ -28,7 +29,7 @@ public class HttpRequestLoggerInterceptor implements HttpRequestInterceptor {
             HttpHost proxy = config.getProxy();
             return proxy != null ? proxy.toURI() : "N/A";
         });
-        log.debug("Request HEADERS: {}", request.getAllHeaders());
+        log.debug("Request HEADERS: {}", Arrays.asList(request.getAllHeaders()));
         log.debug("Request BODY:{}{}", () -> System.lineSeparator(), () -> {
             String content = null;
             HttpEntityEnclosingRequest entityEnclosingRequest;
