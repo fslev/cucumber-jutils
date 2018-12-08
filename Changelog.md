@@ -1,5 +1,6 @@
 ### 2.3.1
 Refactoring  
+Make HTTP and SQL clients extendable  
 
 ### 2.3.0
 Support for Postgresql and Sybase     

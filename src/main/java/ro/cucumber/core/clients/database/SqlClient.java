@@ -80,10 +80,10 @@ public class SqlClient {
     }
 
     public static class Builder {
-        private String url;
-        private String user;
-        private String pwd;
-        private String driver = "com.mysql.jdbc.Driver";
+        protected String url;
+        protected String user;
+        protected String pwd;
+        protected String driver = "com.mysql.jdbc.Driver";
 
         public Builder url(String url) {
             this.url = url;

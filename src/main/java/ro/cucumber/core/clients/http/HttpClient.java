@@ -41,22 +41,22 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
 public class HttpClient {
-    private Integer timeout;
-    private HttpHost proxyHost;
-    private String address;
-    private URIBuilder uriBuilder;
-    private Map<String, String> headers;
-    private String requestEntity;
-    private Method method;
-    private SSLContext sslContext;
-    private HostnameVerifier hostnameVerifier;
-    private HttpRequestRetryHandler requestRetryHandler;
-    private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
+    protected Integer timeout;
+    protected HttpHost proxyHost;
+    protected String address;
+    protected URIBuilder uriBuilder;
+    protected Map<String, String> headers;
+    protected String requestEntity;
+    protected Method method;
+    protected SSLContext sslContext;
+    protected HostnameVerifier hostnameVerifier;
+    protected HttpRequestRetryHandler requestRetryHandler;
+    protected ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
 
     private CloseableHttpClient client;
     private HttpRequestBase request;
 
-    private HttpClient(Builder builder) {
+    protected HttpClient(Builder builder) {
         this.proxyHost = builder.proxyHost;
         this.timeout = builder.timeout;
         this.address = builder.address;
@@ -200,17 +200,17 @@ public class HttpClient {
     }
 
     public static class Builder {
-        private Integer timeout;
-        private HttpHost proxyHost;
-        private String address;
-        private URIBuilder uriBuilder = new URIBuilder();
-        private Map<String, String> headers = new HashMap<>();
-        private String requestEntity;
-        private Method method;
-        private SSLContext sslContext;
-        private HostnameVerifier hostnameVerifier;
-        private HttpRequestRetryHandler requestRetryHandler;
-        private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
+        protected Integer timeout;
+        protected HttpHost proxyHost;
+        protected String address;
+        protected URIBuilder uriBuilder = new URIBuilder();
+        protected Map<String, String> headers = new HashMap<>();
+        protected String requestEntity;
+        protected Method method;
+        protected SSLContext sslContext;
+        protected HostnameVerifier hostnameVerifier;
+        protected HttpRequestRetryHandler requestRetryHandler;
+        protected ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
 
         public Builder useProxy(String proxyHost, int proxyPort, String proxyScheme) {
             this.proxyHost = new HttpHost(proxyHost, proxyPort, proxyScheme);
