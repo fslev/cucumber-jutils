@@ -48,7 +48,7 @@ public class HttpClientSteps {
         }
     }
 
-    @And("HTTP method {httpMethod}")
+    @And("HTTP method {Method}")
     public void setMethod(Method method) {
         builder.method(method);
     }

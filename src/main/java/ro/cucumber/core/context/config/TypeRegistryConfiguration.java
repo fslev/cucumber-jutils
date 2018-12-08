@@ -20,11 +20,8 @@ import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
-    private static final List<String> HTTP_METHOD_REGEXPS = Collections
-            .singletonList(Pattern.compile("(GET|POST|PUT|DELETE|OPTIONS|HEAD|TRACE)").pattern());
-
     private static final List<String> CSTRING_REGEXPS =
-            Collections.singletonList(Pattern.compile("\\s*.+").pattern());
+            Collections.singletonList(Pattern.compile(".+").pattern());
 
     private static final String CUSTOM_STRING = "cstring";
 
@@ -35,36 +32,14 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
     @Override
     public void configureTypeRegistry(TypeRegistry typeRegistry) {
-        typeRegistry.defineParameterType(
-                new ParameterType<>("httpMethod", HTTP_METHOD_REGEXPS, Method.class, (String s) -> {
-                    switch (s) {
-                        case "GET":
-                            return Method.GET;
-                        case "POST":
-                            return Method.POST;
-                        case "PUT":
-                            return Method.PUT;
-                        case "DELETE":
-                            return Method.DELETE;
-                        case "HEAD":
-                            return Method.HEAD;
-                        case "OPTIONS":
-                            return Method.OPTIONS;
-                        case "TRACE":
-                            return Method.TRACE;
-                        default:
-                            return null;
-                    }
-                }));
+        typeRegistry.defineParameterType(ParameterType.fromEnum(Method.class));
 
-        // special string type for parsing scenario and global placeholders
-        typeRegistry.defineParameterType(new ParameterType<>(CUSTOM_STRING, CSTRING_REGEXPS,
+        typeRegistry.defineParameterType(new ParameterType<>("cstring", CSTRING_REGEXPS,
                 Object.class, new SymbolsTransformer()));
 
         // Custom data table type
         typeRegistry.defineDataTableType(
                 new DataTableType(List.class, new PlaceholdersDataTableTransformer()));
-
         // Needed especially for doc strings
         typeRegistry.defineDataTableType(new DataTableType(String.class,
                 (DataTable dataTable) -> (new PlaceholderFiller(dataTable.cell(0, 0).trim())).fill()
@@ -77,8 +52,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             if (s == null) {
                 return null;
             }
-            Object result = new PlaceholderFiller(s.trim()).fill();
-            return result;
+            return new PlaceholderFiller(s.trim()).fill();
         }
     }
 
