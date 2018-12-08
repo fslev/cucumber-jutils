@@ -14,6 +14,9 @@ public class ScenarioProps {
             case "uid":
             case "UID":
                 return getUUID();
+            case "now":
+            case "NOW":
+                return getTimeInMillis();
             default:
                 return props.get(key);
         }
@@ -29,5 +32,9 @@ public class ScenarioProps {
 
     private String getUUID() {
         return UUID.randomUUID().toString();
+    }
+
+    private long getTimeInMillis() {
+        return System.currentTimeMillis();
     }
 }
