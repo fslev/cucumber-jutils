@@ -1,6 +1,9 @@
-### 2.3.1
+### 2.4.0
+Bug fixes  
+Add placeholder for curr time  
+Update cucumber expressions version  
 Refactoring  
-Make HTTP and SQL clients extendable  
+Make HTTP and SQL clients extendable
 
 ### 2.3.0
 Support for Postgresql and Sybase     
