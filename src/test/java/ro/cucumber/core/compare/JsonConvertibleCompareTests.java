@@ -1,6 +1,6 @@
 package ro.cucumber.core.compare;
 
-import ro.cucumber.core.engineering.compare.JsonConvertibleObjectCompare;
+import ro.cucumber.core.engineering.compare.JsonCompare;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,14 +15,14 @@ public class JsonConvertibleCompareTests {
     public void compareObjectsWithNoJsonRepresentation() throws CompareException {
         String expected = "a";
         String actual = "ab";
-        new JsonConvertibleObjectCompare(expected, actual);
+        new JsonCompare(expected, actual);
     }
 
     @Test
     public void compareLists() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 
@@ -30,7 +30,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_nonextensible() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, true, false);
+        JsonCompare compare = new JsonCompare(expected, actual, true, true, false);
         compare.compare();
     }
 
@@ -38,7 +38,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_nonextensible_negative() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, false, true);
+        JsonCompare compare = new JsonCompare(expected, actual, false, true);
         compare.compare();
     }
 
@@ -46,7 +46,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_arrays_strict_order() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"c", "a", "c", "b"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, false, true);
+        JsonCompare compare = new JsonCompare(expected, actual, true, false, true);
         compare.compare();
     }
 
@@ -54,7 +54,7 @@ public class JsonConvertibleCompareTests {
     public void compareLists_arrays_strict_order_negative() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"c", "a", "b", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual, true, false, true);
+        JsonCompare compare = new JsonCompare(expected, actual, true, false, true);
         compare.compare();
     }
 
@@ -62,7 +62,7 @@ public class JsonConvertibleCompareTests {
     public void compareStrings() throws CompareException {
         String expected = "{\"a\":\"some val1\"}";
         String actual = "{\"b\":120,\"a\":\"some val1\"}";
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 
@@ -70,7 +70,7 @@ public class JsonConvertibleCompareTests {
     public void compareStrings_negative() throws CompareException {
         String expected = "{\"a\":\"some val1\"}";
         String actual = "{\"b\":120,\"a\":\"some val2\"}";
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 
@@ -101,7 +101,7 @@ public class JsonConvertibleCompareTests {
         actual.add(map1);
         actual.add(map2);
         actual.add(map3);
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 
@@ -128,7 +128,7 @@ public class JsonConvertibleCompareTests {
         map2.put("lastName", "Davids1");
         actual.add(map1);
         actual.add(map2);
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 
@@ -156,7 +156,7 @@ public class JsonConvertibleCompareTests {
         map2.put("address", "street address");
         actual.add(map1);
         actual.add(map2);
-        JsonConvertibleObjectCompare compare = new JsonConvertibleObjectCompare(expected, actual);
+        JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 }
