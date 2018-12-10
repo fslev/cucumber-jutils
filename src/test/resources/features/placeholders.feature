@@ -5,10 +5,10 @@ Feature: Test placeholder fill
     Then Check filled string equals "Username is jtravolta and password is swordfish"
 
   Scenario: Test placeholder fill with scenario values
-    Given param animal=rabbit
+    Given param animal=r\"a$b\\"b[it
     And param location=forest
     And The string with scenario placeholders "The #[animal] is running through the #[location]"
-    Then Check filled string equals "The rabbit is running through the forest"
+    Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
 
   Scenario: Test placeholder fill with global and scenario values
     Given param animal=bear
