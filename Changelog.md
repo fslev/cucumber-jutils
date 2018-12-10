@@ -1,3 +1,6 @@
+### 2.5.0
+Remove HttpResponseWrapper. Is weak while used for comparing    
+
 ### 2.4.0
 Bug fixes  
 Add placeholder for curr time  
