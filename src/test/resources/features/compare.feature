@@ -1,10 +1,10 @@
 Feature: Test comparator
 
   Scenario: Compare simple values
-    Given param a=1
-    And param b=1
-    Then COMPARE #[a] with #[b]
-    And COMPARE 1 with 1
+    Given param a="1"
+    And param b="1"
+    Then COMPARE #[a] with "#[b]"
+    And COMPARE 1 with "1"
 
   Scenario: Compare jsons
     Given param json1 =
@@ -23,8 +23,8 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
-    Then COMPARE #[json1] with #[json2]
-    And COMPARE #[car] with BMW
+    Then COMPARE #[json1] with "#[json2]"
+    And COMPARE #[car] with "BMW"
     Then COMPARE #[json1] with
     """
   {
@@ -35,29 +35,29 @@ Feature: Test comparator
     """
 
   Scenario: Compare data tables
-    Given param a=replaced_value
+    Given param a="replaced_value"
     And table expectedTable=
       | firstName | lastName |
       | #[a]      | travolta |
       | sam       | .*       |
       | bruce     | ~[name]  |
 
-    Then COMPARE #[expectedTable] against table
+    Then COMPARE #[expectedTable] with table
       | firstName      | lastName |
       | replaced_value | travolta |
       | sam            | carter   |
       | bruce          | willis   |
-    And COMPARE #[name] with willis
+    And COMPARE #[name] with "willis"
 
   Scenario: Compare empty data tables
     Given table empty_table=
       |  |
-    Then COMPARE #[empty_table] against table
+    Then COMPARE #[empty_table] with table
       |  |
 
   Scenario: Compare lists
-    Given param a=cherries
-    And param header=fruits
+    Given param a="cherries"
+    And param header="fruits"
     And table expectedTable1=
       | pineapples | #[a] | .* | strawberries |
     And table expectedTable2=
@@ -67,9 +67,9 @@ Feature: Test comparator
       | .*           |
       | strawberries |
 
-    Then COMPARE #[expectedTable1] against table
+    Then COMPARE #[expectedTable1] with table
       | apples | strawberries | pineapples | cherries |
-    And COMPARE #[expectedTable2] against table
+    And COMPARE #[expectedTable2] with table
       | #[header]    |
       | apples       |
       | strawberries |
@@ -77,17 +77,17 @@ Feature: Test comparator
       | cherries     |
 
   Scenario: Compare resource content containing placeholders
-    Given param status=200
-    And param contentType=application/json
-    And param accept=application/json
-    And param orderType=KVM
+    Given param status="200"
+    And param contentType="application/json"
+    And param accept="application/json"
+    And param orderType="KVM"
     And param body=
     """
 {
   "orderType": "#[orderType]"
 }
     """
-    And param expected from file path placeholders/expected1.json
+    And param expected from file path "placeholders/expected1.json"
     Then COMPARE #[expected] with
       """
 {
@@ -101,5 +101,8 @@ Feature: Test comparator
   }
 }
       """
-    And COMPARE #[expected] from file path placeholders/actual1.json
+    And COMPARE #[expected] with content from path "placeholders/actual1.json"
 
+  Scenario: Compare empty values
+    Given param a=""
+    Then COMPARE #[a] with ""
