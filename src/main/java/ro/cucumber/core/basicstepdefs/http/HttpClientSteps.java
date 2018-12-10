@@ -18,12 +18,12 @@ public class HttpClientSteps {
     private HttpClient.Builder builder = new HttpClient.Builder();
     private HttpResponse response;
 
-    @Given("HTTP REST service at address {string}")
+    @Given("HTTP REST service at address \"{cstring}\"")
     public void setAddress(String address) {
         builder.address(address);
     }
 
-    @And("HTTP path {string}")
+    @And("HTTP path \"{cstring}\"")
     public void setPath(String path) {
         builder.path(path);
     }
@@ -53,17 +53,17 @@ public class HttpClientSteps {
         builder.method(method);
     }
 
-    @And("HTTP entity {string}")
+    @And("HTTP entity \"{cstring}\"")
     public void setEntity(String entity) {
         builder.entity(entity);
     }
 
-    @And("HTTP proxy host {string} port {int} and scheme {string}")
+    @And("HTTP proxy host \"{cstring}\" port \"{cstring}\" and scheme \"{cstring}\"")
     public void useProxy(String host, int port, String scheme) {
         builder.useProxy(host, port, scheme);
     }
 
-    @And("HTTP timeout {int}")
+    @And("HTTP timeout \"{cstring}\"")
     public void setTimeout(int timeout) {
         builder.timeout(timeout);
     }
@@ -78,7 +78,7 @@ public class HttpClientSteps {
         Cucumbers.compare(expected, response);
     }
 
-    @And("HTTP compare response status code with {int}")
+    @And("HTTP compare response status code with \"{cstring}\"")
     public void compareResponseStatusCodeWith(int expected) {
     }
 }
