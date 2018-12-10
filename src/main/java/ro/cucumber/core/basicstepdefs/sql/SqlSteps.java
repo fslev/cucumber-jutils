@@ -18,7 +18,7 @@ public class SqlSteps {
     private Properties dataSource;
     private List<Map<String, String>> result;
 
-    @Given("SQL data source from file path {cstring}")
+    @Given("SQL data source from file path \"{cstring}\"")
     public void setDataSource(String filePath) throws IOException {
         dataSource = ResourceUtils.readProps(filePath);
         SqlClient.Builder builder = new SqlClient.Builder();
