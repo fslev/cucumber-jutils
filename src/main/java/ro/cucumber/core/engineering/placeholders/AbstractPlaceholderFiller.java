@@ -21,7 +21,7 @@ public abstract class AbstractPlaceholderFiller {
     public String fill(Map<String, String> values) {
         String str = stringWithPlaceholders;
         for (Map.Entry<String, String> e : values.entrySet()) {
-            str = str.replaceAll(getPlaceholderStart() + e.getKey() + getPlaceholderEnd(), e.getValue());
+            str = str.replaceAll(getPlaceholderStart() + e.getKey() + getPlaceholderEnd(), Matcher.quoteReplacement(e.getValue()));
         }
         return str;
     }

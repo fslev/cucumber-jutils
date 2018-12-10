@@ -33,7 +33,7 @@ public class PlaceholdersGenerator {
         String str = stringWithPlaceholders;
         for (Map.Entry<String, String> e : placeholdersMap.entrySet()) {
             str = str.replaceAll(PLACEHOLDER_START + e.getKey() + PLACEHOLDER_END,
-                    e.getValue());
+                    Matcher.quoteReplacement(e.getValue()));
         }
         return str;
     }
