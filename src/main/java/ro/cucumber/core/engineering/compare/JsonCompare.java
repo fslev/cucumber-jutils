@@ -2,14 +2,15 @@ package ro.cucumber.core.engineering.compare;
 
 import ro.cucumber.core.engineering.compare.comparators.CustomJsonComparator;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
-import ro.cucumber.core.engineering.utils.JsonUtils;
 import ro.skyah.comparator.CompareMode;
 import ro.skyah.comparator.JSONCompare;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
 
 public class JsonCompare implements Placeholdable {
@@ -36,8 +37,10 @@ public class JsonCompare implements Placeholdable {
     public JsonCompare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray,
                        boolean arrayStrictOrder) throws CompareException {
         try {
-            this.expected = JsonUtils.toJson(expected.toString());
-            this.actual = JsonUtils.toJson(actual.toString());
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+            this.expected = expected instanceof String ? mapper.readTree((String) expected) : mapper.convertValue(expected, JsonNode.class);
+            this.actual = actual instanceof String ? mapper.readTree((String) actual) : mapper.convertValue(actual, JsonNode.class);
             if (!this.expected.getNodeType().equals(JsonNodeType.OBJECT)
                     && !this.expected.getNodeType().equals(JsonNodeType.ARRAY)
                     && !this.actual.getNodeType().equals(JsonNodeType.OBJECT)

@@ -34,13 +34,9 @@ public class Compare implements Placeholdable {
             matcher = new JsonCompare(expected, actual, nonExtensibleObject, nonExtensibleArray);
         } catch (Exception e) {
             try {
-                matcher = new JsonConvertibleObjectCompare(expected, actual, nonExtensibleObject, nonExtensibleArray);
-            } catch (Exception e1) {
-                try {
-                    matcher = new XmlCompare(expected, actual);
-                } catch (Exception e2) {
-                    matcher = new StringRegexCompare(expected, actual);
-                }
+                matcher = new XmlCompare(expected, actual);
+            } catch (Exception e2) {
+                matcher = new StringRegexCompare(expected, actual);
             }
         }
         return matcher.compare();
