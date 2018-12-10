@@ -7,12 +7,12 @@ import java.util.List;
 
 @ScenarioScoped
 public class CompareSteps {
-    @Then("COMPARE {cstring} with {cstring}")
+    @Then("COMPARE {cstring} with \"{cstring}\"")
     public void compareWithString(Object expected, Object actual) {
         Cucumbers.compare(expected, actual);
     }
 
-    @Then("COMPARE {cstring} from file path {cstring}")
+    @Then("COMPARE {cstring} with content from path \"{cstring}\"")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
         Cucumbers.compare(expected, Cucumbers.read(filePath));
     }
@@ -22,7 +22,7 @@ public class CompareSteps {
         Cucumbers.compare(expected, actual);
     }
 
-    @Then("COMPARE {cstring} against table")
+    @Then("COMPARE {cstring} with table")
     public void compareWithDataTable(Object expected, List actual) {
         Cucumbers.compare(expected, actual);
     }

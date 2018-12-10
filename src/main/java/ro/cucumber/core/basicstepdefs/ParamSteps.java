@@ -14,7 +14,7 @@ public class ParamSteps {
     @Inject
     ScenarioProps scenarioProps;
 
-    @Given("param {cstring}={cstring}")
+    @Given("param {cstring}=\"{cstring}\"")
     public void setParamStringQuoted(String name, String value) {
         scenarioProps.put(name, value);
     }
@@ -24,7 +24,7 @@ public class ParamSteps {
         scenarioProps.put(name, value);
     }
 
-    @Given("param {cstring} from file path {cstring}")
+    @Given("param {cstring} from file path \"{cstring}\"")
     public void setParamFromFile(String name, String filePath) {
         String value = new PlaceholderFiller(ResourceUtils.read(filePath)).fill().toString();
         scenarioProps.put(name, value);

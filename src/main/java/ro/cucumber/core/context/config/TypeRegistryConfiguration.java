@@ -21,7 +21,7 @@ import static java.util.Locale.ENGLISH;
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
     private static final List<String> CSTRING_REGEXPS =
-            Collections.singletonList(Pattern.compile(".+").pattern());
+            Collections.singletonList(Pattern.compile(".*").pattern());
 
     private static final String CUSTOM_STRING = "cstring";
 
