@@ -49,8 +49,7 @@ public class JsonCompareTests {
         String expected = "{\"a\":\"val2\",\"c\":\"val1\",\"!.*\":\".*\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\",\"d\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
-        assertTrue(symbols.isEmpty());
+        matcher.compare();
     }
 
     @Test
@@ -168,5 +167,17 @@ public class JsonCompareTests {
         assertEquals("1", symbols.get("friendId"));
         assertEquals("-90.447286", symbols.get("longitude"));
         assertEquals(2, symbols.size());
+    }
+
+    @Test
+    public void checkMessageFromSimpleJsonCompare() throws CompareException {
+        String expected = "{\"a\":\"val2\",\"c\":\"val1\",\"!.*\":\".*\"}";
+        String actual = "{\"a\":\"val2\",\"c\":\"val1\",\"d\":\"val1\"}";
+        JsonCompare matcher = new JsonCompare("some msg", expected, actual);
+        try {
+            matcher.compare();
+        } catch (AssertionError e) {
+            assertTrue(e.getMessage().contains("some msg") && e.getMessage().contains("Expected:"));
+        }
     }
 }
