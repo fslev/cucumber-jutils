@@ -11,7 +11,7 @@
 
     <properties>
         <httpclient.version>4.5.5</httpclient.version>
-        <jsoncompare.version>2.0.4</jsoncompare.version>
+        <jsoncompare.version>2.0.5</jsoncompare.version>
         <xmlunit.version>2.6.0</xmlunit.version>
         <cucumber.version>3.0.2</cucumber.version>
         <cucumber.expressions.version>6.1.0</cucumber.expressions.version>
