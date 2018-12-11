@@ -1,5 +1,9 @@
 ### 2.5.0
+Add support for comparing HttpResponses  
+Refactor basic step definitions  
+Relax {cstring} to allow empty compares  
 Remove HttpResponseWrapper. Is weak while used for comparing    
+Internal refactoring  
 
 ### 2.4.0
 Bug fixes  

@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class HttpResponseAdapter {
@@ -24,20 +25,31 @@ public class HttpResponseAdapter {
     public HttpResponseAdapter() {
     }
 
-    public HttpResponseAdapter(String content) throws IOException {
+    public HttpResponseAdapter(Object object) throws IOException {
+        if (object instanceof HttpResponse) {
+            constructFromHttpResponse((HttpResponse) object);
+        } else {
+            constructFromObject(object);
+        }
+    }
+
+    private void constructFromObject(Object content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         try {
-            HttpResponseAdapter adapter = mapper.readValue(content, HttpResponseAdapter.class);
+            HttpResponseAdapter adapter = content instanceof String ?
+                    mapper.readValue((String) content, HttpResponseAdapter.class) :
+                    mapper.convertValue(content, HttpResponseAdapter.class);
             this.status = adapter.status;
             this.entity = adapter.entity;
             this.reasonPhrase = adapter.reasonPhrase;
             this.headers = adapter.headers;
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new IOException("Cannot init HTTP response adapter - invalid input");
         }
     }
 
-    public HttpResponseAdapter(HttpResponse response) throws IOException {
+    private void constructFromHttpResponse(HttpResponse response) throws IOException {
         this.status = response.getStatusLine().getStatusCode();
         this.reasonPhrase = response.getStatusLine().getReasonPhrase();
         this.headers = getHeaders(response);
@@ -46,7 +58,7 @@ public class HttpResponseAdapter {
             try {
                 content = EntityUtils.toString(response.getEntity());
                 this.entity = content;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new IOException("Cannot init HTTP response adapter", e);
             } finally {
                 if (content != null) {
