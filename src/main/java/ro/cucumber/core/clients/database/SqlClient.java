@@ -53,7 +53,7 @@ public class SqlClient {
                 Map<String, String> rowData = new HashMap<>();
                 for (int i = 1; i <= columns; i++) {
                     Object value = rs.getObject(i);
-                    rowData.put(md.getColumnName(i), value != null ? value.toString() : null);
+                    rowData.put(md.getColumnLabel(i), value != null ? value.toString() : null);
                 }
                 tableData.add(rowData);
             }
