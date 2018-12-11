@@ -1,13 +1,11 @@
 package ro.cucumber.core.compare;
 
-import org.junit.Test;
 import ro.cucumber.core.engineering.compare.XmlCompare;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
-
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 public class XmlCompareTests {
 
@@ -94,4 +92,15 @@ public class XmlCompareTests {
         assertEquals(3, symbols.size());
     }
 
+    @Test(expected = AssertionError.class)
+    public void checkMessageFromXmlCompare() throws CompareException {
+        String expected = "<struct>test</struct>";
+        String actual = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><struct></struct>";
+        try {
+            new XmlCompare("Some message", expected, actual).compare();
+        } catch (AssertionError e) {
+            assertTrue(e.getMessage().contains("Some message") && e.getMessage().contains("Expected:"));
+            throw e;
+        }
+    }
 }

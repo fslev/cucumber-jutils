@@ -12,10 +12,16 @@ public class StringRegexCompare implements Placeholdable {
     private String expected;
     private String actual;
     private Map<String, String> assignSymbols = new HashMap<>();
+    private String message;
 
     public StringRegexCompare(Object expected, Object actual) {
+        this(null, expected, actual);
+    }
+
+    public StringRegexCompare(String message, Object expected, Object actual) {
         this.expected = expected.toString();
         this.actual = actual.toString();
+        this.message = message;
     }
 
     @Override
@@ -34,7 +40,7 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(parser.getPlaceholdersMap());
                 }
             } else {
-                fail(String.format("Expected: %s, But got: %s", parsedString, actual));
+                fail(String.format("%sExpected: %s, But got: %s", message != null ? message + ". " : "", parsedString, actual));
             }
         } catch (PatternSyntaxException e) {
             if (parsedString.equals(actual)) {
@@ -42,7 +48,7 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(parser.getPlaceholdersMap());
                 }
             } else {
-                fail(String.format("Expected: %s, But got: %s", parsedString, actual));
+                fail(String.format("%sExpected: %s, But got: %s", message != null ? message + ". " : "", parsedString, actual));
             }
         }
         return assignSymbols;

@@ -169,7 +169,7 @@ public class JsonCompareTests {
         assertEquals(2, symbols.size());
     }
 
-    @Test
+    @Test(expected = AssertionError.class)
     public void checkMessageFromSimpleJsonCompare() throws CompareException {
         String expected = "{\"a\":\"val2\",\"c\":\"val1\",\"!.*\":\".*\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\",\"d\":\"val1\"}";
@@ -178,6 +178,7 @@ public class JsonCompareTests {
             matcher.compare();
         } catch (AssertionError e) {
             assertTrue(e.getMessage().contains("some msg") && e.getMessage().contains("Expected:"));
+            throw e;
         }
     }
 }

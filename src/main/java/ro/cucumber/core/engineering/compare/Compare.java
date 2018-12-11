@@ -9,16 +9,26 @@ public class Compare implements Placeholdable {
     protected Object actual;
     private boolean nonExtensibleObject;
     private boolean nonExtensibleArray;
+    private String message;
 
     public Compare(Object expected, Object actual) {
-        this(expected, actual, false, false);
+        this(null, expected, actual, false, false);
+    }
+
+    public Compare(String message, Object expected, Object actual) {
+        this(message, expected, actual, false, false);
     }
 
     public Compare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+        this(null, expected, actual, nonExtensibleObject, nonExtensibleArray);
+    }
+
+    public Compare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         this.expected = expected;
         this.actual = actual;
         this.nonExtensibleObject = nonExtensibleObject;
         this.nonExtensibleArray = nonExtensibleArray;
+        this.message = message;
     }
 
     @Override
@@ -31,12 +41,12 @@ public class Compare implements Placeholdable {
         }
         Placeholdable matcher;
         try {
-            matcher = new JsonCompare(expected, actual, nonExtensibleObject, nonExtensibleArray);
+            matcher = new JsonCompare(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
         } catch (Exception e) {
             try {
-                matcher = new XmlCompare(expected, actual);
+                matcher = new XmlCompare(message, expected, actual);
             } catch (Exception e2) {
-                matcher = new StringRegexCompare(expected, actual);
+                matcher = new StringRegexCompare(message, expected, actual);
             }
         }
         return matcher.compare();

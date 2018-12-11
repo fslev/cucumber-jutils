@@ -21,20 +21,37 @@ public class JsonCompare implements Placeholdable {
     private boolean nonExtensibleObject;
     private boolean nonExtensibleArray;
     private boolean arrayStrictOrder;
+    private String message;
 
-    public JsonCompare(Object extpected, Object actual) throws CompareException {
-        this(extpected, actual, false, false, false);
+    public JsonCompare(Object expected, Object actual) throws CompareException {
+        this(null, expected, actual, false, false, false);
+    }
+
+    public JsonCompare(String message, Object expected, Object actual) throws CompareException {
+        this(message, expected, actual, false, false, false);
     }
 
     public JsonCompare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws CompareException {
-        this(expected, actual, nonExtensibleObject, nonExtensibleArray, false);
+        this(null, expected, actual, nonExtensibleObject, nonExtensibleArray, false);
+    }
+
+    public JsonCompare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws CompareException {
+        this(message, expected, actual, nonExtensibleObject, nonExtensibleArray, false);
     }
 
     public JsonCompare(Object expected, Object actual, boolean arrayStrictOrder) throws CompareException {
-        this(expected, actual, false, false, arrayStrictOrder);
+        this(null, expected, actual, false, false, arrayStrictOrder);
     }
 
-    public JsonCompare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray,
+    public JsonCompare(String message, Object expected, Object actual, boolean arrayStrictOrder) throws CompareException {
+        this(message, expected, actual, false, false, arrayStrictOrder);
+    }
+
+    public JsonCompare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray, boolean arrayStrictOrder) throws CompareException {
+        this(null, expected, actual, nonExtensibleObject, nonExtensibleArray, arrayStrictOrder);
+    }
+
+    public JsonCompare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray,
                        boolean arrayStrictOrder) throws CompareException {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -50,6 +67,7 @@ public class JsonCompare implements Placeholdable {
             this.nonExtensibleObject = nonExtensibleObject;
             this.nonExtensibleArray = nonExtensibleArray;
             this.arrayStrictOrder = arrayStrictOrder;
+            this.message = message;
         } catch (IOException e) {
             throw new CompareException("Malformed JSON");
         }
@@ -57,7 +75,7 @@ public class JsonCompare implements Placeholdable {
 
     @Override
     public Map<String, String> compare() {
-        JSONCompare.assertEquals(expected, actual, comparator, compareModes());
+        JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
         return comparator.getAssignSymbols();
     }
 

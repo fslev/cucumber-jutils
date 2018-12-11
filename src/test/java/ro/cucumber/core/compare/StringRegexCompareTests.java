@@ -1,12 +1,10 @@
 package ro.cucumber.core.compare;
 
-import org.junit.Test;
 import ro.cucumber.core.engineering.compare.StringRegexCompare;
-
 import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 public class StringRegexCompareTests {
 
@@ -133,5 +131,17 @@ public class StringRegexCompareTests {
         String actual = "The Rabbit is running in the forest";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
         matcher.compare();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void checkMessageFromFailedCompare() {
+        String expected = "wa";
+        int actual = 1;
+        try {
+            new StringRegexCompare("Some mess", expected, actual).compare();
+        } catch (AssertionError e) {
+            assertTrue(e.getMessage().contains("Some mess") && e.getMessage().contains("Expected:"));
+            throw e;
+        }
     }
 }
