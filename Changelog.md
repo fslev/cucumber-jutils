@@ -1,3 +1,6 @@
+### 2.5.1
+Fix bug with message from failed compares  
+
 ### 2.5.0
 Add support for comparing HttpResponses  
 Refactor basic step definitions  
