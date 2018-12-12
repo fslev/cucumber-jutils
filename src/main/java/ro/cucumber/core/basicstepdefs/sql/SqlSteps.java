@@ -20,17 +20,22 @@ public class SqlSteps {
 
     @Given("SQL data source from file path \"{cstring}\"")
     public void setDataSource(String filePath) throws IOException {
-        dataSource = ResourceUtils.readProps(filePath);
+        this.dataSource = ResourceUtils.readProps(filePath);
         SqlClient.Builder builder = new SqlClient.Builder();
         builder.driver(dataSource.getProperty("driver").trim())
                 .user(dataSource.getProperty("username")).pwd(dataSource.getProperty("password"))
                 .url(dataSource.getProperty("url"));
-        client = builder.build();
+        this.client = builder.build();
+    }
+
+    @Then("SQL execute query \"{cstring}\"")
+    public void executeQuery(String query) {
+        this.client.executeQuery(query);
     }
 
     @Then("SQL execute query \"{cstring}\" and compare result with")
     public void executeQuery(String query, List expected) {
-        result = client.executeQuery(query);
+        this.result = client.executeQuery(query);
         Cucumbers.compare(expected, result, false, true);
     }
 }
