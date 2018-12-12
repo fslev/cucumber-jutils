@@ -120,7 +120,7 @@ public class Cucumbers {
         Map<String, String> expectedHeaders = expectedAdapter.getHeaders();
         Object expectedEntity = expectedAdapter.getEntity();
         String enhancedMessage = new StringBuilder().append("Expected:").append(System.lineSeparator())
-                .append(expectedAdapter.toString()).append("Actual:").append(System.lineSeparator())
+                .append(expectedAdapter.toString()).append(System.lineSeparator()).append("Actual:").append(System.lineSeparator())
                 .append(actualAdapter.toString()).append(System.lineSeparator()).append(message != null ? message : "").toString();
         if (expectedStatus != null) {
             compareInternal(enhancedMessage, expectedStatus, actualAdapter.getStatus(), nonExtensibleObject, nonExtensibleArray);

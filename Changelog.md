@@ -1,3 +1,6 @@
+### 2.5.5
+Refactor message after failed compare      
+
 ### 2.5.4
 Enhanced message after failed compare     
 

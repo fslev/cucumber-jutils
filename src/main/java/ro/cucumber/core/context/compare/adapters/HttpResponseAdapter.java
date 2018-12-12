@@ -94,10 +94,10 @@ public class HttpResponseAdapter {
 
     @Override
     public String toString() {
-        return "HttpResponseAdapter{" +
+        return "{" +
                 "status=" + status +
-                ", entity='" + entity + '\'' +
-                ", reasonPhrase='" + reasonPhrase + '\'' +
+                ", body='" + entity + '\'' +
+                ", reason='" + reasonPhrase + '\'' +
                 ", headers=" + headers +
                 '}';
     }
