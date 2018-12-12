@@ -96,8 +96,8 @@ public class HttpResponseAdapter {
     public String toString() {
         return "{" +
                 "status=" + status +
-                ", body='" + entity + '\'' +
                 ", reason='" + reasonPhrase + '\'' +
+                ", body='" + entity + '\'' +
                 ", headers=" + headers +
                 '}';
     }
