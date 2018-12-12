@@ -21,62 +21,98 @@ public class Cucumbers {
     }
 
     public static void compare(Object expected, Object actual) {
-        compare(expected, actual, false, false);
+        compare(null, expected, actual, false, false);
+    }
+
+    public static void compare(String message, Object expected, Object actual) {
+        compare(message, expected, actual, false, false);
     }
 
     public static void compare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+        compare(null, expected, actual, nonExtensibleObject, nonExtensibleArray);
+    }
+
+    public static void compare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         try {
-            compareHttpResponse(expected, actual, nonExtensibleObject, nonExtensibleArray);
+            compareHttpResponse(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
             return;
         } catch (IOException e) {
         }
-        compareInternal(expected, actual, nonExtensibleObject, nonExtensibleArray);
+        compareInternal(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
+    }
+
+    public static void pollAndCompare(String message, Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+        pollAndCompare(message, expected, null, null, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
     public static void pollAndCompare(Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        pollAndCompare(expected, null, null, supplier, nonExtensibleObject, nonExtensibleArray);
+        pollAndCompare(null, expected, null, null, supplier, nonExtensibleObject, nonExtensibleArray);
+    }
+
+    public static void pollAndCompare(String message, Object expected, Supplier<Object> supplier) {
+        pollAndCompare(message, expected, null, null, supplier);
     }
 
     public static void pollAndCompare(Object expected, Supplier<Object> supplier) {
-        pollAndCompare(expected, null, null, supplier);
+        pollAndCompare(null, expected, null, null, supplier);
+    }
+
+    public static void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+        pollAndCompare(message, expected, pollDurationInSeconds, null, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
     public static void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        pollAndCompare(expected, pollDurationInSeconds, null, supplier, nonExtensibleObject, nonExtensibleArray);
+        pollAndCompare(null, expected, pollDurationInSeconds, null, supplier, nonExtensibleObject, nonExtensibleArray);
+    }
+
+    public static void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
+        pollAndCompare(message, expected, pollDurationInSeconds, null, supplier);
     }
 
     public static void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
-        pollAndCompare(expected, pollDurationInSeconds, null, supplier);
+        pollAndCompare(null, expected, pollDurationInSeconds, null, supplier);
+    }
+
+    public static void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+        pollAndCompare(message, expected, null, pollIntervalInMillis, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
     public static void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        pollAndCompare(expected, null, pollIntervalInMillis, supplier, nonExtensibleObject, nonExtensibleArray);
+        pollAndCompare(null, expected, null, pollIntervalInMillis, supplier, nonExtensibleObject, nonExtensibleArray);
+    }
+
+    public static void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
+        pollAndCompare(message, expected, null, pollIntervalInMillis, supplier);
     }
 
     public static void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
-        pollAndCompare(expected, null, pollIntervalInMillis, supplier);
+        pollAndCompare(null, expected, null, pollIntervalInMillis, supplier);
+    }
+
+    public static void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
+        pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, supplier, false, false);
     }
 
     public static void pollAndCompare(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
-        pollAndCompare(expected, pollDurationInSeconds, pollIntervalInMillis, supplier, false, false);
+        pollAndCompare(null, expected, pollDurationInSeconds, pollIntervalInMillis, supplier, false, false);
     }
 
-    public static void pollAndCompare(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public static void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         Object result = new MethodPoller<>()
                 .duration(pollDurationInSeconds, pollIntervalInMillis)
                 .method(supplier)
                 .until(p -> {
                     try {
-                        compare(expected, p);
+                        compare(message, expected, p);
                         return true;
                     } catch (AssertionError e) {
                         return false;
                     }
                 }).poll();
-        compare(expected, result, nonExtensibleObject, nonExtensibleArray);
+        compare(message, expected, result, nonExtensibleObject, nonExtensibleArray);
     }
 
-    private static void compareHttpResponse(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
+    private static void compareHttpResponse(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
         HttpResponseAdapter actualAdapter = new HttpResponseAdapter(actual);
         HttpResponseAdapter expectedAdapter = new HttpResponseAdapter(expected);
         Integer expectedStatus = expectedAdapter.getStatus();
@@ -84,21 +120,21 @@ public class Cucumbers {
         Map<String, String> expectedHeaders = expectedAdapter.getHeaders();
         Object expectedEntity = expectedAdapter.getEntity();
         if (expectedStatus != null) {
-            compareInternal(expectedStatus, actualAdapter.getStatus(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(message, expectedStatus, actualAdapter.getStatus(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedReason != null) {
-            compareInternal(expectedReason, actualAdapter.getReasonPhrase(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(message, expectedReason, actualAdapter.getReasonPhrase(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedHeaders != null) {
-            compareInternal(expectedHeaders, actualAdapter.getHeaders(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(message, expectedHeaders, actualAdapter.getHeaders(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedEntity != null) {
-            compareInternal(expectedEntity, actualAdapter.getEntity(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(message, expectedEntity, actualAdapter.getEntity(), nonExtensibleObject, nonExtensibleArray);
         }
     }
 
-    private static void compareInternal(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        Map<String, String> placeholdersAndValues = new Compare(expected, actual, nonExtensibleObject, nonExtensibleArray).compare();
+    private static void compareInternal(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+        Map<String, String> placeholdersAndValues = new Compare(message, expected, actual, nonExtensibleObject, nonExtensibleArray).compare();
         ScenarioProps scenarioProps = getScenarioProps();
         placeholdersAndValues.forEach(scenarioProps::put);
     }

@@ -1,3 +1,6 @@
+### 2.5.3
+Fix bug in message from failed compare   
+
 ### 2.5.2
 Fix bug in sql client  
 
