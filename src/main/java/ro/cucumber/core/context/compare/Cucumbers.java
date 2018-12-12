@@ -119,17 +119,20 @@ public class Cucumbers {
         String expectedReason = expectedAdapter.getReasonPhrase();
         Map<String, String> expectedHeaders = expectedAdapter.getHeaders();
         Object expectedEntity = expectedAdapter.getEntity();
+        String enhancedMessage = new StringBuilder().append("Expected:").append(System.lineSeparator())
+                .append(expectedAdapter.toString()).append("Actual:").append(System.lineSeparator())
+                .append(actualAdapter.toString()).append(System.lineSeparator()).append(message != null ? message : "").toString();
         if (expectedStatus != null) {
-            compareInternal(message, expectedStatus, actualAdapter.getStatus(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedStatus, actualAdapter.getStatus(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedReason != null) {
-            compareInternal(message, expectedReason, actualAdapter.getReasonPhrase(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedReason, actualAdapter.getReasonPhrase(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedHeaders != null) {
-            compareInternal(message, expectedHeaders, actualAdapter.getHeaders(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedHeaders, actualAdapter.getHeaders(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedEntity != null) {
-            compareInternal(message, expectedEntity, actualAdapter.getEntity(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedEntity, actualAdapter.getEntity(), nonExtensibleObject, nonExtensibleArray);
         }
     }
 
