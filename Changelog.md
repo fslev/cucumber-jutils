@@ -1,3 +1,6 @@
+### 2.5.8
+Add JSON pretty print  
+
 ### 2.5.7
 Add simple execute SQL execute query as a basic step definition      
 

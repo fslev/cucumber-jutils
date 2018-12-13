@@ -12,4 +12,13 @@ public class JsonUtils {
         mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         return mapper.readTree(content);
     }
+
+    public static String prettyPrint(String content) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(toJson(content));
+        } catch (IOException e) {
+            return content;
+        }
+    }
 }
