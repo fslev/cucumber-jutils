@@ -52,7 +52,7 @@ public class SqlSteps {
             StringBuilder values = new StringBuilder();
             map.forEach((k, v) -> {
                 columns.append(columns.length() != 0 ? "," : "").append(k);
-                values.append(values.length() != 0 ? "," : "").append("'").append(v).append("'");
+                values.append(values.length() != 0 ? "," : "").append(v.equals("null") ? null : "'" + v + "'");
             });
             this.client.executeUpdate(String.format(sql, columns.toString(), values.toString()));
         });
@@ -64,7 +64,7 @@ public class SqlSteps {
         StringBuilder assignmentValues = new StringBuilder();
         ((List<Map<String, String>>) data).forEach(map -> {
             map.forEach((k, v) -> assignmentValues.append(assignmentValues.length() != 0 ? "," : "")
-                    .append(k).append("=").append("'").append(v).append("'"));
+                    .append(k).append("=").append(v.equals("null") ? null : "'" + v + "'"));
             this.client.executeUpdate(String.format(sql, assignmentValues.toString()));
         });
     }

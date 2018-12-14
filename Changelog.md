@@ -1,3 +1,6 @@
+### 2.6.0
+SQL client accepts null values for update  
+
 ### 2.5.9
 BUG fixes  
 Enhance SQL client and SQL basic step definitions  

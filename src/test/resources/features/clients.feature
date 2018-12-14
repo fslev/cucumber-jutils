@@ -11,7 +11,7 @@ Feature: Test clients
 
   Scenario: TEST MYSQL client delete
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL execute update "delete from gift_wf_2012 where person_id<16"
+    Then SQL execute update "delete from gift_wf_2012 where person_id<100"
 
   Scenario: Test MYSQL client simple insert
     Given SQL data source from file path "config/database/mysql.properties"
@@ -20,16 +20,16 @@ Feature: Test clients
   Scenario: Test MYSQL client simple insert with tabular data
     Given SQL data source from file path "config/database/mysql.properties"
     Then SQL INSERT into "gift_wf_2012" the following data
-      | person_id | gift                |
-      | 14        | http://heheheh.ro   |
-      | 16        | ftp://waaa./test/ro |
-      | 17        | wow                 |
+      | person_id | gift              |
+      | 14        | http://heheheh.ro |
+      | 16        | null              |
+      | 17        | wow               |
 
   Scenario: Test MYSQL update table with tabular data
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL UPDATE table "gift_wf_2012" WHERE "person_id=124325 and gift='cool CHANGE'" and with following data
-      | gift        |
-      | cool CHANGE |
+    Then SQL UPDATE table "gift_wf_2012" WHERE "person_id=124325 and gift='wa'" and with following data
+      | gift |
+      | null |
 
   Scenario: Test POSTGRESQL client
     Given SQL data source from file path "config/database/psql.properties"
