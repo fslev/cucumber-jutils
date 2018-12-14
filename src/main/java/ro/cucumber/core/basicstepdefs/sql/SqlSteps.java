@@ -38,4 +38,34 @@ public class SqlSteps {
         this.result = client.executeQuery(query);
         Cucumbers.compare(expected, result, false, true);
     }
+
+    @Then("SQL execute update \"{cstring}\"")
+    public void executeUpdate(String sql) {
+        this.client.executeUpdate(sql);
+    }
+
+    @Then("SQL INSERT into \"{cstring}\" the following data")
+    public void insertDataInsideTable(String table, List data) {
+        String sql = "INSERT INTO " + table + " (%s) values (%s)";
+        ((List<Map<String, String>>) data).forEach(map -> {
+            StringBuilder columns = new StringBuilder();
+            StringBuilder values = new StringBuilder();
+            map.forEach((k, v) -> {
+                columns.append(columns.length() != 0 ? "," : "").append(k);
+                values.append(values.length() != 0 ? "," : "").append("'").append(v).append("'");
+            });
+            this.client.executeUpdate(String.format(sql, columns.toString(), values.toString()));
+        });
+    }
+
+    @Then("SQL UPDATE table \"{cstring}\" WHERE \"{cstring}\" and with following data")
+    public void updateDataFromTable(String table, String cond, List data) {
+        String sql = "UPDATE " + table + " SET %s WHERE " + cond;
+        StringBuilder assignmentValues = new StringBuilder();
+        ((List<Map<String, String>>) data).forEach(map -> {
+            map.forEach((k, v) -> assignmentValues.append(assignmentValues.length() != 0 ? "," : "")
+                    .append(k).append("=").append("'").append(v).append("'"));
+            this.client.executeUpdate(String.format(sql, assignmentValues.toString()));
+        });
+    }
 }

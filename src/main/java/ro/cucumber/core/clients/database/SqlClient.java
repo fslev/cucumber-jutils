@@ -14,13 +14,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class SqlClient {
-    protected static int MAX_ROWS = 100;
-    protected Logger log = LogManager.getLogger();
-    protected String url;
-    protected String user;
-    protected String pwd;
-    protected String driverClassName;
-    protected Connection conn;
+    private static int MAX_ROWS = 100;
+    private Logger log = LogManager.getLogger();
+    private String url;
+    private String user;
+    private String pwd;
+    private String driverClassName;
 
     protected SqlClient(Builder builder) {
         this.url = builder.url;
@@ -29,22 +28,23 @@ public class SqlClient {
         this.driverClassName = builder.driver;
         try {
             Class.forName(driverClassName);
-            this.conn = DriverManager.getConnection(url, user, pwd);
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     public List<Map<String, String>> executeQuery(String sql) {
-        log.debug("---- SQL REQUEST ----");
+        log.debug("---- SQL QUERY REQUEST ----");
         log.debug("Driver: {}", driverClassName);
         log.debug("Database url: {}", url);
         log.debug("SQL query: {}", sql);
+        Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
         List<Map<String, String>> tableData = new ArrayList<>();
         try {
-            st = conn.createStatement();
+            conn = DriverManager.getConnection(url, user, pwd);
+            st = conn.prepareStatement(sql);
             st.setMaxRows(MAX_ROWS);
             rs = st.executeQuery(sql);
             ResultSetMetaData md = rs.getMetaData();
@@ -79,11 +79,42 @@ public class SqlClient {
         }
     }
 
+    public int executeUpdate(String sql) {
+        log.debug("---- SQL UPDATE REQUEST ----");
+        log.debug("Driver: {}", driverClassName);
+        log.debug("Database url: {}", url);
+        log.debug("SQL update: {}", sql);
+        Connection conn = null;
+        Statement st = null;
+        int affected = 0;
+        try {
+            conn = DriverManager.getConnection(url, user, pwd);
+            st = conn.prepareStatement(sql);
+            affected = st.executeUpdate(sql);
+            return affected;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (st != null) {
+                    st.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+                log.debug("SQL affected rows: {}", affected);
+                log.debug("-----------------------");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     public static class Builder {
-        protected String url;
-        protected String user;
-        protected String pwd;
-        protected String driver = "com.mysql.jdbc.Driver";
+        private String url;
+        private String user;
+        private String pwd;
+        private String driver = "com.mysql.jdbc.Driver";
 
         public Builder url(String url) {
             this.url = url;

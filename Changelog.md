@@ -1,3 +1,8 @@
+### 2.5.9
+BUG fixes  
+Enhance SQL client and SQL basic step definitions  
+Internal refactoring    
+
 ### 2.5.8
 Add JSON pretty print  
 
