@@ -1,3 +1,6 @@
+### 2.6.2
+Add getters to HTTP client   
+
 ### 2.6.1
 Poll support for SQL    
 Bug fixes  

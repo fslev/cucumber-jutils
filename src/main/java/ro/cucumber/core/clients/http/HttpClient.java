@@ -197,6 +197,50 @@ public class HttpClient {
         }
     }
 
+    public Integer getTimeout() {
+        return timeout;
+    }
+
+    public HttpHost getProxyHost() {
+        return proxyHost;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public URIBuilder getUriBuilder() {
+        return uriBuilder;
+    }
+
+    public Map<String, String> getHeaders() {
+        return headers;
+    }
+
+    public String getRequestEntity() {
+        return requestEntity;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public SSLContext getSslContext() {
+        return sslContext;
+    }
+
+    public HostnameVerifier getHostnameVerifier() {
+        return hostnameVerifier;
+    }
+
+    public HttpRequestRetryHandler getRequestRetryHandler() {
+        return requestRetryHandler;
+    }
+
+    public ServiceUnavailableRetryStrategy getServiceUnavailableRetryStrategy() {
+        return serviceUnavailableRetryStrategy;
+    }
+
     public static class Builder {
         private Integer timeout;
         private HttpHost proxyHost;
