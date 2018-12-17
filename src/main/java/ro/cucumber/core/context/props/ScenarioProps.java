@@ -34,7 +34,7 @@ public class ScenarioProps {
         return UUID.randomUUID().toString();
     }
 
-    private long getTimeInMillis() {
-        return System.currentTimeMillis();
+    private String getTimeInMillis() {
+        return String.valueOf(System.currentTimeMillis());
     }
 }
