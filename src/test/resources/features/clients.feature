@@ -19,7 +19,7 @@ Feature: Test clients
 
   Scenario: Test MYSQL client simple insert with tabular data
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL INSERT into "gift_wf_2012" the following data
+    Then SQL INSERT into table "gift_wf_2012" the following data
       | person_id | gift              |
       | 14        | http://heheheh.ro |
       | 16        | null              |
@@ -27,7 +27,7 @@ Feature: Test clients
 
   Scenario: Test MYSQL update table with tabular data
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL UPDATE table "gift_wf_2012" WHERE "person_id=124325 and gift='wa'" and with following data
+    Then SQL UPDATE table "gift_wf_2012" WHERE "person_id=124325 and gift='wa'" with the following data
       | gift |
       | null |
 

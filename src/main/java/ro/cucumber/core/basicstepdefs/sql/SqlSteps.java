@@ -63,7 +63,7 @@ public class SqlSteps {
         });
     }
 
-    @Then("SQL UPDATE table \"{cstring}\" WHERE \"{cstring}\" and with the following data")
+    @Then("SQL UPDATE table \"{cstring}\" WHERE \"{cstring}\" with the following data")
     public void updateDataFromTable(String table, String cond, List data) {
         String sql = "UPDATE " + table + " SET %s WHERE " + cond;
         StringBuilder assignmentValues = new StringBuilder();
