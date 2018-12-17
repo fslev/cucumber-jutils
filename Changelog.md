@@ -1,5 +1,9 @@
+### 2.6.1
+Poll support for SQL    
+Bug fixes  
+
 ### 2.6.0
-SQL client accepts null values for update  
+SQL client accepts null values for update    
 
 ### 2.5.9
 BUG fixes  

@@ -34,9 +34,14 @@ public class SqlSteps {
     }
 
     @Then("SQL execute query \"{cstring}\" and compare result with")
-    public void executeQuery(String query, List expected) {
+    public void executeQueryAndCompare(String query, List expected) {
         this.result = client.executeQuery(query);
         Cucumbers.compare(expected, result, false, true);
+    }
+
+    @Then("SQL execute query \"{cstring}\" and poll for {int}s while comparing result with")
+    public void executeQueryAndPollAndCompare(String query, int pollDuration, List expected) {
+        Cucumbers.pollAndCompare(expected, () -> client.executeQuery(query), false, true);
     }
 
     @Then("SQL execute update \"{cstring}\"")
@@ -44,7 +49,7 @@ public class SqlSteps {
         this.client.executeUpdate(sql);
     }
 
-    @Then("SQL INSERT into \"{cstring}\" the following data")
+    @Then("SQL INSERT into table \"{cstring}\" the following data")
     public void insertDataInsideTable(String table, List data) {
         String sql = "INSERT INTO " + table + " (%s) values (%s)";
         ((List<Map<String, String>>) data).forEach(map -> {
@@ -58,7 +63,7 @@ public class SqlSteps {
         });
     }
 
-    @Then("SQL UPDATE table \"{cstring}\" WHERE \"{cstring}\" and with following data")
+    @Then("SQL UPDATE table \"{cstring}\" WHERE \"{cstring}\" and with the following data")
     public void updateDataFromTable(String table, String cond, List data) {
         String sql = "UPDATE " + table + " SET %s WHERE " + cond;
         StringBuilder assignmentValues = new StringBuilder();
