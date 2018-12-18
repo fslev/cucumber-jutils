@@ -1,3 +1,6 @@
+### 2.6.3
+JSON compare bug fixes    
+
 ### 2.6.2
 Add getters to HTTP client   
 
