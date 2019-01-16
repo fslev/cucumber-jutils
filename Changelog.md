@@ -1,3 +1,6 @@
+### 2.6.5
+JSON compare bug fixes
+
 ### 2.6.4
 JSON compare bug fixes      
 
