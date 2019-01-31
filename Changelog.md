@@ -1,3 +1,6 @@
+### 2.9.0
+Change default scenario properties file name to scenario.properties  
+
 ### 2.8.1
 Add step definition for loading scenario props from file
 

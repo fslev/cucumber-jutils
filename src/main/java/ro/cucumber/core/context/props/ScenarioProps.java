@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @ScenarioScoped
 public class ScenarioProps {
-    private final static String ENV_FILE = "env.properties";
+    private final static String ENV_FILE = "scenario.properties";
     private Logger log = LogManager.getLogger();
     private Map<String, Object> props = new HashMap<>();
 
