@@ -1,4 +1,4 @@
-### 2.6.6
+### 2.6.7
 Add a warning when a scenario property is overridden   
 
 ### 2.6.5
