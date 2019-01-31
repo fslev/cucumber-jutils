@@ -3,8 +3,8 @@ package ro.cucumber.core.context.props;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ro.cucumber.core.engineering.utils.ResourceUtils;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -17,7 +17,7 @@ public class ScenarioProps {
     private Map<String, Object> props = new HashMap<>();
 
     public ScenarioProps() {
-        loadEnvProps();
+        loadPropsFromPath(ENV_FILE);
     }
 
     public Object get(String key) {
@@ -44,21 +44,16 @@ public class ScenarioProps {
         this.props.putAll(props);
     }
 
+    public void loadPropsFromPath(String filePath) {
+        Properties p = ResourceUtils.readProps(filePath);
+        p.forEach((k, v) -> put(k.toString(), v.toString().trim()));
+    }
+
     private String getUUID() {
         return UUID.randomUUID().toString();
     }
 
     private String getTimeInMillis() {
         return String.valueOf(System.currentTimeMillis());
-    }
-
-    private void loadEnvProps() {
-        Properties p = new Properties();
-        try {
-            p.load(ScenarioProps.class.getClassLoader().getResourceAsStream(ENV_FILE));
-            p.forEach((k, v) -> this.props.put(k.toString(), v.toString().trim()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

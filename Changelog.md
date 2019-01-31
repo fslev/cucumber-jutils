@@ -1,3 +1,6 @@
+### 2.8.0
+Add support to ScenarioProps for loading scenario props from file   
+
 ### 2.7.0
 Add support for default global variables to ScenarioProps (env.properties file)  
 
