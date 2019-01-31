@@ -1,8 +1,8 @@
 package ro.cucumber.core.context.props;
 
 import ro.cucumber.core.context.config.CustomInjectorSource;
-import ro.cucumber.core.engineering.placeholders.GlobalPlaceholderFiller;
 import ro.cucumber.core.engineering.placeholders.ScenarioPlaceholderFiller;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -26,20 +26,7 @@ public class PlaceholderFiller {
             Object val = scenarioProps.get(standaloneSymbol);
             return val != null ? val : target;
         }
-        return getFilledStringWithEnvironmentValues(getFilledStringWithScenarioValues(target));
-    }
-
-    private static String getFilledStringWithEnvironmentValues(String str) {
-        GlobalPlaceholderFiller parser = new GlobalPlaceholderFiller(str);
-        Set<String> symbolNames = parser.searchForPlaceholders();
-        Map<String, String> values = new HashMap();
-        symbolNames.forEach((String name) -> {
-            String val = EnvProps.get(name);
-            if (val != null) {
-                values.put(name, val);
-            }
-        });
-        return parser.fill(values);
+        return getFilledStringWithScenarioValues(target);
     }
 
     private String getFilledStringWithScenarioValues(String str) {

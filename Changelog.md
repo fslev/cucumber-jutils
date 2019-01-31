@@ -1,3 +1,6 @@
+### 2.7.0
+Add support for default global variables to ScenarioProps (env.properties file)  
+
 ### 2.6.7
 Add a warning when a scenario property is overridden   
 

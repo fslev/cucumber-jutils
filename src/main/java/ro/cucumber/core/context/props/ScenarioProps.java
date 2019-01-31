@@ -4,14 +4,21 @@ import cucumber.runtime.java.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
 @ScenarioScoped
 public class ScenarioProps {
+    private final static String ENV_FILE = "env.properties";
     private Logger log = LogManager.getLogger();
     private Map<String, Object> props = new HashMap<>();
+
+    public ScenarioProps() {
+        loadEnvProps();
+    }
 
     public Object get(String key) {
         switch (key) {
@@ -43,5 +50,15 @@ public class ScenarioProps {
 
     private String getTimeInMillis() {
         return String.valueOf(System.currentTimeMillis());
+    }
+
+    private void loadEnvProps() {
+        Properties p = new Properties();
+        try {
+            p.load(ScenarioProps.class.getClassLoader().getResourceAsStream(ENV_FILE));
+            p.forEach((k, v) -> this.props.put(k.toString(), v.toString().trim()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

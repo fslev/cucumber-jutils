@@ -1,7 +1,7 @@
 Feature: Test placeholder fill
 
   Scenario: Test placeholder fill with global values
-    Given The string with global placeholders "Username is ${username} and password is ${passWord}"
+    Given The string with global placeholders "Username is #[username] and password is #[passWord]"
     Then Check filled string equals "Username is jtravolta and password is swordfish"
 
   Scenario: Test placeholder fill with scenario values
@@ -12,5 +12,5 @@ Feature: Test placeholder fill
 
   Scenario: Test placeholder fill with global and scenario values
     Given param animal="bear"
-    Given The string with scenario placeholders "The #[animal] is attacking ${username}"
+    Given The string with scenario placeholders "The #[animal] is attacking #[username]"
     Then Check filled string equals "The bear is attacking jtravolta"

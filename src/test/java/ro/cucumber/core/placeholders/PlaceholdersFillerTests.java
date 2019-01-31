@@ -2,7 +2,6 @@ package ro.cucumber.core.placeholders;
 
 import org.junit.Test;
 import ro.cucumber.core.engineering.placeholders.AbstractPlaceholderFiller;
-import ro.cucumber.core.engineering.placeholders.GlobalPlaceholderFiller;
 import ro.cucumber.core.engineering.placeholders.ScenarioPlaceholderFiller;
 
 import java.util.Arrays;
@@ -16,8 +15,8 @@ public class PlaceholdersFillerTests {
 
     @Test
     public void testGlobalPlaceholderFillInSimpleText() {
-        String a = "The ${animal} is running through the ${location}";
-        AbstractPlaceholderFiller filler = new GlobalPlaceholderFiller(a);
+        String a = "The #[animal] is running through the #[location]";
+        AbstractPlaceholderFiller filler = new ScenarioPlaceholderFiller(a);
         Map<String, String> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
@@ -26,12 +25,12 @@ public class PlaceholdersFillerTests {
 
     @Test
     public void testGlobalPlaceholderFillInSimpleTextAndInvalidParameters() {
-        String a = "The ${animal} is running through the ${location}";
-        AbstractPlaceholderFiller parser = new GlobalPlaceholderFiller(a);
+        String a = "The #[animal] is running through the #[location]";
+        AbstractPlaceholderFiller parser = new ScenarioPlaceholderFiller(a);
         Map<String, String> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
-        assertEquals("The ${animal} is running through the ${location}", parser.fill(values));
+        assertEquals("The #[animal] is running through the #[location]", parser.fill(values));
     }
 
     @Test
@@ -57,8 +56,8 @@ public class PlaceholdersFillerTests {
 
     @Test
     public void testGlobalAndScenarioPlaceholderFillInSimpleText() {
-        String a = "The ${animal} is running through the #[location]";
-        AbstractPlaceholderFiller globalParser = new GlobalPlaceholderFiller(a);
+        String a = "The #[animal] is running through the #[location]";
+        AbstractPlaceholderFiller globalParser = new ScenarioPlaceholderFiller(a);
         Map<String, String> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
@@ -82,13 +81,13 @@ public class PlaceholdersFillerTests {
                 + "    \"eyeColor\": \"#[val3]\",\n" + "    \"name\": \"Tonya Schneider\",\n"
                 + "    \"gender\": \"female\",\n" + "    \"company\": \"PHARMEX\",\n"
                 + "    \"email\": \"tonyaschneider@pharmex.com\",\n"
-                + "    \"${val1}\": \"#[val2]\",\n"
-                + "    \"address\": \"195 Hubbard Place, ${val1}, New Hampshire, 1382\",\n"
+                + "    \"#[val1]\": \"#[val2]\",\n"
+                + "    \"address\": \"195 Hubbard Place, #[val1], New Hampshire, 1382\",\n"
                 + "    \"about\": \"Occaecat laboris eu #[val1] fugiat. In dolore dolore esse voluptate. Amet ipsum id nisi nulla pariatur do dolore dolore aliquip qui laboris. Aute consequat tempor incididunt sunt voluptate laboris. Velit adipisicing nostrud laboris labore eiusmod. Dolore sint laborum culpa nulla eu sunt excepteur.\\r\\n\",\n"
                 + "    \"registered\": \"2015-05-21T05:11:55 -03:00\",\n"
                 + "    \"latitude\": 67.096081,\n" + "    \"longitude\": 36.71768,\n"
                 + "    \"tags\": [\n" + "      \"aute\",\n" + "      \"dolore\",\n"
-                + "      \"${val2}\",\n" + "      \"officia\",\n" + "      \"enim\",\n"
+                + "      \"#[val2]\",\n" + "      \"officia\",\n" + "      \"enim\",\n"
                 + "      \"aliqua\",\n" + "      \"~[var3]\"\n" + "    ],\n"
                 + "    \"friends\": [\n" + "      {\n" + "        \"id\": 0,\n"
                 + "        \"name\": \"~[val1] Hart\"\n" + "      },\n" + "      {\n"
@@ -120,11 +119,9 @@ public class PlaceholdersFillerTests {
                 + "        \"name\": \"De~[var4]sa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"~[val1]\": \"banana\"\n" + "  }\n" + "]";
-        AbstractPlaceholderFiller globalParser = new GlobalPlaceholderFiller(actual);
-        AbstractPlaceholderFiller scenarioParser = new ScenarioPlaceholderFiller(globalParser.fill(values));
+        AbstractPlaceholderFiller scenarioParser = new ScenarioPlaceholderFiller(actual);
         String result = scenarioParser.fill(values);
         assertEquals(result, expected, result);
         assertEquals(new HashSet<>(Arrays.asList("val3", "val2", "val1")), scenarioParser.searchForPlaceholders());
-        assertEquals(new HashSet<>(Arrays.asList("val2", "val1")), globalParser.searchForPlaceholders());
     }
 }
