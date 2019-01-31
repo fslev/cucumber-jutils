@@ -1,3 +1,6 @@
+### 2.6.6
+Add a warning when a scenario property is overridden   
+
 ### 2.6.5
 JSON compare bug fixes
 

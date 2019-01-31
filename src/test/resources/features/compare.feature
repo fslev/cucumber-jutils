@@ -2,6 +2,7 @@ Feature: Test comparator
 
   Scenario: Compare simple values
     Given param a="1"
+    Given param a="1"
     And param b="1"
     Then COMPARE #[a] with "#[b]"
     And COMPARE 1 with "1"
