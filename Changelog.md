@@ -1,3 +1,6 @@
+### 2.8.1
+Add step definition for loading scenario props from file
+
 ### 2.8.0
 Add support to ScenarioProps for loading scenario props from file   
 

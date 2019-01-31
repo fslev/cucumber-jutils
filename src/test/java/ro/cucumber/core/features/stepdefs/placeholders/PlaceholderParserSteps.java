@@ -21,11 +21,6 @@ public class PlaceholderParserSteps {
         this.str = str;
     }
 
-    @Given("Scenario properties from file \"{cstring}\"")
-    public void scenarioPropsFromFile(String filepath) {
-        this.scenarioProps.loadPropsFromPath(filepath);
-    }
-
     @Given("The string with scenario placeholders \"{cstring}\"")
     public void stringWithScenarioSymbols(String str) {
         this.str = str;

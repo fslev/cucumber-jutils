@@ -16,7 +16,7 @@ Feature: Test placeholder fill
     Then Check filled string equals "The bear is attacking jtravolta"
 
   Scenario: Test placeholder fill with scenario values from properties file
-    Given Scenario properties from file "placeholders/scenario.properties"
+    Given properties from file path "placeholders/scenario.properties"
     Given param animal="bear"
     Given The string with scenario placeholders "The #[animal] is attacking #[a] #[b]"
     Then Check filled string equals "The bear is attacking David Jones"
