@@ -1,3 +1,6 @@
+### 2.9.3
+Increase log details  
+
 ### 2.9.2
 Bug fix  
 

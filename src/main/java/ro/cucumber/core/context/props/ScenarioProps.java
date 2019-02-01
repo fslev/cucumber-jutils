@@ -38,7 +38,7 @@ public class ScenarioProps {
 
     public void put(String key, Object val) {
         if (props.get(key) != null) {
-            log.warn("Scenario property \"{}\" will be overridden", key);
+            log.warn("Scenario property \"{}\" will be overridden with {}", key, val);
         }
         props.put(key, val);
     }
