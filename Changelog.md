@@ -1,3 +1,6 @@
+### 2.9.2
+Bug fix  
+
 ### 2.9.1
 Refactoring  
 Add scenario properties injection support while reading from external file    

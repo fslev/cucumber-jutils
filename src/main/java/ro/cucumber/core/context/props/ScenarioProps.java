@@ -48,9 +48,13 @@ public class ScenarioProps {
     }
 
     public void loadPropsFromPath(String filePath) {
-        Properties p = ResourceUtils.readProps(filePath);
+        Properties p = null;
+        try {
+            p = ResourceUtils.readProps(filePath);
+        } catch (Exception e) {
+            return;
+        }
         p.forEach((k, v) -> {
-            System.out.println(v);
             put(k.toString(), new PlaceholderFiller(v.toString().trim()).fill());
         });
     }
