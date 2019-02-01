@@ -1,12 +1,12 @@
 package ro.cucumber.core.context.compare;
 
 import ro.cucumber.core.context.compare.adapters.HttpResponseAdapter;
-import ro.cucumber.core.context.config.CustomInjectorSource;
 import ro.cucumber.core.context.props.PlaceholderFiller;
 import ro.cucumber.core.context.props.ScenarioProps;
 import ro.cucumber.core.engineering.compare.Compare;
 import ro.cucumber.core.engineering.poller.MethodPoller;
 import ro.cucumber.core.engineering.utils.ResourceUtils;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -18,6 +18,10 @@ public class Cucumbers {
 
     public static String read(String relativeFilePath) {
         return new PlaceholderFiller(ResourceUtils.read(relativeFilePath)).fill().toString();
+    }
+
+    public static void readScenarioProps(String filePath) {
+        ScenarioProps.getScenarioProps().loadPropsFromPath(filePath);
     }
 
     public static void compare(Object expected, Object actual) {
@@ -139,11 +143,8 @@ public class Cucumbers {
 
     private static void compareInternal(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         Map<String, String> placeholdersAndValues = new Compare(message, expected, actual, nonExtensibleObject, nonExtensibleArray).compare();
-        ScenarioProps scenarioProps = getScenarioProps();
+        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
         placeholdersAndValues.forEach(scenarioProps::put);
     }
 
-    private static ScenarioProps getScenarioProps() {
-        return CustomInjectorSource.getContextInjector().getInstance(ScenarioProps.class);
-    }
 }

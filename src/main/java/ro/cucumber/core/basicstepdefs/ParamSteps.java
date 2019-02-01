@@ -3,9 +3,8 @@ package ro.cucumber.core.basicstepdefs;
 import com.google.inject.Inject;
 import cucumber.api.java.en.Given;
 import cucumber.runtime.java.guice.ScenarioScoped;
-import ro.cucumber.core.context.props.PlaceholderFiller;
+import ro.cucumber.core.context.compare.Cucumbers;
 import ro.cucumber.core.context.props.ScenarioProps;
-import ro.cucumber.core.engineering.utils.ResourceUtils;
 
 import java.util.List;
 
@@ -27,13 +26,13 @@ public class ParamSteps {
 
     @Given("param {cstring} from file path \"{cstring}\"")
     public void setParamFromFile(String name, String filePath) {
-        String value = new PlaceholderFiller(ResourceUtils.read(filePath)).fill().toString();
+        String value = Cucumbers.read(filePath);
         scenarioProps.put(name, value);
     }
 
     @Given("properties from file path \"{cstring}\"")
     public void setPropertiesFromFile(String filePath) {
-        scenarioProps.loadPropsFromPath(filePath);
+        Cucumbers.readScenarioProps(filePath);
     }
 
     @Given("table {cstring}=")

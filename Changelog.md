@@ -1,3 +1,7 @@
+### 2.9.1
+Refactoring  
+Add scenario properties injection support while reading from external file    
+
 ### 2.9.0
 Change default scenario properties file name to scenario.properties  
 

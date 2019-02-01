@@ -1,8 +1,10 @@
 package ro.cucumber.core.context.props;
 
+import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ro.cucumber.core.context.config.CustomInjectorSource;
 import ro.cucumber.core.engineering.utils.ResourceUtils;
 
 import java.util.HashMap;
@@ -16,7 +18,8 @@ public class ScenarioProps {
     private Logger log = LogManager.getLogger();
     private Map<String, Object> props = new HashMap<>();
 
-    public ScenarioProps() {
+    @Inject
+    public void init() {
         loadPropsFromPath(ENV_FILE);
     }
 
@@ -46,7 +49,10 @@ public class ScenarioProps {
 
     public void loadPropsFromPath(String filePath) {
         Properties p = ResourceUtils.readProps(filePath);
-        p.forEach((k, v) -> put(k.toString(), v.toString().trim()));
+        p.forEach((k, v) -> {
+            System.out.println(v);
+            put(k.toString(), new PlaceholderFiller(v.toString().trim()).fill());
+        });
     }
 
     private String getUUID() {
@@ -55,5 +61,9 @@ public class ScenarioProps {
 
     private String getTimeInMillis() {
         return String.valueOf(System.currentTimeMillis());
+    }
+
+    public static ScenarioProps getScenarioProps() {
+        return CustomInjectorSource.getContextInjector().getInstance(ScenarioProps.class);
     }
 }

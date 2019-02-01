@@ -1,6 +1,5 @@
 package ro.cucumber.core.context.props;
 
-import ro.cucumber.core.context.config.CustomInjectorSource;
 import ro.cucumber.core.engineering.placeholders.ScenarioPlaceholderFiller;
 
 import java.util.HashMap;
@@ -10,14 +9,10 @@ import java.util.Set;
 public class PlaceholderFiller {
 
     private String target;
-    private ScenarioProps scenarioProps = getScenarioProps();
+    private ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
 
     public PlaceholderFiller(String target) {
         this.target = target;
-    }
-
-    private static ScenarioProps getScenarioProps() {
-        return CustomInjectorSource.getContextInjector().getInstance(ScenarioProps.class);
     }
 
     public Object fill() {
