@@ -1,1 +1,2 @@
-name: "David #[lastName]"
+name: |
+  David #[lastName]
