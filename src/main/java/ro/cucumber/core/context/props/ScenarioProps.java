@@ -32,7 +32,9 @@ public class ScenarioProps {
             case "NOW":
                 return getTimeInMillis();
             default:
-                return props.get(key);
+                return props.get(key) instanceof String ?
+                        new PlaceholderFiller(props.get(key).toString()).fill()
+                        : props.get(key);
         }
     }
 
@@ -55,7 +57,7 @@ public class ScenarioProps {
             return;
         }
         p.forEach((k, v) -> {
-            put(k.toString(), new PlaceholderFiller(v.toString().trim()).fill());
+            put(k.toString(), v.toString().trim());
         });
     }
 

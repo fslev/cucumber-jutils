@@ -1,3 +1,6 @@
+### 2.9.4
+Fill scenario properties values regardless of declaration order   
+
 ### 2.9.3
 Increase log details  
 

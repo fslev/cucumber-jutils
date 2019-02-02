@@ -21,3 +21,15 @@ Feature: Test placeholder fill
     Given param animal="bear"
     Given The string with scenario placeholders "The #[animal] is attacking #[name]"
     Then Check filled string equals "The bear is attacking David Jones"
+
+  Scenario: Test placeholder fill from properties file and scenario params regardless of declaration order
+    Given properties from file path "placeholders/scenario1.properties"
+    Given param lastName="Rey"
+    Given param enemyName="#[enemyFirstName] #[enemyLastName]"
+    Given param enemyFirstName="Ben"
+    Given param enemyLastName=
+  """
+  Solo
+  """
+    Given The string with scenario placeholders "#[enemyName] is attacking #[name]"
+    Then Check filled string equals "Ben Solo is attacking Scavenger Rey"
