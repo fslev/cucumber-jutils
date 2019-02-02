@@ -1,5 +1,7 @@
 package ro.cucumber.core.engineering.utils;
 
+import org.yaml.snakeyaml.Yaml;
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -24,6 +26,10 @@ public class ResourceUtils {
             throw new RuntimeException(e.getMessage(), e);
         }
         return props;
+    }
+
+    public static Map<String, Object> readYaml(String relativeFilePath) {
+        return new Yaml().load(Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath));
     }
 
     /**

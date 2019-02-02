@@ -35,3 +35,10 @@ Feature: Test placeholder fill
     Given param b="olo"
     Given The string with scenario placeholders "#[enemyName] is attacking #[name]"
     Then Check filled string equals "Ben Solo is attacking Scavenger Rey"
+
+  Scenario: Test placeholder fill with scenario values from yaml file
+    Given properties from file path "placeholders/scenario.yaml"
+    Given param lastName="Jones"
+    Given param animal="bear"
+    Given The string with scenario placeholders "The #[animal] is attacking #[name]"
+    Then Check filled string equals "The bear is attacking David Jones"

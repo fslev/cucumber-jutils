@@ -14,13 +14,23 @@ import java.util.UUID;
 
 @ScenarioScoped
 public class ScenarioProps {
-    private final static String ENV_FILE = "scenario.properties";
+    private final static String GLOBAL_FILE_PROPS = "scenario.properties";
+    private final static String GLOBAL_FILE_YAML = "scenario.yaml";
     private Logger log = LogManager.getLogger();
     private Map<String, Object> props = new HashMap<>();
 
     @Inject
     public void init() {
-        loadPropsFromPath(ENV_FILE);
+        try {
+            loadPropsFromPropertiesFile(GLOBAL_FILE_PROPS);
+        } catch (Exception e) {
+            log.info("Cannot read scenario props from global " + GLOBAL_FILE_PROPS);
+        }
+        try {
+            loadPropsFromYamlFile(GLOBAL_FILE_PROPS);
+        } catch (Exception e) {
+            log.info("Cannot read scenario props from global " + GLOBAL_FILE_YAML);
+        }
     }
 
     public Object get(String key) {
@@ -50,15 +60,11 @@ public class ScenarioProps {
     }
 
     public void loadPropsFromPath(String filePath) {
-        Properties p = null;
-        try {
-            p = ResourceUtils.readProps(filePath);
-        } catch (Exception e) {
-            return;
+        if (filePath.endsWith(".properties")) {
+            loadPropsFromPropertiesFile(filePath);
+        } else if (filePath.endsWith(".yaml")) {
+            loadPropsFromYamlFile(filePath);
         }
-        p.forEach((k, v) -> {
-            put(k.toString(), v.toString().trim());
-        });
     }
 
     private String getUUID() {
@@ -67,6 +73,16 @@ public class ScenarioProps {
 
     private String getTimeInMillis() {
         return String.valueOf(System.currentTimeMillis());
+    }
+
+    private void loadPropsFromPropertiesFile(String filePath) {
+        Properties p = ResourceUtils.readProps(filePath);
+        p.forEach((k, v) -> put(k.toString(), v.toString().trim()));
+    }
+
+    private void loadPropsFromYamlFile(String filePath) {
+        Map<String, Object> map = ResourceUtils.readYaml(filePath);
+        map.forEach((k, v) -> put(k, v));
     }
 
     public static ScenarioProps getScenarioProps() {
