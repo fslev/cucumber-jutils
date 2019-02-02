@@ -29,7 +29,9 @@ Feature: Test placeholder fill
     Given param enemyFirstName="Ben"
     Given param enemyLastName=
   """
-  Solo
+  #[a]#[b]
   """
+    Given param a="S"
+    Given param b="olo"
     Given The string with scenario placeholders "#[enemyName] is attacking #[name]"
     Then Check filled string equals "Ben Solo is attacking Scavenger Rey"
