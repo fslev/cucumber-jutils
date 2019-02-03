@@ -29,7 +29,14 @@ public class ResourceUtils {
     }
 
     public static Map<String, Object> readYaml(String relativeFilePath) {
-        return new Yaml().load(Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath));
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath)) {
+            if (is == null) {
+                throw new IOException("File " + relativeFilePath + " not found");
+            }
+            return new Yaml().load(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

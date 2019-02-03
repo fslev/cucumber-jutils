@@ -1,3 +1,8 @@
+### 2.12
+Add date helper step defs support  
+Refatoring  
+Bug fix   
+
 ### 2.11
 Rename Cucumbers methods   
 
