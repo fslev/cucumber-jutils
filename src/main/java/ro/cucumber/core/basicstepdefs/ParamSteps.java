@@ -32,7 +32,7 @@ public class ParamSteps {
 
     @Given("properties from file path \"{cstring}\"")
     public void setPropertiesFromFile(String filePath) {
-        Cucumbers.readScenarioProps(filePath);
+        Cucumbers.loadScenarioProps(filePath);
     }
 
     @Given("table {cstring}=")

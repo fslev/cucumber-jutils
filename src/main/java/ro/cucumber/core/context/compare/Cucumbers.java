@@ -20,7 +20,7 @@ public class Cucumbers {
         return new PlaceholderFiller(ResourceUtils.read(relativeFilePath)).fill().toString();
     }
 
-    public static void readScenarioProps(String filePath) {
+    public static void loadScenarioProps(String filePath) {
         ScenarioProps.getScenarioProps().loadPropsFromPath(filePath);
     }
 

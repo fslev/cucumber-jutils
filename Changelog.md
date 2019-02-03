@@ -1,3 +1,6 @@
+### 2.11
+Rename Cucumbers methods   
+
 ### 2.10
 Add yaml support for reading scenario properties    
 
