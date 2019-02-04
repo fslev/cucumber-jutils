@@ -1,5 +1,5 @@
 ### 2.17
-Refactoring  
+Remove setHeader builder method from http client    
 
 ### 2.16
 Refactoring  
