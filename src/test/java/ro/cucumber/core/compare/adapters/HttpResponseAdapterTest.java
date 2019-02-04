@@ -1,9 +1,5 @@
 package ro.cucumber.core.compare.adapters;
 
-import ro.cucumber.core.context.compare.adapters.HttpResponseAdapter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
@@ -15,6 +11,11 @@ import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
 import org.junit.Assert;
 import org.junit.Test;
+import ro.cucumber.core.context.compare.adapters.HttpResponseAdapter;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
 
 public class HttpResponseAdapterTest {
 

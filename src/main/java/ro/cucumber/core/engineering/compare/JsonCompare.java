@@ -1,17 +1,18 @@
 package ro.cucumber.core.engineering.compare;
 
-import ro.cucumber.core.engineering.compare.comparators.CustomJsonComparator;
-import ro.cucumber.core.engineering.compare.exceptions.CompareException;
-import ro.skyah.comparator.CompareMode;
-import ro.skyah.comparator.JSONCompare;
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
+import ro.cucumber.core.engineering.compare.comparators.CustomJsonComparator;
+import ro.cucumber.core.engineering.compare.exceptions.CompareException;
+import ro.skyah.comparator.CompareMode;
+import ro.skyah.comparator.JSONCompare;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class JsonCompare implements Placeholdable {
 

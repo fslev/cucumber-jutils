@@ -1,14 +1,17 @@
 package ro.cucumber.core.resource;
 
-import ro.cucumber.core.engineering.utils.JsonUtils;
-import ro.cucumber.core.engineering.utils.ResourceUtils;
-import java.io.IOException;
-import java.util.Map;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.junit.Test;
+import ro.cucumber.core.engineering.utils.JsonUtils;
+import ro.cucumber.core.engineering.utils.ResourceUtils;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ResourceReadTests {
 
@@ -31,13 +34,13 @@ public class ResourceReadTests {
     }
 
     @Test
-    public void testInDepthReadFromDirectory() {
+    public void testInDepthReadFromDirectory() throws IOException, URISyntaxException {
         Map<String, String> actualData = ResourceUtils.readDirectory("foobar/dir");
         assertEquals(5, actualData.size());
-        assertTrue(actualData.get("foobar1.json").equals("1"));
-        assertTrue(actualData.get("foo/foo1.json").equals("2"));
-        assertTrue(actualData.get("foo/foo2.json").equals("3"));
-        assertTrue(actualData.get("foo/bar/bar1.json").equals("4"));
-        assertTrue(actualData.get("foo/bar/bar2.json").equals("5"));
+        assertTrue(actualData.get("foobar/dir/foobar1.json").equals("1"));
+        assertTrue(actualData.get("foobar/dir/foo/foo1.json").equals("2"));
+        assertTrue(actualData.get("foobar/dir/foo/foo2.json").equals("3"));
+        assertTrue(actualData.get("foobar/dir/foo/bar/bar1.json").equals("4"));
+        assertTrue(actualData.get("foobar/dir/foo/bar/bar2.json").equals("5"));
     }
 }

@@ -1,11 +1,13 @@
 package ro.cucumber.core.compare;
 
+import org.junit.Test;
 import ro.cucumber.core.engineering.compare.XmlCompare;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
+
 import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 
 public class XmlCompareTests {
 

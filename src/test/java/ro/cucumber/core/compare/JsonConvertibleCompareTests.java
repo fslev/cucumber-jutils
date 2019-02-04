@@ -1,13 +1,10 @@
 package ro.cucumber.core.compare;
 
+import org.junit.Test;
 import ro.cucumber.core.engineering.compare.JsonCompare;
 import ro.cucumber.core.engineering.compare.exceptions.CompareException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.junit.Test;
+
+import java.util.*;
 
 public class JsonConvertibleCompareTests {
 

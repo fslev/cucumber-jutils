@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ResourceUtils {
@@ -42,23 +43,25 @@ public class ResourceUtils {
     /**
      * @return a Map<String,String> between corresponding file paths and file contents
      */
-    public static Map<String, String> readDirectory(String relDirPath) {
-        try {
-            Path basePath = Paths.get(Thread.currentThread().getContextClassLoader().getResource(relDirPath).toURI());
-            Map<String, String> map = Files.walk(basePath).filter(path -> path.toFile().isFile())
-                    .collect(Collectors.toMap(path -> basePath.relativize(path).toString(),
-                            path -> readFromRelativePath(relDirPath + File.separator + basePath.relativize(path).toString())));
-            return map;
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
+    public static Map<String, String> readDirectory(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
+        Path rootPath = Paths.get(Thread.currentThread().getContextClassLoader().getResource(relativeDirPath).toURI());
+        if (!Files.exists(rootPath)) {
+            throw new IOException("Directory " + rootPath + " not found");
         }
+        Map<String, String> map = Files.walk(rootPath).filter(path
+                -> path.toFile().isFile()
+                && (fileExtensionPatterns.length == 0
+                || Set.of(fileExtensionPatterns).contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf(".")))))
+                .collect(Collectors.toMap(path -> relativeDirPath + File.separator + rootPath.relativize(path).toString(),
+                        path -> readFromRelativePath(relativeDirPath + File.separator + rootPath.relativize(path).toString())));
+        return map;
     }
 
-    private static String readFromRelativePath(String filePath) {
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
+    private static String readFromRelativePath(String relativeFilePath) {
+        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath);
              ByteArrayOutputStream result = new ByteArrayOutputStream()) {
             if (is == null) {
-                throw new IOException("File " + filePath + " not found");
+                throw new IOException("File " + relativeFilePath + " not found");
             }
             byte[] buffer = new byte[1024];
             int length;
@@ -69,5 +72,13 @@ public class ResourceUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getFileName(String relativeFilePath) throws IOException, URISyntaxException {
+        Path filePath = Paths.get(Thread.currentThread().getContextClassLoader().getResource(relativeFilePath).toURI());
+        if (!Files.exists(filePath)) {
+            throw new IOException("File " + relativeFilePath + " not found");
+        }
+        return filePath.getFileName().toString();
     }
 }

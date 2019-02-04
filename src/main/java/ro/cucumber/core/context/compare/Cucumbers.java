@@ -9,7 +9,10 @@ import ro.cucumber.core.engineering.utils.ResourceUtils;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Supplier;
+
+import static ro.cucumber.core.context.props.ScenarioProps.FileExtension.*;
 
 public class Cucumbers {
 
@@ -20,8 +23,29 @@ public class Cucumbers {
         return new PlaceholderFiller(ResourceUtils.read(relativeFilePath)).fill().toString();
     }
 
-    public static void loadScenarioProps(String filePath) {
-        ScenarioProps.getScenarioProps().loadPropsFromPath(filePath);
+    public static void loadScenarioPropsFromFile(String filePath) {
+        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
+        if (filePath.endsWith(PROPERTIES.toString())) {
+            loadPropsFromPropertiesFile(scenarioProps, filePath);
+        } else if (filePath.endsWith(YAML.toString())) {
+            loadPropsFromYamlFile(scenarioProps, filePath);
+        } else {
+            throw new RuntimeException("File type not supported for reading scenario properties");
+        }
+    }
+
+    public static void loadScenarioPropertyFile(String relativeFilePath) {
+        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
+        loadScenarioPropertyFile(scenarioProps, relativeFilePath);
+    }
+
+    /**
+     * Loads scenario properties from all supported file patterns: .properties, .yaml, .property
+     */
+
+    public static void loadScenarioPropsFromDir(String relativeDirPath) {
+        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
+        loadScenarioPropsFromDir(scenarioProps, relativeDirPath);
     }
 
     public static void compare(Object expected, Object actual) {
@@ -147,4 +171,45 @@ public class Cucumbers {
         placeholdersAndValues.forEach(scenarioProps::put);
     }
 
+    private static void loadPropsFromPropertiesFile(ScenarioProps scenarioProps, String filePath) {
+        Properties p = ResourceUtils.readProps(filePath);
+        p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
+    }
+
+    private static void loadPropsFromYamlFile(ScenarioProps scenarioProps, String filePath) {
+        Map<String, Object> map = ResourceUtils.readYaml(filePath);
+        map.forEach((k, v) -> scenarioProps.put(k, v));
+    }
+
+    private static void loadScenarioPropertyFile(ScenarioProps scenarioProps, String relativeFilePath) {
+        try {
+            String fileName = ResourceUtils.getFileName(relativeFilePath);
+            if (!fileName.endsWith(".property")) {
+                throw new RuntimeException("Invalid file extension: " + relativeFilePath + " .Must use \".property\" extension");
+            }
+            String value = ResourceUtils.read(relativeFilePath);
+            scenarioProps.put(fileName.substring(0, fileName.lastIndexOf(".")), value);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void loadScenarioPropsFromDir(ScenarioProps scenarioProps, String relativeDirPath) {
+        try {
+            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, PROPERTIES.toString(), YAML.toString(), PROPERTY.toString());
+            System.out.println(map);
+            map.forEach((k, v) -> {
+                if (k.endsWith(PROPERTIES.toString())) {
+                    loadPropsFromPropertiesFile(scenarioProps, k);
+                }
+                if (k.endsWith(YAML.toString())) {
+                    loadPropsFromYamlFile(scenarioProps, k);
+                } else if (k.endsWith(PROPERTY.toString())) {
+                    loadScenarioPropertyFile(k);
+                }
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

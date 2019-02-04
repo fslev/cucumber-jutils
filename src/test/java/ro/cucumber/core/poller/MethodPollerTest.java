@@ -1,11 +1,13 @@
 package ro.cucumber.core.poller;
 
-import ro.cucumber.core.engineering.poller.MethodPoller;
-import java.time.Duration;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import org.junit.Ignore;
 import org.junit.Test;
+import ro.cucumber.core.engineering.poller.MethodPoller;
+
+import java.time.Duration;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 @Ignore
 public class MethodPollerTest {

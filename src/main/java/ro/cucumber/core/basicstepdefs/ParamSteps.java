@@ -30,9 +30,14 @@ public class ParamSteps {
         scenarioProps.put(name, value);
     }
 
-    @Given("properties from file path \"{cstring}\"")
-    public void setPropertiesFromFile(String filePath) {
-        Cucumbers.loadScenarioProps(filePath);
+    @Given("load scenario props from file \"{cstring}\"")
+    public void loadScenarioPropertiesFromFile(String filePath) {
+        Cucumbers.loadScenarioPropsFromFile(filePath);
+    }
+
+    @Given("load scenario props from dir \"{cstring}\"")
+    public void setScenarioPropertiesFromDir(String dirPath) {
+        Cucumbers.loadScenarioPropsFromDir(dirPath);
     }
 
     @Given("table {cstring}=")

@@ -9,13 +9,11 @@ import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
 import ro.cucumber.core.clients.http.Method;
 import ro.cucumber.core.context.props.PlaceholderFiller;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
 import static java.util.Locale.ENGLISH;
 
 public class TypeRegistryConfiguration implements TypeRegistryConfigurer {

@@ -6,12 +6,13 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.datatable.DataTable;
+import org.apache.http.HttpResponse;
 import ro.cucumber.core.clients.http.HttpClient;
 import ro.cucumber.core.clients.http.Method;
 import ro.cucumber.core.context.compare.Cucumbers;
+
 import java.util.List;
 import java.util.Map;
-import org.apache.http.HttpResponse;
 
 @ScenarioScoped
 public class HttpClientSteps {

@@ -2,6 +2,7 @@ package ro.cucumber.core.engineering.compare;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import static org.junit.Assert.fail;
 
 public class Compare implements Placeholdable {

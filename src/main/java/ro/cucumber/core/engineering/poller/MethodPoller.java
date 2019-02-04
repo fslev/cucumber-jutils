@@ -1,10 +1,11 @@
 package ro.cucumber.core.engineering.poller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.time.Duration;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class MethodPoller<T> {
     private Logger log = LogManager.getLogger();

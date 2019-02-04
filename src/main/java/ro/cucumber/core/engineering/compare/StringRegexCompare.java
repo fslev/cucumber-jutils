@@ -1,10 +1,12 @@
 package ro.cucumber.core.engineering.compare;
 
 import ro.cucumber.core.engineering.placeholders.PlaceholdersGenerator;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
 import static org.junit.Assert.fail;
 
 public class StringRegexCompare implements Placeholdable {

@@ -2,6 +2,7 @@ package ro.cucumber.core.engineering.compare.comparators;
 
 import ro.cucumber.core.engineering.placeholders.PlaceholdersGenerator;
 import ro.skyah.comparator.JsonComparator;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
