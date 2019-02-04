@@ -1,3 +1,6 @@
+### 2.15
+Remove useless logging  
+
 ### 2.14
 Add functionality to recursively load all supported scenario properties from a given directory    
 Refactor Date step definitions  
