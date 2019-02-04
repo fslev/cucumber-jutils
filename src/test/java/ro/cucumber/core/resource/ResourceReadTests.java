@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
 public class ResourceReadTests {
 
     @Test
-    public void testStringReadFromFile() {
+    public void testStringReadFromFile() throws IOException {
         assertEquals("some content 1\nsome content 2\n", ResourceUtils.read("foobar/file1.txt"));
     }
 
