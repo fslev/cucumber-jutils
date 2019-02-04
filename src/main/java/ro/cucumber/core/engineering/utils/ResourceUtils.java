@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class ResourceUtils {
 
-    public static String read(String relativeFilePath) {
+    public static String read(String relativeFilePath) throws IOException {
         return readFromRelativePath(relativeFilePath);
     }
 
@@ -29,14 +29,12 @@ public class ResourceUtils {
         return props;
     }
 
-    public static Map<String, Object> readYaml(String relativeFilePath) {
+    public static Map<String, Object> readYaml(String relativeFilePath) throws IOException {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath)) {
             if (is == null) {
                 throw new IOException("File " + relativeFilePath + " not found");
             }
             return new Yaml().load(is);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -53,11 +51,17 @@ public class ResourceUtils {
                 && (fileExtensionPatterns.length == 0
                 || Set.of(fileExtensionPatterns).contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf(".")))))
                 .collect(Collectors.toMap(path -> relativeDirPath + File.separator + rootPath.relativize(path).toString(),
-                        path -> readFromRelativePath(relativeDirPath + File.separator + rootPath.relativize(path).toString())));
+                        path -> {
+                            try {
+                                return readFromRelativePath(relativeDirPath + File.separator + rootPath.relativize(path).toString());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }));
         return map;
     }
 
-    private static String readFromRelativePath(String relativeFilePath) {
+    private static String readFromRelativePath(String relativeFilePath) throws IOException {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath);
              ByteArrayOutputStream result = new ByteArrayOutputStream()) {
             if (is == null) {
@@ -69,8 +73,6 @@ public class ResourceUtils {
                 result.write(buffer, 0, length);
             }
             return result.toString(StandardCharsets.UTF_8.name());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 

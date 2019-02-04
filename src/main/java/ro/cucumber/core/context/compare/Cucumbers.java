@@ -20,7 +20,11 @@ public class Cucumbers {
     }
 
     public static String read(String relativeFilePath) {
-        return new PlaceholderFiller(ResourceUtils.read(relativeFilePath)).fill().toString();
+        try {
+            return new PlaceholderFiller(ResourceUtils.read(relativeFilePath)).fill().toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void loadScenarioPropsFromFile(String filePath) {
@@ -177,7 +181,12 @@ public class Cucumbers {
     }
 
     private static void loadPropsFromYamlFile(ScenarioProps scenarioProps, String filePath) {
-        Map<String, Object> map = ResourceUtils.readYaml(filePath);
+        Map<String, Object> map = null;
+        try {
+            map = ResourceUtils.readYaml(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         map.forEach((k, v) -> scenarioProps.put(k, v));
     }
 
