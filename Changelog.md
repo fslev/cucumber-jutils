@@ -1,3 +1,6 @@
+### 2.19
+Update dependencies versions  
+
 ### 2.18
 Change step description for loading properties from directory    
 
