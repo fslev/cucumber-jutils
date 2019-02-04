@@ -1,3 +1,6 @@
+### 2.18
+Change step description for loading properties from directory    
+
 ### 2.17
 Remove setHeader builder method from http client    
 

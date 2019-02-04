@@ -47,6 +47,6 @@ Feature: Test placeholder fill
 
 
   Scenario: Test placeholder fill with all scenario values recursively loaded from directory
-    Given load scenario props from dir "placeholders/properties"
+    Given load all scenario props from dir "placeholders/properties"
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]"
