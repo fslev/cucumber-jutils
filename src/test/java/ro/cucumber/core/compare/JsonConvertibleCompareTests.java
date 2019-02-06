@@ -76,23 +76,23 @@ public class JsonConvertibleCompareTests {
         List<Map<String, Object>> expected = new ArrayList<>();
         List<Map<String, Object>> actual = new ArrayList<>();
         //Fill expected
-        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map1 = new LinkedHashMap<>();
         map1.put("firstName", "John");
         map1.put("lastName", null);
-        Map<String, Object> map2 = new HashMap<>();
+        Map<String, Object> map2 = new LinkedHashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", ".+1");
         expected.add(map1);
         expected.add(map2);
         //Fill actual
-        map1 = new HashMap<>();
+        map1 = new LinkedHashMap<>();
         map1.put("firstName", "John");
         map1.put("lastName", null);
-        map2 = new HashMap<>();
+        map2 = new LinkedHashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", "Davids1");
         map2.put("address", "blah blah");
-        Map<String, Object> map3 = new HashMap<>();
+        Map<String, Object> map3 = new LinkedHashMap<>();
         map3.put("1", 2);
         map3.put("3", 4);
         actual.add(map1);
@@ -107,20 +107,20 @@ public class JsonConvertibleCompareTests {
         List<Map<String, Object>> expected = new ArrayList<>();
         List<Map<String, Object>> actual = new ArrayList<>();
         //Fill expected
-        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map1 = new LinkedHashMap<>();
         map1.put("firstName", "John");
         map1.put("lastName", null);
-        Map<String, Object> map2 = new HashMap<>();
+        Map<String, Object> map2 = new LinkedHashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", ".+1");
         map2.put("!.*", ".*");
         expected.add(map1);
         expected.add(map2);
         //Fill actual
-        map1 = new HashMap<>();
+        map1 = new LinkedHashMap<>();
         map1.put("firstName", "John");
         map1.put("lastName", null);
-        map2 = new HashMap<>();
+        map2 = new LinkedHashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", "Davids1");
         actual.add(map1);
@@ -134,20 +134,20 @@ public class JsonConvertibleCompareTests {
         List<Map<String, Object>> expected = new ArrayList<>();
         List<Map<String, Object>> actual = new ArrayList<>();
         //Fill expected
-        Map<String, Object> map1 = new HashMap<>();
+        Map<String, Object> map1 = new LinkedHashMap<>();
         map1.put("firstName", "John");
         map1.put("lastName", null);
-        Map<String, Object> map2 = new HashMap<>();
+        Map<String, Object> map2 = new LinkedHashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", ".+1");
         map2.put("!.*", ".*");
         expected.add(map1);
         expected.add(map2);
         //Fill actual
-        map1 = new HashMap<>();
+        map1 = new LinkedHashMap<>();
         map1.put("firstName", "John");
         map1.put("lastName", null);
-        map2 = new HashMap<>();
+        map2 = new LinkedHashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", "Davids1");
         map2.put("address", "street address");
