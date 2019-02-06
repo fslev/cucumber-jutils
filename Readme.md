@@ -21,4 +21,10 @@ The following types of objects are supported for comparison:
    String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
    Cucumbers.compare(expected,actual);
    ~~~~
-          
+* XMLs  
+  * dependency: [**xml-unit**](https://github.com/xmlunit/xmlunit)
+   ~~~~
+   String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
+   String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
+   Cucumbers.compare(expected,actual);
+   ~~~~          
