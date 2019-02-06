@@ -77,7 +77,7 @@ You can share state between different Cucumber steps using *scenario properties*
     * load scenario props from file "placeholders/scenario.properties"
     Then check #[animal]=Rabbit 
     ```
-    where, *scenario.properties*:
+    where, *scenario.properties* contains:
     ```
     animal=Rabbit
     ```  
@@ -95,7 +95,7 @@ You can share state between different Cucumber steps using *scenario properties*
         And The string with scenario placeholders "This is a #[figure]"
         Then Check filled string equals "This is a circle"
     ```  
-    where, *figure.property*:
+    where, *figure.property* contains:
     ```
     circle
     ```  
