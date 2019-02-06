@@ -16,28 +16,26 @@ Most of these features can be imported directly in your test project and are als
 The following types of objects are supported for comparison:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
-    ~~~~
+    ```css
     String expected = "{\"!b\":val1\",\"a\":\"val2\"}";
     String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
     Cucumbers.compare(expected,actual);
-    ~~~~
+    ```
 
 * XMLs  
   * dependency: [**xml-unit**](https://github.com/xmlunit/xmlunit)
     ```css
-    ~~~~
     String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
     String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
     Cucumbers.compare(expected,actual);
-    ~~~~
     ```      
 
 * JSON convertible objects  
      
-    ~~~~
+    ```css
     List<Map<String, Object>> expected = new ArrayList<>();
     List<Map<String, Object>> actual = new ArrayList<>();
     //To Do: Fill expected
     //To Do: Fill actual
     Cucumbers.compare(expected,actual);
-    ~~~~      
+    ```     
