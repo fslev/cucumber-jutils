@@ -32,24 +32,7 @@ The following types of objects are supported for comparison:
    ~~~~
    List<Map<String, Object>> expected = new ArrayList<>();
    List<Map<String, Object>> actual = new ArrayList<>();
-   //Fill expected
-   Map<String, Object> map1 = new LinkedHashMap<>();
-   map1.put("firstName", "John");
-   map1.put("lastName", null);
-   Map<String, Object> map2 = new HashMap<>();
-   map2.put("firstName", "John1");
-   map2.put("lastName", ".+1");
-   map2.put("!.*", ".*");
-   expected.add(map1);
-   expected.add(map2);
-   //Fill actual
-   map1 = new LinkedHashMap<>();
-   map1.put("firstName", "John");
-   map1.put("lastName", null);
-   map2 = new HashMap<>();
-   map2.put("firstName", "John1");
-   map2.put("lastName", "Davids1");
-   actual.add(map1);
-   actual.add(map2);
+   //To Do: Fill expected
+   //To Do: Fill actual
    Cucumbers.compare(expected,actual);
    ~~~~      
