@@ -80,5 +80,5 @@ You can share state between different Cucumber steps using *scenario properties*
     ```
     animal=Rabbit
     ```
-     
+     Reading scenario properties from **.property** files means that the name of the property will actually be the name of the file
  
