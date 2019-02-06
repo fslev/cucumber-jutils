@@ -50,7 +50,7 @@ The following types of objects are supported for comparison:
 
 #### State-sharing mechanism
 The state sharing mechanism uses the power of **guice**, **cucumber-guice** and Cucumber **custom** expressions.  
-You can share state between different Cucumber steps within a *scenario using scenario properties*.  
+You can share state between different Cucumber steps using *scenario properties*.  
 
   
  
