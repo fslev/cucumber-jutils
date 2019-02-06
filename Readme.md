@@ -46,7 +46,7 @@ The following types of objects are supported for comparison:
     Cucumbers.compare(expected,actual);
     ```  
 
-* For the rest, the default *equals()* method is used
+* For the rest, the default *equals()* method is used  
 
 #### State-sharing mechanism
 The state sharing mechanism uses behind the scenes the power of **guice** and **cucumber-guice**.  
