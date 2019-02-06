@@ -61,6 +61,7 @@ The state sharing mechanism uses the power of **guice**, **cucumber-guice** and 
 You can share state between different Cucumber steps using *scenario properties*.  
 
 #### Setting scenario properties  
+
 - within the Scenario, using the **param \<name\>="\<value\>"** Cucumber step
     ```css
     Scenario: Test scenario properties
@@ -69,6 +70,7 @@ You can share state between different Cucumber steps using *scenario properties*
         And The string with scenario placeholders "The #[animal] is running through the #[location]"
         Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
     ```
+
 - from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step           
     ```css
     Scenario: Test scenario properties
@@ -97,6 +99,17 @@ You can share state between different Cucumber steps using *scenario properties*
     ```
     circle
     ```  
-     
+
+- from resource directory, via **load all scenario props from dir "\<relativePath/toDir\>"** Cucumber step           
+    ```css
+    Given load all scenario props from dir "placeholders/properties"
+    Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
+    Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]" 
+    ```
+    where, *properties* dir has several properties files containing the corresponding properties.    
+    
+    ***Note:***  
+    The function for reading scenario properties from a directory walks through the whole directory tree structure. It filters only the supported file types.  
+         
      
  
