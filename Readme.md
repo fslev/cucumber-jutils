@@ -49,7 +49,7 @@ The following types of objects are supported for comparison:
 * For the rest, the default *equals()* method is used  
 
 #### State-sharing mechanism
-The state sharing mechanism uses behind the scenes the power of **guice** and **cucumber-guice** and Cucumber **custom** expressions.  
+The state sharing mechanism uses the power of **guice** and **cucumber-guice** and Cucumber **custom** expressions.  
 You can share state between different Cucumber steps within a scenario using scenario properties.  
 
   
