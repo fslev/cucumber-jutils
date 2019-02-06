@@ -106,7 +106,7 @@ You can share state between different Cucumber steps using *scenario properties*
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]" 
     ```
-    where, *properties* dir has several properties files containing the corresponding properties.    
+    where, inside the *properties* directory are defined several files containing the corresponding properties.    
     
     ***Note:***  
     The function for reading scenario properties from a directory walks through the whole directory tree structure. It filters only the supported file types.  
