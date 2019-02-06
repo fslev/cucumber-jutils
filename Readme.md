@@ -12,7 +12,7 @@ Most of these features can be imported directly in your test project and are als
   
 
 ## Features
-#### _Expected-Actual_ compare mechanism
+#### Expected-Actual compare mechanism
 The following types of objects are supported for comparison:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
