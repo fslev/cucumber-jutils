@@ -35,8 +35,7 @@ The following types of objects are supported for comparison:
     ```css
     List<Map<String, Object>> expected = new ArrayList<>();
     List<Map<String, Object>> actual = new ArrayList<>();
-    //To Do: Fill expected
-    //To Do: Fill actual
+    //To Do: Fill expected and actual
     Cucumbers.compare(expected,actual);
     ```   
 * Strings with regex support   
