@@ -53,14 +53,18 @@ The state sharing mechanism uses the power of **guice**, **cucumber-guice** and 
 You can share state between different Cucumber steps using *scenario properties*.  
 
 ##### Setting scenario properties  
-- from Scenario, using the **param \<name\>="\<value\>"** helper step
+- within the Scenario, using the **param \<name\>="\<value\>"** helper step
 ```css
-  Scenario: Test placeholder fill with scenario values
+  Scenario: Test scenario properties
     Given param animal="r\"a$b\\"b[it"
     And param location="forest"
     And The string with scenario placeholders "The #[animal] is running through the #[location]"
     Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
 ```
-
+- from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"**
+```css
+  Scenario: Test scenario properties
+  * load scenario props from file "placeholders/scenario.properties"
+```
   
  
