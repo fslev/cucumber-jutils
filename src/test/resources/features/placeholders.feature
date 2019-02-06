@@ -11,6 +11,11 @@ Feature: Test placeholder fill
     And The string with scenario placeholders "The #[animal] is running through the #[location]"
     Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
 
+  Scenario: Test placeholder fill with scenario property file
+    * load scenario property file "placeholders/figure.property"
+    And The string with scenario placeholders "This is a #[figure]"
+    Then Check filled string equals "This is a circle"
+
   Scenario: Test placeholder fill with global and scenario values
     Given param animal="bear"
     And load scenario props from file "scenario.properties"
