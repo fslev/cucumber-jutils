@@ -69,8 +69,7 @@ You can share state between different Cucumber steps using *scenario properties*
         And The string with scenario placeholders "The #[animal] is running through the #[location]"
         Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
     ```
-- from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step  
-    *Note:* __Supported file types__ for setting scenario properties:  ***.properties***, ***.yaml*** and ***.property***     
+- from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step           
     ```
     Scenario: Test scenario properties
     * load scenario props from file "placeholders/scenario.properties"
@@ -81,17 +80,23 @@ You can share state between different Cucumber steps using *scenario properties*
     animal=Rabbit
     ```  
     
-     \- If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
-     ```
-       Scenario: Test placeholder fill with scenario property file
-         * load scenario property file "placeholders/figure.property"
-         And The string with scenario placeholders "This is a #[figure]"
-         Then Check filled string equals "This is a circle"
-     ```  
-     where, *figure.property*:
-     ```
-     circle
-     ```  
+    ***Note:***  
+    __Supported file types__ for setting scenario properties:
+    - ***.properties***
+    - ***.yaml***
+    - ***.property***  
+    
+    If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
+    ```
+      Scenario: Test placeholder fill with scenario property file
+        * load scenario property file "placeholders/figure.property"
+        And The string with scenario placeholders "This is a #[figure]"
+        Then Check filled string equals "This is a circle"
+    ```  
+    where, *figure.property*:
+    ```
+    circle
+    ```  
      
      
  
