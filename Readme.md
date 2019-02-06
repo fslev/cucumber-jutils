@@ -114,6 +114,7 @@ You can share state between different Cucumber steps using *scenario properties*
 - programmatically, by injecting the *ScenarioProps* class via **Guice**:    
     ```java
     import com.google.inject.Inject;
+
     @ScenarioScoped
     public class ParamSteps {
         @Inject
