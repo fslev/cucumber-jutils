@@ -54,22 +54,22 @@ You can share state between different Cucumber steps using *scenario properties*
 
 ##### Setting scenario properties  
 - within the Scenario, using the **param \<name\>="\<value\>"** helper step
-```css
-  Scenario: Test scenario properties
-    Given param animal="r\"a$b\\"b[it"
-    And param location="forest"
-    And The string with scenario placeholders "The #[animal] is running through the #[location]"
-    Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
-```
+    ```css
+    Scenario: Test scenario properties
+        Given param animal="r\"a$b\\"b[it"
+        And param location="forest"
+        And The string with scenario placeholders "The #[animal] is running through the #[location]"
+        Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
+    ```
 - from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"**
-```css
-  Scenario: Test scenario properties
-  * load scenario props from file "placeholders/scenario.properties"
-  Then check #[animal]=Rabbit 
-```
-  where, *scenario.properties*:
-  ```
-  animal=Rabbit
-  ```
+    ```css
+    Scenario: Test scenario properties
+    * load scenario props from file "placeholders/scenario.properties"
+    Then check #[animal]=Rabbit 
+    ```
+    where, *scenario.properties*:
+    ```
+    animal=Rabbit
+    ```
   
  
