@@ -71,5 +71,5 @@ You can share state between different Cucumber steps using *scenario properties*
     ```
     animal=Rabbit
     ```
-    __Supported file types__ for setting scenario properties:  **.properties**, **.yaml** and **.property** 
+    __Supported file types__ for setting scenario properties:  ***.properties***, ***.yaml*** and ***.property*** 
  
