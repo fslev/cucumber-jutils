@@ -62,7 +62,7 @@ You can share state between different Cucumber steps using *scenario properties*
 
 ##### Setting scenario properties  
 - within the Scenario, using the **param \<name\>="\<value\>"** Cucumber step
-    ```css
+    ```
     Scenario: Test scenario properties
         Given param animal="r\"a$b\\"b[it"
         And param location="forest"
@@ -71,7 +71,7 @@ You can share state between different Cucumber steps using *scenario properties*
     ```
 - from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step  
     *Note:* __Supported file types__ for setting scenario properties:  ***.properties***, ***.yaml*** and ***.property***     
-    ```css
+    ```
     Scenario: Test scenario properties
     * load scenario props from file "placeholders/scenario.properties"
     Then check #[animal]=Rabbit 
