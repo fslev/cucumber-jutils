@@ -10,11 +10,15 @@ It takes over the usual features that need to be present inside a test framework
 
 Most of these features can be imported directly in your test project and are also available as Cucumber step definitions.  
   
-  
+
 ## Features
 #### _Expected-Actual_ compare mechanism
 The following types of objects are supported for comparison:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
-   
+   ~~~~
+   String expected = "{\"!b\":val1\",\"a\":\"val2\"}";
+   String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
+   Cucumbers.compare(expected,actual);
+   ~~~~
           
