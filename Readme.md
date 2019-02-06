@@ -44,7 +44,7 @@ The following types of objects are supported for comparison:
     String expected = "some .* text";
     String actual = "some dummy text";
     Cucumbers.compare(expected,actual);
-    ```
+    ```  
 
 * For the rest, the default equals() method is used
 
