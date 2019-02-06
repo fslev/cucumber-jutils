@@ -79,6 +79,19 @@ You can share state between different Cucumber steps using *scenario properties*
     where, *scenario.properties*:
     ```
     animal=Rabbit
-    ```
-     Reading scenario properties from **.property** files means that the name of the property will actually be the name of the file
+    ```  
+    
+     \- If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
+     ```
+       Scenario: Test placeholder fill with scenario property file
+         * load scenario property file "placeholders/figure.property"
+         And The string with scenario placeholders "This is a #[figure]"
+         Then Check filled string equals "This is a circle"
+     ```  
+     where, *figure.property*:
+     ```
+     circle
+     ```  
+     
+     
  
