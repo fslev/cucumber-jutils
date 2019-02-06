@@ -67,7 +67,7 @@ You can share state between different Cucumber steps using *scenario properties*
   * load scenario props from file "placeholders/scenario.properties"
   Then check #[animal]=Rabbit 
 ```
-  where, scenario.properties:
+  where, *scenario.properties*:
   ```
   animal=Rabbit
   ```
