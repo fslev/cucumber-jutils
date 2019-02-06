@@ -38,4 +38,12 @@ The following types of objects are supported for comparison:
     //To Do: Fill expected
     //To Do: Fill actual
     Cucumbers.compare(expected,actual);
-    ```     
+    ```   
+* Strings with regex support   
+    ```css
+    String expected = "some .* text";
+    String actual = "some dummy text";
+    Cucumbers.compare(expected,actual);
+    ```
+* For the rest, the default equals() method is used
+
