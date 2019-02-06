@@ -9,8 +9,8 @@ It takes over the usual features that need to be present inside a test framework
 * a light state-sharing mechanism between Cucumber scenario steps       
 
 Most of these features can be imported directly in your test project and are also available as Cucumber step definitions.  
-
-<br>
+  
+  
 ## Features
 #### _Expected-Actual_ comparing mechanism
 The following types of objects are supported for comparison:
