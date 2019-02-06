@@ -39,7 +39,7 @@ The following types of objects are supported for comparison:
     Cucumbers.compare(expected,actual);
     ```   
 
-* Strings with regex support   
+* Strings, with regex support   
     ```css
     String expected = "some .* text";
     String actual = "some dummy text";
