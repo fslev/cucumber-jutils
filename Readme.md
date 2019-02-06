@@ -62,7 +62,7 @@ You can share state between different Cucumber steps using *scenario properties*
 
 ##### Setting scenario properties  
 - within the Scenario, using the **param \<name\>="\<value\>"** Cucumber step
-    ```css
+    ```ruby
     Scenario: Test scenario properties
         Given param animal="r\"a$b\\"b[it"
         And param location="forest"
