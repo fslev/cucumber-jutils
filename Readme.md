@@ -110,6 +110,18 @@ You can share state between different Cucumber steps using *scenario properties*
     
     ***Note:***  
     The function for reading scenario properties from a directory walks through the whole directory tree structure. It filters only the supported file types.  
+    
+- programmatically, via **Guice** injection:  
+    ```java
+    @ScenarioScoped
+    public class ParamSteps {
+        @Inject
+        private ScenarioProps scenarioProps;
+        public void setProp(String name, String value) {
+            scenarioProps.put(name, value);
+        }
+    }
+    ```
          
      
  
