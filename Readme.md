@@ -53,7 +53,7 @@ The state sharing mechanism uses the power of **guice**, **cucumber-guice** and 
 You can share state between different Cucumber steps using *scenario properties*.  
 
 ##### Setting scenario properties  
-- from Scenario, using the **param <name>="<value>"** helper step
+- from Scenario, using the **param <name>="\<value\>"** helper step
 ```css
   Scenario: Test placeholder fill with scenario values
     Given param animal="r\"a$b\\"b[it"
