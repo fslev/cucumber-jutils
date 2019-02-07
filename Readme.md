@@ -71,7 +71,7 @@ You can share state between different Cucumber steps using *scenario properties*
         Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
     ```
 
-As you can see, in order to access a scenario property value within the Cucumber scenario, you must call it by its name using the special placeholders **#[propertyName]**  
+As you can see, in order to access a scenario property value within the Cucumber scenario, you must call it by its name using the special placeholder symbols **#[ ]**  
 
 - from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step           
     ```css
