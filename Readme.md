@@ -139,7 +139,7 @@ The following clients are available via Cucumber-core:
 - HTTP client
 - SQL client
 
-These clients are initialized and configured via the builder pattern, in order to allow to add new settings between Cucumber steps.  
+These clients are initialized and configured via the builder pattern, in order to allow addition of new settings between Cucumber steps.      
     
 
 ### Cucumber pre-defined utility steps 
