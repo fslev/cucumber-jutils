@@ -137,7 +137,7 @@ As you can see, in order to use a scenario property value within the Cucumber sc
 
 The following clients are available via Cucumber-core:
 - HTTP client
-- SQL client
+- SQL clients (MySQL, PostgreSQL, Sybase, etc -> depending on the sql driver you configure)
 
 These clients are initialized and configured via the builder pattern, in order to allow addition of new settings between Cucumber steps.      
     
