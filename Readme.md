@@ -162,7 +162,7 @@ These clients are initialized and configured via the builder pattern, in order t
     ``` 
     ```css
     Scenario: Test POSTGRESQL client simple insert with tabular data
-        Given SQL data source from file path "config/database/mysql.properties"
+        Given SQL data source from file path "config/database/psql.properties"
         Then SQL INSERT into table "mag" the following data
           | person_id | description       |
           | 14        | http://heheheh.ro |
