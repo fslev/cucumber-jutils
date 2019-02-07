@@ -133,6 +133,13 @@ As you can see, in order to use a scenario property value within the Cucumber sc
     }
     ```
      
-### Database clients
-### HTTP client
+### Clients
+
+The following clients are available via Cucumber-core:
+- HTTP client
+- SQL client
+
+These clients are initialized and configured via the builder pattern, in order to allow to add new settings between Cucumber steps.  
+    
+
 ### Cucumber pre-defined utility steps 
