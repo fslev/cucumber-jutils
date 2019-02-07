@@ -142,4 +142,32 @@ The following clients are available via Cucumber-core:
 These clients are initialized and configured via the builder pattern, in order to allow addition of new settings between Cucumber steps.      
     
 
-### Cucumber pre-defined utility steps 
+### Other Pre-defined Cucumber utility steps 
+
+- Compare date times
+    ```css
+    Given DateTime pattern="yyyy-MM-dd HH:mm:ss"
+    Then DateTime check period from "2018-02-03 01:00:00" to "2019-02-03 01:00:00" is 1year
+    ``` 
+    
+- Connect to SQL databases and compare results
+    ```css
+    Scenario: Test MYSQL client select
+        Given SQL data source from file path "config/database/mysql.properties"
+        Then SQL execute query "select * from gift order by person_id asc limit 3" and compare result with
+          | person_id | gift                                                 |
+          | .*        | .*                                                   |
+          | 21189037  | fun & joy for everybody!                             |
+          | 21193939  | Leica M9-P Hermes Edition: http://vimeo.com/42108675 |
+    ``` 
+    ```css
+        Scenario: Test POSTGRESQL client simple insert with tabular data
+            Given SQL data source from file path "config/database/mysql.properties"
+            Then SQL INSERT into table "mag" the following data
+              | person_id | description       |
+              | 14        | http://heheheh.ro |
+              | 16        | null              |
+              | 17        | wow               |
+    ```
+    
+    
