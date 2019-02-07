@@ -73,7 +73,10 @@ You can share state between different Cucumber steps using *scenario properties*
 
 As you can see, in order to use a scenario property value within the Cucumber scenario, you must call it by its name using the special placeholder symbols **#[ ]**, which are magically parsed in your corresponding step definition if it uses the custom cucumber expression **{cstring}**:     
 ```css
-
+    @Then("Check filled string equals \"{cstring}\"")
+    public void check(String str) {
+        assertEquals(str, this.str);
+    }
 ```
 
 - from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step           
