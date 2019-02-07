@@ -150,7 +150,7 @@ These clients are initialized and configured via the builder pattern, in order t
     Then DateTime check period from "2018-02-03 01:00:00" to "2019-02-03 01:00:00" is 1year
     ``` 
     
-- Connect to SQL databases, execute queries and compare results and also execute updates
+- Connect to SQL databases, execute queries, compare results and also execute updates
     ```css
     Scenario: Test MYSQL client select
         Given SQL data source from file path "config/database/mysql.properties"
