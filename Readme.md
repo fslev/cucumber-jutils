@@ -85,7 +85,7 @@ As you can see, in order to use a scenario property value within the Cucumber sc
     * load scenario props from file "placeholders/scenario.properties"
     Then check #[animal]=Rabbit 
     ```
-    where, *scenario.properties* contains:
+    where, *scenario.properties* file contains:
     ```
     animal=Rabbit
     ```  
@@ -103,7 +103,7 @@ As you can see, in order to use a scenario property value within the Cucumber sc
         And The string with scenario placeholders "This is a #[figure]"
         Then Check filled string equals "This is a circle"
     ```  
-    where, *figure.property* contains:
+    where, *figure.property* file contains:
     ```
     circle
     ```  
