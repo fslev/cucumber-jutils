@@ -148,6 +148,10 @@ These clients are initialized and configured via the builder pattern, in order t
     ```css
     Given DateTime pattern="yyyy-MM-dd HH:mm:ss"
     Then DateTime check period from "2018-02-03 01:00:00" to "2019-02-03 01:00:00" is 1year
+    And DateTime check period from "2018-02-03 01:00:00" to "2019-02-02 12:01:10" is 364days
+    And DateTime check period from "2019-02-03 01:02:12" to "2019-02-03 23:59:10" is 22hours
+    And DateTime check period from "2019-02-03 22:02:12" to "2019-02-03 23:59:10" is 116minutes
+    And DateTime check period from "2019-02-03 23:58:12" to "2019-02-03 23:59:10" is 58seconds
     ``` 
     
 - Connect to SQL databases, execute queries, compare results and also execute updates
