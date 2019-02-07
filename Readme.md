@@ -161,13 +161,13 @@ These clients are initialized and configured via the builder pattern, in order t
           | 21193939  | Leica M9-P Hermes Edition: http://vimeo.com/42108675 |
     ``` 
     ```css
-        Scenario: Test POSTGRESQL client simple insert with tabular data
-            Given SQL data source from file path "config/database/mysql.properties"
-            Then SQL INSERT into table "mag" the following data
-              | person_id | description       |
-              | 14        | http://heheheh.ro |
-              | 16        | null              |
-              | 17        | wow               |
+    Scenario: Test POSTGRESQL client simple insert with tabular data
+        Given SQL data source from file path "config/database/mysql.properties"
+        Then SQL INSERT into table "mag" the following data
+          | person_id | description       |
+          | 14        | http://heheheh.ro |
+          | 16        | null              |
+          | 17        | wow               |
     ```
     
     
