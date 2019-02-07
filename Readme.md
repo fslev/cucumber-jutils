@@ -60,7 +60,7 @@ The following types of objects are supported for comparison:
 The state sharing mechanism uses the power of **guice**, **cucumber-guice** and Cucumber **custom** expressions.  
 You can share state between different Cucumber steps using *scenario properties*.  
 
-#### Setting scenario properties  
+#### Set and use scenario properties  
 
 - within the Scenario, using the **param \<name\>="\<value\>"** Cucumber step
     ```css
@@ -70,6 +70,8 @@ You can share state between different Cucumber steps using *scenario properties*
         And The string with scenario placeholders "The #[animal] is running through the #[location]"
         Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
     ```
+
+As you can see, in order to access a scenario property value within the Cucumber scenario, you must call it by its name using the special placeholders **#[propertyName]**  
 
 - from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step           
     ```css
