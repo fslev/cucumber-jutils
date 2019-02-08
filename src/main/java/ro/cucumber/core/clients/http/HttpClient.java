@@ -67,8 +67,7 @@ public class HttpClient {
 
     public HttpResponse execute() {
         try {
-            HttpResponse response = client.execute(request);
-            return response;
+            return client.execute(request);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -285,7 +284,7 @@ public class HttpClient {
         }
 
         public Builder setQueryParams(Map<String, String> queryParams) {
-            List<NameValuePair> paramsList = new ArrayList();
+            List<NameValuePair> paramsList = new ArrayList<>();
             queryParams.forEach((k, v) -> paramsList.add(new BasicNameValuePair(k, v)));
             this.uriBuilder.setParameters(paramsList);
             return this;

@@ -91,6 +91,6 @@ public class JsonCompare implements Placeholdable {
         if (arrayStrictOrder) {
             modes.add(CompareMode.JSON_ARRAY_STRICT_ORDER);
         }
-        return modes.toArray(new CompareMode[modes.size()]);
+        return modes.toArray(new CompareMode[0]);
     }
 }

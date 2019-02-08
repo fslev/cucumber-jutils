@@ -27,7 +27,7 @@ public class PlaceholderFiller {
     private String getFilledStringWithScenarioValues(String str) {
         ScenarioPlaceholderFiller parser = new ScenarioPlaceholderFiller(str);
         Set<String> symbolNames = parser.searchForPlaceholders();
-        Map<String, String> values = new HashMap();
+        Map<String, String> values = new HashMap<>();
         symbolNames.forEach((String name) -> {
             Object val = scenarioProps.get(name);
             if (val != null) {

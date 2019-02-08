@@ -151,10 +151,9 @@ public class Cucumbers {
         String expectedReason = expectedAdapter.getReasonPhrase();
         Map<String, String> expectedHeaders = expectedAdapter.getHeaders();
         Object expectedEntity = expectedAdapter.getEntity();
-        String enhancedMessage = new StringBuilder().append(System.lineSeparator()).append("Expected:").append(System.lineSeparator())
-                .append(expectedAdapter.toString()).append(System.lineSeparator()).append("Actual:").append(System.lineSeparator())
-                .append(actualAdapter.toString()).append(System.lineSeparator()).append(message != null ? message : "")
-                .append(System.lineSeparator()).toString();
+        String enhancedMessage = System.lineSeparator() + "Expected:" + System.lineSeparator()
+                + expectedAdapter.toString() + System.lineSeparator() + "Actual:" + System.lineSeparator()
+                + actualAdapter.toString() + System.lineSeparator() + (message != null ? message : "") + System.lineSeparator();
         if (expectedStatus != null) {
             compareInternal(enhancedMessage, expectedStatus, actualAdapter.getStatus(), nonExtensibleObject, nonExtensibleArray);
         }
@@ -181,7 +180,7 @@ public class Cucumbers {
     }
 
     private static void loadPropsFromYamlFile(ScenarioProps scenarioProps, String filePath) {
-        Map<String, Object> map = null;
+        Map<String, Object> map;
         try {
             map = ResourceUtils.readYaml(filePath);
         } catch (IOException e) {

@@ -32,18 +32,21 @@ public class XmlUtils {
     }
 
     public static boolean isValid(String xml) {
-        DocumentBuilder builder = null;
+        DocumentBuilder builder;
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             builder.setErrorHandler(new ErrorHandler() {
                 @Override
-                public void warning(SAXParseException exception) throws SAXException {}
+                public void warning(SAXParseException exception) throws SAXException {
+                }
 
                 @Override
-                public void error(SAXParseException exception) throws SAXException {}
+                public void error(SAXParseException exception) throws SAXException {
+                }
 
                 @Override
-                public void fatalError(SAXParseException exception) throws SAXException {}
+                public void fatalError(SAXParseException exception) throws SAXException {
+                }
             });
             builder.parse(new InputSource(new StringReader(xml)));
         } catch (SAXException | IOException e) {
