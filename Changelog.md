@@ -1,3 +1,6 @@
+### 2.24
+Fix possible bug         
+
 ### 2.23
 Refactoring and fix bugs       
 

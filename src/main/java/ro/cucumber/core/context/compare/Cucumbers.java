@@ -72,7 +72,7 @@ public class Cucumbers {
         try {
             compareHttpResponse(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
             return;
-        } catch (Exception e) {
+        } catch (IOException e) {
         }
         compareInternal(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
     }
