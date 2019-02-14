@@ -2,9 +2,9 @@
 
 ## Summary
 Cucumber-core is a Java library meant to help you write organized and clean **Cucumber** tests.  
-It takes over the usual features that need to be present inside a test framework, such as:  
+It takes over the usual features needed to be present inside a test framework, such as:  
 * the _expected-actual_ comparing mechanism
-* read from from file functionality
+* read from from file or from all files within a directory
 * customized up-to-date clients to access various resources i.e databases, HTTP services, etc  
 * a light state-sharing mechanism between Cucumber scenario steps       
 
