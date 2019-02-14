@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpResponseAdapter {
+public class HttpResponseWrapper {
 
     @JsonProperty(value = "status")
     private Integer status;
@@ -23,14 +23,17 @@ public class HttpResponseAdapter {
     @JsonProperty(value = "headers")
     private Map<String, String> headers;
 
-    public HttpResponseAdapter() {
+    public HttpResponseWrapper() {
     }
 
-    public HttpResponseAdapter(Object object) throws IOException {
+    public HttpResponseWrapper(Object object) throws IOException {
         if (object instanceof HttpResponse) {
             constructFromHttpResponse((HttpResponse) object);
         } else {
             constructFromObject(object);
+        }
+        if (status == null && entity == null && reasonPhrase == null && headers == null) {
+            throw new InvalidFormatException("Invalid HTTP Response format: " + object);
         }
     }
 
@@ -38,14 +41,14 @@ public class HttpResponseAdapter {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         try {
-            HttpResponseAdapter adapter = content instanceof String ?
-                    mapper.readValue((String) content, HttpResponseAdapter.class) :
-                    mapper.convertValue(content, HttpResponseAdapter.class);
+            HttpResponseWrapper adapter = content instanceof String ?
+                    mapper.readValue((String) content, HttpResponseWrapper.class) :
+                    mapper.convertValue(content, HttpResponseWrapper.class);
             this.status = adapter.status;
             this.entity = adapter.entity;
             this.reasonPhrase = adapter.reasonPhrase;
             this.headers = adapter.headers;
-        } catch (Exception e) {
+        } catch (java.lang.Exception e) {
             throw new IOException("Cannot init HTTP response adapter - invalid input");
         }
     }
@@ -59,7 +62,7 @@ public class HttpResponseAdapter {
             try {
                 content = EntityUtils.toString(response.getEntity());
                 this.entity = content;
-            } catch (Exception e) {
+            } catch (java.lang.Exception e) {
                 throw new IOException("Cannot init HTTP response adapter", e);
             } finally {
                 if (content != null) {
@@ -101,5 +104,13 @@ public class HttpResponseAdapter {
                 ", body='" + entity + '\'' +
                 ", headers=" + headers +
                 '}';
+    }
+
+    public static class InvalidFormatException extends IOException {
+        String msg;
+
+        public InvalidFormatException(String msg) {
+            this.msg = msg;
+        }
     }
 }

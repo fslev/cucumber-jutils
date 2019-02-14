@@ -1,3 +1,6 @@
+### 2.22
+Add warning for failed comparison between two HTTP Responses     
+
 ### 2.20
 Refactoring    
 

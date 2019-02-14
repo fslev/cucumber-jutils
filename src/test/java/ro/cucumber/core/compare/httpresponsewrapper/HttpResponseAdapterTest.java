@@ -1,4 +1,4 @@
-package ro.cucumber.core.compare.adapters;
+package ro.cucumber.core.compare.httpresponsewrapper;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
 import org.junit.Assert;
 import org.junit.Test;
-import ro.cucumber.core.context.compare.adapters.HttpResponseAdapter;
+import ro.cucumber.core.context.compare.adapters.HttpResponseWrapper;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class HttpResponseAdapterTest {
     @Test
     public void testAdapterInitFromString() throws IOException {
         String content = "{\"status\":200,\"reason\":\"some thing\",\"body\":{\"wa\":[1,2,3,4]}}";
-        HttpResponseAdapter adapter = new HttpResponseAdapter(content);
+        HttpResponseWrapper adapter = new HttpResponseWrapper(content);
         Assert.assertEquals(200, (int) adapter.getStatus());
         Assert.assertEquals("some thing", adapter.getReasonPhrase());
         Assert.assertEquals(Map.of("wa", Arrays.asList(new Integer[]{1, 2, 3, 4})), adapter.getEntity());
@@ -32,13 +32,13 @@ public class HttpResponseAdapterTest {
     @Test(expected = IOException.class)
     public void testAdapterInitFromEmptyString() throws IOException {
         String content = "";
-        new HttpResponseAdapter(content);
+        new HttpResponseWrapper(content);
     }
 
-    @Test
+    @Test(expected = HttpResponseWrapper.InvalidFormatException.class)
     public void testAdapterInitFromEmptyJsonString() throws IOException {
         String content = "{}";
-        HttpResponseAdapter adapter = new HttpResponseAdapter(content);
+        HttpResponseWrapper adapter = new HttpResponseWrapper(content);
         Assert.assertNull(adapter.getStatus());
         Assert.assertNull(adapter.getReasonPhrase());
         Assert.assertNull(adapter.getEntity());
@@ -48,13 +48,13 @@ public class HttpResponseAdapterTest {
     @Test(expected = IOException.class)
     public void testAdapterInitFromOtherJsonString() throws IOException {
         String content = "{\"reasonPhrase\":\"test\"}";
-        new HttpResponseAdapter(content);
+        new HttpResponseWrapper(content);
     }
 
     @Test
     public void testAdapterInitFromMap() throws IOException {
         Map<String, Object> map = Map.of("status", 200, "reason", "some reason", "body", new int[]{2, 3, 4});
-        HttpResponseAdapter adapter = new HttpResponseAdapter(map);
+        HttpResponseWrapper adapter = new HttpResponseWrapper(map);
         Assert.assertEquals(200, (int) adapter.getStatus());
         Assert.assertEquals("some reason", adapter.getReasonPhrase());
         Assert.assertEquals(Arrays.asList(new Integer[]{2, 3, 4}), adapter.getEntity());
@@ -69,7 +69,7 @@ public class HttpResponseAdapterTest {
         mock.setEntity(new StringEntity("{\"a\":100}"));
         mock.setHeader(new BasicHeader("Content-Type", "application/json"));
         mock.setHeader(new BasicHeader("Accept", "application/json"));
-        HttpResponseAdapter adapter = new HttpResponseAdapter(mock);
+        HttpResponseWrapper adapter = new HttpResponseWrapper(mock);
         Assert.assertEquals(200, (int) adapter.getStatus());
         Assert.assertEquals("some reason", adapter.getReasonPhrase());
         Assert.assertEquals("{\"a\":100}", adapter.getEntity());

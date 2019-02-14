@@ -1,6 +1,8 @@
 package ro.cucumber.core.context.compare;
 
-import ro.cucumber.core.context.compare.adapters.HttpResponseAdapter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ro.cucumber.core.context.compare.adapters.HttpResponseWrapper;
 import ro.cucumber.core.context.props.PlaceholderFiller;
 import ro.cucumber.core.context.props.ScenarioProps;
 import ro.cucumber.core.engineering.compare.Compare;
@@ -15,6 +17,8 @@ import java.util.function.Supplier;
 import static ro.cucumber.core.context.props.ScenarioProps.FileExtension.*;
 
 public class Cucumbers {
+
+    private static Logger log = LogManager.getLogger();
 
     private Cucumbers() {
     }
@@ -67,6 +71,9 @@ public class Cucumbers {
     public static void compare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         try {
             compareHttpResponse(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
+            return;
+        } catch (HttpResponseWrapper.InvalidFormatException e) {
+            log.warn(e.getMessage());
             return;
         } catch (IOException e) {
         }
@@ -145,8 +152,8 @@ public class Cucumbers {
     }
 
     private static void compareHttpResponse(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
-        HttpResponseAdapter actualAdapter = new HttpResponseAdapter(actual);
-        HttpResponseAdapter expectedAdapter = new HttpResponseAdapter(expected);
+        HttpResponseWrapper actualAdapter = new HttpResponseWrapper(actual);
+        HttpResponseWrapper expectedAdapter = new HttpResponseWrapper(expected);
         Integer expectedStatus = expectedAdapter.getStatus();
         String expectedReason = expectedAdapter.getReasonPhrase();
         Map<String, String> expectedHeaders = expectedAdapter.getHeaders();
