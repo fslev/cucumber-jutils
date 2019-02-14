@@ -19,6 +19,12 @@ Most of these features can be imported directly in your test project and are als
     </dependency>
 ```  
 
+## Integration
+In order to integrate **cucumber-core** within your test project you must add the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
+```
+ro.cucumber.core
+```
+
 ## Features
 ### Expected-Actual compare mechanism
 The following types of objects are supported for comparison:
