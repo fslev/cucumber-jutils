@@ -8,7 +8,7 @@ It takes over the usual features that need to be present inside a test framework
 * customized up-to-date clients to access various resources i.e databases, HTTP services, etc  
 * a light state-sharing mechanism between Cucumber scenario steps       
 
-Most of these features can be imported directly in your test project and are also available as Cucumber step definitions.  
+These features can be used directly by the code from your test project and are also available as Cucumber step definitions.    
 
 #### Dependency
 ```css
