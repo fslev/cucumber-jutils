@@ -2,7 +2,7 @@ package ro.cucumber.core.context.compare;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ro.cucumber.core.context.compare.adapters.HttpResponseWrapper;
+import ro.cucumber.core.context.compare.wrappers.HttpResponseWrapper;
 import ro.cucumber.core.context.props.PlaceholderFiller;
 import ro.cucumber.core.context.props.ScenarioProps;
 import ro.cucumber.core.engineering.compare.Compare;
@@ -72,10 +72,7 @@ public class Cucumbers {
         try {
             compareHttpResponse(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
             return;
-        } catch (HttpResponseWrapper.InvalidFormatException e) {
-            log.warn(e.getMessage());
-            return;
-        } catch (IOException e) {
+        } catch (Exception e) {
         }
         compareInternal(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
     }
@@ -152,26 +149,32 @@ public class Cucumbers {
     }
 
     private static void compareHttpResponse(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
-        HttpResponseWrapper actualAdapter = new HttpResponseWrapper(actual);
-        HttpResponseWrapper expectedAdapter = new HttpResponseWrapper(expected);
-        Integer expectedStatus = expectedAdapter.getStatus();
-        String expectedReason = expectedAdapter.getReasonPhrase();
-        Map<String, String> expectedHeaders = expectedAdapter.getHeaders();
-        Object expectedEntity = expectedAdapter.getEntity();
+        HttpResponseWrapper actualWrapper = new HttpResponseWrapper(actual);
+        HttpResponseWrapper expectedWrapper = null;
+        try {
+            expectedWrapper = new HttpResponseWrapper(expected);
+        } catch (IOException e) {
+            log.warn("Expected value is not of type HTTP Response\n" + expected);
+            throw e;
+        }
+        Integer expectedStatus = expectedWrapper.getStatus();
+        String expectedReason = expectedWrapper.getReasonPhrase();
+        Map<String, String> expectedHeaders = expectedWrapper.getHeaders();
+        Object expectedEntity = expectedWrapper.getEntity();
         String enhancedMessage = System.lineSeparator() + "Expected:" + System.lineSeparator()
-                + expectedAdapter.toString() + System.lineSeparator() + "Actual:" + System.lineSeparator()
-                + actualAdapter.toString() + System.lineSeparator() + (message != null ? message : "") + System.lineSeparator();
+                + expectedWrapper.toString() + System.lineSeparator() + "Actual:" + System.lineSeparator()
+                + actualWrapper.toString() + System.lineSeparator() + (message != null ? message : "") + System.lineSeparator();
         if (expectedStatus != null) {
-            compareInternal(enhancedMessage, expectedStatus, actualAdapter.getStatus(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedStatus, actualWrapper.getStatus(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedReason != null) {
-            compareInternal(enhancedMessage, expectedReason, actualAdapter.getReasonPhrase(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedReason, actualWrapper.getReasonPhrase(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedHeaders != null) {
-            compareInternal(enhancedMessage, expectedHeaders, actualAdapter.getHeaders(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedHeaders, actualWrapper.getHeaders(), nonExtensibleObject, nonExtensibleArray);
         }
         if (expectedEntity != null) {
-            compareInternal(enhancedMessage, expectedEntity, actualAdapter.getEntity(), nonExtensibleObject, nonExtensibleArray);
+            compareInternal(enhancedMessage, expectedEntity, actualWrapper.getEntity(), nonExtensibleObject, nonExtensibleArray);
         }
     }
 

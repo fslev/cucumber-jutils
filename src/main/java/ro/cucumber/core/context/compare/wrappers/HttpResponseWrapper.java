@@ -1,4 +1,4 @@
-package ro.cucumber.core.context.compare.adapters;
+package ro.cucumber.core.context.compare.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -28,32 +28,29 @@ public class HttpResponseWrapper {
 
     public HttpResponseWrapper(Object object) throws IOException {
         if (object instanceof HttpResponse) {
-            constructFromHttpResponse((HttpResponse) object);
+            fromHttpResponse((HttpResponse) object);
         } else {
-            constructFromObject(object);
-        }
-        if (status == null && entity == null && reasonPhrase == null && headers == null) {
-            throw new InvalidFormatException("Invalid HTTP Response format: " + object);
+            fromObject(object);
         }
     }
 
-    private void constructFromObject(Object content) throws IOException {
+    private void fromObject(Object content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         try {
-            HttpResponseWrapper adapter = content instanceof String ?
+            HttpResponseWrapper wrapper = content instanceof String ?
                     mapper.readValue((String) content, HttpResponseWrapper.class) :
                     mapper.convertValue(content, HttpResponseWrapper.class);
-            this.status = adapter.status;
-            this.entity = adapter.entity;
-            this.reasonPhrase = adapter.reasonPhrase;
-            this.headers = adapter.headers;
-        } catch (java.lang.Exception e) {
-            throw new IOException("Cannot init HTTP response adapter - invalid input");
+            this.status = wrapper.status;
+            this.entity = wrapper.entity;
+            this.reasonPhrase = wrapper.reasonPhrase;
+            this.headers = wrapper.headers;
+        } catch (Exception e) {
+            throw new IOException("HTTP Response wrapper of invalid format\n");
         }
     }
 
-    private void constructFromHttpResponse(HttpResponse response) throws IOException {
+    private void fromHttpResponse(HttpResponse response) throws IOException {
         this.status = response.getStatusLine().getStatusCode();
         this.reasonPhrase = response.getStatusLine().getReasonPhrase();
         this.headers = getHeaders(response);
@@ -62,8 +59,8 @@ public class HttpResponseWrapper {
             try {
                 content = EntityUtils.toString(response.getEntity());
                 this.entity = content;
-            } catch (java.lang.Exception e) {
-                throw new IOException("Cannot init HTTP response adapter", e);
+            } catch (Exception e) {
+                throw new IOException("HTTP Response wrapper of invalid format", e);
             } finally {
                 if (content != null) {
                     response.setEntity(new StringEntity(content));
@@ -104,13 +101,5 @@ public class HttpResponseWrapper {
                 ", body='" + entity + '\'' +
                 ", headers=" + headers +
                 '}';
-    }
-
-    public static class InvalidFormatException extends IOException {
-        String msg;
-
-        public InvalidFormatException(String msg) {
-            this.msg = msg;
-        }
     }
 }
