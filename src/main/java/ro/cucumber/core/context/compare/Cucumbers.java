@@ -211,7 +211,7 @@ public class Cucumbers {
 
     private static void loadScenarioPropsFromDir(ScenarioProps scenarioProps, String relativeDirPath) {
         try {
-            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, PROPERTIES.toString(), YAML.toString(), PROPERTY.toString());
+            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.stringValues());
             map.forEach((k, v) -> {
                 if (k.endsWith(PROPERTIES.toString())) {
                     loadPropsFromPropertiesFile(scenarioProps, k);
