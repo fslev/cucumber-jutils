@@ -31,20 +31,17 @@ public class Cucumbers {
         }
     }
 
-    public static void loadScenarioPropsFromFile(String filePath) {
+    public static void loadScenarioPropsFromFile(String relativeFilePath) {
         ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
-        if (filePath.endsWith(PROPERTIES.toString())) {
-            loadPropsFromPropertiesFile(scenarioProps, filePath);
-        } else if (filePath.endsWith(YAML.toString())) {
-            loadPropsFromYamlFile(scenarioProps, filePath);
+        if (relativeFilePath.endsWith(PROPERTIES.toString())) {
+            loadPropsFromPropertiesFile(scenarioProps, relativeFilePath);
+        } else if (relativeFilePath.endsWith(YAML.toString()) || relativeFilePath.endsWith(YML.toString())) {
+            loadPropsFromYamlFile(scenarioProps, relativeFilePath);
+        } else if (relativeFilePath.endsWith(PROPERTY.toString())) {
+            loadScenarioPropertyFile(scenarioProps, relativeFilePath);
         } else {
             throw new RuntimeException("File type not supported for reading scenario properties");
         }
-    }
-
-    public static void loadScenarioPropertyFile(String relativeFilePath) {
-        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
-        loadScenarioPropertyFile(scenarioProps, relativeFilePath);
     }
 
     /**
@@ -150,11 +147,11 @@ public class Cucumbers {
 
     private static void compareHttpResponse(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(actual);
-        HttpResponseWrapper expectedWrapper = null;
+        HttpResponseWrapper expectedWrapper;
         try {
             expectedWrapper = new HttpResponseWrapper(expected);
         } catch (IOException e) {
-            log.warn("Expected value is not of type HTTP Response\n" + expected);
+            log.warn("Expected value has no HTTP Response format\n{}", expected);
             throw e;
         }
         Integer expectedStatus = expectedWrapper.getStatus();
@@ -202,8 +199,8 @@ public class Cucumbers {
     private static void loadScenarioPropertyFile(ScenarioProps scenarioProps, String relativeFilePath) {
         try {
             String fileName = ResourceUtils.getFileName(relativeFilePath);
-            if (!fileName.endsWith(".property")) {
-                throw new RuntimeException("Invalid file extension: " + relativeFilePath + " .Must use \".property\" extension");
+            if (!fileName.endsWith(PROPERTY.toString())) {
+                throw new RuntimeException("Invalid file extension: " + relativeFilePath + " .Must use \"" + PROPERTY + "\" extension");
             }
             String value = ResourceUtils.read(relativeFilePath);
             scenarioProps.put(fileName.substring(0, fileName.lastIndexOf(".")), value);
@@ -219,10 +216,10 @@ public class Cucumbers {
                 if (k.endsWith(PROPERTIES.toString())) {
                     loadPropsFromPropertiesFile(scenarioProps, k);
                 }
-                if (k.endsWith(YAML.toString())) {
+                if (k.endsWith(YAML.toString()) || k.endsWith(YML.toString())) {
                     loadPropsFromYamlFile(scenarioProps, k);
                 } else if (k.endsWith(PROPERTY.toString())) {
-                    loadScenarioPropertyFile(k);
+                    loadScenarioPropertyFile(scenarioProps, k);
                 }
             });
         } catch (Exception e) {

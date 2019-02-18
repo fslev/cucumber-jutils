@@ -105,7 +105,7 @@ As you can see, in order to use a scenario property value within the Cucumber sc
     If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
     ```css
       Scenario: Test placeholder fill with scenario property file
-        * load scenario property file "placeholders/figure.property"
+        * load scenario props from file "placeholders/figure.property"
         And The string with scenario placeholders "This is a #[figure]"
         Then Check filled string equals "This is a circle"
     ```  

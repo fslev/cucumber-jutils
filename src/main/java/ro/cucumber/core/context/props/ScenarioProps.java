@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ro.cucumber.core.context.config.CustomInjectorSource;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -55,12 +56,17 @@ public class ScenarioProps {
     public enum FileExtension {
         PROPERTIES(".properties"),
         PROPERTY(".property"),
-        YAML(".yaml");
+        YAML(".yaml"),
+        YML(".yml");
 
         private String name;
 
         FileExtension(String name) {
             this.name = name;
+        }
+
+        public static String[] stringValues() {
+            return Arrays.stream(values()).map(FileExtension::toString).toArray(String[]::new);
         }
 
         @Override
