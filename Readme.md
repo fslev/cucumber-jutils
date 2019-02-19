@@ -150,7 +150,7 @@ These clients are initialized and configured via the builder pattern, in order t
 #### HTTP Client
 Example:  
 ```java
-HttpClient client=new HttpClient.Builder()
+HttpClient client = new HttpClient.Builder()
                 .address("http://example.com")
                 .path("/user/")
                 .method(Method.POST)
@@ -158,8 +158,8 @@ HttpClient client=new HttpClient.Builder()
                 .addQueryParam("host","google.ro")
                 .entity("{\"a\":\"some json value\"}")
                 .build();
-        HttpResponse response=client.execute();
-        String responseAsString=EntityUtils.toString(response.getEntity());
+        HttpResponse response = client.execute();
+        String responseAsString = EntityUtils.toString(response.getEntity());
 ```
 
 ### Other Pre-defined Cucumber utility steps 
