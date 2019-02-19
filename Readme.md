@@ -147,6 +147,20 @@ The following clients are available via Cucumber-core:
 
 These clients are initialized and configured via the builder pattern, in order to allow addition of new settings between Cucumber steps.      
     
+#### HTTP Client
+Example:  
+```java
+HttpClient client=new HttpClient.Builder()
+                .address("http://example.com")
+                .path("/user/")
+                .method(Method.POST)
+                .addHeader("auth", "authCode")
+                .addQueryParam("host","google.ro")
+                .entity("{\"a\":\"some json value\"}")
+                .build();
+        HttpResponse response=client.execute();
+        String responseAsString=EntityUtils.toString(response.getEntity());
+```
 
 ### Other Pre-defined Cucumber utility steps 
 
