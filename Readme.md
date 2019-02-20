@@ -151,7 +151,7 @@ When invoke create user HTTP API of application
 Then check response body="{"id":"~[userId]"}" 
 ```  
     
-If inside the step definition the comparison is done via the compare mechanism, and if the comparison passes, then a new scenario property will be initialised behind the scenes, having the name *userId*.  
+If inside the step definition the comparison is done via the compare mechanism from above and if the comparison passes, then a new scenario property will be initialised behind the scenes, having the name ***userId***.  
 This new scenario property can be used further inside your test scenario:  
 
 ```css
