@@ -1,6 +1,6 @@
 # Cucumber Core
 
-## Summary
+# Summary
 Cucumber-core is a Java library meant to help you write organized and clean **Cucumber** tests.  
 It takes over the usual features needed to be present inside a test framework, such as:  
 * the _expected-actual_ comparing mechanism
@@ -19,14 +19,14 @@ These features can be used directly by the code from your test project and are a
     </dependency>
 ```  
 
-## Integration
+# Integration
 In order to integrate **cucumber-core** within your test project you must add the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
 ```
 ro.cucumber.core
 ```  
 
-## Features
-### Expected-Actual compare mechanism
+# Features
+## Expected-Actual compare mechanism
 The following types of objects are supported for comparison:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
@@ -62,7 +62,7 @@ The following types of objects are supported for comparison:
 
 * For the rest, the default *equals()* method is used  
 
-### State-sharing mechanism
+## State-sharing mechanism
 The state sharing mechanism uses the power of **guice**, **cucumber-guice** and Cucumber **custom** expressions.  
 You can share state between different Cucumber steps using *scenario properties*.  
 
@@ -139,7 +139,7 @@ As you can see, in order to use a scenario property value within the Cucumber sc
     }
     ```
      
-### Setup scenario properties from compare
+## Setup scenario properties from compare
 There is another way to initialise a scenario property. This is done via the compare mechanism.
 Suppose you want to extract a value from the JSON response received after calling the API of an application.
 In order to do that, you must compare the actual response with an expected one and inside the expected value you must introduce the variable placeholder **~[var.name.here]**.
@@ -158,7 +158,7 @@ This new scenario property can be used further inside your test scenario:
     ... 
     ```
      
-### Clients
+# Clients
 
 The following clients are available via Cucumber-core:
 - HTTP client
@@ -166,7 +166,7 @@ The following clients are available via Cucumber-core:
 
 These clients are initialized and configured via the builder pattern, in order to allow addition of new settings between Cucumber steps.      
     
-#### HTTP Client
+### HTTP Client
 Example:  
 ```java
 HttpClient client = new HttpClient.Builder()
@@ -181,7 +181,7 @@ HttpClient client = new HttpClient.Builder()
         String responseAsString = EntityUtils.toString(response.getEntity());
 ```
 
-### Other Pre-defined Cucumber utility steps 
+# Other Pre-defined Cucumber utility steps 
 
 - Compare date times
     ```css
