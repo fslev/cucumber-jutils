@@ -145,21 +145,21 @@ Suppose you want to extract a value from the JSON response received after callin
 In order to do that, you must compare the actual response with an expected one and inside the expected value you must introduce the variable placeholder **~[var.name.here]**.  
 Example:  
 
-    ```css
-    Scenario: Test scenario properties
-    When invoke create user HTTP API of application    
-    Then check response body="{"id":"~[userId]"}" 
-    ```  
+```css
+Scenario: Test scenario properties
+When invoke create user HTTP API of application    
+Then check response body="{"id":"~[userId]"}" 
+```  
     
 If inside the step definition the comparison is done via the compare mechanism, and if the comparison passes, then a new scenario property will be initialised behind the scenes, having the name *userId*.  
 This new scenario property can be used further inside your test scenario:  
 
-    ```css
-    ...        
-    When invoke get user HTTP API of applicaiton with user id = #[userId]
-    Then check HTTP response status = 200
-    ... 
-    ```  
+```css
+...        
+When invoke get user HTTP API of applicaiton with user id = #[userId]
+Then check HTTP response status = 200
+... 
+```  
      
 ## 3. Clients
 
