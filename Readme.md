@@ -149,15 +149,17 @@ Example:
     Scenario: Test scenario properties
     When invoke create user HTTP API of application    
     Then check response body="{"id":"~[userId]"}" 
-    ```
+    ```  
+    
 If inside the step definition the comparison is done via the compare mechanism, and if the comparison passes, then a new scenario property will be initialised behind the scenes, having the name *userId*.  
 This new scenario property can be used further inside your test scenario:  
+
     ```css
     ...        
     When invoke get user HTTP API of applicaiton with user id = #[userId]
     Then check HTTP response status = 200
     ... 
-    ```
+    ```  
      
 ## 3. Clients
 
