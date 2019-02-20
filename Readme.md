@@ -144,6 +144,7 @@ There is another way to initialise a scenario property. This is done via the com
 Suppose you want to extract a value from the JSON response received after calling the API of an application.  
 In order to do that, you must compare the actual response with an expected one and inside the expected value you must introduce the variable placeholder **~[var.name.here]**.  
 Example:  
+
     ```css
     Scenario: Test scenario properties
     When invoke create user HTTP API of application    
