@@ -140,7 +140,7 @@ As you can see, in order to use a scenario property value within the Cucumber sc
     ```
      
 ## Setup scenario properties from compare
-There is another way to initialise a scenario property. This is done via the compare mechanism.  
+There is another way to initialise a scenario property. This is done via the *compare mechanism*.  
 Suppose you want to extract a value from the JSON response received after calling the API of an application.  
 In order to do that, you must compare the actual response with an expected one and inside the expected value you must introduce the variable placeholder **~[var.name.here]**.  
 Example:  
