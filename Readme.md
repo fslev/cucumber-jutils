@@ -26,7 +26,7 @@ ro.cucumber.core
 ```  
 
 # Features
-## Expected-Actual compare mechanism
+## 1. Expected-Actual compare mechanism
 The following types of objects are supported for comparison:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
@@ -62,7 +62,7 @@ The following types of objects are supported for comparison:
 
 * For the rest, the default *equals()* method is used  
 
-## State-sharing mechanism
+## 2. State-sharing mechanism
 The state sharing mechanism uses the power of **guice**, **cucumber-guice** and Cucumber **custom** expressions.  
 You can share state between different Cucumber steps using *scenario properties*.  
 
@@ -158,7 +158,7 @@ This new scenario property can be used further inside your test scenario:
     ... 
     ```
      
-## Clients
+## 3. Clients
 
 The following clients are available via Cucumber-core:
 - HTTP client
@@ -181,7 +181,7 @@ HttpClient client = new HttpClient.Builder()
         String responseAsString = EntityUtils.toString(response.getEntity());
 ```
 
-## Other Pre-defined Cucumber utility steps 
+## 4. Pre-defined Cucumber utility steps 
 
 - Compare date times
     ```css
