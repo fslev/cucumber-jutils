@@ -158,7 +158,7 @@ This new scenario property can be used further inside your test scenario:
     ... 
     ```
      
-# Clients
+## Clients
 
 The following clients are available via Cucumber-core:
 - HTTP client
@@ -181,7 +181,7 @@ HttpClient client = new HttpClient.Builder()
         String responseAsString = EntityUtils.toString(response.getEntity());
 ```
 
-# Other Pre-defined Cucumber utility steps 
+## Other Pre-defined Cucumber utility steps 
 
 - Compare date times
     ```css
