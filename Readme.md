@@ -140,17 +140,17 @@ As you can see, in order to use a scenario property value within the Cucumber sc
     ```
      
 ## Setup scenario properties from compare
-There is another way to initialise a scenario property. This is done via the compare mechanism.
-Suppose you want to extract a value from the JSON response received after calling the API of an application.
-In order to do that, you must compare the actual response with an expected one and inside the expected value you must introduce the variable placeholder **~[var.name.here]**.
-Example:
+There is another way to initialise a scenario property. This is done via the compare mechanism.  
+Suppose you want to extract a value from the JSON response received after calling the API of an application.  
+In order to do that, you must compare the actual response with an expected one and inside the expected value you must introduce the variable placeholder **~[var.name.here]**.  
+Example:  
     ```css
     Scenario: Test scenario properties
     When invoke create user HTTP API of application    
     Then check response body="{"id":"~[userId]"}" 
     ```
-If inside the step definition the comparison is done via the compare mechanism, and if the comparison passes, then a new scenario property will be initialised behind the scenes, having the name *userId*.
-This new scenario property can be used further inside your test scenario:
+If inside the step definition the comparison is done via the compare mechanism, and if the comparison passes, then a new scenario property will be initialised behind the scenes, having the name *userId*.  
+This new scenario property can be used further inside your test scenario:  
     ```css
     ...        
     When invoke get user HTTP API of applicaiton with user id = #[userId]
