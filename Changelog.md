@@ -1,3 +1,6 @@
+### 2.26
+Buf fix       
+
 ### 2.24
 Fix possible bug         
 

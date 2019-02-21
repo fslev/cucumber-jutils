@@ -115,7 +115,8 @@ public class HttpClient {
         String url;
 
         try {
-            url = address + "/" + uriBuilder.build().toString();
+            String uri = uriBuilder.build().toString();
+            url = address + (!uri.isEmpty() && !uri.startsWith("/") ? "/" : "") + uri;
         } catch (URISyntaxException e) {
             throw new IllegalStateException(e.getMessage());
         }
