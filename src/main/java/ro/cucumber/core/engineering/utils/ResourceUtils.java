@@ -4,6 +4,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,7 +43,11 @@ public class ResourceUtils {
      * @return a Map<String,String> between corresponding file paths and file contents
      */
     public static Map<String, String> readDirectory(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
-        Path rootPath = Paths.get(Thread.currentThread().getContextClassLoader().getResource(relativeDirPath).toURI());
+        URL dirURL = Thread.currentThread().getContextClassLoader().getResource(relativeDirPath);
+        if (dirURL == null) {
+            throw new IOException("Directory " + relativeDirPath + " not found");
+        }
+        Path rootPath = Paths.get(dirURL.toURI());
         if (!Files.exists(rootPath)) {
             throw new IOException("Directory " + rootPath + " not found");
         }

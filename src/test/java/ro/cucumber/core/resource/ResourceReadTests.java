@@ -43,4 +43,9 @@ public class ResourceReadTests {
         assertTrue(actualData.get("foobar/dir/foo/bar/bar1.json").equals("4"));
         assertTrue(actualData.get("foobar/dir/foo/bar/bar2.json").equals("5"));
     }
+
+    @Test(expected = IOException.class)
+    public void testInDepthReadFromNonExistentDirectory() throws IOException, URISyntaxException {
+        ResourceUtils.readDirectory("non_existent");
+    }
 }
