@@ -1,7 +1,6 @@
 package ro.cucumber.core.context.compare.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -36,7 +35,6 @@ public class HttpResponseWrapper {
 
     private void fromObject(Object content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         try {
             HttpResponseWrapper wrapper = content instanceof String ?
                     mapper.readValue((String) content, HttpResponseWrapper.class) :
