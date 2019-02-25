@@ -37,6 +37,11 @@ public class CompareTests {
     }
 
     @Test
+    public void comparePrimitives() {
+        new Compare("", Integer.valueOf(200), Integer.valueOf(200), false, true).compare();
+    }
+
+    @Test
     public void compareJsonWithAssignSymbols() {
         String expected = "{\"b\":\"(~[sym1]\"}";
         String actual = "{\"a\":\"val2\",\"b\":\"(val1\"}";
