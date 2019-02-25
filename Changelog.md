@@ -1,5 +1,8 @@
+### 2.27
+Bug fix       
+
 ### 2.26
-Buf fix       
+Bug fix       
 
 ### 2.24
 Fix possible bug         
