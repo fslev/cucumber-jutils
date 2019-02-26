@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ro.qa.cucumber</groupId>
-    <artifactId>cucumber-core</artifactId>
+    <groupId>com.qa.cucumber</groupId>
+    <artifactId>cucumber-utils</artifactId>
     <version>2.30-SNAPSHOT</version>
 
-    <name>Cucumber Core</name>
+    <name>Cucumber Utils</name>
     <description>A little helper for Cucumber</description>
 
     <properties>
@@ -20,13 +21,13 @@
 
     <scm>
         <connection>
-            scm:git:ssh://git@bitbucket.1and1.org/tcqa/cucumber-core.git
+            scm:git:ssh://git@bitbucket.1and1.org/tcqa/cucumber-utils.git
         </connection>
         <developerConnection>
-            scm:git:ssh://git@bitbucket.1and1.org/tcqa/cucumber-core.git
+            scm:git:ssh://git@bitbucket.1and1.org/tcqa/cucumber-utils.git
         </developerConnection>
         <url>
-            https://bitbucket.1and1.org/projects/TCQA/repos/cucumber-core
+            https://bitbucket.1and1.org/projects/TCQA/repos/cucumber-utils
         </url>
         <tag>HEAD</tag>
     </scm>

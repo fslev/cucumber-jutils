@@ -1,7 +1,7 @@
-# Cucumber Core
+# Cucumber Utils
 
 # Summary
-Cucumber-core is a Java library meant to help you write organized and clean **Cucumber** tests.  
+Cucumber-Utils is a Java library meant to help you write organized and clean **Cucumber** tests.  
 It takes over the usual features needed to be present inside a test framework, such as:  
 * the _expected-actual_ comparing mechanism
 * read from from file or from all files within a directory
@@ -13,16 +13,16 @@ These features can be used directly by the code from your test project and are a
 #### Dependency
 ```css
     <dependency>
-        <groupId>ro.qa.cucumber</groupId>
-        <artifactId>cucumber-core</artifactId>
+        <groupId>com.qa.cucumber</groupId>
+        <artifactId>cucumber-utils</artifactId>
         <version>${version}</version>
     </dependency>
 ```  
 
 # Integration
-In order to integrate **cucumber-core** within your test project you must add the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
+In order to integrate **cucumber-utils** within your test project you must add the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
 ```
-ro.cucumber.core
+ro.cucumber.utils
 ```  
 
 # Features
@@ -164,7 +164,7 @@ Then check HTTP response status = 200
      
 ## 3. Clients
 
-The following clients are available via Cucumber-core:
+The following clients are available via Cucumber-Utils:
 - HTTP client
 - SQL clients (MySQL, PostgreSQL, Sybase, etc -> depending on the sql driver you configure)
 
