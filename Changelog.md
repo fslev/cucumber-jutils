@@ -1,3 +1,6 @@
+### 3.2
+Refactoring  
+
 ### 3.1
 Bug fix    
 
