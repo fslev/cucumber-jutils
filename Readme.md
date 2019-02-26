@@ -22,7 +22,7 @@ These features can be used directly by the code from your test project and are a
 # Integration
 In order to integrate **cucumber-utils** within your test project you must add the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
 ```
-ro.cucumber.utils
+com.cucumber.utils
 ```  
 
 # Features
