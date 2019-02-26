@@ -17,6 +17,15 @@ public class PlaceholdersGeneratorTests {
     }
 
     @Test
+    public void testPlaceholderGeneratorFromTextWithSpecialCharacters() {
+        String a = "~[sym1]";
+        String b = "{\"test\":\"M^o|%o$n\"";
+        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
+        assertEquals(b, parser.getPlaceholdersMap().get("sym1"));
+        assertEquals(1, parser.getPlaceholdersMap().size());
+    }
+
+    @Test
     public void testPlaceholderGeneratorFromSimpleText_negative() {
         String a = "foo ~[sym1] bar";
         String b = "foo some bra";
