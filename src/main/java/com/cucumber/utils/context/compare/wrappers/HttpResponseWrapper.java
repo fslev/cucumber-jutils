@@ -96,10 +96,10 @@ public class HttpResponseWrapper {
     @Override
     public String toString() {
         return "{" +
-                "status=" + status +
-                ", reason='" + reasonPhrase + '\'' +
-                ", body='" + entity + '\'' +
-                ", headers=" + headers +
+                (status != null ? "status=" + status : "") +
+                (reasonPhrase != null ? ", reason='" + reasonPhrase + '\'' : "") +
+                (entity != null ? ", body='" + entity + '\'' : "") +
+                (headers != null ? ", headers=" + headers : "") +
                 '}';
     }
 }
