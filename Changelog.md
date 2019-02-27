@@ -1,3 +1,6 @@
+### 3.4
+Bug fix        
+
 ### 3.3
 Refactoring    
 

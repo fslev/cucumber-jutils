@@ -151,7 +151,7 @@ public class Cucumbers {
         try {
             expectedWrapper = new HttpResponseWrapper(expected);
         } catch (IOException e) {
-            log.warn("Expected getParsedTarget has no HTTP Response format\n{}", expected);
+            log.warn("Expected value has no HTTP Response format\n{}", expected);
             throw e;
         }
         Integer expectedStatus = expectedWrapper.getStatus();

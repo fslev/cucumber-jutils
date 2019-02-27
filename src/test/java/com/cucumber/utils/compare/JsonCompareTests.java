@@ -200,7 +200,7 @@ public class JsonCompareTests {
                 "}";
         JsonCompare matcher = new JsonCompare(expected, actual);
         Map<String, String> symbols = matcher.compare();
-        assertEquals("Actual symbol getParsedTarget: " + symbols.get("businessKey"), "1551172176725.com|email-verif|1d55b4f3-6ec1-4d89-ba58-2ba2a3eaa80e", symbols.get("businessKey"));
+        assertEquals("Actual symbol result: " + symbols.get("businessKey"), "1551172176725.com|email-verif|1d55b4f3-6ec1-4d89-ba58-2ba2a3eaa80e", symbols.get("businessKey"));
         assertEquals(1, symbols.size());
     }
 }

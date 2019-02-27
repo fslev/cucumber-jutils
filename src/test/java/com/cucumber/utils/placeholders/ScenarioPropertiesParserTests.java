@@ -68,10 +68,10 @@ public class ScenarioPropertiesParserTests {
     @Test
     public void testGlobalAndScenarioPlaceholderFillInJson() {
         Map<String, String> values = new HashMap<>();
-        values.put("val1", "getParsedTarget 1");
-        values.put("val2", "getParsedTarget 2");
-        values.put("val3", "getParsedTarget 3");
-        values.put("val4", "getParsedTarget 4");
+        values.put("val1", "result 1");
+        values.put("val2", "result 2");
+        values.put("val3", "result 3");
+        values.put("val4", "result 4");
         values.put("location", "forest");
         String actual = "[\n" + "  {\n" + "    \"_id\": \"5b48fcdd5c3da373f5114ec7\",\n"
                 + "    \"index\": 0,\n"
@@ -101,16 +101,16 @@ public class ScenarioPropertiesParserTests {
                 + "    \"guid\": \"ed43e5b1-3da2-4ebe-baa5-e44d4eb18a5c\",\n"
                 + "    \"isActive\": true,\n" + "    \"balance\": \"$3,812.47\",\n"
                 + "    \"picture\": \"http://placehold.it/32x32\",\n" + "    \"age\": 25,\n"
-                + "    \"eyeColor\": \"getParsedTarget 3\",\n" + "    \"name\": \"Tonya Schneider\",\n"
+                + "    \"eyeColor\": \"result 3\",\n" + "    \"name\": \"Tonya Schneider\",\n"
                 + "    \"gender\": \"female\",\n" + "    \"company\": \"PHARMEX\",\n"
                 + "    \"email\": \"tonyaschneider@pharmex.com\",\n"
-                + "    \"getParsedTarget 1\": \"getParsedTarget 2\",\n"
-                + "    \"address\": \"195 Hubbard Place, getParsedTarget 1, New Hampshire, 1382\",\n"
-                + "    \"about\": \"Occaecat laboris eu getParsedTarget 1 fugiat. In dolore dolore esse voluptate. Amet ipsum id nisi nulla pariatur do dolore dolore aliquip qui laboris. Aute consequat tempor incididunt sunt voluptate laboris. Velit adipisicing nostrud laboris labore eiusmod. Dolore sint laborum culpa nulla eu sunt excepteur.\\r\\n\",\n"
+                + "    \"result 1\": \"result 2\",\n"
+                + "    \"address\": \"195 Hubbard Place, result 1, New Hampshire, 1382\",\n"
+                + "    \"about\": \"Occaecat laboris eu result 1 fugiat. In dolore dolore esse voluptate. Amet ipsum id nisi nulla pariatur do dolore dolore aliquip qui laboris. Aute consequat tempor incididunt sunt voluptate laboris. Velit adipisicing nostrud laboris labore eiusmod. Dolore sint laborum culpa nulla eu sunt excepteur.\\r\\n\",\n"
                 + "    \"registered\": \"2015-05-21T05:11:55 -03:00\",\n"
                 + "    \"latitude\": 67.096081,\n" + "    \"longitude\": 36.71768,\n"
                 + "    \"tags\": [\n" + "      \"aute\",\n" + "      \"dolore\",\n"
-                + "      \"getParsedTarget 2\",\n" + "      \"officia\",\n" + "      \"enim\",\n"
+                + "      \"result 2\",\n" + "      \"officia\",\n" + "      \"enim\",\n"
                 + "      \"aliqua\",\n" + "      \"~[var3]\"\n" + "    ],\n"
                 + "    \"friends\": [\n" + "      {\n" + "        \"id\": 0,\n"
                 + "        \"name\": \"~[val1] Hart\"\n" + "      },\n" + "      {\n"

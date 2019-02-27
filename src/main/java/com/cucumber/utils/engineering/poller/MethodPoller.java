@@ -45,7 +45,7 @@ public class MethodPoller<T> {
     }
 
     public T poll() {
-        log.debug("Polling for getParsedTarget...");
+        log.debug("Polling for result...");
         boolean pollSucceeded = false;
         boolean pollTimeout = false;
         T result = null;
@@ -69,7 +69,7 @@ public class MethodPoller<T> {
                 }
             }
         }
-        log.debug(!pollTimeout ? "Found correct getParsedTarget" : "Poll timeout");
+        log.debug(!pollTimeout ? "Found correct result" : "Poll timeout");
         return result;
     }
 }

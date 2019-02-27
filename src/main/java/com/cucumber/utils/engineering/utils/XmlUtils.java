@@ -22,7 +22,7 @@ public class XmlUtils {
             + "<xsl:strip-space elements=\"*\"/><xsl:template compare=\"@*|node()\"><xsl:copy>"
             + "<xsl:apply-templates select=\"@*|node()\"></xsl:apply-templates></xsl:copy></xsl:template>"
             + "<xsl:template compare=\"*/text()\">"
-            + "    <xsl:getParsedTarget-of select=\".\" disable-output-escaping=\"yes\"/>\n"
+            + "    <xsl:result-of select=\".\" disable-output-escaping=\"yes\"/>\n"
             + "</xsl:template></xsl:stylesheet>";
 
     public static String toSingleLineString(String xml) {

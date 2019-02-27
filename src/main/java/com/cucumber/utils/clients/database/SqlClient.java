@@ -35,14 +35,14 @@ public class SqlClient {
         log.debug("Database url: {}", url);
         log.debug("SQL query: {}", sql);
         Connection conn = null;
-        Statement st = null;
+        PreparedStatement pst = null;
         ResultSet rs = null;
         List<Map<String, String>> tableData = new ArrayList<>();
         try {
             conn = DriverManager.getConnection(url, user, pwd);
-            st = conn.prepareStatement(sql);
-            st.setMaxRows(MAX_ROWS);
-            rs = st.executeQuery(sql);
+            pst = conn.prepareStatement(sql);
+            pst.setMaxRows(MAX_ROWS);
+            rs = pst.executeQuery();
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
             while (rs.next()) {
@@ -61,13 +61,13 @@ public class SqlClient {
                 if (rs != null) {
                     rs.close();
                 }
-                if (st != null) {
-                    st.close();
+                if (pst != null) {
+                    pst.close();
                 }
                 if (conn != null) {
                     conn.close();
                 }
-                log.debug("SQL getParsedTarget: {}", tableData);
+                log.debug("SQL result: {}", tableData);
                 log.debug("-----------------------");
             } catch (SQLException e) {
                 throw new RuntimeException(e);
