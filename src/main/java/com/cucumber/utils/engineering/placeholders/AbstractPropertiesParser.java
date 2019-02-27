@@ -7,20 +7,20 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractPlaceholderFiller {
+public abstract class AbstractPropertiesParser {
 
     protected String stringWithPlaceholders;
 
-    public AbstractPlaceholderFiller(String stringWithPlaceholders) {
+    public AbstractPropertiesParser(String stringWithPlaceholders) {
         if (stringWithPlaceholders == null) {
             throw new RuntimeException("I don't do NULLs here...");
         }
         this.stringWithPlaceholders = stringWithPlaceholders;
     }
 
-    public String fill(Map<String, String> values) {
+    public String parse(Map<String, String> properties) {
         String str = stringWithPlaceholders;
-        for (Map.Entry<String, String> e : values.entrySet()) {
+        for (Map.Entry<String, String> e : properties.entrySet()) {
             str = str.replaceAll(getPlaceholderStart() + e.getKey() + getPlaceholderEnd(), Matcher.quoteReplacement(e.getValue()));
         }
         return str;
@@ -32,7 +32,7 @@ public abstract class AbstractPlaceholderFiller {
 
     protected abstract Pattern getPlaceholderPattern();
 
-    public Set<String> searchForPlaceholders() {
+    public Set<String> getPropertyNames() {
         Set<String> names = new HashSet<>();
         Matcher matcher = getPlaceholderPattern().matcher(stringWithPlaceholders);
         while (matcher.find()) {

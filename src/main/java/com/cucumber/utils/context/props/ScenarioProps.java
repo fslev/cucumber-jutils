@@ -25,7 +25,7 @@ public class ScenarioProps {
                 return getTimeInMillis();
             default:
                 return props.get(key) instanceof String ?
-                        new PlaceholderFiller(props.get(key).toString()).fill()
+                        new ScenarioPropsParser(props.get(key).toString()).result()
                         : props.get(key);
         }
     }

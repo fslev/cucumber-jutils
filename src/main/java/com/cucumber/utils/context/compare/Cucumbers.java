@@ -1,13 +1,13 @@
 package com.cucumber.utils.context.compare;
 
 import com.cucumber.utils.context.compare.wrappers.HttpResponseWrapper;
+import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.props.ScenarioPropsParser;
 import com.cucumber.utils.engineering.compare.Compare;
 import com.cucumber.utils.engineering.poller.MethodPoller;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.cucumber.utils.context.props.PlaceholderFiller;
-import com.cucumber.utils.context.props.ScenarioProps;
 
 import java.io.IOException;
 import java.util.Map;
@@ -25,7 +25,7 @@ public class Cucumbers {
 
     public static String read(String relativeFilePath) {
         try {
-            return new PlaceholderFiller(ResourceUtils.read(relativeFilePath)).fill().toString();
+            return new ScenarioPropsParser(ResourceUtils.read(relativeFilePath)).result().toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -151,7 +151,7 @@ public class Cucumbers {
         try {
             expectedWrapper = new HttpResponseWrapper(expected);
         } catch (IOException e) {
-            log.warn("Expected value has no HTTP Response format\n{}", expected);
+            log.warn("Expected getParsedTarget has no HTTP Response format\n{}", expected);
             throw e;
         }
         Integer expectedStatus = expectedWrapper.getStatus();

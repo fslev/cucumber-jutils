@@ -67,7 +67,7 @@ public class SqlClient {
                 if (conn != null) {
                     conn.close();
                 }
-                log.debug("SQL result: {}", tableData);
+                log.debug("SQL getParsedTarget: {}", tableData);
                 log.debug("-----------------------");
             } catch (SQLException e) {
                 throw new RuntimeException(e);

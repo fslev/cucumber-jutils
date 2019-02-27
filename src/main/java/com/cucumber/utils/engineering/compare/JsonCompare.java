@@ -77,7 +77,7 @@ public class JsonCompare implements Placeholdable {
     @Override
     public Map<String, String> compare() {
         JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
-        return comparator.getAssignSymbols();
+        return comparator.getGeneratedProperties();
     }
 
     private CompareMode[] compareModes() {

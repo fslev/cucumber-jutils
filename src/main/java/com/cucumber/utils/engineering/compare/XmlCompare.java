@@ -8,9 +8,9 @@ import org.xmlunit.diff.ElementSelectors;
 
 import java.util.Map;
 
+import static com.cucumber.utils.engineering.utils.XmlUtils.isValid;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isSimilarTo;
-import static com.cucumber.utils.engineering.utils.XmlUtils.isValid;
 
 public class XmlCompare implements Placeholdable {
 
@@ -38,6 +38,6 @@ public class XmlCompare implements Placeholdable {
                 .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName))
                 .withDifferenceEvaluator(
                         DifferenceEvaluators.chain(DifferenceEvaluators.Default, comparator)));
-        return comparator.getAssignSymbols();
+        return comparator.getGeneratedProperties();
     }
 }

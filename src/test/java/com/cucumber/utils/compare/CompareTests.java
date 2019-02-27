@@ -56,7 +56,7 @@ public class CompareTests {
         String expected =
                 "<struct><int a=\"~[sym1]\">some ~[sym3] here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
-                + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";
+                + "<int a=\"(attrValue1\">some text here</int><str a=\"some getParsedTarget\"><a>sub text</a></str></struct>";
         Compare compare = new Compare(expected, actual);
         Map<String, String> symbols = compare.compare();
         assertEquals("(attrValue1", symbols.get("sym1"));

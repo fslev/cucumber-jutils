@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare;
 
-import com.cucumber.utils.engineering.placeholders.PlaceholdersGenerator;
+import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,17 +29,17 @@ public class StringRegexCompare implements Placeholdable {
     @Override
     public Map<String, String> compare() {
 
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(expected, actual);
-        boolean hasAssignSymbols = !parser.getPlaceholdersMap().isEmpty();
+        PropertiesGenerator generator = new PropertiesGenerator(expected, actual);
+        boolean hasAssignSymbols = !generator.getProperties().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {
-            parsedString = parser.parse();
+            parsedString = generator.getParsedTarget();
         }
         try {
             Pattern pattern = Pattern.compile(parsedString, Pattern.DOTALL | Pattern.MULTILINE);
             if (pattern.matcher(actual).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
+                    this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
                 fail(String.format("%sExpected: %s, But got: %s", message != null ? message + ". " : "", parsedString, actual));
@@ -47,7 +47,7 @@ public class StringRegexCompare implements Placeholdable {
         } catch (PatternSyntaxException e) {
             if (parsedString.equals(actual)) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
+                    this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
                 fail(String.format("%sExpected: %s, But got: %s", message != null ? message + ". " : "", parsedString, actual));

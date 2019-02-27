@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare.comparators;
 
-import com.cucumber.utils.engineering.placeholders.PlaceholdersGenerator;
+import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
 import ro.skyah.comparator.JsonComparator;
 
 import java.util.HashMap;
@@ -10,21 +10,21 @@ import java.util.regex.PatternSyntaxException;
 
 public class CustomJsonComparator implements JsonComparator {
 
-    private Map<String, String> assignSymbols = new HashMap<>();
+    private Map<String, String> generatedProperties = new HashMap<>();
 
     public boolean compareValues(Object expected, Object actual) {
         String actualString = actual.toString();
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(expected.toString(), actualString);
+        PropertiesGenerator generator = new PropertiesGenerator(expected.toString(), actualString);
 
-        boolean hasAssignSymbols = !parser.getPlaceholdersMap().isEmpty();
-        String parsedExpected = hasAssignSymbols ? parser.parse() : expected.toString();
-        String parsedExpectedQuoted = hasAssignSymbols ? parser.parseQuoted() : expected.toString();
+        boolean hasAssignSymbols = !generator.getProperties().isEmpty();
+        String parsedExpected = hasAssignSymbols ? generator.getParsedTarget() : expected.toString();
+        String parsedExpectedQuoted = hasAssignSymbols ? generator.getParsedTarget(true) : expected.toString();
 
         try {
             Pattern pattern = Pattern.compile(parsedExpectedQuoted);
             if (pattern.matcher(actualString).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
+                    this.generatedProperties.putAll(generator.getProperties());
                 }
                 return true;
             } else {
@@ -33,7 +33,7 @@ public class CustomJsonComparator implements JsonComparator {
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual.toString())) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
+                    this.generatedProperties.putAll(generator.getProperties());
                 }
                 return true;
             } else {
@@ -51,7 +51,7 @@ public class CustomJsonComparator implements JsonComparator {
         }
     }
 
-    public Map<String, String> getAssignSymbols() {
-        return assignSymbols;
+    public Map<String, String> getGeneratedProperties() {
+        return generatedProperties;
     }
 }

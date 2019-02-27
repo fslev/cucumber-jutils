@@ -34,13 +34,13 @@ public class SqlSteps {
         this.client.executeQuery(query);
     }
 
-    @Then("SQL execute query \"{cstring}\" and compare result with")
+    @Then("SQL execute query \"{cstring}\" and compare getParsedTarget with")
     public void executeQueryAndCompare(String query, List expected) {
         this.result = client.executeQuery(query);
         Cucumbers.compare(expected, result, false, true);
     }
 
-    @Then("SQL execute query \"{cstring}\" and poll for {int}s while comparing result with")
+    @Then("SQL execute query \"{cstring}\" and poll for {int}s while comparing getParsedTarget with")
     public void executeQueryAndPollAndCompare(String query, int pollDuration, List expected) {
         Cucumbers.pollAndCompare(expected, () -> client.executeQuery(query), false, true);
     }

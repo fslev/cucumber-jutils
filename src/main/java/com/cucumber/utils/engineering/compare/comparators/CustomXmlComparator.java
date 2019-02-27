@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare.comparators;
 
-import com.cucumber.utils.engineering.placeholders.PlaceholdersGenerator;
+import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -16,7 +16,7 @@ import java.util.regex.PatternSyntaxException;
 
 public class CustomXmlComparator implements DifferenceEvaluator {
 
-    private Map<String, String> assignSymbols = new HashMap<>();
+    private Map<String, String> generatedProperties = new HashMap<>();
 
     @Override
     public ComparisonResult evaluate(Comparison comparison, ComparisonResult comparisonResult) {
@@ -52,15 +52,15 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     }
 
     private ComparisonResult compare(String expected, String actual) {
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(expected, actual);
-        boolean hasAssignSymbols = !parser.getPlaceholdersMap().isEmpty();
-        String parsedExpected = hasAssignSymbols ? parser.parse() : expected;
-        String parsedExpectedQuoted = hasAssignSymbols ? parser.parseQuoted() : expected;
+        PropertiesGenerator generator = new PropertiesGenerator(expected, actual);
+        boolean hasAssignSymbols = !generator.getProperties().isEmpty();
+        String parsedExpected = hasAssignSymbols ? generator.getParsedTarget() : expected;
+        String parsedExpectedQuoted = hasAssignSymbols ? generator.getParsedTarget(true) : expected;
         try {
             Pattern pattern = Pattern.compile(parsedExpectedQuoted);
             if (pattern.matcher(actual).matches()) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
+                    this.generatedProperties.putAll(generator.getProperties());
                 }
                 return ComparisonResult.SIMILAR;
             } else {
@@ -69,7 +69,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual)) {
                 if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(parser.getPlaceholdersMap());
+                    this.generatedProperties.putAll(generator.getProperties());
                 }
                 return ComparisonResult.EQUAL;
             } else {
@@ -78,7 +78,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         }
     }
 
-    public Map<String, String> getAssignSymbols() {
-        return assignSymbols;
+    public Map<String, String> getGeneratedProperties() {
+        return generatedProperties;
     }
 }

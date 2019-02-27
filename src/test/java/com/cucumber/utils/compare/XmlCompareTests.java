@@ -23,7 +23,7 @@ public class XmlCompareTests {
         String expected =
                 "<struct><int a=\"~[sym1]\">some ~[sym3] here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
-                + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";
+                + "<int a=\"(attrValue1\">some text here</int><str a=\"some getParsedTarget\"><a>sub text</a></str></struct>";
         XmlCompare matcher = new XmlCompare(expected, actual);
         Map<String, String> symbols = matcher.compare();
         assertEquals("(attrValue1", symbols.get("sym1"));
@@ -37,7 +37,7 @@ public class XmlCompareTests {
         String expected =
                 "<struct><int a=\"X~[sym1]\">some ~[sym3] here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
-                + "<int a=\"(attrValue1\">some text here</int><str a=\"some value\"><a>sub text</a></str></struct>";
+                + "<int a=\"(attrValue1\">some text here</int><str a=\"some getParsedTarget\"><a>sub text</a></str></struct>";
         XmlCompare matcher = new XmlCompare(expected, actual);
         matcher.compare();
     }

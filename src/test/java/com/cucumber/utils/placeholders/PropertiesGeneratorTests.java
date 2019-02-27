@@ -1,105 +1,105 @@
 package com.cucumber.utils.placeholders;
 
-import com.cucumber.utils.engineering.placeholders.PlaceholdersGenerator;
+import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class PlaceholdersGeneratorTests {
+public class PropertiesGeneratorTests {
 
     @Test
     public void testPlaceholderGeneratorFromSimpleText() {
         String a = "~[sym1]";
         String b = "Moon";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("Moon", parser.getPlaceholdersMap().get("sym1"));
-        assertEquals(1, parser.getPlaceholdersMap().size());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("Moon", generator.getProperties().get("sym1"));
+        assertEquals(1, generator.getProperties().size());
     }
 
     @Test
     public void testPlaceholderGeneratorFromTextWithSpecialCharacters() {
         String a = "~[sym1]";
         String b = "{\"test\":\"M^o|%o$n\"";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals(b, parser.getPlaceholdersMap().get("sym1"));
-        assertEquals(1, parser.getPlaceholdersMap().size());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals(b, generator.getProperties().get("sym1"));
+        assertEquals(1, generator.getProperties().size());
     }
 
     @Test
     public void testPlaceholderGeneratorFromSimpleText_negative() {
         String a = "foo ~[sym1] bar";
         String b = "foo some bra";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals(null, parser.getPlaceholdersMap().get("sym1"));
-        assertEquals(0, parser.getPlaceholdersMap().size());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals(null, generator.getProperties().get("sym1"));
+        assertEquals(0, generator.getProperties().size());
     }
 
     @Test
     public void testPlaceholderGeneratorDuplicated() {
         String a = "~[sym1] ~[sym1]";
         String b = "Moon Sun";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("Sun", parser.getPlaceholdersMap().get("sym1"));
-        assertEquals(1, parser.getPlaceholdersMap().size());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("Sun", generator.getProperties().get("sym1"));
+        assertEquals(1, generator.getProperties().size());
     }
 
     @Test
     public void testPlaceholderGeneratorFromSimpleTextWithRegex() {
         String a = ".*M~[sym1]n.*";
         String b = "Moon";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("oo", parser.getPlaceholdersMap().get("sym1"));
-        assertEquals(1, parser.getPlaceholdersMap().size());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("oo", generator.getProperties().get("sym1"));
+        assertEquals(1, generator.getProperties().size());
     }
 
     @Test
     public void testEmptyPlaceholderGeneratorFromSimpleText() {
         String a = "~[sym1]Moon";
         String b = "Moon";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("", parser.getPlaceholdersMap().get("sym1"));
-        assertEquals(1, parser.getPlaceholdersMap().size());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("", generator.getProperties().get("sym1"));
+        assertEquals(1, generator.getProperties().size());
     }
 
     @Test
     public void testEmptyPlaceholderGeneratorFromSimpleTextWithRegex() {
         String a = ".*~[sym1]n.*";
         String b = "Moon";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("", parser.getPlaceholdersMap().get("sym1"));
-        assertEquals(1, parser.getPlaceholdersMap().size());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("", generator.getProperties().get("sym1"));
+        assertEquals(1, generator.getProperties().size());
     }
 
     @Test
     public void testPlaceholderGeneratorFromInvalidRegex() {
         String a = "The ~[var1] is ru.*n(ning through the ~[var2]";
         String b = "something here The rab\nbit is ru.*n(ning through the forest";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("rab\nbit", parser.getPlaceholdersMap().get("var1"));
-        assertEquals("forest", parser.getPlaceholdersMap().get("var2"));
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("rab\nbit", generator.getProperties().get("var1"));
+        assertEquals("forest", generator.getProperties().get("var2"));
         assertEquals("The rab\nbit is ru.*n(ning through the forest",
-                parser.parse());
+                generator.getParsedTarget());
     }
 
     @Test
     public void testPlaceholderGeneratorFromRegex() {
         String a = ".* The ~[var1] is ru\\Q.*\\En.*g through ~[var2] .*";
         String b = "something here The rab\nbit is ru.*nning through the forest";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("rab\nbit", parser.getPlaceholdersMap().get("var1"));
-        assertEquals("the", parser.getPlaceholdersMap().get("var2"));
-        assertEquals(parser.parse(),
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("rab\nbit", generator.getProperties().get("var1"));
+        assertEquals("the", generator.getProperties().get("var2"));
+        assertEquals(generator.getParsedTarget(),
                 ".* The rab\nbit is ru\\Q.*\\En.*g through the .*",
-                parser.parse());
+                generator.getParsedTarget());
     }
 
     @Test
     public void testPlaceholderGeneratorFromSimpleJson() {
         String a = "{\"a\":[1,~[var1],3,4,5],\"b\":{\"k\":\"i\"}}";
         String b = "{\"a\":[1,2,3,4,5],\"b\":{\"k\":\"i\"}}";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("2", parser.getPlaceholdersMap().get("var1"));
-        assertEquals(b, parser.parse());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("2", generator.getProperties().get("var1"));
+        assertEquals(b, generator.getParsedTarget());
     }
 
     @Test
@@ -150,11 +150,11 @@ public class PlaceholdersGeneratorTests {
                 + "        \"name\": \"Dena \nSosa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"favoriteFruit\": \"banana\"\n" + "  }\n" + "]";
-        PlaceholdersGenerator parser = new PlaceholdersGenerator(a, b);
-        assertEquals("Levine", parser.getPlaceholdersMap().get("var1"));
-        assertEquals("favoriteFruit", parser.getPlaceholdersMap().get("var2"));
-        assertEquals("consect(etur", parser.getPlaceholdersMap().get("var3"));
-        assertEquals("na \nSo", parser.getPlaceholdersMap().get("var4"));
-        assertEquals(b, parser.parse());
+        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        assertEquals("Levine", generator.getProperties().get("var1"));
+        assertEquals("favoriteFruit", generator.getProperties().get("var2"));
+        assertEquals("consect(etur", generator.getProperties().get("var3"));
+        assertEquals("na \nSo", generator.getProperties().get("var4"));
+        assertEquals(b, generator.getParsedTarget());
     }
 }

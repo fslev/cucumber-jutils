@@ -12,8 +12,8 @@ public class StringRegexCompareTests {
 
     @Test
     public void compareSimpleString() {
-        String expected = "value";
-        String actual = "value";
+        String expected = "getParsedTarget";
+        String actual = "getParsedTarget";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
         Map<String, String> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
@@ -75,7 +75,7 @@ public class StringRegexCompareTests {
     @Test(expected = AssertionError.class)
     public void compareSimpleString_negative() {
         String expected = "val";
-        String actual = "value";
+        String actual = "getParsedTarget";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
         matcher.compare();
     }

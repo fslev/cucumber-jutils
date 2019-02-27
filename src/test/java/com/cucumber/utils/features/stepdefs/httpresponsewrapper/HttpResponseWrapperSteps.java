@@ -1,5 +1,7 @@
 package com.cucumber.utils.features.stepdefs.httpresponsewrapper;
 
+import com.cucumber.utils.context.compare.Cucumbers;
+import com.cucumber.utils.context.compare.wrappers.HttpResponseWrapper;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import org.apache.http.HttpResponse;
@@ -11,8 +13,6 @@ import org.apache.http.impl.DefaultHttpResponseFactory;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
-import com.cucumber.utils.context.compare.Cucumbers;
-import com.cucumber.utils.context.compare.wrappers.HttpResponseWrapper;
 
 import java.io.IOException;
 

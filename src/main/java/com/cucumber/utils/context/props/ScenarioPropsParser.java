@@ -1,32 +1,32 @@
 package com.cucumber.utils.context.props;
 
-import com.cucumber.utils.engineering.placeholders.ScenarioPlaceholderFiller;
+import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesParser;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class PlaceholderFiller {
+public class ScenarioPropsParser {
 
     private String target;
     private ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
 
-    public PlaceholderFiller(String target) {
+    public ScenarioPropsParser(String target) {
         this.target = target;
     }
 
-    public Object fill() {
+    public Object result() {
         String standaloneSymbol = getStandaloneScenarioPlaceholder();
         if (standaloneSymbol != null) {
             Object val = scenarioProps.get(standaloneSymbol);
             return val != null ? val : target;
         }
-        return getFilledStringWithScenarioValues(target);
+        return getParsedStringWithScenarioValues(target);
     }
 
-    private String getFilledStringWithScenarioValues(String str) {
-        ScenarioPlaceholderFiller parser = new ScenarioPlaceholderFiller(str);
-        Set<String> symbolNames = parser.searchForPlaceholders();
+    private String getParsedStringWithScenarioValues(String str) {
+        ScenarioPropertiesParser parser = new ScenarioPropertiesParser(str);
+        Set<String> symbolNames = parser.getPropertyNames();
         Map<String, String> values = new HashMap<>();
         symbolNames.forEach((String name) -> {
             Object val = scenarioProps.get(name);
@@ -34,17 +34,17 @@ public class PlaceholderFiller {
                 values.put(name, val.toString());
             }
         });
-        return parser.fill(values);
+        return parser.parse(values);
     }
 
     private String getStandaloneScenarioPlaceholder() {
-        ScenarioPlaceholderFiller parser = new ScenarioPlaceholderFiller(target);
-        Set<String> symbolNames = parser.searchForPlaceholders();
-        if (!symbolNames.isEmpty()) {
-            String element = symbolNames.iterator().next();
-            if ((ScenarioPlaceholderFiller.PLACEHOLDER_START + element + ScenarioPlaceholderFiller.PLACEHOLDER_END)
+        ScenarioPropertiesParser parser = new ScenarioPropertiesParser(target);
+        Set<String> placeholders = parser.getPropertyNames();
+        if (!placeholders.isEmpty()) {
+            String placeholder = placeholders.iterator().next();
+            if ((ScenarioPropertiesParser.PLACEHOLDER_START + placeholder + ScenarioPropertiesParser.PLACEHOLDER_END)
                     .equals(target)) {
-                return element;
+                return placeholder;
             }
         }
         return null;

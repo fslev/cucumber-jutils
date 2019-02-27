@@ -3,7 +3,7 @@ package com.cucumber.utils.engineering.placeholders;
 
 import java.util.regex.Pattern;
 
-public class ScenarioPlaceholderFiller extends AbstractPlaceholderFiller {
+public class ScenarioPropertiesParser extends AbstractPropertiesParser {
 
     public static final String PLACEHOLDER_START = "#[";
     public static final String PLACEHOLDER_END = "]";
@@ -14,8 +14,8 @@ public class ScenarioPlaceholderFiller extends AbstractPlaceholderFiller {
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
 
-    public ScenarioPlaceholderFiller(String stringWithSymbols) {
-        super(stringWithSymbols);
+    public ScenarioPropertiesParser(String stringWithPlaceholders) {
+        super(stringWithPlaceholders);
     }
 
     @Override

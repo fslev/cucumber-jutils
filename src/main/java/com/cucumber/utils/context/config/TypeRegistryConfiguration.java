@@ -1,5 +1,7 @@
 package com.cucumber.utils.context.config;
 
+import com.cucumber.utils.clients.http.Method;
+import com.cucumber.utils.context.props.ScenarioPropsParser;
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
 import io.cucumber.cucumberexpressions.ParameterType;
@@ -7,8 +9,6 @@ import io.cucumber.cucumberexpressions.Transformer;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
-import com.cucumber.utils.clients.http.Method;
-import com.cucumber.utils.context.props.PlaceholderFiller;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -40,7 +40,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                 new DataTableType(List.class, new PlaceholdersDataTableTransformer()));
         // Needed especially for doc strings
         typeRegistry.defineDataTableType(new DataTableType(String.class,
-                (DataTable dataTable) -> (new PlaceholderFiller(dataTable.cell(0, 0).trim())).fill()
+                (DataTable dataTable) -> (new ScenarioPropsParser(dataTable.cell(0, 0).trim())).result()
                         .toString()));
     }
 
@@ -50,7 +50,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             if (s == null) {
                 return null;
             }
-            return new PlaceholderFiller(s.trim()).fill();
+            return new ScenarioPropsParser(s.trim()).result();
         }
     }
 
@@ -60,11 +60,11 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
             List<Map<String, String>> list = new ArrayList<>();
             dataTable.asMaps().forEach(map -> {
                 list.add(map.entrySet().stream().collect(Collectors.toMap(
-                        e -> new PlaceholderFiller(e.getKey()).fill().toString(),
-                        e -> new PlaceholderFiller(e.getValue()).fill().toString())));
+                        e -> new ScenarioPropsParser(e.getKey()).result().toString(),
+                        e -> new ScenarioPropsParser(e.getValue()).result().toString())));
             });
             return !list.isEmpty() ? list : dataTable.asList().stream()
-                    .map(el -> new PlaceholderFiller(el).fill().toString())
+                    .map(el -> new ScenarioPropsParser(el).result().toString())
                     .collect(Collectors.toList());
         }
     }
