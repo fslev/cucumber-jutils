@@ -53,13 +53,13 @@ public class CustomXmlComparator implements DifferenceEvaluator {
 
     private ComparisonResult compare(String expected, String actual) {
         PropertiesGenerator generator = new PropertiesGenerator(expected, actual);
-        boolean hasAssignSymbols = !generator.getProperties().isEmpty();
-        String parsedExpected = hasAssignSymbols ? generator.getParsedTarget() : expected;
-        String parsedExpectedQuoted = hasAssignSymbols ? generator.getParsedTarget(true) : expected;
+        boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty();
+        String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected;
+        String parsedExpectedQuoted = hasPropertiesToGenerate ? generator.getParsedTarget(true) : expected;
         try {
             Pattern pattern = Pattern.compile(parsedExpectedQuoted);
             if (pattern.matcher(actual).matches()) {
-                if (hasAssignSymbols) {
+                if (hasPropertiesToGenerate) {
                     this.generatedProperties.putAll(generator.getProperties());
                 }
                 return ComparisonResult.SIMILAR;
@@ -68,7 +68,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
             }
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual)) {
-                if (hasAssignSymbols) {
+                if (hasPropertiesToGenerate) {
                     this.generatedProperties.putAll(generator.getProperties());
                 }
                 return ComparisonResult.EQUAL;

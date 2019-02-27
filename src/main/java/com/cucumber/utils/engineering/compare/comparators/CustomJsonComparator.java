@@ -16,14 +16,14 @@ public class CustomJsonComparator implements JsonComparator {
         String actualString = actual.toString();
         PropertiesGenerator generator = new PropertiesGenerator(expected.toString(), actualString);
 
-        boolean hasAssignSymbols = !generator.getProperties().isEmpty();
-        String parsedExpected = hasAssignSymbols ? generator.getParsedTarget() : expected.toString();
-        String parsedExpectedQuoted = hasAssignSymbols ? generator.getParsedTarget(true) : expected.toString();
+        boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty();
+        String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected.toString();
+        String parsedExpectedQuoted = hasPropertiesToGenerate ? generator.getParsedTarget(true) : expected.toString();
 
         try {
             Pattern pattern = Pattern.compile(parsedExpectedQuoted);
             if (pattern.matcher(actualString).matches()) {
-                if (hasAssignSymbols) {
+                if (hasPropertiesToGenerate) {
                     this.generatedProperties.putAll(generator.getProperties());
                 }
                 return true;
@@ -32,7 +32,7 @@ public class CustomJsonComparator implements JsonComparator {
             }
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual.toString())) {
-                if (hasAssignSymbols) {
+                if (hasPropertiesToGenerate) {
                     this.generatedProperties.putAll(generator.getProperties());
                 }
                 return true;

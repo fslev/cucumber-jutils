@@ -26,9 +26,9 @@ public class ScenarioPropsParser {
 
     private String getParsedStringWithScenarioValues(String str) {
         ScenarioPropertiesParser parser = new ScenarioPropertiesParser(str);
-        Set<String> symbolNames = parser.getPropertyNames();
+        Set<String> propertyNames = parser.getPropertyNames();
         Map<String, String> values = new HashMap<>();
-        symbolNames.forEach((String name) -> {
+        propertyNames.forEach((String name) -> {
             Object val = scenarioProps.get(name);
             if (val != null) {
                 values.put(name, val.toString());
@@ -39,9 +39,9 @@ public class ScenarioPropsParser {
 
     private String getStandaloneScenarioPlaceholder() {
         ScenarioPropertiesParser parser = new ScenarioPropertiesParser(target);
-        Set<String> placeholders = parser.getPropertyNames();
-        if (!placeholders.isEmpty()) {
-            String placeholder = placeholders.iterator().next();
+        Set<String> propertyNames = parser.getPropertyNames();
+        if (!propertyNames.isEmpty()) {
+            String placeholder = propertyNames.iterator().next();
             if ((ScenarioPropertiesParser.PLACEHOLDER_START + placeholder + ScenarioPropertiesParser.PLACEHOLDER_END)
                     .equals(target)) {
                 return placeholder;
