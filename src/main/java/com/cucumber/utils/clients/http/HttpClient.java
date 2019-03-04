@@ -16,9 +16,11 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.net.ssl.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -143,7 +145,17 @@ public class HttpClient {
                 request = put;
                 break;
             case DELETE:
-                request = new HttpDelete(url);
+                if (requestEntity == null || requestEntity.isEmpty()) {
+                    request = new HttpDelete(url);
+                } else {
+                    HttpDeleteWithBody deleteWithBody = new HttpDeleteWithBody(url);
+                    try {
+                        deleteWithBody.setEntity(new StringEntity(requestEntity));
+                    } catch (UnsupportedEncodingException e) {
+                        throw new RuntimeException(e);
+                    }
+                    request = deleteWithBody;
+                }
                 break;
             case OPTIONS:
                 request = new HttpOptions(url);
@@ -334,6 +346,29 @@ public class HttpClient {
     }
 }
 
+
+@NotThreadSafe
+class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
+    public static final String METHOD_NAME = "DELETE";
+
+    public String getMethod() {
+        return METHOD_NAME;
+    }
+
+    public HttpDeleteWithBody(final String uri) {
+        super();
+        setURI(URI.create(uri));
+    }
+
+    public HttpDeleteWithBody(final URI uri) {
+        super();
+        setURI(uri);
+    }
+
+    public HttpDeleteWithBody() {
+        super();
+    }
+}
 
 class DefaultTrustManager implements X509TrustManager {
 
