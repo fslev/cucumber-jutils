@@ -1,3 +1,6 @@
+### 3.6
+Accept request entity for DELETE type requests  
+
 ### 3.5
 Enhance message        
 
