@@ -78,7 +78,7 @@ Feature: Test comparator
       | cherries     |
 
   Scenario: Compare resource content containing placeholders
-    Given param status="200"
+    Given param status=200
     And param contentType="application/json"
     And param accept="application/json"
     And param orderType="KVM"
