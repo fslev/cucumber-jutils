@@ -23,43 +23,43 @@ public class DateTimeSteps {
         this.formatter = DateTimeFormatter.ofPattern(pattern);
     }
 
-    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {int}year(s)")
-    public void compareYears(String date1, String date2, int y) {
+    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {cstring}year(s)")
+    public void compareYears(String date1, String date2, String y) {
         log.info("Check period from {} to {}", date1, date2);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
-        assertEquals("Years differ", y, ChronoUnit.YEARS.between(localDateTime1, localDateTime2));
+        assertEquals("Years differ", Long.parseLong(y), ChronoUnit.YEARS.between(localDateTime1, localDateTime2));
     }
 
-    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {int}day(s)")
-    public void compareDays(String date1, String date2, int d) {
+    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {cstring}day(s)")
+    public void compareDays(String date1, String date2, String d) {
         log.info("Check period from {} to {}", date1, date2);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
-        assertEquals("Days differ", d, ChronoUnit.DAYS.between(localDateTime1, localDateTime2));
+        assertEquals("Days differ", Long.parseLong(d), ChronoUnit.DAYS.between(localDateTime1, localDateTime2));
     }
 
-    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {long}hour(s)")
-    public void compareHours(String date1, String date2, long h) {
+    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {cstring}hour(s)")
+    public void compareHours(String date1, String date2, String h) {
         log.info("Check period from {} to {}", date1, date2);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
-        assertEquals("Hours differ", h, Duration.between(localDateTime1, localDateTime2).toHours());
+        assertEquals("Hours differ", Long.parseLong(h), Duration.between(localDateTime1, localDateTime2).toHours());
     }
 
-    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {long}minute(s)")
-    public void compareMinutes(String date1, String date2, long m) {
+    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {cstring}minute(s)")
+    public void compareMinutes(String date1, String date2, String m) {
         log.info("Check period from {} to {}", date1, date2);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
-        assertEquals("Minutes differ", m, Duration.between(localDateTime1, localDateTime2).toMinutes());
+        assertEquals("Minutes differ", Long.parseLong(m), Duration.between(localDateTime1, localDateTime2).toMinutes());
     }
 
-    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {long}second(s)")
-    public void compareSeconds(String date1, String date2, long s) {
+    @Then("DateTime check period from \"{cstring}\" to \"{cstring}\" is {cstring}second(s)")
+    public void compareSeconds(String date1, String date2, String s) {
         log.info("Check period from {} to {}", date1, date2);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
-        assertEquals("Seconds differ", s, Duration.between(localDateTime1, localDateTime2).toSeconds());
+        assertEquals("Seconds differ", Long.parseLong(s), Duration.between(localDateTime1, localDateTime2).toSeconds());
     }
 }

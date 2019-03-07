@@ -1,5 +1,8 @@
+### 3.8
+Refactor date time step definitions      
+
 ### 3.7
-Add scenario params of type Integer
+Add scenario params of type Integer  
 
 ### 3.6
 Accept request entity for DELETE type requests  
