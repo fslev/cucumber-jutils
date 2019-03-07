@@ -1,3 +1,6 @@
+### 3.7
+Add scenario params of type Integer
+
 ### 3.6
 Accept request entity for DELETE type requests  
 

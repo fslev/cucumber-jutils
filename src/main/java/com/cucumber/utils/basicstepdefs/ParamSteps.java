@@ -30,6 +30,12 @@ public class ParamSteps {
         log.debug("Param {} = {}", name, value);
     }
 
+    @Given("param {cstring}={int}")
+    public void setParamInteger(String name, Integer value) {
+        scenarioProps.put(name, value);
+        log.debug("Param {} = {}", name, value);
+    }
+
     @Given("param {cstring} from file path \"{cstring}\"")
     public void setParamFromFile(String name, String filePath) {
         String value = Cucumbers.read(filePath);
