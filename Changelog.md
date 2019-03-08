@@ -1,3 +1,6 @@
+### 3.10
+Bug fix inside ResourceUtils    
+
 ### 3.9
 Refactor date time step definitions        
 

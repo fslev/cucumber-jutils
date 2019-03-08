@@ -49,4 +49,15 @@ public class ResourceReadTests {
     public void testInDepthReadFromNonExistentDirectory() throws IOException, URISyntaxException {
         ResourceUtils.readDirectory("non_existent");
     }
+
+    @Test
+    public void testInDepthReadFromClasspathDir() throws IOException, URISyntaxException {
+        Map<String, String> actualData = ResourceUtils.readDirectory("");
+        assertTrue(actualData.size() > 0);
+        assertTrue(actualData.get("foobar/dir/foobar1.json").equals("1"));
+        assertTrue(actualData.get("foobar/dir/foo/foo1.json").equals("2"));
+        assertTrue(actualData.get("foobar/dir/foo/foo2.json").equals("3"));
+        assertTrue(actualData.get("foobar/dir/foo/bar/bar1.json").equals("4"));
+        assertTrue(actualData.get("foobar/dir/foo/bar/bar2.json").equals("5"));
+    }
 }

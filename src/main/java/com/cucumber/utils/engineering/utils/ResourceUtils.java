@@ -55,10 +55,10 @@ public class ResourceUtils {
                 -> path.toFile().isFile()
                 && (fileExtensionPatterns.length == 0
                 || Set.of(fileExtensionPatterns).contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf(".")))))
-                .collect(Collectors.toMap(path -> relativeDirPath + File.separator + rootPath.relativize(path).toString(),
+                .collect(Collectors.toMap(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString(),
                         path -> {
                             try {
-                                return readFromRelativePath(relativeDirPath + File.separator + rootPath.relativize(path).toString());
+                                return readFromRelativePath(relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
