@@ -23,9 +23,17 @@ public class HttpResponseWrapperTest {
     public void testWrapperInitFromString() throws IOException {
         String content = "{\"status\":200,\"reason\":\"some thing\",\"body\":{\"wa\":[1,2,3,4]}}";
         HttpResponseWrapper wrapper = new HttpResponseWrapper(content);
-        Assert.assertEquals(200, (int) wrapper.getStatus());
+        Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some thing", wrapper.getReasonPhrase());
         Assert.assertEquals(Map.of("wa", Arrays.asList(new Integer[]{1, 2, 3, 4})), wrapper.getEntity());
+        Assert.assertNull(wrapper.getHeaders());
+    }
+
+    @Test
+    public void testWrapperInitFromStringStatus() throws IOException {
+        String content = "{\"status\":\"200\"}";
+        HttpResponseWrapper wrapper = new HttpResponseWrapper(content);
+        Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertNull(wrapper.getHeaders());
     }
 
@@ -55,7 +63,7 @@ public class HttpResponseWrapperTest {
     public void testWrapperInitFromMap() throws IOException {
         Map<String, Object> map = Map.of("status", 200, "reason", "some reason", "body", new int[]{2, 3, 4});
         HttpResponseWrapper wrapper = new HttpResponseWrapper(map);
-        Assert.assertEquals(200, (int) wrapper.getStatus());
+        Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some reason", wrapper.getReasonPhrase());
         Assert.assertEquals(Arrays.asList(new Integer[]{2, 3, 4}), wrapper.getEntity());
         Assert.assertNull(wrapper.getHeaders());
@@ -70,7 +78,7 @@ public class HttpResponseWrapperTest {
         mock.setHeader(new BasicHeader("Content-Type", "application/json"));
         mock.setHeader(new BasicHeader("Accept", "application/json"));
         HttpResponseWrapper wrapper = new HttpResponseWrapper(mock);
-        Assert.assertEquals(200, (int) wrapper.getStatus());
+        Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some reason", wrapper.getReasonPhrase());
         Assert.assertEquals("{\"a\":100}", wrapper.getEntity());
         Assert.assertEquals(Map.of("Content-Type", "application/json", "Accept", "application/json"), wrapper.getHeaders());

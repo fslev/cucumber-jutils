@@ -1,3 +1,6 @@
+### 3.11
+Enhance Http Responses comparison      
+
 ### 3.10
 Bug fix inside ResourceUtils    
 

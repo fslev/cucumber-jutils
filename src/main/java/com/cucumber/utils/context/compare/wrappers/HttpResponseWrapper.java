@@ -15,7 +15,7 @@ import java.util.Map;
 public class HttpResponseWrapper {
 
     @JsonProperty(value = "status")
-    private Integer status;
+    private String status;
     @JsonProperty(value = "body")
     private Object entity;
     @JsonProperty(value = "reason")
@@ -51,7 +51,7 @@ public class HttpResponseWrapper {
     }
 
     private void fromHttpResponse(HttpResponse response) throws IOException {
-        this.status = response.getStatusLine().getStatusCode();
+        this.status = String.valueOf(response.getStatusLine().getStatusCode());
         this.reasonPhrase = response.getStatusLine().getReasonPhrase();
         this.headers = getHeaders(response);
         String content = null;
@@ -77,7 +77,7 @@ public class HttpResponseWrapper {
         return headers;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 

@@ -154,7 +154,7 @@ public class Cucumbers {
             log.warn("Expected value has no HTTP Response format\n{}", expected);
             throw e;
         }
-        Integer expectedStatus = expectedWrapper.getStatus();
+        String expectedStatus = expectedWrapper.getStatus();
         String expectedReason = expectedWrapper.getReasonPhrase();
         Map<String, String> expectedHeaders = expectedWrapper.getHeaders();
         Object expectedEntity = expectedWrapper.getEntity();
