@@ -54,7 +54,7 @@ public class ResourceUtils {
         Map<String, String> map = Files.walk(rootPath).filter(path
                 -> path.toFile().isFile()
                 && (fileExtensionPatterns.length == 0
-                || Set.of(fileExtensionPatterns).contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf(".")))))
+                || (path.getFileName().toString().contains(".") && Set.of(fileExtensionPatterns).contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf("."))))))
                 .collect(Collectors.toMap(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString(),
                         path -> {
                             try {

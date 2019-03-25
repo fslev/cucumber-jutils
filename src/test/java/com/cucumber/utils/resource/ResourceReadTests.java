@@ -35,14 +35,28 @@ public class ResourceReadTests {
     }
 
     @Test
+    public void testPropertiesReadFromFileWithoutExtension() {
+        assertEquals("some values with white spaces and new lines \n ",
+                ResourceUtils.readProps("foobar/dir/foo/foo").get("IAmAProperty"));
+    }
+
+    @Test
     public void testInDepthReadFromDirectory() throws IOException, URISyntaxException {
         Map<String, String> actualData = ResourceUtils.readDirectory("foobar/dir");
-        assertEquals(5, actualData.size());
+        assertEquals(7, actualData.size());
         assertTrue(actualData.get("foobar/dir/foobar1.json").equals("1"));
         assertTrue(actualData.get("foobar/dir/foo/foo1.json").equals("2"));
         assertTrue(actualData.get("foobar/dir/foo/foo2.json").equals("3"));
         assertTrue(actualData.get("foobar/dir/foo/bar/bar1.json").equals("4"));
         assertTrue(actualData.get("foobar/dir/foo/bar/bar2.json").equals("5"));
+        assertTrue(actualData.get("foobar/dir/foo/bar/bar").equals("test"));
+    }
+
+    @Test
+    public void testInDepthReadFromDirectoryFilesWithoutExtension() throws IOException, URISyntaxException {
+        Map<String, String> actualData = ResourceUtils.readDirectory("foobar/dir1", ".properties");
+        assertEquals(1, actualData.size());
+        assertTrue(actualData.get("foobar/dir1/test2.properties").equals("pass"));
     }
 
     @Test(expected = IOException.class)

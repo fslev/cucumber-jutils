@@ -1,3 +1,6 @@
+### 3.12
+Bug fix        
+
 ### 3.11
 Enhance Http Responses comparison      
 
