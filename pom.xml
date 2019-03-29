@@ -20,13 +20,13 @@
 
     <scm>
         <connection>
-            scm:git:ssh://git@bitbucket.1and1.org/tcqa/cucumber-utils.git
+            scm:git:ssh://git@bitbucket.1and1.org/dgpqa/cucumber-utils.git
         </connection>
         <developerConnection>
-            scm:git:ssh://git@bitbucket.1and1.org/tcqa/cucumber-utils.git
+            scm:git:ssh://git@bitbucket.1and1.org/dgpqa/cucumber-utils.git
         </developerConnection>
         <url>
-            https://bitbucket.1and1.org/projects/TCQA/repos/cucumber-utils
+            https://bitbucket.1and1.org/projects/dgpqa/repos/cucumber-utils
         </url>
         <tag>HEAD</tag>
     </scm>
