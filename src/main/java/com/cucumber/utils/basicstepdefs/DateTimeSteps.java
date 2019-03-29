@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -61,5 +62,21 @@ public class DateTimeSteps {
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
         assertEquals("Seconds differ", Long.parseLong(s.toString()), Duration.between(localDateTime1, localDateTime2).toSeconds());
+    }
+
+    @Then("Date check period from \"{cstring}\" to \"{cstring}\" is {cstring}year(s)")
+    public void compareYearsFromDates(String date1, String date2, Object y) {
+        log.info("Check period from {} to {}", date1, date2);
+        LocalDate localDate1 = LocalDateTime.parse(date1, formatter).toLocalDate();
+        LocalDate localDate2 = LocalDateTime.parse(date2, formatter).toLocalDate();
+        assertEquals("Years differ", Long.parseLong(y.toString()), ChronoUnit.YEARS.between(localDate1, localDate2));
+    }
+
+    @Then("Date check period from \"{cstring}\" to \"{cstring}\" is {cstring}day(s)")
+    public void compareDaysFromDates(String date1, String date2, Object y) {
+        log.info("Check period from {} to {}", date1, date2);
+        LocalDate localDate1 = LocalDateTime.parse(date1, formatter).toLocalDate();
+        LocalDate localDate2 = LocalDateTime.parse(date2, formatter).toLocalDate();
+        assertEquals("Years differ", Long.parseLong(y.toString()), ChronoUnit.DAYS.between(localDate1, localDate2));
     }
 }

@@ -1,3 +1,6 @@
+### 3.13  
+Add support to compare only dates          
+
 ### 3.12
 Bug fix        
 
