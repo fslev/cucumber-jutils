@@ -16,7 +16,7 @@ public class CustomInjectorSource implements InjectorSource {
 
     @Override
     public Injector getInjector() {
-        injector = (injector == null) ? Guice.createInjector(Stage.PRODUCTION, CucumberModules.SCENARIO) : injector;
+        injector = (injector == null) ? Guice.createInjector(Stage.PRODUCTION, CucumberModules.createScenarioModule()) : injector;
         return injector;
     }
 }

@@ -4,7 +4,7 @@
 
     <groupId>com.qa.cucumber</groupId>
     <artifactId>cucumber-utils</artifactId>
-    <version>3.15-SNAPSHOT</version>
+    <version>4.0-SNAPSHOT</version>
 
     <name>Cucumber Utils</name>
     <description>A little helper for Cucumber</description>
@@ -13,8 +13,8 @@
         <httpclient.version>4.5.7</httpclient.version>
         <jsoncompare.version>2.0.8</jsoncompare.version>
         <xmlunit.version>2.6.2</xmlunit.version>
-        <cucumber.version>3.0.2</cucumber.version>
-        <cucumber.expressions.version>6.1.0</cucumber.expressions.version>
+        <cucumber.version>4.2.6</cucumber.version>
+        <cucumber.expressions.version>6.2.2</cucumber.expressions.version>
         <guice.version>4.2.2</guice.version>
     </properties>
 
