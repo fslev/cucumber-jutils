@@ -77,6 +77,6 @@ public class DateTimeSteps {
         log.info("Check period from {} to {}", date1, date2);
         LocalDate localDate1 = LocalDateTime.parse(date1, formatter).toLocalDate();
         LocalDate localDate2 = LocalDateTime.parse(date2, formatter).toLocalDate();
-        assertEquals("Years differ", Long.parseLong(y.toString()), ChronoUnit.DAYS.between(localDate1, localDate2));
+        assertEquals("Days differ", Long.parseLong(y.toString()), ChronoUnit.DAYS.between(localDate1, localDate2));
     }
 }
