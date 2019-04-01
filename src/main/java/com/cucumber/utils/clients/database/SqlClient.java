@@ -17,11 +17,11 @@ public class SqlClient {
     private String pwd;
     private String driverClassName;
 
-    protected SqlClient(Builder builder) {
-        this.url = builder.url;
-        this.user = builder.user;
-        this.pwd = builder.pwd;
-        this.driverClassName = builder.driver;
+    public SqlClient(String url, String user, String pwd, String driverClassName) {
+        this.url = url;
+        this.user = user;
+        this.pwd = pwd;
+        this.driverClassName = driverClassName;
         try {
             Class.forName(driverClassName);
         } catch (ClassNotFoundException e) {
@@ -103,37 +103,6 @@ public class SqlClient {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        }
-    }
-
-    public static class Builder {
-        private String url;
-        private String user;
-        private String pwd;
-        private String driver = "com.mysql.jdbc.Driver";
-
-        public Builder url(String url) {
-            this.url = url;
-            return this;
-        }
-
-        public Builder user(String user) {
-            this.user = user;
-            return this;
-        }
-
-        public Builder pwd(String pwd) {
-            this.pwd = pwd;
-            return this;
-        }
-
-        public Builder driver(String driver) {
-            this.driver = driver;
-            return this;
-        }
-
-        public SqlClient build() {
-            return new SqlClient(this);
         }
     }
 }

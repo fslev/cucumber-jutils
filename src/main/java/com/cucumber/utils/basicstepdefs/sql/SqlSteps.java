@@ -22,11 +22,8 @@ public class SqlSteps {
     @Given("SQL data source from file path \"{cstring}\"")
     public void setDataSource(String filePath) throws IOException {
         this.dataSource = ResourceUtils.readProps(filePath);
-        SqlClient.Builder builder = new SqlClient.Builder();
-        builder.driver(dataSource.getProperty("driver").trim())
-                .user(dataSource.getProperty("username")).pwd(dataSource.getProperty("password"))
-                .url(dataSource.getProperty("url"));
-        this.client = builder.build();
+        this.client = new SqlClient(dataSource.getProperty("url"), dataSource.getProperty("username"),
+                dataSource.getProperty("password"), dataSource.getProperty("driver").trim());
     }
 
     @Then("SQL execute query \"{cstring}\"")
