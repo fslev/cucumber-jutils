@@ -6,6 +6,7 @@ Feature: Test JSCH feature
     Then JSCH execute command "hostname -f" and check response="vm-test\d+.sandbox.lan"
     Then JSCH execute command "echo test" and check response="test"
     Then JSCH execute command "ls -alh" and check response=".*"
+    Then JSCH execute command "invalidcommand" and check response=".*command not found.*"
     Given param multilineCmd=
     """
     a='foo'
