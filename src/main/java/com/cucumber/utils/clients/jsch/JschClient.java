@@ -53,12 +53,18 @@ public class JschClient {
             Channel channel = this.session.openChannel("exec");
             ((ChannelExec) channel).setCommand(cmd);
             InputStream commandOutput = channel.getInputStream();
+            InputStream commandErrOutput = ((ChannelExec) channel).getErrStream();
             channel.connect();
             StringBuilder outputBuffer = new StringBuilder();
             int readByte = commandOutput.read();
             while (readByte != 0xffffffff) {
                 outputBuffer.append((char) readByte);
                 readByte = commandOutput.read();
+            }
+            readByte = commandErrOutput.read();
+            while (readByte != 0xffffffff) {
+                outputBuffer.append((char) readByte);
+                readByte = commandErrOutput.read();
             }
             channel.disconnect();
             log.debug("Output over SSH: {}", outputBuffer.toString());
