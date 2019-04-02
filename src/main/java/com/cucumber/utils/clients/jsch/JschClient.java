@@ -61,7 +61,7 @@ public class JschClient {
                 readByte = commandOutput.read();
             }
             channel.disconnect();
-            log.debug("Output: {}", outputBuffer.toString());
+            log.debug("Output over SSH: {}", outputBuffer.toString());
             return outputBuffer.toString();
         } catch (JSchException | IOException e) {
             throw new RuntimeException(e);
