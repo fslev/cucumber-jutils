@@ -1,7 +1,6 @@
 package com.cucumber.utils.clients.http;
 
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.entity.StringEntity;
@@ -19,7 +18,7 @@ public class HttpResponseLoggerInterceptor implements HttpResponseInterceptor {
     private Logger log = LogManager.getLogger();
 
     @Override
-    public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
+    public void process(HttpResponse response, HttpContext context) {
         log.debug("--- HTTP RESPONSE ---");
         log.debug("Response STATUS: {}", response.getStatusLine());
         log.debug("Response HEADERS: {}", Arrays.asList(response.getAllHeaders()));
