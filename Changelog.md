@@ -1,3 +1,6 @@
+### 3.20  
+Refactor http client      
+
 ### 3.19  
 Fix possible bug. Consume Http Entities after each time are used    
 
