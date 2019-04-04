@@ -4,7 +4,7 @@
 
     <groupId>com.qa.cucumber</groupId>
     <artifactId>cucumber-utils</artifactId>
-    <version>3.18</version>
+    <version>3.19-SNAPSHOT</version>
 
     <name>Cucumber Utils</name>
     <description>A little helper for Cucumber</description>
@@ -28,7 +28,7 @@
         <url>
             https://bitbucket.1and1.org/projects/dgpqa/repos/cucumber-utils
         </url>
-        <tag>cucumber-utils-3.18</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
