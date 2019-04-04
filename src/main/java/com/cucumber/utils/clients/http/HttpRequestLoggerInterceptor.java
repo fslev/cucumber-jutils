@@ -1,9 +1,6 @@
 package com.cucumber.utils.clients.http;
 
-import org.apache.http.HttpEntityEnclosingRequest;
-import org.apache.http.HttpHost;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestInterceptor;
+import org.apache.http.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
@@ -13,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 public class HttpRequestLoggerInterceptor implements HttpRequestInterceptor {
@@ -36,16 +32,18 @@ public class HttpRequestLoggerInterceptor implements HttpRequestInterceptor {
             HttpEntityEnclosingRequest entityEnclosingRequest;
             if (request instanceof HttpEntityEnclosingRequest) {
                 entityEnclosingRequest = (HttpEntityEnclosingRequest) request;
+                HttpEntity entity = entityEnclosingRequest.getEntity();
                 try {
-                    content = EntityUtils.toString(entityEnclosingRequest.getEntity());
+                    content = EntityUtils.toString(entity);
                 } catch (IOException e) {
                     log.error(e);
                 } finally {
                     try {
+                        EntityUtils.consume(entity);
                         if (entityEnclosingRequest != null && content != null) {
                             entityEnclosingRequest.setEntity(new StringEntity(content));
                         }
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (IOException e) {
                         log.error(e);
                     }
                 }

@@ -1,3 +1,6 @@
+### 3.19  
+Fix possible bug. Consume Http Entities after each time are used    
+
 ### 3.18  
 Update dependencies    
 

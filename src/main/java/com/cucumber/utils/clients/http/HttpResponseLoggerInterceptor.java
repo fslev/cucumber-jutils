@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 public class HttpResponseLoggerInterceptor implements HttpResponseInterceptor {
@@ -38,10 +37,11 @@ public class HttpResponseLoggerInterceptor implements HttpResponseInterceptor {
                 return "Cannot consume HTTP response: " + e.getMessage();
             } finally {
                 try {
-                    if (response != null && content != null) {
+                    EntityUtils.consume(entity);
+                    if (content != null) {
                         response.setEntity(new StringEntity(content));
                     }
-                } catch (UnsupportedEncodingException e) {
+                } catch (IOException e) {
                     log.error(e);
                 }
             }

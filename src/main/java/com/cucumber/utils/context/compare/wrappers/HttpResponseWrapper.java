@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
@@ -55,13 +56,15 @@ public class HttpResponseWrapper {
         this.reasonPhrase = response.getStatusLine().getReasonPhrase();
         this.headers = getHeaders(response);
         String content = null;
-        if (response.getEntity() != null) {
+        HttpEntity entity = response.getEntity();
+        if (entity != null) {
             try {
-                content = EntityUtils.toString(response.getEntity());
+                content = EntityUtils.toString(entity);
                 this.entity = content;
             } catch (Exception e) {
                 throw new IOException("HTTP Response wrapper of invalid format", e);
             } finally {
+                EntityUtils.consume(entity);
                 if (content != null) {
                     response.setEntity(new StringEntity(content));
                 }
