@@ -1,3 +1,6 @@
+### 3.18  
+Update dependencies    
+
 ### 3.17  
 Fix Http Response Listener bug       
 
