@@ -24,8 +24,11 @@ public class HttpResponseLoggerInterceptor implements HttpResponseInterceptor {
         log.debug("Response STATUS: {}", response.getStatusLine());
         log.debug("Response HEADERS: {}", Arrays.asList(response.getAllHeaders()));
         log.debug("Response BODY:{}{}", () -> System.lineSeparator(), () -> {
-            HttpEntity entity = response.getEntity();
             if (response == null) {
+                return null;
+            }
+            HttpEntity entity = response.getEntity();
+            if (entity == null) {
                 return null;
             }
             String content = null;
