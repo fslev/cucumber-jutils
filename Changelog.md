@@ -1,3 +1,7 @@
+### 3.21  
+Accept more file extension types   
+Refactoring  
+
 ### 3.20  
 Refactor http client      
 
