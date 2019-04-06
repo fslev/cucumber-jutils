@@ -1,3 +1,6 @@
+### 3.24  
+Bug fix    
+
 ### 3.23  
 Refactor SqlClient    
 

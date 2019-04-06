@@ -74,8 +74,6 @@ public class HttpClient {
             return client.execute(request);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } finally {
-            this.request.releaseConnection();
         }
     }
 
