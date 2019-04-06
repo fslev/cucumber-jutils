@@ -1,7 +1,6 @@
 package com.cucumber.utils.clients.http;
 
 import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.ServiceUnavailableRetryStrategy;
@@ -70,12 +69,18 @@ public class HttpClient {
         this.request = getRequest();
     }
 
-    public HttpResponse execute() {
+    public CloseableHttpResponse execute() {
         try {
             return client.execute(request);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            this.request.releaseConnection();
         }
+    }
+
+    public void close() throws IOException {
+        this.client.close();
     }
 
     private CloseableHttpClient getClient() {

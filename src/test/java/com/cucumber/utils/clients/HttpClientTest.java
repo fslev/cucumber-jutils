@@ -60,6 +60,8 @@ public class HttpClientTest {
                         return 3000;
                     }
                 });
-        log.info(EntityUtils.toString(builder.build().execute().getEntity()));
+        HttpClient client = builder.build();
+        log.info(EntityUtils.toString(client.execute().getEntity()));
+        client.close();
     }
 }

@@ -1,3 +1,6 @@
+### 3.22  
+Refactor HttpClient  
+
 ### 3.21  
 Accept more file extension types   
 Refactoring  
