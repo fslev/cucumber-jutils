@@ -12,7 +12,7 @@ public class ShellSteps {
 
     @Then("SHELL execute command \"{cstring}\" and check response=\"{cstring}\"")
     public void executeAndCompare(String cmd, String expected) {
-        String actual = shellClient.command(cmd).trim();
+        String actual = shellClient.command("bash", "-c", cmd).trim();
         Cucumbers.compare(expected, actual);
     }
 }

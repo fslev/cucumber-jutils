@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class ShellClient {
 
@@ -16,9 +17,9 @@ public class ShellClient {
         this.processBuilder = new ProcessBuilder();
     }
 
-    public String command(String command) {
-        log.info("Executing shell command \"{}\"", command);
-        this.processBuilder.command("bash", "-c", command);
+    public String command(String... command) {
+        log.info("Executing shell command \"{}\"", Arrays.toString(command));
+        this.processBuilder.command(command);
         StringBuilder outputBuffer = new StringBuilder();
         try {
             Process p = processBuilder.start();
