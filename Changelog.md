@@ -1,3 +1,6 @@
+### 3.27    
+Compile library compatible with Java 8     
+
 ### 3.26  
 Refactor Shell Client    
 
