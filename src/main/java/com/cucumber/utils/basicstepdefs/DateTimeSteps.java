@@ -61,7 +61,7 @@ public class DateTimeSteps {
         log.info("Check period from {} to {}", date1, date2);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
-        assertEquals("Seconds differ", Long.parseLong(s.toString()), Duration.between(localDateTime1, localDateTime2).toSeconds());
+        assertEquals("Seconds differ", Long.parseLong(s.toString()), Duration.between(localDateTime1, localDateTime2).getSeconds());
     }
 
     @Then("Date check period from \"{cstring}\" to \"{cstring}\" is {cstring}year(s)")

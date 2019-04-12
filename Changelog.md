@@ -1,3 +1,6 @@
+### 3.29    
+Fix Java 8 backwards compatibility issue    
+
 ### 3.28    
 Use Json Compare For Java 8     
 
