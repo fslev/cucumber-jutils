@@ -17,11 +17,15 @@ public class SqlClient {
     private String pwd;
     private String driverClassName;
 
-    protected SqlClient(Builder builder) {
-        this.url = builder.url;
-        this.user = builder.user;
-        this.pwd = builder.pwd;
-        this.driverClassName = builder.driver;
+    private Connection conn;
+    private PreparedStatement pst;
+    private String sql;
+
+    public SqlClient(String url, String user, String pwd, String driverClassName) {
+        this.url = url;
+        this.user = user;
+        this.pwd = pwd;
+        this.driverClassName = driverClassName;
         try {
             Class.forName(driverClassName);
         } catch (ClassNotFoundException e) {
@@ -29,19 +33,36 @@ public class SqlClient {
         }
     }
 
-    public List<Map<String, String>> executeQuery(String sql) {
-        log.debug("---- SQL QUERY REQUEST ----");
-        log.debug("Driver: {}", driverClassName);
-        log.debug("Database url: {}", url);
-        log.debug("SQL query: {}", sql);
-        Connection conn = null;
-        PreparedStatement pst = null;
-        ResultSet rs = null;
+    public void connect() throws SQLException {
+        conn = DriverManager.getConnection(url, user, pwd);
+    }
+
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        if (conn == null) {
+            throw new RuntimeException("Connection not initialised");
+        }
+        if (pst != null) {
+            pst.close();
+        }
+        this.sql = sql;
+        pst = conn.prepareStatement(sql);
+        pst.setMaxRows(MAX_ROWS);
+        return pst;
+    }
+
+    public void close() throws SQLException {
+        if (pst != null) {
+            pst.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+    }
+
+    public List<Map<String, String>> executeQueryAndGetRsAsList() {
         List<Map<String, String>> tableData = new ArrayList<>();
+        ResultSet rs = null;
         try {
-            conn = DriverManager.getConnection(url, user, pwd);
-            pst = conn.prepareStatement(sql);
-            pst.setMaxRows(MAX_ROWS);
             rs = pst.executeQuery();
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
@@ -61,12 +82,6 @@ public class SqlClient {
                 if (rs != null) {
                     rs.close();
                 }
-                if (pst != null) {
-                    pst.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
                 log.debug("SQL result: {}", tableData);
                 log.debug("-----------------------");
             } catch (SQLException e) {
@@ -75,67 +90,26 @@ public class SqlClient {
         }
     }
 
-    public int executeUpdate(String sql) {
+    public ResultSet executeQuery() throws SQLException {
+        log.debug("---- SQL QUERY REQUEST ----");
+        log.debug("Driver: {}", driverClassName);
+        log.debug("Database url: {}", url);
+        log.debug("SQL query: {}", sql);
+        return pst.executeQuery();
+    }
+
+    public int executeUpdate() throws SQLException {
         log.debug("---- SQL UPDATE REQUEST ----");
         log.debug("Driver: {}", driverClassName);
         log.debug("Database url: {}", url);
         log.debug("SQL update: {}", sql);
-        Connection conn = null;
-        Statement st = null;
         int affected = 0;
         try {
-            conn = DriverManager.getConnection(url, user, pwd);
-            st = conn.prepareStatement(sql);
-            affected = st.executeUpdate(sql);
+            affected = pst.executeUpdate();
             return affected;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         } finally {
-            try {
-                if (st != null) {
-                    st.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-                log.debug("SQL affected rows: {}", affected);
-                log.debug("-----------------------");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public static class Builder {
-        private String url;
-        private String user;
-        private String pwd;
-        private String driver = "com.mysql.jdbc.Driver";
-
-        public Builder url(String url) {
-            this.url = url;
-            return this;
-        }
-
-        public Builder user(String user) {
-            this.user = user;
-            return this;
-        }
-
-        public Builder pwd(String pwd) {
-            this.pwd = pwd;
-            return this;
-        }
-
-        public Builder driver(String driver) {
-            this.driver = driver;
-            return this;
-        }
-
-        public SqlClient build() {
-            return new SqlClient(this);
+            log.debug("SQL affected rows: {}", affected);
+            log.debug("-----------------------");
         }
     }
 }
-
-

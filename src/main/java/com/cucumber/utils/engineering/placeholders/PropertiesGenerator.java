@@ -30,6 +30,11 @@ public class PropertiesGenerator {
         generateProperties();
     }
 
+    public boolean targetIsStandaloneProperty() {
+        return target.startsWith(PLACEHOLDER_START.replaceFirst("\\\\", ""))
+                && target.endsWith(PLACEHOLDER_END.replaceFirst("\\\\", ""));
+    }
+
     public String getParsedTarget() {
         return getParsedTarget(false);
     }

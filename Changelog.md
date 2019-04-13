@@ -1,3 +1,49 @@
+### 3.29    
+Fix Java 8 backwards compatibility issue    
+
+### 3.28    
+Use Json Compare For Java 8     
+
+### 3.27    
+Compile library compatible with Java 8     
+
+### 3.26  
+Refactor Shell Client    
+
+### 3.25  
+Update Json Compare     
+
+### 3.24  
+Bug fix    
+
+### 3.23  
+Refactor SqlClient    
+
+### 3.22  
+Refactor HttpClient  
+
+### 3.21  
+Accept more file extension types   
+Refactoring  
+
+### 3.20  
+Refactor http client      
+
+### 3.19  
+Fix possible bug. Consume Http Entities after each time are used    
+
+### 3.18  
+Update dependencies    
+
+### 3.17  
+Fix Http Response Listener bug       
+
+### 3.16  
+Add SHELL support     
+
+### 3.15  
+Add JSCH support   
+
 ### 3.14  
 Add support to compare only dates   
 

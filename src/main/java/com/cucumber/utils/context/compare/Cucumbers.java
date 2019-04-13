@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
 import java.util.function.Supplier;
@@ -33,14 +34,15 @@ public class Cucumbers {
 
     public static void loadScenarioPropsFromFile(String relativeFilePath) {
         ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
-        if (relativeFilePath.endsWith(PROPERTIES.toString())) {
+        if (relativeFilePath.endsWith(PROPERTIES.value())) {
             loadPropsFromPropertiesFile(scenarioProps, relativeFilePath);
-        } else if (relativeFilePath.endsWith(YAML.toString()) || relativeFilePath.endsWith(YML.toString())) {
+        } else if (relativeFilePath.endsWith(YAML.value()) || relativeFilePath.endsWith(YML.value())) {
             loadPropsFromYamlFile(scenarioProps, relativeFilePath);
-        } else if (relativeFilePath.endsWith(PROPERTY.toString())) {
+        } else if (Arrays.stream(propertyFileExtensions()).anyMatch(val -> relativeFilePath.endsWith(val))) {
             loadScenarioPropertyFile(scenarioProps, relativeFilePath);
         } else {
-            throw new RuntimeException("File type not supported for reading scenario properties");
+            throw new RuntimeException("File type not supported for reading scenario properties." +
+                    " Must have one of the extensions: " + Arrays.toString(allExtensions()));
         }
     }
 
@@ -199,8 +201,9 @@ public class Cucumbers {
     private static void loadScenarioPropertyFile(ScenarioProps scenarioProps, String relativeFilePath) {
         try {
             String fileName = ResourceUtils.getFileName(relativeFilePath);
-            if (!fileName.endsWith(PROPERTY.toString())) {
-                throw new RuntimeException("Invalid file extension: " + relativeFilePath + " .Must use \"" + PROPERTY + "\" extension");
+            if (!Arrays.stream(propertyFileExtensions())
+                    .anyMatch(val -> fileName.endsWith(val))) {
+                throw new RuntimeException("Invalid file extension: " + relativeFilePath + " .Must use one of the following: \"" + propertyFileExtensions());
             }
             String value = ResourceUtils.read(relativeFilePath);
             scenarioProps.put(fileName.substring(0, fileName.lastIndexOf(".")), value);
@@ -211,14 +214,14 @@ public class Cucumbers {
 
     private static void loadScenarioPropsFromDir(ScenarioProps scenarioProps, String relativeDirPath) {
         try {
-            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.stringValues());
+            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
             map.forEach((k, v) -> {
-                if (k.endsWith(PROPERTIES.toString())) {
+                if (k.endsWith(PROPERTIES.value())) {
                     loadPropsFromPropertiesFile(scenarioProps, k);
                 }
-                if (k.endsWith(YAML.toString()) || k.endsWith(YML.toString())) {
+                if (k.endsWith(YAML.value()) || k.endsWith(YML.value())) {
                     loadPropsFromYamlFile(scenarioProps, k);
-                } else if (k.endsWith(PROPERTY.toString())) {
+                } else if (Arrays.stream(propertyFileExtensions()).anyMatch(val -> k.endsWith(val))) {
                     loadScenarioPropertyFile(scenarioProps, k);
                 }
             });

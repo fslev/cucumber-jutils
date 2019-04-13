@@ -84,24 +84,24 @@ Feature: Test comparator
     And param orderType="KVM"
     And param body=
     """
-{
-  "orderType": "#[orderType]"
-}
+    {
+      "orderType": "#[orderType]"
+    }
     """
     And param expected from file path "placeholders/expected1.json"
     Then COMPARE #[expected] with
-      """
-{
-  "status": 200,
-  "body": {
-    "orderType": "KVM"
-  },
-  "headers": {
-    "Content-type": "application/json",
-    "Accept": "application/json"
-  }
-}
-      """
+    """
+    {
+      "status": 200,
+      "body": {
+        "orderType": "KVM"
+      },
+      "headers": {
+        "Content-type": "application/json",
+        "Accept": "application/json"
+      }
+    }
+    """
     And COMPARE #[expected] with content from path "placeholders/actual1.json"
 
   Scenario: Compare empty values

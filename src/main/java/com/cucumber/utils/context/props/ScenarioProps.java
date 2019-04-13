@@ -55,9 +55,12 @@ public class ScenarioProps {
 
     public enum FileExtension {
         PROPERTIES(".properties"),
-        PROPERTY(".property"),
         YAML(".yaml"),
-        YML(".yml");
+        YML(".yml"),
+        PROPERTY(".property"),
+        JSON(".json"),
+        XML(".xml"),
+        TXT(".txt");
 
         private String name;
 
@@ -65,12 +68,20 @@ public class ScenarioProps {
             this.name = name;
         }
 
-        public static String[] stringValues() {
-            return Arrays.stream(values()).map(FileExtension::toString).toArray(String[]::new);
+        public static String[] allExtensions() {
+            return Arrays.stream(values()).map(FileExtension::value).toArray(String[]::new);
         }
 
-        @Override
-        public String toString() {
+        public static String[] propertyFileExtensions() {
+            return Arrays.stream(allExtensions())
+                    .filter(val -> val.equals(PROPERTY.value())
+                            || val.equals(XML.value())
+                            || val.equals(JSON.value())
+                            || val.equals(TXT.value()))
+                    .toArray(String[]::new);
+        }
+
+        public String value() {
             return name;
         }
     }

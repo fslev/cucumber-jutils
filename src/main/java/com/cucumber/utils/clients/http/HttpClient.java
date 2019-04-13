@@ -1,7 +1,6 @@
 package com.cucumber.utils.clients.http;
 
 import org.apache.http.HttpHost;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.ServiceUnavailableRetryStrategy;
@@ -34,8 +33,7 @@ import java.util.Map;
 public class HttpClient {
     private Integer timeout;
     private HttpHost proxyHost;
-    private String address;
-    private URIBuilder uriBuilder;
+    private String uri;
     private Map<String, String> headers;
     private String requestEntity;
     private Method method;
@@ -48,10 +46,17 @@ public class HttpClient {
     private HttpRequestBase request;
 
     protected HttpClient(Builder builder) {
+
+        validateMethod(builder);
+        validateAddress(builder);
+
         this.proxyHost = builder.proxyHost;
         this.timeout = builder.timeout;
-        this.address = builder.address;
-        this.uriBuilder = builder.uriBuilder;
+        try {
+            this.uri = new URIBuilder(builder.address + (builder.uriBuilder.isPathEmpty() ? "" : builder.uriBuilder.build().toString())).build().toString();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
         this.headers = builder.headers;
         this.requestEntity = builder.requestEntity;
         this.method = builder.method;
@@ -60,19 +65,20 @@ public class HttpClient {
         this.requestRetryHandler = builder.requestRetryHandler;
         this.serviceUnavailableRetryStrategy = builder.serviceUnavailableRetryStrategy;
 
-        validateMethod();
-        validateAddress();
-
         this.client = getClient();
         this.request = getRequest();
     }
 
-    public HttpResponse execute() {
+    public CloseableHttpResponse execute() {
         try {
             return client.execute(request);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void close() throws IOException {
+        this.client.close();
     }
 
     private CloseableHttpClient getClient() {
@@ -114,20 +120,12 @@ public class HttpClient {
     private HttpRequestBase getRequest() {
 
         HttpRequestBase request;
-        String url;
-
-        try {
-            String uri = uriBuilder.build().toString();
-            url = address + (!uri.isEmpty() && !uri.startsWith("/") ? "/" : "") + uri;
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException(e.getMessage());
-        }
         switch (method) {
             case GET:
-                request = new HttpGet(url);
+                request = new HttpGet(uri);
                 break;
             case POST:
-                HttpPost post = new HttpPost(url);
+                HttpPost post = new HttpPost(uri);
                 try {
                     post.setEntity(new StringEntity(requestEntity != null ? requestEntity : ""));
                 } catch (UnsupportedEncodingException e) {
@@ -136,7 +134,7 @@ public class HttpClient {
                 request = post;
                 break;
             case PUT:
-                HttpPut put = new HttpPut(url);
+                HttpPut put = new HttpPut(uri);
                 try {
                     put.setEntity(new StringEntity(requestEntity != null ? requestEntity : ""));
                 } catch (UnsupportedEncodingException e) {
@@ -146,9 +144,9 @@ public class HttpClient {
                 break;
             case DELETE:
                 if (requestEntity == null || requestEntity.isEmpty()) {
-                    request = new HttpDelete(url);
+                    request = new HttpDelete(uri);
                 } else {
-                    HttpDeleteWithBody deleteWithBody = new HttpDeleteWithBody(url);
+                    HttpDeleteWithBody deleteWithBody = new HttpDeleteWithBody(uri);
                     try {
                         deleteWithBody.setEntity(new StringEntity(requestEntity));
                     } catch (UnsupportedEncodingException e) {
@@ -158,16 +156,16 @@ public class HttpClient {
                 }
                 break;
             case OPTIONS:
-                request = new HttpOptions(url);
+                request = new HttpOptions(uri);
                 break;
             case TRACE:
-                request = new HttpTrace(url);
+                request = new HttpTrace(uri);
                 break;
             case HEAD:
-                request = new HttpHead(url);
+                request = new HttpHead(uri);
                 break;
             case PATCH:
-                HttpPatch patch = new HttpPatch(url);
+                HttpPatch patch = new HttpPatch(uri);
                 try {
                     patch.setEntity(new StringEntity(requestEntity != null ? requestEntity : ""));
                 } catch (UnsupportedEncodingException e) {
@@ -186,14 +184,14 @@ public class HttpClient {
         headers.entrySet().forEach(e -> request.setHeader(e.getKey(), e.getValue()));
     }
 
-    private void validateMethod() {
-        if (method == null) {
+    private void validateMethod(Builder builder) {
+        if (builder.method == null) {
             throw new IllegalStateException("HTTP Method missing");
         }
     }
 
-    private void validateAddress() {
-        if (address == null) {
+    private void validateAddress(Builder builder) {
+        if (builder.address == null) {
             throw new IllegalStateException("HTTP Address missing");
         }
     }
@@ -206,12 +204,8 @@ public class HttpClient {
         return proxyHost;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public URIBuilder getUriBuilder() {
-        return uriBuilder;
+    public String getUri() {
+        return this.uri;
     }
 
     public Map<String, String> getHeaders() {
@@ -340,9 +334,9 @@ public class HttpClient {
 
     @Override
     public String toString() {
-        return "HttpClient{" + "timeout=" + timeout + ", proxyHost=" + proxyHost + ", address='"
-                + address + '\'' + ", uriBuilder=" + uriBuilder + ", headers=" + headers
-                + ", requestEntity='" + requestEntity + '\'' + ", method=" + method + '}';
+        return "HttpClient{" + "timeout=" + timeout + ", proxyHost=" + proxyHost + ", uri='"
+                + uri + ", headers=" + headers + ", requestEntity='"
+                + requestEntity + '\'' + ", method=" + method + '}';
     }
 }
 

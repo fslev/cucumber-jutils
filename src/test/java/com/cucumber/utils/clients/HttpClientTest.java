@@ -2,6 +2,7 @@ package com.cucumber.utils.clients;
 
 import com.cucumber.utils.clients.http.HttpClient;
 import com.cucumber.utils.clients.http.Method;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ServiceUnavailableRetryStrategy;
 import org.apache.http.entity.StringEntity;
@@ -13,7 +14,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 @Ignore
 public class HttpClientTest {
@@ -30,19 +30,27 @@ public class HttpClientTest {
                     @Override
                     public boolean retryRequest(HttpResponse response, int executionCount, HttpContext context) {
                         String content = null;
+                        HttpEntity entity = response.getEntity();
+                        if (entity == null) {
+                            return true;
+                        }
                         try {
                             log.info("SERVICE retry: {}", executionCount);
-                            content = EntityUtils.toString(response.getEntity());
+                            if (entity != null) {
+                                content = EntityUtils.toString(entity);
+                            }
                             return !content.equals("") && executionCount < 3;
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         } finally {
-                            if (content != null) {
-                                try {
+                            try {
+                                EntityUtils.consume(entity);
+                                if (content != null) {
                                     response.setEntity(new StringEntity(content));
-                                } catch (UnsupportedEncodingException e) {
-                                    throw new RuntimeException(e);
+
                                 }
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
                             }
                         }
                     }
@@ -52,6 +60,8 @@ public class HttpClientTest {
                         return 3000;
                     }
                 });
-        log.info(EntityUtils.toString(builder.build().execute().getEntity()));
+        HttpClient client = builder.build();
+        log.info(EntityUtils.toString(client.execute().getEntity()));
+        client.close();
     }
 }

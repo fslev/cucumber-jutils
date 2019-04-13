@@ -28,8 +28,11 @@ public class StringRegexCompare implements Placeholdable {
 
     @Override
     public Map<String, String> compare() {
-
         PropertiesGenerator generator = new PropertiesGenerator(expected, actual);
+        if (generator.targetIsStandaloneProperty()) {
+            assignSymbols.putAll(generator.getProperties());
+            return assignSymbols;
+        }
         boolean hasAssignSymbols = !generator.getProperties().isEmpty();
         String parsedString = expected;
         if (hasAssignSymbols) {

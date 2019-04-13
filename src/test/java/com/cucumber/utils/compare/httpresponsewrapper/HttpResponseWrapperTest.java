@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 public class HttpResponseWrapperTest {
@@ -25,7 +26,9 @@ public class HttpResponseWrapperTest {
         HttpResponseWrapper wrapper = new HttpResponseWrapper(content);
         Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some thing", wrapper.getReasonPhrase());
-        Assert.assertEquals(Map.of("wa", Arrays.asList(new Integer[]{1, 2, 3, 4})), wrapper.getEntity());
+        Map<String, Object> expectedMap = new HashMap<>();
+        expectedMap.put("wa", Arrays.asList(new Integer[]{1, 2, 3, 4}));
+        Assert.assertEquals(expectedMap, wrapper.getEntity());
         Assert.assertNull(wrapper.getHeaders());
     }
 
@@ -61,8 +64,11 @@ public class HttpResponseWrapperTest {
 
     @Test
     public void testWrapperInitFromMap() throws IOException {
-        Map<String, Object> map = Map.of("status", 200, "reason", "some reason", "body", new int[]{2, 3, 4});
-        HttpResponseWrapper wrapper = new HttpResponseWrapper(map);
+        Map<String, Object> expectedMap = new HashMap<>();
+        expectedMap.put("status", 200);
+        expectedMap.put("reason", "some reason");
+        expectedMap.put("body", new int[]{2, 3, 4});
+        HttpResponseWrapper wrapper = new HttpResponseWrapper(expectedMap);
         Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some reason", wrapper.getReasonPhrase());
         Assert.assertEquals(Arrays.asList(new Integer[]{2, 3, 4}), wrapper.getEntity());
@@ -81,6 +87,9 @@ public class HttpResponseWrapperTest {
         Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some reason", wrapper.getReasonPhrase());
         Assert.assertEquals("{\"a\":100}", wrapper.getEntity());
-        Assert.assertEquals(Map.of("Content-Type", "application/json", "Accept", "application/json"), wrapper.getHeaders());
+        Map<String, Object> expectedMap = new HashMap<>();
+        expectedMap.put("Content-Type", "application/json");
+        expectedMap.put("Accept", "application/json");
+        Assert.assertEquals(expectedMap, wrapper.getHeaders());
     }
 }

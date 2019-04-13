@@ -9,9 +9,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ResourceUtils {
@@ -54,7 +55,8 @@ public class ResourceUtils {
         Map<String, String> map = Files.walk(rootPath).filter(path
                 -> path.toFile().isFile()
                 && (fileExtensionPatterns.length == 0
-                || (path.getFileName().toString().contains(".") && Set.of(fileExtensionPatterns).contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf("."))))))
+                || (path.getFileName().toString().contains(".") && new HashSet<>(Arrays.asList(fileExtensionPatterns))
+                .contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf("."))))))
                 .collect(Collectors.toMap(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString(),
                         path -> {
                             try {
