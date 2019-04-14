@@ -1,4 +1,4 @@
-package com.cucumber.utils.basicstepdefs;
+package com.cucumber.utils.context.stepdefs;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

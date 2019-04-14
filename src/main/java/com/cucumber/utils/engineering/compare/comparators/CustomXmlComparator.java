@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare.comparators;
 
-import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
+import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -52,7 +52,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     }
 
     private ComparisonResult compare(String expected, String actual) {
-        PropertiesGenerator generator = new PropertiesGenerator(expected, actual);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
         boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty();
         String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected;
         String parsedExpectedQuoted = hasPropertiesToGenerate ? generator.getParsedTarget(true) : expected;

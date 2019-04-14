@@ -1,5 +1,7 @@
 Feature: Test comparator
 
+  Scenario: Ignore me. Just keep scrolling
+
   Scenario: Compare simple values
     Given param a="1"
     Given param a="1"
@@ -8,6 +10,8 @@ Feature: Test comparator
     And COMPARE 1 with "1"
 
   Scenario: Compare jsons
+    Given param a="da"
+    And param b="oho"
     Given param json1 =
     """
   {

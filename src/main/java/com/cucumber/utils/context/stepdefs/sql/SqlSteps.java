@@ -1,8 +1,9 @@
-package com.cucumber.utils.basicstepdefs.sql;
+package com.cucumber.utils.context.stepdefs.sql;
 
 import com.cucumber.utils.clients.database.SqlClient;
-import com.cucumber.utils.context.compare.Cucumbers;
+import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
+import com.google.inject.Inject;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
@@ -16,6 +17,8 @@ import java.util.Properties;
 @ScenarioScoped
 public class SqlSteps {
 
+    @Inject
+    private Cucumbers cucumbers;
     private SqlClient client;
     private Properties dataSource;
     private List<Map<String, String>> result;
@@ -44,7 +47,7 @@ public class SqlSteps {
             this.client.connect();
             this.client.prepareStatement(query);
             this.result = client.executeQueryAndGetRsAsList();
-            Cucumbers.compare(expected, result, false, true);
+            cucumbers.compare(expected, result, false, true);
         } finally {
             this.client.close();
         }
@@ -55,7 +58,7 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            Cucumbers.pollAndCompare(expected, () -> client.executeQueryAndGetRsAsList(), false, true);
+            cucumbers.pollAndCompare(expected, () -> client.executeQueryAndGetRsAsList(), false, true);
         } finally {
             this.client.close();
         }

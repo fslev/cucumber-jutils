@@ -5,12 +5,12 @@ import java.util.regex.Pattern;
 
 public class ScenarioPropertiesParser extends AbstractPropertiesParser {
 
-    public static final String PLACEHOLDER_START = "#[";
-    public static final String PLACEHOLDER_END = "]";
-    public static final String PLACEHOLDER_REGEX =
-            "\\Q" + PLACEHOLDER_START + "\\E" + "(.*?)" + "\\Q" + PLACEHOLDER_END + "\\E";
+    public static final String SYMBOL_START = "#[";
+    public static final String SYMBOL_END = "]";
+    public static final String SYMBOL_REGEX =
+            "\\Q" + SYMBOL_START + "\\E" + "(.*?)" + "\\Q" + SYMBOL_END + "\\E";
 
-    public static final Pattern PLACEHOLDER_PATTERN = Pattern.compile(PLACEHOLDER_REGEX,
+    public static final Pattern SYMBOL_PATTERN = Pattern.compile(SYMBOL_REGEX,
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
 
@@ -19,17 +19,17 @@ public class ScenarioPropertiesParser extends AbstractPropertiesParser {
     }
 
     @Override
-    protected String getPlaceholderStart() {
-        return "\\Q" + PLACEHOLDER_START + "\\E";
+    protected String getSymbolStart() {
+        return "\\Q" + SYMBOL_START + "\\E";
     }
 
     @Override
-    protected String getPlaceholderEnd() {
-        return "\\Q" + PLACEHOLDER_END + "\\E";
+    protected String getSymbolEnd() {
+        return "\\Q" + SYMBOL_END + "\\E";
     }
 
     @Override
-    protected Pattern getPlaceholderPattern() {
-        return PLACEHOLDER_PATTERN;
+    protected Pattern getSymbolPattern() {
+        return SYMBOL_PATTERN;
     }
 }

@@ -1,18 +1,21 @@
-package com.cucumber.utils.basicstepdefs.shell;
+package com.cucumber.utils.context.stepdefs.shell;
 
 import com.cucumber.utils.clients.shell.ShellClient;
-import com.cucumber.utils.context.compare.Cucumbers;
+import com.cucumber.utils.context.utils.Cucumbers;
+import com.google.inject.Inject;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 
 @ScenarioScoped
 public class ShellSteps {
 
+    @Inject
+    private Cucumbers cucumbers;
     private ShellClient shellClient = new ShellClient();
 
     @Then("SHELL execute command \"{cstring}\" and check response=\"{cstring}\"")
     public void executeAndCompare(String cmd, String expected) {
         String actual = shellClient.command("bash", "-c", cmd).trim();
-        Cucumbers.compare(expected, actual);
+        cucumbers.compare(expected, actual);
     }
 }

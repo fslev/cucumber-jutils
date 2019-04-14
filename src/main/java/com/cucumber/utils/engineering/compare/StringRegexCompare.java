@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare;
 
-import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
+import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class StringRegexCompare implements Placeholdable {
 
     @Override
     public Map<String, String> compare() {
-        PropertiesGenerator generator = new PropertiesGenerator(expected, actual);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
         if (generator.targetIsStandaloneProperty()) {
             assignSymbols.putAll(generator.getProperties());
             return assignSymbols;

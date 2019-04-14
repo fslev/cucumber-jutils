@@ -1,7 +1,8 @@
 package com.cucumber.utils.features.stepdefs.httpresponsewrapper;
 
-import com.cucumber.utils.context.compare.Cucumbers;
-import com.cucumber.utils.context.compare.wrappers.HttpResponseWrapper;
+import com.cucumber.utils.context.utils.Cucumbers;
+import com.cucumber.utils.clients.http.wrappers.HttpResponseWrapper;
+import com.google.inject.Inject;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import org.apache.http.HttpResponse;
@@ -21,6 +22,9 @@ import static org.junit.Assert.fail;
 @ScenarioScoped
 public class HttpResponseWrapperSteps {
 
+    @Inject
+    private Cucumbers cucumbers;
+
 
     @Then("Compare two random HTTP response wrappers")
     public void compareHttpResponseWrappers() throws IOException {
@@ -31,7 +35,7 @@ public class HttpResponseWrapperSteps {
         mock.setHeader(new BasicHeader("Content-Type", "application/json"));
         mock.setHeader(new BasicHeader("Accept", "application/json"));
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(mock);
-        Cucumbers.compare("{\"status\":200,\"body\":{\"a\":100}}", actualWrapper);
+        cucumbers.compare("{\"status\":200,\"body\":{\"a\":100}}", actualWrapper);
     }
 
     @Then("Compare two random HTTP response wrappers negative")
@@ -44,7 +48,7 @@ public class HttpResponseWrapperSteps {
         mock.setHeader(new BasicHeader("Accept", "application/json"));
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(mock);
         try {
-            Cucumbers.compare("{\"a\":100}", actualWrapper);
+            cucumbers.compare("{\"a\":100}", actualWrapper);
         } catch (AssertionError e) {
             return;
         }

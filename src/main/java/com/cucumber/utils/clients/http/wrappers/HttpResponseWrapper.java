@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.compare.wrappers;
+package com.cucumber.utils.clients.http.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;

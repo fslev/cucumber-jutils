@@ -1,6 +1,7 @@
 package com.cucumber.utils.context.config;
 
 import com.cucumber.utils.clients.http.Method;
+import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.context.props.ScenarioPropsParser;
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
@@ -20,7 +21,6 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
     private static final List<String> CSTRING_REGEXPS =
             Collections.singletonList(Pattern.compile(".*").pattern());
-
     private static final String CUSTOM_STRING = "cstring";
 
     @Override
@@ -31,7 +31,6 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     @Override
     public void configureTypeRegistry(TypeRegistry typeRegistry) {
         typeRegistry.defineParameterType(ParameterType.fromEnum(Method.class));
-
         typeRegistry.defineParameterType(new ParameterType<>("cstring", CSTRING_REGEXPS,
                 Object.class, new SymbolsTransformer()));
 
@@ -40,31 +39,36 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
                 new DataTableType(List.class, new PlaceholdersDataTableTransformer()));
         // Needed especially for doc strings
         typeRegistry.defineDataTableType(new DataTableType(String.class,
-                (DataTable dataTable) -> (new ScenarioPropsParser(dataTable.cell(0, 0).trim())).result()
-                        .toString()));
+                (DataTable dataTable) -> {
+                    ScenarioProps scenarioProps = InjectorByThreadSource.getInjector(Thread.currentThread().getId()).getInstance(ScenarioProps.class);
+                    return new ScenarioPropsParser(scenarioProps, dataTable.cell(0, 0).trim()).result().toString();
+                }));
+
     }
 
-    private static class SymbolsTransformer implements Transformer<Object> {
+    private class SymbolsTransformer implements Transformer<Object> {
         @Override
         public Object transform(String s) {
+            ScenarioProps scenarioProps = InjectorByThreadSource.getInjector(Thread.currentThread().getId()).getInstance(ScenarioProps.class);
             if (s == null) {
                 return null;
             }
-            return new ScenarioPropsParser(s.trim()).result();
+            return new ScenarioPropsParser(scenarioProps, s.trim()).result();
         }
     }
 
-    private static class PlaceholdersDataTableTransformer implements TableTransformer {
+    private class PlaceholdersDataTableTransformer implements TableTransformer {
         @Override
         public List transform(DataTable dataTable) {
+            ScenarioProps scenarioProps = InjectorByThreadSource.getInjector(Thread.currentThread().getId()).getInstance(ScenarioProps.class);
             List<Map<String, String>> list = new ArrayList<>();
             dataTable.asMaps().forEach(map -> {
                 list.add(map.entrySet().stream().collect(Collectors.toMap(
-                        e -> new ScenarioPropsParser(e.getKey()).result().toString(),
-                        e -> new ScenarioPropsParser(e.getValue()).result().toString())));
+                        e -> new ScenarioPropsParser(scenarioProps, e.getKey()).result().toString(),
+                        e -> new ScenarioPropsParser(scenarioProps, e.getValue()).result().toString())));
             });
             return !list.isEmpty() ? list : dataTable.asList().stream()
-                    .map(el -> new ScenarioPropsParser(el).result().toString())
+                    .map(el -> new ScenarioPropsParser(scenarioProps, el).result().toString())
                     .collect(Collectors.toList());
         }
     }

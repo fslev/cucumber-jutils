@@ -1,8 +1,9 @@
-package com.cucumber.utils.basicstepdefs.jsch;
+package com.cucumber.utils.context.stepdefs.jsch;
 
 import com.cucumber.utils.clients.jsch.JschClient;
-import com.cucumber.utils.context.compare.Cucumbers;
+import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
+import com.google.inject.Inject;
 import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -15,6 +16,9 @@ import java.util.Properties;
 public class JschSteps {
 
     private JschClient client;
+
+    @Inject
+    private Cucumbers cucumbers;
 
     @Given("JSCH connection from properties file \"{cstring}\"")
     public void init(String relFilePath) {
@@ -36,7 +40,7 @@ public class JschSteps {
     @Then("JSCH execute command \"{cstring}\" and check response=\"{cstring}\"")
     public void executeCmd(String cmd, String expected) {
         String actual = this.client.sendCommand(cmd).trim();
-        Cucumbers.compare(expected, actual);
+        cucumbers.compare(expected, actual);
     }
 
     @After("@jsch_cleanup")

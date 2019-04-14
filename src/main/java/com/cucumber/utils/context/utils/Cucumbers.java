@@ -1,11 +1,13 @@
-package com.cucumber.utils.context.compare;
+package com.cucumber.utils.context.utils;
 
-import com.cucumber.utils.context.compare.wrappers.HttpResponseWrapper;
+import com.cucumber.utils.clients.http.wrappers.HttpResponseWrapper;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.context.props.ScenarioPropsParser;
 import com.cucumber.utils.engineering.compare.Compare;
 import com.cucumber.utils.engineering.poller.MethodPoller;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
+import com.google.inject.Inject;
+import cucumber.runtime.java.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,29 +19,33 @@ import java.util.function.Supplier;
 
 import static com.cucumber.utils.context.props.ScenarioProps.FileExtension.*;
 
+@ScenarioScoped
 public class Cucumbers {
 
-    private static Logger log = LogManager.getLogger();
+    private Logger log = LogManager.getLogger();
 
-    private Cucumbers() {
+    private ScenarioProps scenarioProps;
+
+    @Inject
+    private Cucumbers(ScenarioProps scenarioProps) {
+        this.scenarioProps = scenarioProps;
     }
 
-    public static String read(String relativeFilePath) {
+    public String read(String relativeFilePath) {
         try {
-            return new ScenarioPropsParser(ResourceUtils.read(relativeFilePath)).result().toString();
+            return new ScenarioPropsParser(scenarioProps, ResourceUtils.read(relativeFilePath)).result().toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void loadScenarioPropsFromFile(String relativeFilePath) {
-        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
+    public void loadScenarioPropsFromFile(String relativeFilePath) {
         if (relativeFilePath.endsWith(PROPERTIES.value())) {
-            loadPropsFromPropertiesFile(scenarioProps, relativeFilePath);
+            loadPropsFromPropertiesFile(relativeFilePath);
         } else if (relativeFilePath.endsWith(YAML.value()) || relativeFilePath.endsWith(YML.value())) {
-            loadPropsFromYamlFile(scenarioProps, relativeFilePath);
+            loadPropsFromYamlFile(relativeFilePath);
         } else if (Arrays.stream(propertyFileExtensions()).anyMatch(val -> relativeFilePath.endsWith(val))) {
-            loadScenarioPropertyFile(scenarioProps, relativeFilePath);
+            loadScenarioPropertyFile(relativeFilePath);
         } else {
             throw new RuntimeException("File type not supported for reading scenario properties." +
                     " Must have one of the extensions: " + Arrays.toString(allExtensions()));
@@ -50,24 +56,37 @@ public class Cucumbers {
      * Loads scenario properties from all supported file patterns: .properties, .yaml, .property
      */
 
-    public static void loadScenarioPropsFromDir(String relativeDirPath) {
-        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
-        loadScenarioPropsFromDir(scenarioProps, relativeDirPath);
+    public void loadScenarioPropsFromDir(String relativeDirPath) {
+        try {
+            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
+            map.forEach((k, v) -> {
+                if (k.endsWith(PROPERTIES.value())) {
+                    loadPropsFromPropertiesFile(k);
+                }
+                if (k.endsWith(YAML.value()) || k.endsWith(YML.value())) {
+                    loadPropsFromYamlFile(k);
+                } else if (Arrays.stream(propertyFileExtensions()).anyMatch(val -> k.endsWith(val))) {
+                    loadScenarioPropertyFile(k);
+                }
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static void compare(Object expected, Object actual) {
+    public void compare(Object expected, Object actual) {
         compare(null, expected, actual, false, false);
     }
 
-    public static void compare(String message, Object expected, Object actual) {
+    public void compare(String message, Object expected, Object actual) {
         compare(message, expected, actual, false, false);
     }
 
-    public static void compare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void compare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         compare(null, expected, actual, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void compare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void compare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         try {
             compareHttpResponse(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
             return;
@@ -76,63 +95,63 @@ public class Cucumbers {
         compareInternal(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void pollAndCompare(String message, Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void pollAndCompare(String message, Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         pollAndCompare(message, expected, null, null, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void pollAndCompare(Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void pollAndCompare(Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         pollAndCompare(null, expected, null, null, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void pollAndCompare(String message, Object expected, Supplier<Object> supplier) {
+    public void pollAndCompare(String message, Object expected, Supplier<Object> supplier) {
         pollAndCompare(message, expected, null, null, supplier);
     }
 
-    public static void pollAndCompare(Object expected, Supplier<Object> supplier) {
+    public void pollAndCompare(Object expected, Supplier<Object> supplier) {
         pollAndCompare(null, expected, null, null, supplier);
     }
 
-    public static void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         pollAndCompare(message, expected, pollDurationInSeconds, null, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         pollAndCompare(null, expected, pollDurationInSeconds, null, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
+    public void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
         pollAndCompare(message, expected, pollDurationInSeconds, null, supplier);
     }
 
-    public static void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
+    public void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
         pollAndCompare(null, expected, pollDurationInSeconds, null, supplier);
     }
 
-    public static void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         pollAndCompare(message, expected, null, pollIntervalInMillis, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         pollAndCompare(null, expected, null, pollIntervalInMillis, supplier, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public static void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
+    public void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
         pollAndCompare(message, expected, null, pollIntervalInMillis, supplier);
     }
 
-    public static void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
+    public void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
         pollAndCompare(null, expected, null, pollIntervalInMillis, supplier);
     }
 
-    public static void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
+    public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
         pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, supplier, false, false);
     }
 
-    public static void pollAndCompare(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
+    public void pollAndCompare(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
         pollAndCompare(null, expected, pollDurationInSeconds, pollIntervalInMillis, supplier, false, false);
     }
 
-    public static void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         Object result = new MethodPoller<>()
                 .duration(pollDurationInSeconds, pollIntervalInMillis)
                 .method(supplier)
@@ -147,7 +166,7 @@ public class Cucumbers {
         compare(message, expected, result, nonExtensibleObject, nonExtensibleArray);
     }
 
-    private static void compareHttpResponse(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
+    private void compareHttpResponse(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(actual);
         HttpResponseWrapper expectedWrapper;
         try {
@@ -177,18 +196,17 @@ public class Cucumbers {
         }
     }
 
-    private static void compareInternal(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    private void compareInternal(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         Map<String, String> placeholdersAndValues = new Compare(message, expected, actual, nonExtensibleObject, nonExtensibleArray).compare();
-        ScenarioProps scenarioProps = ScenarioProps.getScenarioProps();
         placeholdersAndValues.forEach(scenarioProps::put);
     }
 
-    private static void loadPropsFromPropertiesFile(ScenarioProps scenarioProps, String filePath) {
+    private void loadPropsFromPropertiesFile(String filePath) {
         Properties p = ResourceUtils.readProps(filePath);
         p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
     }
 
-    private static void loadPropsFromYamlFile(ScenarioProps scenarioProps, String filePath) {
+    private void loadPropsFromYamlFile(String filePath) {
         Map<String, Object> map;
         try {
             map = ResourceUtils.readYaml(filePath);
@@ -198,7 +216,7 @@ public class Cucumbers {
         map.forEach((k, v) -> scenarioProps.put(k, v));
     }
 
-    private static void loadScenarioPropertyFile(ScenarioProps scenarioProps, String relativeFilePath) {
+    private void loadScenarioPropertyFile(String relativeFilePath) {
         try {
             String fileName = ResourceUtils.getFileName(relativeFilePath);
             if (!Arrays.stream(propertyFileExtensions())
@@ -207,24 +225,6 @@ public class Cucumbers {
             }
             String value = ResourceUtils.read(relativeFilePath);
             scenarioProps.put(fileName.substring(0, fileName.lastIndexOf(".")), value);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void loadScenarioPropsFromDir(ScenarioProps scenarioProps, String relativeDirPath) {
-        try {
-            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
-            map.forEach((k, v) -> {
-                if (k.endsWith(PROPERTIES.value())) {
-                    loadPropsFromPropertiesFile(scenarioProps, k);
-                }
-                if (k.endsWith(YAML.value()) || k.endsWith(YML.value())) {
-                    loadPropsFromYamlFile(scenarioProps, k);
-                } else if (Arrays.stream(propertyFileExtensions()).anyMatch(val -> k.endsWith(val))) {
-                    loadScenarioPropertyFile(scenarioProps, k);
-                }
-            });
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

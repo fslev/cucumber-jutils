@@ -1,6 +1,6 @@
 package com.cucumber.utils.context.props;
 
-import com.cucumber.utils.context.config.CustomInjectorSource;
+import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,6 +15,10 @@ public class ScenarioProps {
     private Logger log = LogManager.getLogger();
     private Map<String, Object> props = new HashMap<>();
 
+    @Inject
+    private ScenarioProps() {
+    }
+
     public Object get(String key) {
         switch (key) {
             case "uid":
@@ -25,8 +29,7 @@ public class ScenarioProps {
                 return getTimeInMillis();
             default:
                 return props.get(key) instanceof String ?
-                        new ScenarioPropsParser(props.get(key).toString()).result()
-                        : props.get(key);
+                        new ScenarioPropsParser(this, props.get(key).toString()).result() : props.get(key);
         }
     }
 
@@ -47,10 +50,6 @@ public class ScenarioProps {
 
     private String getTimeInMillis() {
         return String.valueOf(System.currentTimeMillis());
-    }
-
-    public static ScenarioProps getScenarioProps() {
-        return CustomInjectorSource.getContextInjector().getInstance(ScenarioProps.class);
     }
 
     public enum FileExtension {

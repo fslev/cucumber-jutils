@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare.comparators;
 
-import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
+import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
 import ro.skyah.comparator.JsonComparator;
 
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class CustomJsonComparator implements JsonComparator {
 
     public boolean compareValues(Object expected, Object actual) {
         String actualString = actual.toString();
-        PropertiesGenerator generator = new PropertiesGenerator(expected.toString(), actualString);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected.toString(), actualString);
 
         boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty();
         String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected.toString();

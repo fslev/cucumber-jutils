@@ -1,6 +1,6 @@
 package com.cucumber.utils.compare.httpresponsewrapper;
 
-import com.cucumber.utils.context.compare.wrappers.HttpResponseWrapper;
+import com.cucumber.utils.clients.http.wrappers.HttpResponseWrapper;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;

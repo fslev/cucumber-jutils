@@ -1,6 +1,6 @@
 package com.cucumber.utils.placeholders;
 
-import com.cucumber.utils.engineering.placeholders.PropertiesGenerator;
+import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,7 +11,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorFromSimpleText() {
         String a = "~[sym1]";
         String b = "Moon";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("Moon", generator.getProperties().get("sym1"));
         assertEquals(1, generator.getProperties().size());
     }
@@ -20,7 +20,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorFromTextWithSpecialCharacters() {
         String a = "~[sym1]";
         String b = "{\"test\":\"M^o|%o$n\"";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals(b, generator.getProperties().get("sym1"));
         assertEquals(1, generator.getProperties().size());
     }
@@ -29,7 +29,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorFromSimpleText_negative() {
         String a = "foo ~[sym1] bar";
         String b = "foo some bra";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals(null, generator.getProperties().get("sym1"));
         assertEquals(0, generator.getProperties().size());
     }
@@ -38,7 +38,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorDuplicated() {
         String a = "~[sym1] ~[sym1]";
         String b = "Moon Sun";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("Sun", generator.getProperties().get("sym1"));
         assertEquals(1, generator.getProperties().size());
     }
@@ -47,7 +47,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorFromSimpleTextWithRegex() {
         String a = ".*M~[sym1]n.*";
         String b = "Moon";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("oo", generator.getProperties().get("sym1"));
         assertEquals(1, generator.getProperties().size());
     }
@@ -56,7 +56,7 @@ public class PropertiesGeneratorTests {
     public void testEmptyPlaceholderGeneratorFromSimpleText() {
         String a = "~[sym1]Moon";
         String b = "Moon";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("", generator.getProperties().get("sym1"));
         assertEquals(1, generator.getProperties().size());
     }
@@ -65,7 +65,7 @@ public class PropertiesGeneratorTests {
     public void testEmptyPlaceholderGeneratorFromSimpleTextWithRegex() {
         String a = ".*~[sym1]n.*";
         String b = "Moon";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("", generator.getProperties().get("sym1"));
         assertEquals(1, generator.getProperties().size());
     }
@@ -74,7 +74,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorFromInvalidRegex() {
         String a = "The ~[var1] is ru.*n(ning through the ~[var2]";
         String b = "something here The rab\nbit is ru.*n(ning through the forest";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("rab\nbit", generator.getProperties().get("var1"));
         assertEquals("forest", generator.getProperties().get("var2"));
         assertEquals("The rab\nbit is ru.*n(ning through the forest",
@@ -85,7 +85,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorFromRegex() {
         String a = ".* The ~[var1] is ru\\Q.*\\En.*g through ~[var2] .*";
         String b = "something here The rab\nbit is ru.*nning through the forest";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("rab\nbit", generator.getProperties().get("var1"));
         assertEquals("the", generator.getProperties().get("var2"));
         assertEquals(generator.getParsedTarget(),
@@ -97,7 +97,7 @@ public class PropertiesGeneratorTests {
     public void testPlaceholderGeneratorFromSimpleJson() {
         String a = "{\"a\":[1,~[var1],3,4,5],\"b\":{\"k\":\"i\"}}";
         String b = "{\"a\":[1,2,3,4,5],\"b\":{\"k\":\"i\"}}";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("2", generator.getProperties().get("var1"));
         assertEquals(b, generator.getParsedTarget());
     }
@@ -150,7 +150,7 @@ public class PropertiesGeneratorTests {
                 + "        \"name\": \"Dena \nSosa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"favoriteFruit\": \"banana\"\n" + "  }\n" + "]";
-        PropertiesGenerator generator = new PropertiesGenerator(a, b);
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(a, b);
         assertEquals("Levine", generator.getProperties().get("var1"));
         assertEquals("favoriteFruit", generator.getProperties().get("var2"));
         assertEquals("consect(etur", generator.getProperties().get("var3"));

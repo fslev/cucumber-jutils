@@ -51,7 +51,7 @@ public class ScenarioPropertiesParserTests {
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
         assertEquals("The #[animal] is running through the #[location]", parser.parse(values));
-        assertEquals(new HashSet<>(Arrays.asList("animal", "location")), parser.getPropertyNames());
+        assertEquals(new HashSet<>(Arrays.asList("animal", "location")), parser.getPropertyKeys());
     }
 
     @Test
@@ -122,6 +122,6 @@ public class ScenarioPropertiesParserTests {
         AbstractPropertiesParser scenarioParser = new ScenarioPropertiesParser(actual);
         String result = scenarioParser.parse(values);
         assertEquals(result, expected, result);
-        assertEquals(new HashSet<>(Arrays.asList("val3", "val2", "val1")), scenarioParser.getPropertyNames());
+        assertEquals(new HashSet<>(Arrays.asList("val3", "val2", "val1")), scenarioParser.getPropertyKeys());
     }
 }

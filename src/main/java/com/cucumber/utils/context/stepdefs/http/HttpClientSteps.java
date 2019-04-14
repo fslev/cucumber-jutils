@@ -1,8 +1,9 @@
-package com.cucumber.utils.basicstepdefs.http;
+package com.cucumber.utils.context.stepdefs.http;
 
 import com.cucumber.utils.clients.http.HttpClient;
 import com.cucumber.utils.clients.http.Method;
-import com.cucumber.utils.context.compare.Cucumbers;
+import com.cucumber.utils.context.utils.Cucumbers;
+import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -16,6 +17,9 @@ import java.util.Map;
 
 @ScenarioScoped
 public class HttpClientSteps {
+
+    @Inject
+    private Cucumbers cucumbers;
     private HttpClient.Builder builder = new HttpClient.Builder();
     private HttpResponse response;
 
@@ -76,7 +80,7 @@ public class HttpClientSteps {
 
     @Then("^HTTP compare response body with$")
     public void compareResponseBodyWith(String expected) {
-        Cucumbers.compare(expected, response);
+        cucumbers.compare(expected, response);
     }
 
     @And("HTTP compare response status code with \"{cstring}\"")
