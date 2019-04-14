@@ -178,6 +178,9 @@
                 </executions>
                 <configuration>
                     <testFailureIgnore>false</testFailureIgnore>
+                    <parallel>methods</parallel>
+                    <threadCount>2</threadCount>
+                    <perCoreThreadCount>true</perCoreThreadCount>
                 </configuration>
             </plugin>
             <plugin>
