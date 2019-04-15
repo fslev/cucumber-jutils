@@ -20,10 +20,9 @@ public class ParamSteps {
     private ScenarioProps scenarioProps;
 
     @Given("param {cstring}=\"{cstring}\"")
-    public void setParamStringQuoted(String name, String value) throws InterruptedException {
+    public void setParamStringQuoted(String name, String value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
-        Thread.sleep(1600);
     }
 
     @Given("param {cstring}=")
