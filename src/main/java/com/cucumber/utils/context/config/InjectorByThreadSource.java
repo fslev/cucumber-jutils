@@ -14,7 +14,9 @@ public class InjectorByThreadSource implements InjectorSource {
 
     public static Injector getInjector(long threadId) {
         if (injectors.get(threadId) == null) {
-            injectors.put(threadId, Guice.createInjector(Stage.PRODUCTION, CucumberModules.createScenarioModule()));
+            Injector injector = Guice.createInjector(Stage.PRODUCTION, CucumberModules.createScenarioModule());
+            injectors.put(threadId, injector);
+            return injector;
         }
         return injectors.get(threadId);
     }
