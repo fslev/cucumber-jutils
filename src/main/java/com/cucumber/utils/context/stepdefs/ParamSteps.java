@@ -19,42 +19,37 @@ public class ParamSteps {
     @Inject
     private ScenarioProps scenarioProps;
 
-    @Given("param {cstring}=\"{cstring}\"")
+    @Given("param {}=\"{}\"")
     public void setParamStringQuoted(String name, String value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
     }
 
-    @Given("param {cstring}=")
+    @Given("param {}=")
     public void setParamDocString(String name, String value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
     }
 
-    @Given("param {cstring}={int}")
-    public void setParamInteger(String name, Integer value) {
-        scenarioProps.put(name, value);
-        log.debug("Param {} = {}", name, value);
-    }
-
-    @Given("param {cstring} from file path \"{cstring}\"")
+    @Given("param {} from file path \"{}\"")
     public void setParamFromFile(String name, String filePath) {
         String value = cucumbers.read(filePath);
         scenarioProps.put(name, value);
     }
 
-    @Given("load scenario props from file \"{cstring}\"")
+    @Given("load scenario props from file \"{}\"")
     public void loadScenarioPropertiesFromFile(String filePath) {
         cucumbers.loadScenarioPropsFromFile(filePath);
     }
 
-    @Given("load all scenario props from dir \"{cstring}\"")
+    @Given("load all scenario props from dir \"{}\"")
     public void setScenarioPropertiesFromDir(String dirPath) {
         cucumbers.loadScenarioPropsFromDir(dirPath);
     }
 
-    @Given("table {cstring}=")
-    public void setCustomDataTable(String paramName, List value) {
-        scenarioProps.put(paramName, value);
+    @Given("table {}=")
+    public void setCustomDataTable(String name, List value) {
+        scenarioProps.put(name, value);
+        log.debug("Param {} = {}", name, value);
     }
 }

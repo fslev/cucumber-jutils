@@ -16,17 +16,17 @@ public class PlaceholderParserSteps {
     @Inject
     private ScenarioProps scenarioProps;
 
-    @Given("The string with global placeholders \"{cstring}\"")
+    @Given("The string with global placeholders \"{}\"")
     public void stringWithGlobalSymbols(String str) {
         this.str = str;
     }
 
-    @Given("The string with scenario placeholders \"{cstring}\"")
+    @Given("The string with scenario placeholders \"{}\"")
     public void stringWithScenarioSymbols(String str) {
         this.str = str;
     }
 
-    @Then("Check filled string equals \"{cstring}\"")
+    @Then("Check filled string equals \"{}\"")
     public void check(String str) {
         assertEquals(str, this.str);
     }

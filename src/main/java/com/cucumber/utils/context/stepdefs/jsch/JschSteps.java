@@ -20,7 +20,7 @@ public class JschSteps {
     @Inject
     private Cucumbers cucumbers;
 
-    @Given("JSCH connection from properties file \"{cstring}\"")
+    @Given("JSCH connection from properties file \"{}\"")
     public void init(String relFilePath) {
 
         Properties config = new Properties();
@@ -37,7 +37,7 @@ public class JschSteps {
         this.client.connect();
     }
 
-    @Then("JSCH execute command \"{cstring}\" and check response=\"{cstring}\"")
+    @Then("JSCH execute command \"{}\" and check response=\"{}\"")
     public void executeCmd(String cmd, String expected) {
         String actual = this.client.sendCommand(cmd).trim();
         cucumbers.compare(expected, actual);

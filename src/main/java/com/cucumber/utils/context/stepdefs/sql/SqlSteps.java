@@ -23,14 +23,14 @@ public class SqlSteps {
     private Properties dataSource;
     private List<Map<String, String>> result;
 
-    @Given("SQL data source from file path \"{cstring}\"")
+    @Given("SQL data source from file path \"{}\"")
     public void setDataSource(String filePath) throws IOException {
         this.dataSource = ResourceUtils.readProps(filePath);
         this.client = new SqlClient(dataSource.getProperty("url"), dataSource.getProperty("username"),
                 dataSource.getProperty("password"), dataSource.getProperty("driver").trim());
     }
 
-    @Then("SQL execute query \"{cstring}\"")
+    @Then("SQL execute query \"{}\"")
     public void executeQuery(String query) throws SQLException {
         try {
             this.client.connect();
@@ -41,7 +41,7 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL execute query \"{cstring}\" and compare result with")
+    @Then("SQL execute query \"{}\" and compare result with")
     public void executeQueryAndCompare(String query, List expected) throws SQLException {
         try {
             this.client.connect();
@@ -53,7 +53,7 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL execute query \"{cstring}\" and poll for {int}s while comparing result with")
+    @Then("SQL execute query \"{}\" and poll for {int}s while comparing result with")
     public void executeQueryAndPollAndCompare(String query, int pollDuration, List expected) throws SQLException {
         try {
             this.client.connect();
@@ -64,7 +64,7 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL execute update \"{cstring}\"")
+    @Then("SQL execute update \"{}\"")
     public void executeUpdate(String sql) throws SQLException {
         try {
             this.client.connect();
@@ -75,7 +75,7 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL INSERT into table \"{cstring}\" the following data")
+    @Then("SQL INSERT into table \"{}\" the following data")
     public void insertDataInsideTable(String table, List data) throws SQLException {
         try {
             this.client.connect();
@@ -99,7 +99,7 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL UPDATE table \"{cstring}\" WHERE \"{cstring}\" with the following data")
+    @Then("SQL UPDATE table \"{}\" WHERE \"{}\" with the following data")
     public void updateDataFromTable(String table, String cond, List data) throws SQLException {
         try {
             this.client.connect();

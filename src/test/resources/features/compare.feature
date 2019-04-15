@@ -20,7 +20,7 @@ Feature: Test comparator
     "cars": ["Ford", "~[car]", "Fiat"]
   }
     """
-    And param json2 =
+    And param json2=
     """
   {
 	"name": "John",

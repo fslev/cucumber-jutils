@@ -13,22 +13,22 @@ public class CompareSteps {
     @Inject
     private Cucumbers cucumbers;
 
-    @Then("COMPARE {cstring} with \"{cstring}\"")
+    @Then("COMPARE {} with \"{}\"")
     public void compareWithString(Object expected, Object actual) {
         cucumbers.compare(expected, actual);
     }
 
-    @Then("COMPARE {cstring} with content from path \"{cstring}\"")
+    @Then("COMPARE {} with content from path \"{}\"")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
         cucumbers.compare(expected, cucumbers.read(filePath));
     }
 
-    @Then("COMPARE {cstring} with")
+    @Then("COMPARE {} with")
     public void compareWithDocString(Object expected, String actual) {
         cucumbers.compare(expected, actual);
     }
 
-    @Then("COMPARE {cstring} with table")
+    @Then("COMPARE {} with table")
     public void compareWithDataTable(Object expected, List actual) {
         cucumbers.compare(expected, actual);
     }
