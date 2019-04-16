@@ -204,13 +204,16 @@
                         </executions>
                         <configuration>
                             <testFailureIgnore>false</testFailureIgnore>
+                            <parallel>methods</parallel>
+                            <threadCount>3</threadCount>
+                            <perCoreThreadCount>true</perCoreThreadCount>
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                             </suiteXmlFiles>
                             <properties>
                                 <property>
                                     <name>dataproviderthreadcount</name>
-                                    <value>10</value>
+                                    <value>3</value>
                                 </property>
                             </properties>
                         </configuration>
