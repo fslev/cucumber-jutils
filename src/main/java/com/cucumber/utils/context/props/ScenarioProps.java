@@ -22,9 +22,11 @@ public class ScenarioProps {
     public Object get(String key) {
         switch (key) {
             case "uid":
+            case "Uid":
             case "UID":
                 return getUUID();
             case "now":
+            case "Now":
             case "NOW":
                 return getTimeInMillis();
             default:

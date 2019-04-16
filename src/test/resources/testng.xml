@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="CucumberTestSuite">
+    <test name="EngineeringJunitTests" junit="true" parallel="tests" thread-count="10" verbose="1">
+        <packages>
+            <package name="com.cucumber.utils.clients.*"/>
+            <package name="com.cucumber.utils.compare.*"/>
+            <package name="com.cucumber.utils.placeholders.*"/>
+            <package name="com.cucumber.utils.poller.*"/>
+            <package name="com.cucumber.utils.resource.*"/>
+        </packages>
+    </test>
+    <test name="CucumberTestNGTests">
+        <packages>
+            <package name="com.cucumber.utils.features.*"/>
+        </packages>
+    </test>
+</suite>
