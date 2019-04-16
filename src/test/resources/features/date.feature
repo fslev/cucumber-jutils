@@ -7,7 +7,7 @@ Feature: Date feature
     And DateTime check period from "2019-02-03 01:02:12" to "2019-02-03 23:59:10" is 22hours
     Given param expected="116"
     And DateTime check period from "2019-02-03 22:02:12" to "2019-02-03 23:59:10" is #[expected]minutes
-    Given param expected=58
+    Given param expected="58"
     And DateTime check period from "2019-02-03 23:58:12" to "2019-02-03 23:59:10" is #[expected]seconds
 
   Scenario: Compare two dates
