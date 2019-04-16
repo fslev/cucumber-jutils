@@ -82,7 +82,7 @@ Feature: Test comparator
       | cherries     |
 
   Scenario: Compare resource content containing placeholders
-    Given param status=200
+    Given param status="200"
     And param contentType="application/json"
     And param accept="application/json"
     And param orderType="KVM"
@@ -96,7 +96,7 @@ Feature: Test comparator
     Then COMPARE #[expected] with
     """
     {
-      "status": 200,
+      "status": #[status],
       "body": {
         "orderType": "KVM"
       },
