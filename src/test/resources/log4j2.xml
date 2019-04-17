@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Appenders>
-        <Console name="CCoreConsole" target="SYSTEM_OUT">
+        <Console name="CUtilsConsole" target="SYSTEM_OUT">
             <PatternLayout
                     pattern="%d{HH:mm:ss} [%t] %highlight{%-5level %logger{36}} - %highlight{%msg}{DEBUG=white, INFO=white}%n"/>
         </Console>
     </Appenders>
     <Loggers>
         <logger name="com.cucumber.utils" level="debug" additivity="false">
-            <AppenderRef ref="CCoreConsole"/>
+            <AppenderRef ref="CUtilsConsole"/>
         </logger>
     </Loggers>
 </Configuration>
