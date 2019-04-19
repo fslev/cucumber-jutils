@@ -1,3 +1,7 @@
+### 4.2
+Relax HttpClient builder to support Apache HttpClientBuilder     
+Add #\[short-random\] scenario property  
+  
 ### 4.1
 Support for TestNG  
 

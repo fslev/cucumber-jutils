@@ -41,6 +41,7 @@ public class HttpClient {
     private HostnameVerifier hostnameVerifier;
     private HttpRequestRetryHandler requestRetryHandler;
     private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
+    private HttpClientBuilder clientBuilder;
 
     private CloseableHttpClient client;
     private HttpRequestBase request;
@@ -64,6 +65,7 @@ public class HttpClient {
         this.hostnameVerifier = builder.hostnameVerifier;
         this.requestRetryHandler = builder.requestRetryHandler;
         this.serviceUnavailableRetryStrategy = builder.serviceUnavailableRetryStrategy;
+        this.clientBuilder = builder.clientBuilder;
 
         this.client = getClient();
         this.request = getRequest();
@@ -90,18 +92,17 @@ public class HttpClient {
         if (proxyHost != null) {
             configBuilder.setProxy(proxyHost);
         }
-        HttpClientBuilder builder = HttpClients.custom()
-                .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext == null ?
-                        defaultSslContext() : sslContext, hostnameVerifier == null ?
-                        new NoopHostnameVerifier() : hostnameVerifier))
+        clientBuilder.setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext == null ?
+                defaultSslContext() : sslContext, hostnameVerifier == null ?
+                new NoopHostnameVerifier() : hostnameVerifier))
                 .setDefaultRequestConfig(configBuilder.build());
         if (requestRetryHandler != null) {
-            builder.setRetryHandler(requestRetryHandler);
+            clientBuilder.setRetryHandler(requestRetryHandler);
         }
         if (serviceUnavailableRetryStrategy != null) {
-            builder.setServiceUnavailableRetryStrategy(serviceUnavailableRetryStrategy);
+            clientBuilder.setServiceUnavailableRetryStrategy(serviceUnavailableRetryStrategy);
         }
-        return builder.addInterceptorLast(new HttpResponseLoggerInterceptor())
+        return clientBuilder.addInterceptorLast(new HttpResponseLoggerInterceptor())
                 .addInterceptorLast(new HttpRequestLoggerInterceptor()).build();
     }
 
@@ -248,6 +249,7 @@ public class HttpClient {
         private HostnameVerifier hostnameVerifier;
         private HttpRequestRetryHandler requestRetryHandler;
         private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
+        private HttpClientBuilder clientBuilder = HttpClients.custom();
 
         public Builder useProxy(String proxyHost, int proxyPort, String proxyScheme) {
             this.proxyHost = new HttpHost(proxyHost, proxyPort, proxyScheme);
@@ -260,12 +262,16 @@ public class HttpClient {
         }
 
         public Builder address(String address) {
-            this.address = address.replaceFirst("/*$", "");
+            if (address != null) {
+                this.address = address.replaceFirst("/*$", "");
+            }
             return this;
         }
 
         public Builder path(String path) {
-            this.uriBuilder.setPath(path.replaceFirst("^/*", ""));
+            if (path != null) {
+                this.uriBuilder.setPath(path.replaceFirst("^/*", ""));
+            }
             return this;
         }
 
@@ -324,6 +330,11 @@ public class HttpClient {
 
         public Builder serviceUnavailableRetryStrategy(ServiceUnavailableRetryStrategy serviceRetryStrategy) {
             this.serviceUnavailableRetryStrategy = serviceRetryStrategy;
+            return this;
+        }
+
+        public Builder clientBuilder(HttpClientBuilder clientBuilder) {
+            this.clientBuilder = clientBuilder;
             return this;
         }
 
