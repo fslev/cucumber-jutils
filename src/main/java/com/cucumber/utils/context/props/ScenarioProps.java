@@ -20,15 +20,13 @@ public class ScenarioProps {
     }
 
     public Object get(String key) {
-        switch (key) {
+        switch (key.toLowerCase()) {
             case "uid":
-            case "Uid":
-            case "UID":
                 return getUUID();
             case "now":
-            case "Now":
-            case "NOW":
                 return getTimeInMillis();
+            case "short-random":
+                return (int) (Math.random() * (Short.MAX_VALUE - Short.MIN_VALUE));
             default:
                 return props.get(key) instanceof String ?
                         new ScenarioPropsParser(this, props.get(key).toString()).result() : props.get(key);
