@@ -41,7 +41,7 @@ public class ResourceUtils {
     }
 
     /**
-     * @return a Map<String,String> between corresponding file paths and file contents
+     * @return a Map&lt;String,String&gt; between corresponding file paths and file contents
      */
     public static Map<String, String> readDirectory(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
         URL dirURL = Thread.currentThread().getContextClassLoader().getResource(relativeDirPath);
