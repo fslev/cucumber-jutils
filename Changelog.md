@@ -1,3 +1,6 @@
+### 4.3
+Add logger to compare predefined steps       
+
 ### 4.2
 Relax HttpClient builder to support Apache HttpClientBuilder     
 Add #\[short-random\] scenario property  
