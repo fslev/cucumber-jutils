@@ -1,3 +1,6 @@
+### 4.4
+Increment Cucumber dependencies      
+
 ### 4.3
 Add logger to compare predefined steps       
 
