@@ -19,30 +19,6 @@
         <surefire.version>2.22.1</surefire.version>
     </properties>
 
-    <scm>
-        <connection>
-            scm:git:ssh://git@bitbucket.1and1.org/dgpqa/cucumber-utils.git
-        </connection>
-        <developerConnection>
-            scm:git:ssh://git@bitbucket.1and1.org/dgpqa/cucumber-utils.git
-        </developerConnection>
-        <url>
-            https://bitbucket.1and1.org/projects/dgpqa/repos/cucumber-utils
-        </url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <distributionManagement>
-        <repository>
-            <id>hosting-release</id>
-            <url>https://artifactory.1and1.org/artifactory/hosting-release</url>
-        </repository>
-        <snapshotRepository>
-            <id>hosting-snapshot</id>
-            <url>https://artifactory.1and1.org/artifactory/hosting-snapshot</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <dependencies>
         <!--Apache-->
         <dependency>

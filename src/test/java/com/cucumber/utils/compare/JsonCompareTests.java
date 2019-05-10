@@ -187,13 +187,13 @@ public class JsonCompareTests {
     @Test
     public void testPlaceholderFillFromJsonCompareWithRegexSymbols() throws CompareException {
         String expected = "{\n" +
-                "  \"/processes/running/ote_oneandone/test-create-1551172176725.com/emailverification.*\": {\n" +
+                "  \"/processes/running/ote_company/test-create-1551172176725.com/emailverification.*\": {\n" +
                 "    \"businessKey\": \"tes.*reate-~[businessKey]\",\n" +
                 "    \"type\": \"EMAIL_VERIFICATION\"\n" +
                 "  }\n" +
                 "}";
         String actual = "{\n" +
-                "  \"/processes/running/ote_oneandone/test-create-1551172176725.com/emailverification/3edb8eeb-b4e2-4b57-a6af-927fc1807b8e\": {\n" +
+                "  \"/processes/running/ote_company/test-create-1551172176725.com/emailverification/3edb8eeb-b4e2-4b57-a6af-927fc1807b8e\": {\n" +
                 "    \"businessKey\": \"test-create-1551172176725.com|email-verif|1d55b4f3-6ec1-4d89-ba58-2ba2a3eaa80e\",\n" +
                 "    \"type\": \"EMAIL_VERIFICATION\"\n" +
                 "  }\n" +
