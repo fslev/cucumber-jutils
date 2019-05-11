@@ -24,6 +24,14 @@ public class JsonConvertibleCompareTests {
     }
 
     @Test
+    public void compareListsWithRegex() throws CompareException {
+        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", ".*"});
+        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
+        JsonCompare compare = new JsonCompare(expected, actual);
+        compare.compare();
+    }
+
+    @Test
     public void compareLists_nonextensible() throws CompareException {
         List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
         List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
