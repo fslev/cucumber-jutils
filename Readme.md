@@ -111,10 +111,10 @@ where, *scenario.properties* file contains:
 ```  
     
 ***Note:***  
-    __Supported file types__ for setting scenario properties:
-    - ***.properties***
-    - ***.yaml***
-    - ***.property***  
+    __Supported file types__ for setting scenario properties:  
+    * ***.properties***
+    * ***.yaml***
+    * ***.property***  
     
 If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
 ```
