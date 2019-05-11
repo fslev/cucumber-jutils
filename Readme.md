@@ -232,11 +232,10 @@ String responseAsString = EntityUtils.toString(response.getEntity());
 ```
     * SHELL execute command "ls -alh" and check response=".*"
 ``` 
-- Connect via SSH to a remote server and execute bash shell commands:
+- Connect via SSH to a remote server and execute bash commands:
 ```
     Given JSCH connection from properties file "config/jsch/jsch.properties"
     Then JSCH execute command "hostname -f" and check response="vm-test\d+.sandbox.lan"
-    
 ```
 where _jsch.properties_ contains:
 ```
