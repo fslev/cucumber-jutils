@@ -154,7 +154,7 @@ where, inside the *properties* directory are defined several files containing th
     }
 ```
      
-- Another way to set scenario properties is from the compare mechanism:
+- Another way to set scenario properties is from the compare mechanism:  
 Suppose you want to extract a value from the JSON response received after calling the API of an application.  
 In order to do that, you must compare the actual response with an expected one, but inside the expected value you must introduce a special placeholder **~[property.name]**.  
 
@@ -165,19 +165,6 @@ Scenario: Test scenario properties
 When invoke HTTP API Create user    
 Then check response body="{"id":"~[userId]"}" 
 ```  
-_Cucumber_ step definition
-```java
-public class Test {
-
-    @Inject Cucumbers cucumbers;
-    
-    @Then("check response body=\"{}\"")
-    public void compare(String expected) {
-        cucumbers.compare(expected, this.response);
-    }
-}
-```
-    
 If comparison passes, then a new scenario property will be set, having the name ***userId*** and the value matched from the HTTP response.  
 This new scenario property can be used further inside your test scenario:  
 
