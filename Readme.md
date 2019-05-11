@@ -76,7 +76,7 @@ cucumbers.pollAndCompare(expected, 1000, 10, () -> generateRandomNumber());
 
 ## 2. State-sharing mechanism
 The state sharing mechanism is based on **guice**, **cucumber-guice** and Cucumber [**anonymous parameter types**](https://cucumber.io/docs/cucumber/cucumber-expressions/#parameter-types).  
-State can be shared between different Cucumber steps inside same scenario by using *scenario properties*.  
+State is shared between different Cucumber steps inside same scenario by using *scenario properties*.  
 
 ### 2.1 Set and use scenario properties  
 
@@ -89,8 +89,8 @@ State can be shared between different Cucumber steps inside same scenario by usi
         Then check string equals "The rabbit is running through the forest"
 ```
 
-As you can see, in order to use the value of a scenario property within the Cucumber scenario, you must call it by its name by using the special symbols **#[ ]**.  
-_Under the hood_: If your Cucumber step definition uses anonymous parameter types {}, then any #[<property_name>] sequence is parsed and the corresponding value is mapped to the corresponding argument:     
+As you can see, in order to use the value of a scenario property within your Cucumber scenario, you must call it by its name, using the special symbols **#[ ]**.  
+_Under the hood_: If your Cucumber step definition uses anonymous parameter types ***{}***, then any **#[<property_name>]** sequence is parsed and the corresponding value is mapped to the corresponding argument:     
 ```
     @Then("check string equals \"{}\"")
     public void check(String str) {
