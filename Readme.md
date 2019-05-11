@@ -99,7 +99,8 @@ _Under the hood_: If your Cucumber step definition uses anonymous parameter type
     }
 ```
 
-- from resource file, via **load scenario props from file "relative/path/to/file.properties"** _Cucumber_ step           
+- from resource file, via **load scenario props from file "relative/path/to/file.properties"** _Cucumber_ step
+           
 ```
     Scenario: Test scenario properties
     * load scenario props from file "placeholders/scenario.properties"
