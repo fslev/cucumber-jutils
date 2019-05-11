@@ -68,7 +68,7 @@ The following types of objects are supported for complex comparison:
     cucumbers.compare(expected, actual); //comparison passes
     ```  
 
-* By default, when comparing two Java objects, the compare mechanisms from above are called in the same order, until one comparison passes.  
+* By default, when comparing two Java objects, all compare mechanisms from above are invoked in same order, until one comparison passes.  
   If not, the *equals()* method is used as a last compare mechanism.   
 
 ## 2. State-sharing mechanism
