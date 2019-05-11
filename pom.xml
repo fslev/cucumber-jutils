@@ -318,8 +318,8 @@
     </build>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com/fslev//cucumber-utils.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/fslev//cucumber-utils.git</developerConnection>
+        <connection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</developerConnection>
         <url>https://github.com/fslev/cucumber-utils/tree/master</url>
     </scm>
 
