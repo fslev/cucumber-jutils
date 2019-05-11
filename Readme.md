@@ -95,7 +95,7 @@ _Under the hood_: If your Cucumber step definition uses anonymous parameter type
     @Given("the string with scenario properties \"{}\"")
     public void setString(String str) {
         this.str = str;
-        //taking the example above, the str value is "The rabbit is running through the forest"
+        //taking the example above, the str parsed value is "The rabbit is running through the forest"
     }
 ```
 
@@ -111,7 +111,7 @@ where, *scenario.properties* file contains:
 ```  
     
 ***Note:***  
-    __Supported file types__ for setting scenario properties:  
+_Supported file types_ for setting scenario properties:  
 * ***.properties***
 * ***.yaml***
 * ***.property***
