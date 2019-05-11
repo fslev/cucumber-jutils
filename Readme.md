@@ -22,10 +22,10 @@ Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
 ```  
 #### Included dependencies that are worth to mention:
 
-* [**xml-unit**](https://github.com/xmlunit/xmlunit)
-* [**json-compare**](https://github.com/fslev/json-compare)
 * [**cucumber-java8**](https://github.com/cucumber/cucumber-jvm/tree/master/java8)
 * [**cucumber-guice**](https://github.com/cucumber/cucumber-jvm/tree/master/guice)
+* [**xml-unit**](https://github.com/xmlunit/xmlunit)
+* [**json-compare**](https://github.com/fslev/json-compare)
 * [**apache-http-client**](https://github.com/apache/httpcomponents-client)
 
 # Integration
