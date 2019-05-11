@@ -9,6 +9,14 @@
 
     <name>Cucumber Utils</name>
     <description>A little helper for Cucumber</description>
+    <url>https://github.com/fslev/cucumber-utils</url>
+    <developers>
+        <developer>
+            <name>Florin Slevoaca</name>
+            <email>slevoaca.florin@gmail.com</email>
+            <timezone>EEST</timezone>
+        </developer>
+    </developers>
 
     <properties>
         <httpclient.version>4.5.8</httpclient.version>
@@ -346,13 +354,6 @@
         </repository>
     </distributionManagement>
 
-    <developers>
-        <developer>
-            <name>Florin Slevoaca</name>
-            <email>slevoaca.florin@gmail.com</email>
-            <timezone>EEST</timezone>
-        </developer>
-    </developers>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
