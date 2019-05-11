@@ -44,7 +44,7 @@ The following types of objects are supported for complex comparison, via the _Cu
     String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
     cucumbers.compare(expected, actual); //comparison passes
     ```
-* JSON convertible objects  
+* JSON convertible Java objects  
      
     ```
     List<String> expected = Arrays.asList(new String[]{"a", "b", "c", ".*"});
@@ -64,9 +64,6 @@ The following types of objects are supported for complex comparison, via the _Cu
     String actual = "some dummy text";
     cucumbers.compare(expected, actual); //comparison passes
     ```  
-
-* By default, when comparing two Java objects, all compare mechanisms from above are invoked in same order, until one comparison passes.  
-  If not, the *equals()* method is used as a last compare mechanism.   
 
 ## 2. State-sharing mechanism
 The state sharing mechanism uses the power of **guice**, **cucumber-guice** and Cucumber **custom** expressions.  
