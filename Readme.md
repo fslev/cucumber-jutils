@@ -11,7 +11,7 @@ It takes over the usual dependencies and features needed inside a test framework
 Most of these features can be used directly from code within your test project and are also available as _Cucumber step definitions_.    
 
 #### Maven Central
-```css
+```
     <dependency>
         <groupId>io.github.fslev</groupId>
         <artifactId>cucumber-utils</artifactId>
