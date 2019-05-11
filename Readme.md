@@ -173,13 +173,14 @@ When invoke HTTP API Get user with id = #[userId]
 Then check HTTP response status = 200
 ```
      
-## 3. Clients
+## 3. Customized clients
 
 The following clients are available via Cucumber-Utils:
 - HTTP client
 - SQL clients (MySQL, PostgreSQL, Sybase, etc -> depending on the sql driver you configure)
+- Shell and Jsch clients
 
-These clients are initialized and configured via the builder pattern, in order to allow addition of new settings between Cucumber steps.      
+These clients are initialized and configured via the builder pattern, in order to allow construction of new settings between Cucumber steps.      
     
 ### HTTP Client
 Example:  
@@ -192,24 +193,24 @@ HttpClient client = new HttpClient.Builder()
                 .addQueryParam("host","google.ro")
                 .entity("{\"a\":\"some json value\"}")
                 .build();
-        HttpResponse response = client.execute();
-        String responseAsString = EntityUtils.toString(response.getEntity());
+HttpResponse response = client.execute();
+String responseAsString = EntityUtils.toString(response.getEntity());
 ```
 
 ## 4. Pre-defined Cucumber utility steps 
 
 - Compare date times
-    ```css
+```
     Given DateTime pattern="yyyy-MM-dd HH:mm:ss"
     Then DateTime check period from "2018-02-03 01:00:00" to "2019-02-03 01:00:00" is 1year
     And DateTime check period from "2018-02-03 01:00:00" to "2019-02-02 12:01:10" is 364days
     And DateTime check period from "2019-02-03 01:02:12" to "2019-02-03 23:59:10" is 22hours
     And DateTime check period from "2019-02-03 22:02:12" to "2019-02-03 23:59:10" is 116minutes
     And DateTime check period from "2019-02-03 23:58:12" to "2019-02-03 23:59:10" is 58seconds
-    ``` 
+``` 
     
 - Connect to SQL databases, execute queries, compare results and also execute updates
-    ```css
+```
     Scenario: Test MYSQL client select
         Given SQL data source from file path "config/database/mysql.properties"
         Then SQL execute query "select * from gift order by person_id asc limit 3" and compare result with
@@ -217,8 +218,8 @@ HttpClient client = new HttpClient.Builder()
           | .*        | .*                                                   |
           | 21189037  | fun & joy for everybody!                             |
           | 21193939  | Leica M9-P Hermes Edition: http://vimeo.com/42108675 |
-    ``` 
-    ```css
+``` 
+```
     Scenario: Test POSTGRESQL client simple insert with tabular data
         Given SQL data source from file path "config/database/psql.properties"
         Then SQL INSERT into table "mag" the following data
@@ -226,6 +227,22 @@ HttpClient client = new HttpClient.Builder()
           | 14        | http://heheheh.ro |
           | 16        | null              |
           | 17        | wow               |
-    ```
+```
+- Execute shell / bash  commands:
+```
+    * SHELL execute command "ls -alh" and check response=".*"
+``` 
+- Connect via SSH to a remote server and execute bash shell commands:
+```
+    Given JSCH connection from properties file "config/jsch/jsch.properties"
+    Then JSCH execute command "hostname -f" and check response="vm-test\d+.sandbox.lan"
     
-    
+```
+where _jsch.properties_ contains:
+```
+host=vm-test1.sandbox.lan 
+port=22 
+user=tanja 
+password=*****
+privateKey=/home/tanja/.ssh/id_rsa
+```
