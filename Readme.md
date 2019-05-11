@@ -15,7 +15,7 @@ Most of these features can be used directly from code within your test project a
 Maven
 
     <dependency>
-        <groupId>com.qa.cucumber</groupId>
+        <groupId>io.github.fslev</groupId>
         <artifactId>cucumber-utils</artifactId>
         <version>${latest.version}</version>
     </dependency>
