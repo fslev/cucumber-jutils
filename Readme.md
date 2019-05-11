@@ -78,7 +78,7 @@ cucumbers.pollAndCompare(expected, 1000, 10, () -> generateRandomNumber());
 The state sharing mechanism is based on **guice**, **cucumber-guice** and Cucumber [**anonymous parameter types**](https://cucumber.io/docs/cucumber/cucumber-expressions/#parameter-types).  
 State is shared between different Cucumber steps inside same scenario by using *scenario properties*.  
 
-### 2.1 Set and use scenario properties  
+### 2.1 How to set and use scenario properties  
 
 - within the Cucumber Scenario, by using the **param \<name\>="\<value\>"** _Cucumber_ step
 ```
@@ -133,8 +133,8 @@ where, *animal.property* file contains:
 - from resource directory, via **load all scenario props from dir "relative/path/to/dir"** Cucumber step           
 ```
     Given load all scenario props from dir "placeholders/properties"
-    Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
-    Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]" 
+    Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger] and cheese=#[cheese]"
+    Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger and cheese=Mozzarela" 
 ```
 where, inside the *properties* directory are defined several files containing the corresponding properties.    
     
