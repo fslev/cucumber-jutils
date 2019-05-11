@@ -44,15 +44,6 @@ The following types of objects are supported for complex comparison:
     String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
     cucumbers.compare(expected, actual); //comparison passes
     ```
-
-* XMLs  
-  * dependency: [**xml-unit**](https://github.com/xmlunit/xmlunit)
-    ```
-    String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
-    String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
-    cucumbers.compare(expected, actual); //comparison passes
-    ```      
-
 * JSON convertible objects  
      
     ```
@@ -60,9 +51,15 @@ The following types of objects are supported for complex comparison:
     List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
     cucumbers.compare(expected, actual); //comparison passes
     ```   
-
+* XMLs  
+  * dependency: [**xml-unit**](https://github.com/xmlunit/xmlunit)
+    ```
+    String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
+    String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
+    cucumbers.compare(expected, actual); //comparison passes
+    ```      
 * Strings, with regex support   
-    ```css
+    ```
     String expected = "some .* text";
     String actual = "some dummy text";
     cucumbers.compare(expected, actual); //comparison passes
