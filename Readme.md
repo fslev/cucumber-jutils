@@ -3,20 +3,24 @@
 # Summary
 A Java library meant to help you write organized and clean **Cucumber** tests.  
 It takes over the usual dependencies and features needed inside a test framework, such as:  
-* the _expected-actual_ comparing mechanism
-* read from from file or from all files within a directory
-* customized up-to-date *clients* to access various resources i.e databases, HTTP services, etc  
-* a light *state-sharing mechanism* between Cucumber scenario steps       
+* the *comparing* mechanism (compare XMLs, JSONs, and Java objects)  
+* customized up-to-date *clients* to access various resources, i.e databases, HTTP services, etc  
+* a light *state-sharing mechanism* between Cucumber Scenario Steps  
+* other utility methods           
 
-These features can be used directly by the code from your test project and are also available as Cucumber step definitions.    
+Most of these features can be used directly from code within your test project and are also available as Cucumber step definitions.    
 
 #### Dependency
 ```css
+Maven
+
     <dependency>
         <groupId>com.qa.cucumber</groupId>
         <artifactId>cucumber-utils</artifactId>
-        <version>${version}</version>
+        <version>${latest.version}</version>
     </dependency>
+
+Gradle: compile("io.github.fslev:cucumber-utils:4.4")
 ```  
 
 # Integration
