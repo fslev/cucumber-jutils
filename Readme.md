@@ -8,7 +8,7 @@ It takes over the usual dependencies and features needed inside a test framework
 * a light and powerful **state-sharing mechanism** between _Cucumber Scenario Steps_  
 * other utility methods           
 
-Most of these features can be used directly from code within your test project and are also available as Cucumber step definitions.    
+Most of these features can be used directly from code within your test project and are also available as _Cucumber step definitions_.    
 
 #### Maven Central
 ```css
