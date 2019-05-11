@@ -141,7 +141,7 @@ where, inside the *properties* directory are defined several files containing th
 ***Note:***  
     The function for reading scenario properties from a directory walks through the whole directory tree structure. It filters only the supported file types.  
     
-- programmatically, by injecting the *ScenarioProps* class via **Guice**:    
+- programmatically, by injecting the a *ScenarioProps* class instance via **Guice**:    
 ```java
     import com.google.inject.Inject;
 
