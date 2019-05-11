@@ -112,20 +112,22 @@ where, *scenario.properties* file contains:
     
 ***Note:***  
     __Supported file types__ for setting scenario properties:  
-    * ***.properties***
-    * ***.yaml***
-    * ***.property***  
+* ***.properties***
+* ***.yaml***
+* ***.property***
+* ***.json***
+* ***.xml***
+* ***.txt***  
     
-If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
+If a scenario property is read from a **.property**, **.json**, **.xml** or **.txt** file, then the name of the scenario property will actually be the name of the file, without extension:  
 ```
       Scenario: Test placeholder fill with scenario property file
-        * load scenario props from file "placeholders/figure.property"
-        And The string with scenario placeholders "This is a #[figure]"
-        Then Check filled string equals "This is a circle"
+        * load scenario props from file "placeholders/animal.property"
+        Then COMPARE #[animal] with "Rabbit"
 ```  
-where, *figure.property* file contains:
+where, *animal.property* file contains:
 ```
-    circle
+    Rabbit
 ```  
 
 - from resource directory, via **load all scenario props from dir "\<relativePath/toDir\>"** Cucumber step           
