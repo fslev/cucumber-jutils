@@ -80,7 +80,7 @@ State is shared between different Cucumber steps inside same scenario by using *
 
 ### 2.1 Set and use scenario properties  
 
-- within the Cucumber Scenario, by using the **param \<name\>="\<value\>"** step
+- within the Cucumber Scenario, by using the **param \<name\>="\<value\>"** _Cucumber_ step
 ```
     Scenario: Test scenario properties
         Given param animal="rabbit"
@@ -89,7 +89,7 @@ State is shared between different Cucumber steps inside same scenario by using *
         Then check string equals "The rabbit is running through the forest"
 ```
 
-As you can see, in order to use the value of a scenario property within your Cucumber scenario, you must call it by its name, using the special symbols **#[ ]**.  
+As you can see, in order to use the value of a scenario property within your _Cucumber_ scenario, you must call it by its name, using the special symbols **#[ ]**.  
 _Under the hood_: If your Cucumber step definition uses anonymous parameter types ***{}***, then any **#[_property_name_]** sequence is parsed and the corresponding value is mapped to the corresponding argument:     
 ```
     @Given("the string with scenario properties \"{}\"")
@@ -99,11 +99,11 @@ _Under the hood_: If your Cucumber step definition uses anonymous parameter type
     }
 ```
 
-- from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step           
+- from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** _Cucumber_ step           
 ```
     Scenario: Test scenario properties
     * load scenario props from file "placeholders/scenario.properties"
-    Then check #[animal]=Rabbit 
+    Then COMPARE #[animal] with "Rabbit" 
 ```
 where, *scenario.properties* file contains:
 ```
