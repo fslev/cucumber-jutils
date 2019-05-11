@@ -4,24 +4,29 @@
 A Java library meant to help you write organized and clean **Cucumber** tests.  
 It takes over the usual dependencies and features needed inside a test framework, such as:  
 * the **comparing** mechanism (compare XMLs, JSONs, and Java objects)  
-* customized up-to-date **clients** to access various resources, i.e databases, HTTP services, etc  
+* customized up-to-date **clients** to access various resources, i.e _databases_, _HTTP services_, etc  
 * a light **state-sharing mechanism** between _Cucumber Scenario Steps_  
 * other utility methods           
 
 Most of these features can be used directly from code within your test project and are also available as Cucumber step definitions.    
 
-#### Dependency
+#### Maven Central
 ```css
-Maven
-
     <dependency>
         <groupId>io.github.fslev</groupId>
         <artifactId>cucumber-utils</artifactId>
         <version>${latest.version}</version>
     </dependency>
 
-Gradle: compile("io.github.fslev:cucumber-utils:4.4")
+Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
 ```  
+#### Included dependencies that are worth to mention:
+
+* [**xml-unit**](https://github.com/xmlunit/xmlunit)
+* [**json-compare**](https://github.com/fslev/json-compare)
+* [**cucumber-java8**](https://github.com/cucumber/cucumber-jvm/tree/master/java8)
+* [**cucumber-guice**](https://github.com/cucumber/cucumber-jvm/tree/master/guice)
+* [**apache-http-client**](https://github.com/apache/httpcomponents-client)
 
 # Integration
 In order to integrate **cucumber-utils** within your test project you must add the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
