@@ -99,7 +99,7 @@ _Under the hood_: If your Cucumber step definition uses anonymous parameter type
     }
 ```
 
-- from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** _Cucumber_ step           
+- from resource file, via **load scenario props from file "relative/path/to/file.properties"** _Cucumber_ step           
 ```
     Scenario: Test scenario properties
     * load scenario props from file "placeholders/scenario.properties"
@@ -130,7 +130,7 @@ where, *animal.property* file contains:
     Rabbit
 ```  
 
-- from resource directory, via **load all scenario props from dir "\<relativePath/toDir\>"** Cucumber step           
+- from resource directory, via **load all scenario props from dir "relative/path/to/dir"** Cucumber step           
 ```
     Given load all scenario props from dir "placeholders/properties"
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
