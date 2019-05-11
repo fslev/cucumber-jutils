@@ -317,8 +317,8 @@
     </build>
 
     <scm>
-        <connection>scm:git:git://github.com/fslev/cucumber-utils.git</connection>
-        <developerConnection>scm:git:git://github.com/fslev/cucumber-utils.git</developerConnection>
+        <connection>scm:git:git@github.com:fslev/cucumber-utils.git</connection>
+        <developerConnection>scm:git:git@github.com:fslev/cucumber-utils.git</developerConnection>
         <url>https://github.com/fslev/cucumber-utils/tree/master</url>
       <tag>cucumber-utils-4.4</tag>
   </scm>
