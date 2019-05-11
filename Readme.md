@@ -90,8 +90,8 @@ State is shared between different Cucumber steps inside same scenario by using *
 ```
 
 As you can see, in order to use the value of a scenario property within your _Cucumber_ scenario, you must call it by its name, using the special symbols **#[ ]**.  
-_Under the hood_: If your Cucumber step definition uses anonymous parameter types ***{}***, then any **#[_property_name_]** sequence is parsed and the corresponding value is mapped to the corresponding argument:     
-```
+_Under the hood_: If your Cucumber step definition uses anonymous parameter types ***{}***, then any **#[property.name]** sequence is parsed and the corresponding value is mapped to the corresponding argument:     
+```java
     @Given("the string with scenario properties \"{}\"")
     public void setString(String str) {
         this.str = str;
@@ -131,7 +131,7 @@ where, *animal.property* file contains:
 
 - from resource directory, via **load all scenario props from dir "relative/path/to/dir"** Cucumber step           
 ```
-    Given load all scenario props from dir "placeholders/properties"
+    * load all scenario props from dir "placeholders/properties"
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger] and cheese=#[cheese]"
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger and cheese=Mozzarela" 
 ```
@@ -154,28 +154,37 @@ where, inside the *properties* directory are defined several files containing th
     }
 ```
      
-## Setup scenario properties from compare
-There is another way to initialise a scenario property. This is done via the *compare mechanism*.  
+- Another way to set scenario properties is from the compare mechanism:
 Suppose you want to extract a value from the JSON response received after calling the API of an application.  
-In order to do that, you must compare the actual response with an expected one and inside the expected value you must introduce the variable placeholder **~[var.name.here]**.  
+In order to do that, you must compare the actual response with an expected one, but inside the expected value you must introduce a special placeholder **~[property.name]**.  
 
 Example:  
 
 ```
 Scenario: Test scenario properties
-When invoke create user HTTP API of application    
+When invoke HTTP API Create user    
 Then check response body="{"id":"~[userId]"}" 
 ```  
+_Cucumber_ step definition
+```java
+public class Test {
+
+    @Inject Cucumbers cucumbers;
     
-If inside the step definition the comparison is done via the compare mechanism from above and if the comparison passes, then a new scenario property will be initialised behind the scenes, having the name ***userId***.  
+    @Then("check response body=\"{}\"")
+    public void compare(String expected) {
+        cucumbers.compare(expected, this.response);
+    }
+}
+```
+    
+If comparison passes, then a new scenario property will be set, having the name ***userId*** and the value matched from the HTTP response.  
 This new scenario property can be used further inside your test scenario:  
 
-```css
-...        
-When invoke get user HTTP API of applicaiton with user id = #[userId]
+```
+When invoke HTTP API Get user with id = #[userId]
 Then check HTTP response status = 200
-... 
-```  
+```
      
 ## 3. Clients
 
