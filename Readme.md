@@ -66,71 +66,80 @@ The following types of objects are supported for complex comparison, via the _Cu
     ```  
 * If the objects compared are not of any type from above, then the comparison is done via the equals() method.  
 
+### 1.1 Poll and compare
+Compare until condition is met or until timeout:
+```
+// Compare every 1000 millis until generated random number is 3 or until total time duration is 10s   
+int expected = 3;
+cucumbers.pollAndCompare(expected, 1000, 10, () -> generateRandomNumber());
+```
+
 ## 2. State-sharing mechanism
 The state sharing mechanism is based on **guice**, **cucumber-guice** and Cucumber [**anonymous parameter types**](https://cucumber.io/docs/cucumber/cucumber-expressions/#parameter-types).  
 State can be shared between different Cucumber steps inside same scenario by using *scenario properties*.  
 
-#### Set and use scenario properties  
+### 2.1 Set and use scenario properties  
 
-- within the Scenario, using the **param \<name\>="\<value\>"** Cucumber step
-    ```css
+- within the Cucumber Scenario, by using the **param \<name\>="\<value\>"** step
+```
     Scenario: Test scenario properties
-        Given param animal="r\"a$b\\"b[it"
+        Given param animal="rabbit"
         And param location="forest"
-        And The string with scenario placeholders "The #[animal] is running through the #[location]"
-        Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
-    ```
+        And the string with scenario properties "The #[animal] is running through the #[location]"
+        Then check string equals "The rabbit is running through the forest"
+```
 
-As you can see, in order to use a scenario property value within the Cucumber scenario, you must call it by its name using the special placeholder symbols **#[ ]**, which are magically parsed in your corresponding step definition if it uses the custom cucumber expression **{cstring}**:     
-```java
-    @Then("Check filled string equals \"{cstring}\"")
+As you can see, in order to use the value of a scenario property within the Cucumber scenario, you must call it by its name by using the special symbols **#[ ]**.  
+_Under the hood_: If your Cucumber step definition uses anonymous parameter types {}, then any #[<property_name>] sequence is parsed and the corresponding value is mapped to the corresponding argument:     
+```
+    @Then("check string equals \"{}\"")
     public void check(String str) {
         assertEquals(str, this.str);
     }
 ```
 
 - from resource file, via **load scenario props from file "\<relativePath/toFile.properties\>"** Cucumber step           
-    ```css
+```
     Scenario: Test scenario properties
     * load scenario props from file "placeholders/scenario.properties"
     Then check #[animal]=Rabbit 
-    ```
-    where, *scenario.properties* file contains:
-    ```
+```
+where, *scenario.properties* file contains:
+```
     animal=Rabbit
-    ```  
+```  
     
-    ***Note:***  
+***Note:***  
     __Supported file types__ for setting scenario properties:
     - ***.properties***
     - ***.yaml***
     - ***.property***  
     
-    If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
-    ```css
+If a scenario property is read from a **.property** file, it means that the name of the property will actually be the name of the file, without the extension:  
+```
       Scenario: Test placeholder fill with scenario property file
         * load scenario props from file "placeholders/figure.property"
         And The string with scenario placeholders "This is a #[figure]"
         Then Check filled string equals "This is a circle"
-    ```  
-    where, *figure.property* file contains:
-    ```
+```  
+where, *figure.property* file contains:
+```
     circle
-    ```  
+```  
 
 - from resource directory, via **load all scenario props from dir "\<relativePath/toDir\>"** Cucumber step           
-    ```css
+```
     Given load all scenario props from dir "placeholders/properties"
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]" 
-    ```
-    where, inside the *properties* directory are defined several files containing the corresponding properties.    
+```
+where, inside the *properties* directory are defined several files containing the corresponding properties.    
     
-    ***Note:***  
+***Note:***  
     The function for reading scenario properties from a directory walks through the whole directory tree structure. It filters only the supported file types.  
     
 - programmatically, by injecting the *ScenarioProps* class via **Guice**:    
-    ```java
+```java
     import com.google.inject.Inject;
 
     @ScenarioScoped
@@ -141,7 +150,7 @@ As you can see, in order to use a scenario property value within the Cucumber sc
             scenarioProps.put(name, value);
         }
     }
-    ```
+```
      
 ## Setup scenario properties from compare
 There is another way to initialise a scenario property. This is done via the *compare mechanism*.  
@@ -150,7 +159,7 @@ In order to do that, you must compare the actual response with an expected one a
 
 Example:  
 
-```css
+```
 Scenario: Test scenario properties
 When invoke create user HTTP API of application    
 Then check response body="{"id":"~[userId]"}" 
