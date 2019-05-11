@@ -1,8 +1,8 @@
 # Cucumber Utils
 
 # Summary
-Cucumber-Utils is a Java library meant to help you write organized and clean **Cucumber** tests.  
-It takes over the usual features needed to be present inside a test framework, such as:  
+A Java library meant to help you write organized and clean **Cucumber** tests.  
+It takes over the usual dependencies and features needed inside a test framework, such as:  
 * the _expected-actual_ comparing mechanism
 * read from from file or from all files within a directory
 * customized up-to-date *clients* to access various resources i.e databases, HTTP services, etc  
