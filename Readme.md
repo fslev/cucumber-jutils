@@ -110,8 +110,7 @@ where, *scenario.properties* file contains:
     animal=Rabbit
 ```  
     
-***Note:***  
-_Supported file types_ for setting scenario properties:  
+***Note:***  _Supported file types_ for setting scenario properties:  
 * ***.properties***
 * ***.yaml***
 * ***.property***
