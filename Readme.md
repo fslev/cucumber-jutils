@@ -5,7 +5,7 @@ A Java library meant to help you write organized and clean **Cucumber** tests.
 It takes over the usual dependencies and features needed inside a test framework, such as:  
 * the **comparing** mechanism (compare XMLs, JSONs, and Java objects)  
 * customized up-to-date **clients** to access various resources, i.e _databases_, _HTTP services_, etc  
-* a light **state-sharing mechanism** between _Cucumber Scenario Steps_  
+* a light and powerful **state-sharing mechanism** between _Cucumber Scenario Steps_  
 * other utility methods           
 
 Most of these features can be used directly from code within your test project and are also available as Cucumber step definitions.    
