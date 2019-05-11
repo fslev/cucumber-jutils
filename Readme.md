@@ -90,7 +90,7 @@ State is shared between different Cucumber steps inside same scenario by using *
 ```
 
 As you can see, in order to use the value of a scenario property within your Cucumber scenario, you must call it by its name, using the special symbols **#[ ]**.  
-_Under the hood_: If your Cucumber step definition uses anonymous parameter types ***{}***, then any **#[**_property_name_**]** sequence is parsed and the corresponding value is mapped to the corresponding argument:     
+_Under the hood_: If your Cucumber step definition uses anonymous parameter types ***{}***, then any **#[_property_name_]** sequence is parsed and the corresponding value is mapped to the corresponding argument:     
 ```
     @Then("check string equals \"{}\"")
     public void check(String str) {
