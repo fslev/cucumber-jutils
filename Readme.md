@@ -12,11 +12,11 @@ Most of these features can be used directly from code within your test project a
 
 #### Maven Central
 ```
-    <dependency>
-        <groupId>io.github.fslev</groupId>
-        <artifactId>cucumber-utils</artifactId>
-        <version>${latest.version}</version>
-    </dependency>
+<dependency>
+  <groupId>io.github.fslev</groupId>
+  <artifactId>cucumber-utils</artifactId>
+  <version>${latest.version}</version>
+</dependency>
 
 Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
 ```  
