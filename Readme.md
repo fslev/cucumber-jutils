@@ -28,8 +28,8 @@ Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
 * [**json-compare**](https://github.com/fslev/json-compare)
 * [**apache-http-client**](https://github.com/apache/httpcomponents-client)
 
-# Integration
-In order to integrate **cucumber-utils** within your test project you must configure the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
+# Configuration
+In order to integrate **cucumber-utils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
 ```
 com.cucumber.utils
 ```  
@@ -64,10 +64,11 @@ The following types of objects are supported for complex comparison, via the _Cu
     String actual = "some dummy text";
     cucumbers.compare(expected, actual); //comparison passes
     ```  
+* If the objects compared are not of any type from above, then the comparison is done via the equals() method.  
 
 ## 2. State-sharing mechanism
-The state sharing mechanism uses the power of **guice**, **cucumber-guice** and Cucumber **custom** expressions.  
-You can share state between different Cucumber steps using *scenario properties*.  
+The state sharing mechanism is based on **guice**, **cucumber-guice** and Cucumber [**anonymous parameter types**](https://cucumber.io/docs/cucumber/cucumber-expressions/#parameter-types).  
+State can be shared between different Cucumber steps inside same scenario by using *scenario properties*.  
 
 #### Set and use scenario properties  
 
