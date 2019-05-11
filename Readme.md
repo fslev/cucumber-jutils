@@ -29,47 +29,47 @@ Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
 * [**apache-http-client**](https://github.com/apache/httpcomponents-client)
 
 # Integration
-In order to integrate **cucumber-utils** within your test project you must add the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
+In order to integrate **cucumber-utils** within your test project you must configure the following **glue** package, either inside your IDE Cucumber plugin or inside the code:
 ```
 com.cucumber.utils
 ```  
 
 # Features
-## 1. Expected-Actual compare mechanism
+## 1. Compare mechanism
 The following types of objects are supported for comparison:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
-    ```css
+    ```
     String expected = "{\"!b\":val1\",\"a\":\"val2\"}";
     String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
-    Cucumbers.compare(expected,actual);
+    cucumbers.compare(expected, actual); //comparison passes
     ```
 
 * XMLs  
   * dependency: [**xml-unit**](https://github.com/xmlunit/xmlunit)
-    ```css
+    ```
     String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
     String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
-    Cucumbers.compare(expected,actual);
+    cucumbers.compare(expected, actual); //comparison passes
     ```      
 
 * JSON convertible objects  
      
-    ```css
-    List<Map<String, Object>> expected = new ArrayList<>();
-    List<Map<String, Object>> actual = new ArrayList<>();
-    //To Do: Fill expected and actual
-    Cucumbers.compare(expected,actual);
+    ```
+    List<String> expected = Arrays.asList(new String[]{"a", "b", "c", ".*"});
+    List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
+    cucumbers.compare(expected, actual); //comparison passes
     ```   
 
 * Strings, with regex support   
     ```css
     String expected = "some .* text";
     String actual = "some dummy text";
-    Cucumbers.compare(expected,actual);
+    cucumbers.compare(expected, actual); //comparison passes
     ```  
 
-* For the rest, the default *equals()* method is used  
+* By default, when comparing two Java objects, the compare mechanisms from above are called in the same order, until one comparison passes.  
+  If not, the *equals()* method is used as a last compare mechanism.   
 
 ## 2. State-sharing mechanism
 The state sharing mechanism uses the power of **guice**, **cucumber-guice** and Cucumber **custom** expressions.  
