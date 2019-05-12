@@ -203,6 +203,34 @@ String responseAsString = EntityUtils.toString(response.getEntity());
 
 ## 4. Predefined Cucumber utility steps 
 
+- Set scenario properties
+```
+* load all scenario props from dir "relativePath/to/dir"
+* load scenario props from file "relativePath/to/file"
+Given param a="1"
+
+```
+- Compare simple values
+```
+Given param a="1"
+And param b="1"
+Then COMPARE #[a] with "#[b]"
+Given param json1 =
+"""
+  {
+    "name": "J.*n",
+    "age": "\\d+",
+  }
+    """
+    And param json2=
+    """
+  {
+	"name": "John",
+	"age": 30,
+  }
+"""
+    Then COMPARE #[json1] with "#[json2]"
+```
 - Compare date times
 ```
 Given DateTime pattern="yyyy-MM-dd HH:mm:ss"
