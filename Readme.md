@@ -3,10 +3,10 @@
 # Summary
 A Java library meant to help you write organized and clean **Cucumber** tests.  
 It takes over the usual dependencies and features needed inside a test framework, such as:  
-* [**Comparing** mechanism](#1-compare-mechanism) (compare XMLs, JSONs, and Java objects)  
+* [**Compare** mechanism](#1-compare-mechanism) (compare XMLs, JSONs, and Java objects)  
 * [A light and powerful **state-sharing mechanism**](#2-state-sharing-mechanism) between _Cucumber Scenario Steps_  
 * [Customized **clients**](#3-customized-clients) to access various resources, i.e _databases_, _HTTP services_, etc  
-* [Predefined Cucumber utility steps](#4-pre-defined-cucumber-utility-steps)
+* [Predefined Cucumber utility steps](#4-predefined-cucumber-utility-steps)
 * other utility methods           
 
 Most of these features can be used directly from code within your test project and are also available as _Cucumber step definitions_.    
@@ -199,7 +199,7 @@ HttpResponse response = client.execute();
 String responseAsString = EntityUtils.toString(response.getEntity());
 ```
 
-## 4. Pre-defined Cucumber utility steps 
+## 4. Predefined Cucumber utility steps 
 
 - Compare date times
 ```
