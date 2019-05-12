@@ -148,8 +148,10 @@ where, inside the *properties* directory are defined several files containing th
 
     @ScenarioScoped
     public class ParamSteps {
+        
         @Inject
         private ScenarioProps scenarioProps;
+        
         public void setProp(String name, String value) {
             scenarioProps.put(name, value);
         }
