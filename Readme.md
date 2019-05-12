@@ -211,12 +211,12 @@ Given param a="1"
 
 ```
 - Compare simple values
-```
+```css
 Given param a="1"
 And param b="1"
 Then COMPARE #[a] with "#[b]"
 Given param json1 =
-"""css
+"""
   {
     "name": "J.*n",
     "age": "\\d+",
