@@ -6,7 +6,7 @@ It takes over the usual dependencies and features needed inside a test framework
 * [**Compare** mechanism](#1-compare-mechanism) (compare XMLs, JSONs, and Java objects)  
 * [A light and powerful **state-sharing mechanism**](#2-state-sharing-mechanism) between _Cucumber Scenario Steps_  
 * [Customized **clients**](#3-customized-clients) to access various resources, i.e _databases_, _HTTP services_, etc  
-* [Predefined Cucumber utility steps](#4-predefined-cucumber-utility-steps)
+* [**Predefined** Cucumber utility steps](#4-predefined-cucumber-utility-steps)
 * other utility methods           
 
 Most of these features can be used directly from code within your test project and are also available as _Cucumber step definitions_.    
