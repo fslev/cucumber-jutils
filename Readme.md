@@ -211,7 +211,7 @@ Given param a="1"
 
 ```
 - Compare simple values
-```css
+```gherkin
 Given param a="1"
 And param b="1"
 Then COMPARE #[a] with "#[b]"
