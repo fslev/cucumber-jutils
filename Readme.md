@@ -40,27 +40,27 @@ com.cucumber.utils
 The following types of objects are supported for complex comparison, via the _Cucumbers_ class:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
-    ```
+    ```java
     String expected = "{\"!b\":val1\",\"a\":\"val2\"}";
     String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
     cucumbers.compare(expected, actual); //comparison passes
     ```
 * JSON convertible Java objects  
      
-    ```
+    ```java
     List<String> expected = Arrays.asList(new String[]{"a", "b", "c", ".*"});
     List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
     cucumbers.compare(expected, actual); //comparison passes
     ```   
 * XMLs  
   * dependency: [**xml-unit**](https://github.com/xmlunit/xmlunit)
-    ```
+    ```java
     String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
     String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
     cucumbers.compare(expected, actual); //comparison passes
     ```      
 * Strings, with regex support   
-    ```
+    ```java
     String expected = "some .* text";
     String actual = "some dummy text";
     cucumbers.compare(expected, actual); //comparison passes
@@ -69,7 +69,7 @@ The following types of objects are supported for complex comparison, via the _Cu
 
 ### 1.1 Poll and compare
 Compare until condition is met or until timeout:
-```
+```java
 // Compare every 1000 millis until generated random number is 3 or until total time duration is 10s   
 int expected = 3;
 cucumbers.pollAndCompare(expected, 1000, 10, () -> generateRandomNumber());
@@ -82,7 +82,7 @@ State is shared between different Cucumber steps inside same scenario by using *
 ### 2.1 How to set and use scenario properties  
 
 - within the Cucumber Scenario, by using the **param \<name\>="\<value\>"** _Cucumber_ step
-```
+```gherkin
 Scenario: Test scenario properties
   Given param animal="rabbit"
   And param location="forest"
@@ -102,7 +102,7 @@ _Under the hood_: If your Cucumber step definition uses anonymous parameter type
 
 - from resource file, via **load scenario props from file "relative/path/to/file.properties"** _Cucumber_ step
            
-```
+```gherkin
 Scenario: Test scenario properties
   * load scenario props from file "placeholders/scenario.properties"
   Then COMPARE #[animal] with "Rabbit" 
@@ -121,7 +121,7 @@ animal=Rabbit
 * ***.txt***  
     
 If a scenario property is read from a **.property**, **.json**, **.xml** or **.txt** file, then the name of the scenario property will actually be the name of the file, without extension:  
-```
+```gherkin
 Scenario: Test placeholder fill with scenario property file
   * load scenario props from file "placeholders/animal.property"
   Then COMPARE #[animal] with "Rabbit"
@@ -132,7 +132,7 @@ Rabbit
 ```  
 
 - from resource directory, via **load all scenario props from dir "relative/path/to/dir"** Cucumber step           
-```
+```gherkin
 * load all scenario props from dir "placeholders/properties"
 Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger] and cheese=#[cheese]"
 Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger and cheese=Mozzarela" 
@@ -164,7 +164,7 @@ In order to do that, you must compare the actual response with an expected one, 
 
 Example:  
 
-```
+```gherkin
 Scenario: Test scenario properties
   When invoke HTTP API Create user    
   Then check response body="{"id":"~[userId]"}" 
@@ -172,7 +172,7 @@ Scenario: Test scenario properties
 If comparison passes, then a new scenario property will be set, having the name ***userId*** and the value matched from the HTTP response.  
 This new scenario property can be used further inside your test scenario:  
 
-```
+```gherkin
 When invoke HTTP API Get user with id = #[userId]
 Then check HTTP response status = 200
 ```
@@ -204,11 +204,10 @@ String responseAsString = EntityUtils.toString(response.getEntity());
 ## 4. Predefined Cucumber utility steps 
 
 - Set scenario properties
-```
+```gherkin
 * load all scenario props from dir "relativePath/to/dir"
 * load scenario props from file "relativePath/to/file"
 Given param a="1"
-
 ```
 - Compare simple values
 ```gherkin
@@ -222,17 +221,17 @@ Given param json1 =
     "age": "\\d+",
   }
 """
-    And param json2=
+And param json2=
 """
   {
 	"name": "John",
 	"age": 30,
   }
 """
-    Then COMPARE #[json1] with "#[json2]"
+Then COMPARE #[json1] with "#[json2]"
 ```
 - Compare date times
-```
+```gherkin
 Given DateTime pattern="yyyy-MM-dd HH:mm:ss"
 Then DateTime check period from "2018-02-03 01:00:00" to "2019-02-03 01:00:00" is 1year
 And DateTime check period from "2018-02-03 01:00:00" to "2019-02-02 12:01:10" is 364days
@@ -242,7 +241,7 @@ And DateTime check period from "2019-02-03 23:58:12" to "2019-02-03 23:59:10" is
 ``` 
     
 - Connect to SQL databases, execute queries, compare results and also execute updates
-```
+```gherkin
 Scenario: Test MYSQL client select
   Given SQL data source from file path "config/database/mysql.properties"
   Then SQL execute query "select * from gift order by person_id asc limit 3" and compare result with
@@ -251,7 +250,7 @@ Scenario: Test MYSQL client select
           | 21189037  | fun & joy for everybody!                             |
           | 21193939  | Leica M9-P Hermes Edition: http://vimeo.com/42108675 |
 ``` 
-```
+```gherkin
 Scenario: Test POSTGRESQL client simple insert with tabular data
   Given SQL data source from file path "config/database/psql.properties"
   Then SQL INSERT into table "mag" the following data
@@ -261,11 +260,11 @@ Scenario: Test POSTGRESQL client simple insert with tabular data
           | 17        | wow               |
 ```
 - Execute shell / bash  commands:
-```
+```gherkin
 * SHELL execute command "ls -alh" and check response=".*"
 ``` 
 - Connect via SSH to a remote server and execute bash commands:
-```
+```gherkin
 Given JSCH connection from properties file "config/jsch/jsch.properties"
 Then JSCH execute command "hostname -f" and check response="vm-test\d+.sandbox.lan"
 ```
