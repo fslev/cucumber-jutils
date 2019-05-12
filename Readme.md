@@ -40,31 +40,31 @@ com.cucumber.utils
 The following types of objects are supported for complex comparison, via the _Cucumbers_ class:
 * JSONs (String, JsonNode)  
   * dependency: [**json-compare**](https://github.com/fslev/json-compare)
-    ```java
-    String expected = "{\"!b\":val1\",\"a\":\"val2\"}";
-    String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
-    cucumbers.compare(expected, actual); //comparison passes
-    ```
+```java
+String expected = "{\"!b\":val1\",\"a\":\"val2\"}";
+String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
+cucumbers.compare(expected, actual); //comparison passes
+```
 * JSON convertible Java objects  
      
-    ```java
-    List<String> expected = Arrays.asList(new String[]{"a", "b", "c", ".*"});
-    List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
-    cucumbers.compare(expected, actual); //comparison passes
-    ```   
+```java
+List<String> expected = Arrays.asList(new String[]{"a", "b", "c", ".*"});
+List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
+cucumbers.compare(expected, actual); //comparison passes
+```   
 * XMLs  
   * dependency: [**xml-unit**](https://github.com/xmlunit/xmlunit)
-    ```java
-    String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
-    String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
-    cucumbers.compare(expected, actual); //comparison passes
-    ```      
+```java
+String expected = "<struct><int a=1>some .* text</int><boolean>false</boolean></struct>";
+String actual = "<struct><int a=1>some dummy text</int><boolean>false</boolean></struct>";
+cucumbers.compare(expected, actual); //comparison passes
+```      
 * Strings, with regex support   
-    ```java
-    String expected = "some .* text";
-    String actual = "some dummy text";
-    cucumbers.compare(expected, actual); //comparison passes
-    ```  
+```java
+String expected = "some .* text";
+String actual = "some dummy text";
+cucumbers.compare(expected, actual); //comparison passes
+```  
 * If the objects compared are not of any type from above, then the comparison is done via the equals() method.  
 
 ### 1.1 Poll and compare
