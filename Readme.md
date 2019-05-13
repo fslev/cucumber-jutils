@@ -78,7 +78,7 @@ Compare until condition is met or until timeout:
 int expected = 3;
 cucumbers.pollAndCompare(expected, 1000, 10, () -> generateRandomNumber());
 ```
-
+<a name="2-state-sharing-mechanism"></a>
 ## 2. State-sharing mechanism
 The state sharing mechanism is based on **guice**, **cucumber-guice** and Cucumber [**anonymous parameter types**](https://cucumber.io/docs/cucumber/cucumber-expressions/#parameter-types).  
 State is shared between different Cucumber steps inside same scenario by using *scenario properties*.  
@@ -180,7 +180,8 @@ This new scenario property can be used further inside your test scenario:
 When invoke HTTP API Get user with id = #[userId]
 Then check HTTP response status = 200
 ```
-     
+
+<a name="3-customized-clients"></a>     
 ## 3. Customized clients
 
 The following clients are available via Cucumber-Utils:
@@ -205,6 +206,7 @@ HttpResponse response = client.execute();
 String responseAsString = EntityUtils.toString(response.getEntity());
 ```
 
+<a name="4-predefined-cucumber-utility-steps"></a>     
 ## 4. Predefined Cucumber utility steps 
 
 - Set scenario properties
