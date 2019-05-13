@@ -39,6 +39,7 @@ com.cucumber.utils
 ```  
 
 # Features
+<a name="1-compare-mechanism"></a>
 ## 1. Compare mechanism
 The following types of objects are supported for complex comparison, via the _Cucumbers_ class:
 * JSONs (String, JsonNode)  
