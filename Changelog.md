@@ -1,4 +1,7 @@
 ### 4.4
+Reformat comparison error messages   
+
+### 4.4
 Increment Cucumber dependencies      
 
 ### 4.3

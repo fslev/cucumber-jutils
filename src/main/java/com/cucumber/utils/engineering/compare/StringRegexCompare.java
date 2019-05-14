@@ -45,7 +45,7 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                fail(String.format("%sExpected: %s, But got: %s", message != null ? message + ". " : "", parsedString, actual));
+                fail(String.format("%sExpected: %s\nBut got: %s", message != null ? message + ". " : "", parsedString, actual));
             }
         } catch (PatternSyntaxException e) {
             if (parsedString.equals(actual)) {
@@ -53,7 +53,7 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                fail(String.format("%sExpected: %s, But got: %s", message != null ? message + ". " : "", parsedString, actual));
+                fail(String.format("%sExpected: %s\nBut got: %s", message != null ? message + ". " : "", parsedString, actual));
             }
         }
         return assignSymbols;
