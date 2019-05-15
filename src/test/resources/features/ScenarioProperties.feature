@@ -1,10 +1,10 @@
 Feature: Test placeholder fill
 
   Scenario Outline: Test scneario property from example table
-    * COMPARE <withProperties> with "<result>"
+    * COMPARE <expected> with "<withProperties>"
     Examples:
-      | withProperties       | result    |
-      | val-with-#[uid]-prop | [a-Z0-9]* |
+      | withProperties  | expected        |
+      | val-with-#[now] | val-with-[0-9]+ |
 
   Scenario: Test placeholder fill with global values
     Given load scenario props from file "scenario.properties"
