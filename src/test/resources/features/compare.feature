@@ -9,11 +9,6 @@ Feature: Test comparator
     Then COMPARE #[a] with "#[b]"
     And COMPARE 1 with "1"
 
-  Scenario: Compare values with special characters
-    Given param expected=".*"
-    And param actual="[ERROR] No message available\n"
-    Then COMPARE #[expected] with "#[actual]"
-
   Scenario: Compare jsons
     Given param a="da"
     And param b="oho"
