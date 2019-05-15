@@ -1,5 +1,11 @@
 Feature: Test placeholder fill
 
+  Scenario Outline: Test scneario property from example table
+    * COMPARE <withProperties> with "<result>"
+    Examples:
+      | withProperties       | result    |
+      | val-with-#[uid]-prop | [a-Z0-9]* |
+
   Scenario: Test placeholder fill with global values
     Given load scenario props from file "scenario.properties"
     Given The string with global placeholders "Username is #[username] and password is #[passWord]"
