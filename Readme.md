@@ -11,8 +11,8 @@ It takes over the usual dependencies and features needed inside a test framework
 
 Most of these features can be used directly from code within your test project and are also available as _Cucumber step definitions_.    
 
-### Tutorial (to do)
-
+### Tutorial
+Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tutorial) for a better picture on how this library is/should be used.  
 
 #### Maven Central
 ```
