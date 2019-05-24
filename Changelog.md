@@ -1,3 +1,6 @@
+### 4.7
+Update Jackson vulnerable dependency  
+
 ### 4.6
 Update dependencies     
 
