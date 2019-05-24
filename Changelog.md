@@ -1,3 +1,6 @@
+### 4.6
+Update dependencies     
+
 ### 4.5
 Reformat comparison error messages   
 
