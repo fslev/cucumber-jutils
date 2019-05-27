@@ -1,3 +1,6 @@
+### 4.8
+Re-format assertion error msg      
+
 ### 4.7
 Update Jackson vulnerable dependency  
 

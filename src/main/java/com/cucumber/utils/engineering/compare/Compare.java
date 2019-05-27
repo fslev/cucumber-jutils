@@ -55,7 +55,7 @@ public class Compare implements Placeholdable {
 
     private boolean nullsMatch() {
         if (expected == null ^ actual == null) {
-            fail(String.format("%sExpected: [%s]\nBut found: [%s]", message != null ? message + "\n" : "", expected, actual));
+            fail(String.format("%sExpected:\n[%s]\nBut found:\n[%s]", message != null ? message + "\n" : "", expected, actual));
         } else if (expected == null) {
             return true;
         }
