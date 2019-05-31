@@ -35,6 +35,9 @@ public class SqlClient {
 
     public void connect() throws SQLException {
         conn = DriverManager.getConnection(url, user, pwd);
+        log.debug("---- DB SETUP ----");
+        log.debug("Driver: {}", driverClassName);
+        log.debug("Database url: {}", url);
     }
 
     public PreparedStatement prepareStatement(String sql) throws SQLException {
@@ -60,6 +63,8 @@ public class SqlClient {
     }
 
     public List<Map<String, String>> executeQueryAndGetRsAsList() {
+        log.debug("---- SQL QUERY REQUEST ----");
+        log.debug("SQL query: {}", sql);
         List<Map<String, String>> tableData = new ArrayList<>();
         ResultSet rs = null;
         try {
@@ -92,16 +97,12 @@ public class SqlClient {
 
     public ResultSet executeQuery() throws SQLException {
         log.debug("---- SQL QUERY REQUEST ----");
-        log.debug("Driver: {}", driverClassName);
-        log.debug("Database url: {}", url);
         log.debug("SQL query: {}", sql);
         return pst.executeQuery();
     }
 
     public int executeUpdate() throws SQLException {
         log.debug("---- SQL UPDATE REQUEST ----");
-        log.debug("Driver: {}", driverClassName);
-        log.debug("Database url: {}", url);
         log.debug("SQL update: {}", sql);
         int affected = 0;
         try {

@@ -1,3 +1,6 @@
+### 4.10
+More logging for SQL client       
+
 ### 4.9
 Re-format again assertion error msg        
 
