@@ -47,7 +47,7 @@ public class HttpResponseWrapper {
             this.reasonPhrase = wrapper.reasonPhrase;
             this.headers = wrapper.headers;
         } catch (Exception e) {
-            throw new IOException("HTTP Response wrapper of invalid format\n");
+            throw new IOException("HTTP Response wrapper of invalid format");
         }
     }
 

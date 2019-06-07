@@ -1,6 +1,9 @@
+### 4.12
+Refactor logs        
+
 ### 4.11
 Bug fix  
-Refactor logs  
+Refactor logs    
      
 ### 4.10
 More logging for SQL client       
