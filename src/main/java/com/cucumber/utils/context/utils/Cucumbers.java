@@ -157,7 +157,7 @@ public class Cucumbers {
                 .method(supplier)
                 .until(p -> {
                     try {
-                        compare(message, expected, p);
+                        compare(message, expected, p, nonExtensibleObject, nonExtensibleArray);
                         return true;
                     } catch (AssertionError e) {
                         return false;
@@ -172,7 +172,7 @@ public class Cucumbers {
         try {
             expectedWrapper = new HttpResponseWrapper(expected);
         } catch (IOException e) {
-            log.warn("Expected value has no HTTP Response format\n{}", expected);
+            log.info("Expected value has no HTTP Response format\n{}", expected);
             throw e;
         }
         String expectedStatus = expectedWrapper.getStatus();

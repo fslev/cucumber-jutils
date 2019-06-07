@@ -58,7 +58,7 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            cucumbers.pollAndCompare(expected, () -> client.executeQueryAndGetRsAsList(), false, true);
+            cucumbers.pollAndCompare(expected, pollDuration, () -> client.executeQueryAndGetRsAsList(), true, true);
         } finally {
             this.client.close();
         }

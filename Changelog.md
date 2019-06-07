@@ -1,3 +1,7 @@
+### 4.11
+Bug fix  
+Refactor logs  
+     
 ### 4.10
 More logging for SQL client       
 

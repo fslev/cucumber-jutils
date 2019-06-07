@@ -9,6 +9,13 @@ Feature: Test clients
       | 21189037  | fun & joy for everybody!                             |
       | 21193939  | Leica M9-P Hermes Edition: http://vimeo.com/42108675 |
 
+  Scenario: Test MYSQL client select and compare with poll
+    Given SQL data source from file path "config/database/mysql.properties"
+    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 2" and poll for 6s while comparing result with
+      | person_id | gift |
+      | .*        | .*   |
+      | 16        | null |
+
   Scenario: TEST MYSQL client delete
     Given SQL data source from file path "config/database/mysql.properties"
     Then SQL execute update "delete from gift_wf_2012 where person_id<100"
