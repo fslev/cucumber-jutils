@@ -1,5 +1,10 @@
 Feature: Test placeholder fill
 
+  Scenario: Test scenario prop assigned to itself
+    Given param a="test"
+    And param a="#[a]"
+    Then COMPARE #[a] with "test"
+
   Scenario Outline: Test scneario property from example table
     * COMPARE <expected> with "<withProperties>"
     Examples:
