@@ -1,6 +1,15 @@
 @Ignore
 Feature: Test clients
 
+  Scenario: Test MYSQL client select with empty result set in string format
+    Given SQL data source from file path "config/database/mysql.properties"
+    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and compare result with {"a":2}
+
+  Scenario: Test MYSQL client select with empty result set in data table format
+    Given SQL data source from file path "config/database/mysql.properties"
+    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and compare result with
+      |  |
+
   Scenario: Test MYSQL client select
     Given SQL data source from file path "config/database/mysql.properties"
     Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 3" and compare result with

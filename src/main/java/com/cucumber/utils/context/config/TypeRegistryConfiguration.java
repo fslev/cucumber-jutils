@@ -3,6 +3,7 @@ package com.cucumber.utils.context.config;
 import com.cucumber.utils.clients.http.Method;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.context.props.ScenarioPropsParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cucumber.api.TypeRegistry;
 import cucumber.api.TypeRegistryConfigurer;
@@ -46,7 +47,7 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
 
     private class ScenarioPropsParameterTransformer implements ParameterByTypeTransformer {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper().enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
         @Override
         public Object transform(String s, Type type) {
@@ -58,15 +59,14 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
     private class ScenarioPropsDataTableTransformer implements TableTransformer {
         @Override
         public List transform(DataTable dataTable) {
+
             ScenarioProps scenarioProps = InjectorByThreadSource.getInjector(Thread.currentThread().getId()).getInstance(ScenarioProps.class);
             List<Map<String, String>> list = new ArrayList<>();
             dataTable.asMaps().forEach(map ->
                     list.add(map.entrySet().stream().collect(Collectors.toMap(
                             e -> new ScenarioPropsParser(scenarioProps, e.getKey()).result().toString(),
                             e -> new ScenarioPropsParser(scenarioProps, e.getValue()).result().toString()))));
-            return !list.isEmpty() ? list : dataTable.asList().stream()
-                    .map(el -> new ScenarioPropsParser(scenarioProps, el).result().toString())
-                    .collect(Collectors.toList());
+            return list;
         }
     }
 }

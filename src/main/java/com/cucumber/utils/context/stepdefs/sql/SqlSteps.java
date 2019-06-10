@@ -3,6 +3,8 @@ package com.cucumber.utils.context.stepdefs.sql;
 import com.cucumber.utils.clients.database.SqlClient;
 import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -41,8 +43,18 @@ public class SqlSteps {
         }
     }
 
+    @Then("SQL execute query \"{}\" and compare result with {}")
+    public void executeQueryAndCompareWithJson(String query, ObjectNode expected) throws SQLException {
+        System.out.println(expected);
+        executeQueryAndCompare(query, expected);
+    }
+
     @Then("SQL execute query \"{}\" and compare result with")
-    public void executeQueryAndCompare(String query, List expected) throws SQLException {
+    public void executeQueryAndCompareWithTable(String query, List expected) throws SQLException {
+        executeQueryAndCompare(query, expected);
+    }
+
+    public void executeQueryAndCompare(String query, Object expected) throws SQLException {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
