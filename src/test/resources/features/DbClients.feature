@@ -3,20 +3,24 @@ Feature: Test clients
 
   Scenario: Test MYSQL client select with empty result set in string format
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and compare result with {"a":2}
+    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and compare result with []
 
   Scenario: Test MYSQL client select with empty result set in data table format
     Given SQL data source from file path "config/database/mysql.properties"
     Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and compare result with
       |  |
 
-  Scenario: Test MYSQL client select
+  Scenario: Test MYSQL client select and compare with table
     Given SQL data source from file path "config/database/mysql.properties"
     Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 3" and compare result with
       | person_id | gift                                                 |
       | .*        | .*                                                   |
       | 21189037  | fun & joy for everybody!                             |
       | 21193939  | Leica M9-P Hermes Edition: http://vimeo.com/42108675 |
+
+  Scenario: Test MYSQL client select and compare with json
+    Given SQL data source from file path "config/database/mysql.properties"
+    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 1" and compare result with [{"person_id": "*", "gift": ".*"}]
 
   Scenario: Test MYSQL client select and compare with poll
     Given SQL data source from file path "config/database/mysql.properties"

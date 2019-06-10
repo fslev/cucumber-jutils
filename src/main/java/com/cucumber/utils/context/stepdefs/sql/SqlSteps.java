@@ -4,7 +4,6 @@ import com.cucumber.utils.clients.database.SqlClient;
 import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.inject.Inject;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -44,8 +43,7 @@ public class SqlSteps {
     }
 
     @Then("SQL execute query \"{}\" and compare result with {}")
-    public void executeQueryAndCompareWithJson(String query, ObjectNode expected) throws SQLException {
-        System.out.println(expected);
+    public void executeQueryAndCompareWithJson(String query, List<Map<String, String>> expected) throws SQLException {
         executeQueryAndCompare(query, expected);
     }
 

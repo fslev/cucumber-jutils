@@ -13,6 +13,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.datatable.DataTableType;
 import io.cucumber.datatable.TableTransformer;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +53,19 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
         @Override
         public Object transform(String s, Type type) {
             ScenarioProps scenarioProps = InjectorByThreadSource.getInjector(Thread.currentThread().getId()).getInstance(ScenarioProps.class);
-            return objectMapper.convertValue(new ScenarioPropsParser(scenarioProps, s.trim()).result(), objectMapper.constructType(type));
+            Object parsedValue = new ScenarioPropsParser(scenarioProps, s.trim()).result();
+            try {
+                return objectMapper.readValue(parsedValue.toString(), objectMapper.constructType(type));
+                // if json string cannot be converted to object then proceed to simple value conversion
+            } catch (IOException e) {
+                return objectMapper.convertValue(parsedValue, objectMapper.constructType(type));
+            }
         }
     }
 
     private class ScenarioPropsDataTableTransformer implements TableTransformer {
         @Override
         public List transform(DataTable dataTable) {
-
             ScenarioProps scenarioProps = InjectorByThreadSource.getInjector(Thread.currentThread().getId()).getInstance(ScenarioProps.class);
             List<Map<String, String>> list = new ArrayList<>();
             dataTable.asMaps().forEach(map ->

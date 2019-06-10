@@ -96,22 +96,6 @@ public class Cucumbers {
         compareInternal(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
     }
 
-    public void pollAndCompare(String message, Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        pollAndCompare(message, expected, null, null, supplier, nonExtensibleObject, nonExtensibleArray);
-    }
-
-    public void pollAndCompare(Object expected, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        pollAndCompare(null, expected, null, null, supplier, nonExtensibleObject, nonExtensibleArray);
-    }
-
-    public void pollAndCompare(String message, Object expected, Supplier<Object> supplier) {
-        pollAndCompare(message, expected, null, null, supplier);
-    }
-
-    public void pollAndCompare(Object expected, Supplier<Object> supplier) {
-        pollAndCompare(null, expected, null, null, supplier);
-    }
-
     public void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         pollAndCompare(message, expected, pollDurationInSeconds, null, supplier, nonExtensibleObject, nonExtensibleArray);
     }
@@ -121,35 +105,11 @@ public class Cucumbers {
     }
 
     public void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
-        pollAndCompare(message, expected, pollDurationInSeconds, null, supplier);
+        pollAndCompare(message, expected, pollDurationInSeconds, null, supplier, false, false);
     }
 
     public void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
-        pollAndCompare(null, expected, pollDurationInSeconds, null, supplier);
-    }
-
-    public void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        pollAndCompare(message, expected, null, pollIntervalInMillis, supplier, nonExtensibleObject, nonExtensibleArray);
-    }
-
-    public void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        pollAndCompare(null, expected, null, pollIntervalInMillis, supplier, nonExtensibleObject, nonExtensibleArray);
-    }
-
-    public void pollAndCompare(String message, Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
-        pollAndCompare(message, expected, null, pollIntervalInMillis, supplier);
-    }
-
-    public void pollAndCompare(Object expected, long pollIntervalInMillis, Supplier<Object> supplier) {
-        pollAndCompare(null, expected, null, pollIntervalInMillis, supplier);
-    }
-
-    public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
-        pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, supplier, false, false);
-    }
-
-    public void pollAndCompare(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
-        pollAndCompare(null, expected, pollDurationInSeconds, pollIntervalInMillis, supplier, false, false);
+        pollAndCompare(null, expected, pollDurationInSeconds, null, supplier, false, false);
     }
 
     public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
