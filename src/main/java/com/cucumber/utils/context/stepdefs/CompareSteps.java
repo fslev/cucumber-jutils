@@ -23,6 +23,18 @@ public class CompareSteps {
         cucumbers.compare(expected, actual);
     }
 
+    @Then("Negative COMPARE {} with \"{}\"")
+    public void compareNegativeWithString(Object expected, Object actual) {
+        log.info("Negative compare {} against {}", expected, actual);
+        try {
+            cucumbers.compare(expected, actual);
+        } catch (AssertionError e) {
+            log.info("Assertion Error caught. Negative compare passes");
+            return;
+        }
+        throw new AssertionError("Compared objects match");
+    }
+
     @Then("COMPARE {} with content from path \"{}\"")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
         String actual = cucumbers.read(filePath);
@@ -34,6 +46,18 @@ public class CompareSteps {
     public void compareWithDocString(Object expected, String actual) {
         log.info("Compare {} against {}", expected, actual);
         cucumbers.compare(expected, actual);
+    }
+
+    @Then("Negative COMPARE {} with")
+    public void compareNegativeWithDocString(Object expected, String actual) {
+        log.info("Negative compare {} against {}", expected, actual);
+        try {
+            cucumbers.compare(expected, actual);
+        } catch (AssertionError e) {
+            log.info("Assertion Error caught. Negative compare passes");
+            return;
+        }
+        throw new AssertionError("Compared objects match");
     }
 
     @Then("COMPARE {} with table")

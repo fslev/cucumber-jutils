@@ -9,6 +9,11 @@ Feature: Test comparator
     Then COMPARE #[a] with "#[b]"
     And COMPARE 1 with "1"
 
+  Scenario: Compare simple values negative
+    Given param a="1"
+    And param b="2"
+    Then Negative COMPARE #[a] with "#[b]"
+
   Scenario: Compare jsons
     Given param a="da"
     And param b="oho"
@@ -38,6 +43,25 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
+
+  Scenario: Compare jsons negative
+    Given param json1 =
+    """
+  {
+    "name": "J.*n",
+    "age": "\\d+",
+    "cars": ["Ford", "lol", "Fiat"]
+  }
+    """
+    And param json2=
+    """
+  {
+	"name": "John",
+	"age": 30,
+	"cars": ["BMW","Ford","Fiat"]
+  }
+    """
+    Then Negative COMPARE #[json1] with "#[json2]"
 
   Scenario: Compare data tables
     Given param a="replaced_value"
