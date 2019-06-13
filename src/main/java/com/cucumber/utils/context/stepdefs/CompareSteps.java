@@ -29,7 +29,7 @@ public class CompareSteps {
         try {
             cucumbers.compare(expected, actual);
         } catch (AssertionError e) {
-            log.info("Assertion Error caught. Negative compare passes");
+            log.info("Assertion Error caught. Negative compare passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared objects match");
@@ -54,7 +54,7 @@ public class CompareSteps {
         try {
             cucumbers.compare(expected, actual);
         } catch (AssertionError e) {
-            log.info("Assertion Error caught. Negative compare passes");
+            log.info("Assertion Error caught. Negative compare passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared objects match");
