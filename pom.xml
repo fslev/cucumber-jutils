@@ -21,8 +21,8 @@
         <httpclient.version>4.5.8</httpclient.version>
         <jsoncompare.version>2.13</jsoncompare.version>
         <xmlunit.version>2.6.2</xmlunit.version>
-        <cucumber.version>4.3.1</cucumber.version>
-        <cucumber.expressions.version>7.0.0</cucumber.expressions.version>
+        <cucumber.version>4.4.0</cucumber.version>
+        <cucumber.expressions.version>7.0.2</cucumber.expressions.version>
         <guice.version>4.2.2</guice.version>
         <surefire.version>2.22.1</surefire.version>
     </properties>
