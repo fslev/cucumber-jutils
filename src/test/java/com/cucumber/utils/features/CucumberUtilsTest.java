@@ -1,8 +1,8 @@
 package com.cucumber.utils.features;
 
-import cucumber.api.CucumberOptions;
-import cucumber.api.junit.Cucumber;
-import cucumber.api.testng.AbstractTestNGCucumberTests;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
 import org.junit.runner.RunWith;
 import org.testng.ITest;
 import org.testng.ITestContext;
