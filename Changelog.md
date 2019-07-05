@@ -1,3 +1,6 @@
+### 4.19
+Fix Method poll duration bug       
+
 ### 4.18
 Update to cucumber 4.5.1     
 

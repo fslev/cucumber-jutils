@@ -37,7 +37,7 @@ public class MethodPollerTest {
         int expected = 5;
         int result = new MethodPoller<Integer>()
                 .method(() -> generateRandomNumber(4))
-                .duration(2)
+                .duration(5)
                 .until(n -> n.equals(expected)).poll();
         assertNotEquals(expected, result);
     }

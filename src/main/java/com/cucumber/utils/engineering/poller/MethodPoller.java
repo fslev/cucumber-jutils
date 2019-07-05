@@ -50,6 +50,7 @@ public class MethodPoller<T> {
         boolean pollTimeout = false;
         T result = null;
         while (!pollSucceeded && !pollTimeout) {
+            long start = System.currentTimeMillis();
             try {
                 result = pollMethod.get();
                 pollSucceeded = pollResultPredicate.test(result);
@@ -60,7 +61,8 @@ public class MethodPoller<T> {
                 try {
                     log.debug("Poll failed, I'll take another shot after {}ms", pollIntervalMillis);
                     Thread.sleep(pollIntervalMillis);
-                    pollDurationSec = pollDurationSec.minusMillis(pollIntervalMillis);
+                    long elapsed = System.currentTimeMillis() - start;
+                    pollDurationSec = pollDurationSec.minusMillis(elapsed);
                     if (pollDurationSec.isZero() || pollDurationSec.isNegative()) {
                         pollTimeout = true;
                     }
