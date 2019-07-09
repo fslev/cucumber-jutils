@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-utils</artifactId>
-    <version>4.20-SNAPSHOT</version>
+    <version>4.20</version>
 
     <name>Cucumber Utils</name>
     <description>A little helper for Cucumber</description>
@@ -310,7 +310,7 @@
         <connection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</developerConnection>
         <url>https://github.com/fslev/cucumber-utils/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>cucumber-utils-4.20</tag>
     </scm>
 
     <distributionManagement>
