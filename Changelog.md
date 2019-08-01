@@ -1,3 +1,6 @@
+### 4.24
+Fix anonymous parameter type conversion  
+ 
 ### 4.23
 Update Cucumber version  
 

@@ -48,7 +48,9 @@ public class TypeRegistryConfiguration implements TypeRegistryConfigurer {
 
 
     private class ScenarioPropsParameterTransformer implements ParameterByTypeTransformer {
-        ObjectMapper objectMapper = new ObjectMapper().enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        ObjectMapper objectMapper = new ObjectMapper()
+                .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
 
         @Override
         public Object transform(String s, Type type) {
