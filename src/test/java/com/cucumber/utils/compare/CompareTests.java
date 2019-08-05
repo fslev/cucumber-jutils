@@ -73,6 +73,19 @@ public class CompareTests {
     }
 
     @Test
+    public void compareJsonWithMultipleAssignSymbolsOnFieldsAndValues() {
+        String expected = "{\"~[sym1]\":\"~[val1]\",\"~[sym2]\":\"~[val2]\"}";
+        String actual = "{\"a\":\"3\",\"b\":\"100\"}";
+        Compare compare = new Compare(expected, actual);
+        Map<String, String> symbols = compare.compare();
+        assertEquals("a", symbols.get("sym1"));
+        assertEquals("3", symbols.get("val1"));
+        assertEquals("b", symbols.get("sym2"));
+        assertEquals("100", symbols.get("val2"));
+        assertEquals(4, symbols.size());
+    }
+
+    @Test
     public void compareJsonArrayWithAssignSymbolsOnFieldsAndValues() {
         String expected = "[{\"~[sym1]\":\"~[sym2]\"},{\"x\":false}]";
         String actual = "[{\"c\":0},{\"x\":false}]";
