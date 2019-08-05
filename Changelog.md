@@ -1,3 +1,6 @@
+### 4.25  
+Add support for assign symbols on JSON fields      
+
 ### 4.24
 Fix anonymous parameter type conversion  
  

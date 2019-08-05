@@ -52,6 +52,38 @@ public class CompareTests {
     }
 
     @Test
+    public void compareJsonWithAssignSymbolsOnFields() {
+        String expected = "{\"~[sym1]\":\"2\"}";
+        String actual = "{\"a\":\"2\"}";
+        Compare compare = new Compare(expected, actual);
+        Map<String, String> symbols = compare.compare();
+        assertEquals("a", symbols.get("sym1"));
+        assertEquals(1, symbols.size());
+    }
+
+    @Test
+    public void compareJsonWithAssignSymbolsOnFieldsAndValues() {
+        String expected = "{\"~[sym1]\":\"~[sym2]\"}";
+        String actual = "{\"a\":\"3\",\"b\":\"100\"}";
+        Compare compare = new Compare(expected, actual);
+        Map<String, String> symbols = compare.compare();
+        assertEquals("a", symbols.get("sym1"));
+        assertEquals("3", symbols.get("sym2"));
+        assertEquals(2, symbols.size());
+    }
+
+    @Test
+    public void compareJsonArrayWithAssignSymbolsOnFieldsAndValues() {
+        String expected = "[{\"~[sym1]\":\"~[sym2]\"},{\"x\":false}]";
+        String actual = "[{\"c\":0},{\"x\":false}]";
+        Compare compare = new Compare(expected, actual);
+        Map<String, String> symbols = compare.compare();
+        assertEquals("c", symbols.get("sym1"));
+        assertEquals("0", symbols.get("sym2"));
+        assertEquals(2, symbols.size());
+    }
+
+    @Test
     public void compareXmlWithAssignSymbols() {
         String expected =
                 "<struct><int a=\"~[sym1]\">some ~[sym3] here</int><boolean a=\"bo~[sym2]ue\">false</boolean></struct>";

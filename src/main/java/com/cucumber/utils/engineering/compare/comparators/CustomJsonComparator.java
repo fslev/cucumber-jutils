@@ -43,11 +43,31 @@ public class CustomJsonComparator implements JsonComparator {
     }
 
     public boolean compareFields(String expected, String actual) {
+
+        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
+        boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty()
+                && !(this.generatedProperties.keySet().containsAll(generator.getProperties().keySet()));
+        String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected;
+        String parsedExpectedQuoted = hasPropertiesToGenerate ? generator.getParsedTarget(true) : expected;
         try {
-            Pattern pattern = Pattern.compile(expected);
-            return pattern.matcher(actual).matches();
+            Pattern pattern = Pattern.compile(parsedExpectedQuoted);
+            if (pattern.matcher(actual).matches()) {
+                if (hasPropertiesToGenerate) {
+                    this.generatedProperties.putAll(generator.getProperties());
+                }
+                return true;
+            } else {
+                return false;
+            }
         } catch (PatternSyntaxException e) {
-            return expected.equals(actual);
+            if (parsedExpected.equals(actual)) {
+                if (hasPropertiesToGenerate) {
+                    this.generatedProperties.putAll(generator.getProperties());
+                }
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
