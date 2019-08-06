@@ -82,8 +82,7 @@ public class JsonCompare implements Placeholdable {
         } catch (AssertionError e) {
             if (!comparator.getGeneratedFieldProperties().isEmpty()) {
                 while (true) {
-                    comparator.getDepletedFieldPropertyList().add(new HashMap<>(comparator.getGeneratedProperties()));
-                    comparator.getGeneratedProperties().clear();
+                    comparator.getDepletedFieldPropertyList().add(new HashMap<>(comparator.getGeneratedFieldProperties()));
                     comparator.getGeneratedFieldProperties().clear();
                     try {
                         JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
