@@ -95,8 +95,10 @@ public class CustomJsonComparator implements JsonComparator {
 
     public boolean areFieldPropertiesDepleted(Map<String, String> target) {
         for (Map<String, String> depletedFieldProperty : depletedFieldPropertyList) {
-            if (depletedFieldProperty.equals(target)) {
-                return true;
+            for (Map.Entry<String, String> targetEntry : target.entrySet()) {
+                if (depletedFieldProperty.get(targetEntry.getKey()).equals(targetEntry.getValue())) {
+                    return true;
+                }
             }
         }
         return false;

@@ -38,6 +38,24 @@ public class JsonCompareTests {
     }
 
     @Test
+    public void compareJsonWithAssignSymbolsOnFields_in_depth() throws CompareException {
+        String expected = "{\"a\":{\"abc-~[sym1]\":{\"o\":\"2\"},\"abc-~[sym2]\":{\"o\":\"0\"}}}";
+        String actual = "{\"a\":{\"abc-X\":{\"o\":\"1\"},\"abc-Y\":{\"o\":\"0\"},\"abc-X\":{\"o\":\"2\"}}}";
+        JsonCompare matcher = new JsonCompare(expected, actual);
+        Map<String, String> symbols = matcher.compare();
+        assertEquals("X", symbols.get("sym1"));
+        assertEquals("Y", symbols.get("sym2"));
+        assertEquals(2, symbols.size());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareJsonWithAssignSymbolsOnFields_in_depth_negative() throws CompareException {
+        String expected = "{\"a\":{\"abc-~[sym1]\":{\"o\":\"2\"},\"abc-~[sym2]\":{\"o\":\"U\"}}}";
+        String actual = "{\"a\":{\"abc-X\":{\"o\":\"1\"},\"abc-Y\":{\"o\":\"0\"},\"abc-X\":{\"o\":\"2\"}}}";
+        new JsonCompare(expected, actual).compare();
+    }
+
+    @Test
     public void compareSimpleJson_checkNoExtraFieldsExist() throws CompareException {
         String expected = "{\"a\":\"val2\",\"c\":\"val1\",\"!.*\":\".*\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
