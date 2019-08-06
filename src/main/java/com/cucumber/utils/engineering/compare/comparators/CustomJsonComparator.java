@@ -13,8 +13,8 @@ import java.util.regex.PatternSyntaxException;
 public class CustomJsonComparator implements JsonComparator {
 
     private Map<String, String> generatedProperties = new HashMap<>();
+    private Map<String, String> generatedFieldProperties = new HashMap<>();
     private List<Map<String, String>> depletedFieldPropertyList = new ArrayList<>();
-    private boolean hasFieldProperties;
 
     public boolean compareValues(Object expected, Object actual) {
         String actualString = actual.toString();
@@ -60,8 +60,8 @@ public class CustomJsonComparator implements JsonComparator {
                             || generatedFieldPropertiesContainAllKeysWithDifferentValues(fieldGeneratedProperties)) {
                         return false;
                     }
-                    this.hasFieldProperties = true;
                     this.generatedProperties.putAll(fieldGeneratedProperties);
+                    this.generatedFieldProperties.putAll(fieldGeneratedProperties);
                 }
                 return true;
             } else {
@@ -74,8 +74,8 @@ public class CustomJsonComparator implements JsonComparator {
                             || generatedFieldPropertiesContainAllKeysWithDifferentValues(fieldGeneratedProperties)) {
                         return false;
                     }
-                    this.hasFieldProperties = true;
                     this.generatedProperties.putAll(fieldGeneratedProperties);
+                    this.generatedFieldProperties.putAll(fieldGeneratedProperties);
                 }
                 return true;
             } else {
@@ -86,7 +86,7 @@ public class CustomJsonComparator implements JsonComparator {
 
     public boolean generatedFieldPropertiesContainAllKeysWithDifferentValues(Map<String, String> target) {
         for (Map.Entry<String, String> entry : target.entrySet()) {
-            if (generatedProperties.get(entry.getKey()) == null || generatedProperties.get(entry.getKey()).equals(entry.getValue())) {
+            if (generatedFieldProperties.get(entry.getKey()) == null || generatedFieldProperties.get(entry.getKey()).equals(entry.getValue())) {
                 return false;
             }
         }
@@ -102,8 +102,8 @@ public class CustomJsonComparator implements JsonComparator {
         return false;
     }
 
-    public boolean hasFieldProperties() {
-        return this.hasFieldProperties;
+    public Map<String, String> getGeneratedFieldProperties() {
+        return generatedFieldProperties;
     }
 
     public List<Map<String, String>> getDepletedFieldPropertyList() {
