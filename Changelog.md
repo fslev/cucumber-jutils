@@ -1,3 +1,6 @@
+### 4.26  
+Add support for assign symbols on JSON fields. Bug fix      
+
 ### 4.25  
 Add support for assign symbols on JSON fields      
 

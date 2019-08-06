@@ -10,6 +10,7 @@ import ro.skyah.comparator.CompareMode;
 import ro.skyah.comparator.JSONCompare;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -76,7 +77,27 @@ public class JsonCompare implements Placeholdable {
 
     @Override
     public Map<String, String> compare() {
-        JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
+        try {
+            JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
+        } catch (AssertionError e) {
+            if (comparator.hasFieldProperties()) {
+                while (true) {
+                    comparator.getDepletedFieldPropertyList().add(new HashMap<>(comparator.getGeneratedProperties()));
+                    comparator.getGeneratedProperties().clear();
+                    try {
+                        JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
+                    } catch (AssertionError e1) {
+                        if (!comparator.getGeneratedProperties().isEmpty()) {
+                            continue;
+                        }
+                        throw e1;
+                    }
+                    break;
+                }
+            } else {
+                throw e;
+            }
+        }
         return comparator.getGeneratedProperties();
     }
 

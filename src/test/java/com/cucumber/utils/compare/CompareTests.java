@@ -62,6 +62,23 @@ public class CompareTests {
     }
 
     @Test
+    public void compareJsonWithAssignSymbolsOnFields_in_depth() {
+        String expected = "{\"a\":{\"abc-~[sym1]\":{\"o\":\"0\"}}}";
+        String actual = "{\"a\":{\"abc-X\":{\"o\":\"1\"},\"abc-Y\":{\"o\":\"0\"},\"abc-X\":{\"o\":\"2\"}}}";
+        Compare compare = new Compare(expected, actual);
+        Map<String, String> symbols = compare.compare();
+        assertEquals("Y", symbols.get("sym1"));
+        assertEquals(1, symbols.size());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareJsonWithAssignSymbolsOnFields_in_depth_negative() {
+        String expected = "{\"a\":{\"abc-~[sym1]\":{\"o\":\"does not exists\"}}}";
+        String actual = "{\"a\":{\"abc-X\":{\"o\":\"1\"},\"abc-Y\":{\"o\":\"0\"},\"abc-X\":{\"o\":\"2\"}}}";
+        new Compare(expected, actual).compare();
+    }
+
+    @Test
     public void compareJsonWithAssignSymbolsOnFieldsAndValues() {
         String expected = "{\"~[sym1]\":\"~[sym2]\"}";
         String actual = "{\"a\":\"3\",\"b\":\"100\"}";
@@ -70,6 +87,23 @@ public class CompareTests {
         assertEquals("a", symbols.get("sym1"));
         assertEquals("3", symbols.get("sym2"));
         assertEquals(2, symbols.size());
+    }
+
+    @Test
+    public void compareJsonWithAssignSymbolsOnFieldsWhichHasValuesThatMatch() {
+        String expected = "{\"~[sym1]\":\"100\"}";
+        String actual = "{\"a\":\"3\",\"x\":\"o\",\"b\":\"100\",\"c\":\"90\"}";
+        Compare compare = new Compare(expected, actual);
+        Map<String, String> symbols = compare.compare();
+        assertEquals("b", symbols.get("sym1"));
+        assertEquals(1, symbols.size());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareJsonWithAssignSymbolsOnFieldsWhichHasValuesThatMatch_negative() {
+        String expected = "{\"~[sym1]\":\"101\"}";
+        String actual = "{\"a\":\"3\",\"x\":\"o\",\"b\":\"100\",\"c\":\"90\"}";
+        new Compare(expected, actual).compare();
     }
 
     @Test
@@ -94,6 +128,16 @@ public class CompareTests {
         assertEquals("c", symbols.get("sym1"));
         assertEquals("0", symbols.get("sym2"));
         assertEquals(2, symbols.size());
+    }
+
+    @Test
+    public void compareJsonArrayWithAssignSymbolsOnFieldsAndValues1() {
+        String expected = "[{\"~[sym1]\":false}]";
+        String actual = "[{\"c\":0},{\"x\":false}]";
+        Compare compare = new Compare(expected, actual);
+        Map<String, String> symbols = compare.compare();
+        assertEquals("x", symbols.get("sym1"));
+        assertEquals(1, symbols.size());
     }
 
     @Test
