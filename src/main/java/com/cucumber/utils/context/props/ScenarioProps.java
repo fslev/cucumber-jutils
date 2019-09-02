@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.props;
 
 import com.google.inject.Inject;
-import cucumber.runtime.java.guice.ScenarioScoped;
+import io.cucumber.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

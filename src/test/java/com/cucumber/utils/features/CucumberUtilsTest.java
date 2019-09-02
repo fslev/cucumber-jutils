@@ -25,7 +25,6 @@ public class CucumberUtilsTest extends AbstractTestNGCucumberTests implements IT
         return super.scenarios();
     }
 
-
     @BeforeMethod
     public void BeforeMethod(Method method, Object[] testData, ITestContext ctx) {
         if (testData.length > 0) {

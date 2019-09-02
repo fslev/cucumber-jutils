@@ -1,10 +1,10 @@
 package com.cucumber.utils.features.stepdefs.httpresponsewrapper;
 
-import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.clients.http.wrappers.HttpResponseWrapper;
+import com.cucumber.utils.context.utils.Cucumbers;
 import com.google.inject.Inject;
-import cucumber.api.java.en.Then;
-import cucumber.runtime.java.guice.ScenarioScoped;
+import io.cucumber.guice.ScenarioScoped;
+import io.cucumber.java.en.Then;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;

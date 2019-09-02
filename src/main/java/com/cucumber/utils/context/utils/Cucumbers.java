@@ -7,7 +7,7 @@ import com.cucumber.utils.engineering.compare.Compare;
 import com.cucumber.utils.engineering.poller.MethodPoller;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import com.google.inject.Inject;
-import cucumber.runtime.java.guice.ScenarioScoped;
+import io.cucumber.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

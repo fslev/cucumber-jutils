@@ -4,12 +4,12 @@ import com.cucumber.utils.clients.http.HttpClient;
 import com.cucumber.utils.clients.http.Method;
 import com.cucumber.utils.context.utils.Cucumbers;
 import com.google.inject.Inject;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import cucumber.runtime.java.guice.ScenarioScoped;
-import io.cucumber.datatable.DataTable;
 import org.apache.http.HttpResponse;
 
 import java.util.List;
