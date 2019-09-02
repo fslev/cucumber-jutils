@@ -1,3 +1,6 @@
+### 4.30    
+Remove deprecated cucumber.api.* packages    
+
 ### 4.29    
 Bug fix & Refactoring    
 

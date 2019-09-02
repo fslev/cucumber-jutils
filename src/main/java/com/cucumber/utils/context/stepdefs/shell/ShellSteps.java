@@ -3,7 +3,7 @@ package com.cucumber.utils.context.stepdefs.shell;
 import com.cucumber.utils.clients.shell.ShellClient;
 import com.cucumber.utils.context.utils.Cucumbers;
 import com.google.inject.Inject;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 
 @ScenarioScoped

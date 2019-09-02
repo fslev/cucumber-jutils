@@ -1,8 +1,8 @@
 package com.cucumber.utils.context.stepdefs;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

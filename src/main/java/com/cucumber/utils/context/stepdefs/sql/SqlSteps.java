@@ -5,8 +5,8 @@ import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
 
 import java.io.IOException;
