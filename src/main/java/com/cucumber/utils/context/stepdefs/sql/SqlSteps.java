@@ -3,11 +3,10 @@ package com.cucumber.utils.context.stepdefs.sql;
 import com.cucumber.utils.clients.database.SqlClient;
 import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.inject.Inject;
+import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import cucumber.runtime.java.guice.ScenarioScoped;
 
 import java.io.IOException;
 import java.sql.SQLException;

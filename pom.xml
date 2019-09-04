@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-utils</artifactId>
-    <version>4.31-SNAPSHOT</version>
+    <version>4.40-SNAPSHOT</version>
 
     <name>Cucumber Utils</name>
     <description>A little helper for Cucumber</description>
@@ -18,10 +18,10 @@
     </developers>
 
     <properties>
-        <httpclient.version>4.5.8</httpclient.version>
+        <httpclient.version>4.5.9</httpclient.version>
         <jsoncompare.version>2.13</jsoncompare.version>
-        <xmlunit.version>2.6.2</xmlunit.version>
-        <cucumber.version>4.6.0</cucumber.version>
+        <xmlunit.version>2.6.3</xmlunit.version>
+        <cucumber.version>4.7.2</cucumber.version>
         <cucumber.expressions.version>7.0.2</cucumber.expressions.version>
         <guice.version>4.2.2</guice.version>
         <surefire.version>2.22.1</surefire.version>
@@ -38,12 +38,12 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.15</version>
+            <version>8.0.17</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.5</version>
+            <version>42.2.6</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.jtds</groupId>
@@ -113,22 +113,22 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
-            <version>1.24</version>
+            <version>1.25</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.11.2</version>
+            <version>2.12.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.11.2</version>
+            <version>2.12.1</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.9</version>
+            <version>2.9.9.3</version>
         </dependency>
     </dependencies>
 

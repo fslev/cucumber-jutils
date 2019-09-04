@@ -1,7 +1,7 @@
 package com.cucumber.utils.features.stepdefs.httpresponsewrapper;
 
-import com.cucumber.utils.context.utils.Cucumbers;
 import com.cucumber.utils.clients.http.wrappers.HttpResponseWrapper;
+import com.cucumber.utils.context.utils.Cucumbers;
 import com.google.inject.Inject;
 import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;

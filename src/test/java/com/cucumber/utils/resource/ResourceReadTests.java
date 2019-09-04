@@ -64,6 +64,11 @@ public class ResourceReadTests {
         ResourceUtils.readDirectory("non_existent");
     }
 
+    @Test(expected = IOException.class)
+    public void testInDepthReadFromDirectoryWhichIsAFile() throws IOException, URISyntaxException {
+        ResourceUtils.readDirectory("foobar/file1.txt");
+    }
+
     @Test
     public void testInDepthReadFromClasspathDir() throws IOException, URISyntaxException {
         Map<String, String> actualData = ResourceUtils.readDirectory("");

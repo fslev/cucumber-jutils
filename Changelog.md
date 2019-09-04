@@ -1,3 +1,8 @@
+### 4.40
+Bug fix      
+Increase Cucumber version    
+Update dependencies  
+
 ### 4.30    
 Remove deprecated cucumber.api.* packages    
 

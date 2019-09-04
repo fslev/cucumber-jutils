@@ -52,6 +52,9 @@ public class ResourceUtils {
         if (!Files.exists(rootPath)) {
             throw new IOException("Directory " + rootPath + " not found");
         }
+        if (!Files.isDirectory(rootPath)) {
+            throw new IOException("Not a directory " + rootPath);
+        }
         Map<String, String> map = Files.walk(rootPath).filter(path
                 -> path.toFile().isFile()
                 && (fileExtensionPatterns.length == 0
