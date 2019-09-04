@@ -24,7 +24,7 @@
         <cucumber.version>4.7.2</cucumber.version>
         <cucumber.expressions.version>7.0.2</cucumber.expressions.version>
         <guice.version>4.2.2</guice.version>
-        <surefire.version>2.22.1</surefire.version>
+        <surefire.version>2.22.2</surefire.version>
     </properties>
 
     <dependencies>
