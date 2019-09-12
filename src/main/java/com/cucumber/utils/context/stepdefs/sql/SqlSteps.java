@@ -2,6 +2,7 @@ package com.cucumber.utils.context.stepdefs.sql;
 
 import com.cucumber.utils.clients.database.SqlClient;
 import com.cucumber.utils.context.utils.Cucumbers;
+import com.cucumber.utils.context.utils.ScenarioLogger;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
@@ -19,6 +20,8 @@ public class SqlSteps {
 
     @Inject
     private Cucumbers cucumbers;
+    @Inject
+    private ScenarioLogger logger;
     private SqlClient client;
     private Properties dataSource;
     private List<Map<String, String>> result;
@@ -32,6 +35,7 @@ public class SqlSteps {
 
     @Then("SQL execute query \"{}\"")
     public void executeQuery(String query) throws SQLException {
+        logger.log("Execute query '%s'", query);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -52,6 +56,7 @@ public class SqlSteps {
     }
 
     public void executeQueryAndCompare(String query, Object expected) throws SQLException {
+        logger.log("Execute query '%s' and compare with: %s", query, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -64,6 +69,7 @@ public class SqlSteps {
 
     @Then("SQL execute query \"{}\" and poll for {int}s while comparing result with")
     public void executeQueryAndPollAndCompare(String query, int pollDuration, List expected) throws SQLException {
+        logger.log("Execute query '%s', poll %ss while comparing with: %s", query, pollDuration, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -75,6 +81,7 @@ public class SqlSteps {
 
     @Then("SQL execute update \"{}\"")
     public void executeUpdate(String sql) throws SQLException {
+        logger.log("Execute update '%s'", sql);
         try {
             this.client.connect();
             this.client.prepareStatement(sql);
@@ -86,6 +93,7 @@ public class SqlSteps {
 
     @Then("SQL INSERT into table \"{}\" the following data")
     public void insertDataInsideTable(String table, List data) throws SQLException {
+        logger.log("Insert into table '%s', data: %s", table, data);
         try {
             this.client.connect();
             String sql = "INSERT INTO " + table + " (%s) values (%s)";
@@ -110,6 +118,7 @@ public class SqlSteps {
 
     @Then("SQL UPDATE table \"{}\" WHERE \"{}\" with the following data")
     public void updateDataFromTable(String table, String cond, List data) throws SQLException {
+        logger.log("Update table '%s', with condition '%s', the following data: %s", table, cond, data);
         try {
             this.client.connect();
             String sql = "UPDATE " + table + " SET %s WHERE " + cond;

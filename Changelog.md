@@ -1,3 +1,6 @@
+### 4.41
+Add scenario logger       
+
 ### 4.40
 Bug fix      
 Increase Cucumber version    
