@@ -1,6 +1,6 @@
 package com.cucumber.utils.context.stepdefs;
 
-import com.cucumber.utils.context.utils.ScenarioLogger;
+import com.cucumber.utils.context.utils.ScenarioUtils;
 import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 public class DateTimeSteps {
     private DateTimeFormatter formatter;
     @Inject
-    private ScenarioLogger logger;
+    private ScenarioUtils logger;
 
     @Given("DateTime pattern=\"{}\"")
     public void format(String pattern) {

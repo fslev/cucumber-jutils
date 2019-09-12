@@ -5,7 +5,7 @@ import io.cucumber.core.api.Scenario;
 import io.cucumber.java.Before;
 
 @ScenarioScoped
-public class ScenarioLogger {
+public class ScenarioUtils {
     private Scenario scenario;
 
     @Before
@@ -15,5 +15,9 @@ public class ScenarioLogger {
 
     public void log(String msg, Object... args) {
         scenario.write(String.format(msg, args));
+    }
+
+    public Scenario getScenario() {
+        return scenario;
     }
 }

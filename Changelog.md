@@ -1,3 +1,6 @@
+### 4.42
+Refactor scenario  utils    
+
 ### 4.41
 Add scenario logger       
 

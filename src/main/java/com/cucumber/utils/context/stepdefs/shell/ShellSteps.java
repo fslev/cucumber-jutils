@@ -2,7 +2,7 @@ package com.cucumber.utils.context.stepdefs.shell;
 
 import com.cucumber.utils.clients.shell.ShellClient;
 import com.cucumber.utils.context.utils.Cucumbers;
-import com.cucumber.utils.context.utils.ScenarioLogger;
+import com.cucumber.utils.context.utils.ScenarioUtils;
 import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
@@ -13,7 +13,7 @@ public class ShellSteps {
     @Inject
     private Cucumbers cucumbers;
     @Inject
-    private ScenarioLogger logger;
+    private ScenarioUtils logger;
     private ShellClient shellClient = new ShellClient();
 
     @Then("SHELL execute command \"{}\" and check response=\"{}\"")

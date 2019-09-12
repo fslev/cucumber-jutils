@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.stepdefs;
 
 import com.cucumber.utils.context.utils.Cucumbers;
-import com.cucumber.utils.context.utils.ScenarioLogger;
+import com.cucumber.utils.context.utils.ScenarioUtils;
 import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
@@ -14,7 +14,7 @@ public class CompareSteps {
     @Inject
     private Cucumbers cucumbers;
     @Inject
-    private ScenarioLogger logger;
+    private ScenarioUtils logger;
 
     @Then("COMPARE {} with \"{}\"")
     public void compareWithString(Object expected, Object actual) {

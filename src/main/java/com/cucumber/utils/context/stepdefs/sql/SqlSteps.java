@@ -2,7 +2,7 @@ package com.cucumber.utils.context.stepdefs.sql;
 
 import com.cucumber.utils.clients.database.SqlClient;
 import com.cucumber.utils.context.utils.Cucumbers;
-import com.cucumber.utils.context.utils.ScenarioLogger;
+import com.cucumber.utils.context.utils.ScenarioUtils;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
@@ -21,7 +21,7 @@ public class SqlSteps {
     @Inject
     private Cucumbers cucumbers;
     @Inject
-    private ScenarioLogger logger;
+    private ScenarioUtils logger;
     private SqlClient client;
     private Properties dataSource;
     private List<Map<String, String>> result;
