@@ -18,7 +18,7 @@ public class ShellSteps {
 
     @Then("SHELL execute command \"{}\" and check response=\"{}\"")
     public void executeAndCompare(String cmd, String expected) {
-        logger.log("Execute cmd '%s' and compare response with: %s", cmd, expected);
+        logger.log("Execute cmd '{}' and compare response with: {}", cmd, expected);
         String actual = shellClient.command("bash", "-c", cmd).trim();
         cucumbers.compare(expected, actual);
     }

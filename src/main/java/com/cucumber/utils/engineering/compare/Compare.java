@@ -1,5 +1,7 @@
 package com.cucumber.utils.engineering.compare;
 
+import org.apache.logging.log4j.message.ParameterizedMessage;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,7 +57,8 @@ public class Compare implements Placeholdable {
 
     private boolean nullsMatch() {
         if (expected == null ^ actual == null) {
-            fail(String.format("%s\nEXPECTED:\n[%s]\nBUT GOT:\n[%s]", message != null ? message : "", expected, actual));
+            fail(ParameterizedMessage.format("{}\nEXPECTED:\n[{}]\nBUT GOT:\n[{}]",
+                    new String[]{message != null ? message : "", expected.toString(), actual.toString()}));
         } else if (expected == null) {
             return true;
         }

@@ -8,6 +8,7 @@ import com.google.inject.Inject;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,7 +36,7 @@ public class SqlSteps {
 
     @Then("SQL execute query \"{}\"")
     public void executeQuery(String query) throws SQLException {
-        logger.log("Execute query '%s'", query);
+        logger.log("Execute query '{}'", query);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -56,7 +57,7 @@ public class SqlSteps {
     }
 
     public void executeQueryAndCompare(String query, Object expected) throws SQLException {
-        logger.log("Execute query '%s' and compare with: %s", query, expected);
+        logger.log("Execute query '{}' and compare with: {}", query, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -69,7 +70,7 @@ public class SqlSteps {
 
     @Then("SQL execute query \"{}\" and poll for {int}s while comparing result with")
     public void executeQueryAndPollAndCompare(String query, int pollDuration, List expected) throws SQLException {
-        logger.log("Execute query '%s', poll %ss while comparing with: %s", query, pollDuration, expected);
+        logger.log("Execute query '{}', poll {}s while comparing with: {}", query, pollDuration, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -81,7 +82,7 @@ public class SqlSteps {
 
     @Then("SQL execute update \"{}\"")
     public void executeUpdate(String sql) throws SQLException {
-        logger.log("Execute update '%s'", sql);
+        logger.log("Execute update '{}'", sql);
         try {
             this.client.connect();
             this.client.prepareStatement(sql);
@@ -93,10 +94,10 @@ public class SqlSteps {
 
     @Then("SQL INSERT into table \"{}\" the following data")
     public void insertDataInsideTable(String table, List data) throws SQLException {
-        logger.log("Insert into table '%s', data: %s", table, data);
+        logger.log("Insert into table '{}', data: {}", table, data);
         try {
             this.client.connect();
-            String sql = "INSERT INTO " + table + " (%s) values (%s)";
+            String sql = "INSERT INTO " + table + " ({}) values ({})";
             ((List<Map<String, String>>) data).forEach(map -> {
                 StringBuilder columns = new StringBuilder();
                 StringBuilder values = new StringBuilder();
@@ -105,7 +106,7 @@ public class SqlSteps {
                     values.append(values.length() != 0 ? "," : "").append(v.equals("null") ? null : "'" + v + "'");
                 });
                 try {
-                    this.client.prepareStatement(String.format(sql, columns.toString(), values.toString()));
+                    this.client.prepareStatement(ParameterizedMessage.format(sql, new String[]{columns.toString(), values.toString()}));
                     this.client.executeUpdate();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -118,16 +119,16 @@ public class SqlSteps {
 
     @Then("SQL UPDATE table \"{}\" WHERE \"{}\" with the following data")
     public void updateDataFromTable(String table, String cond, List data) throws SQLException {
-        logger.log("Update table '%s', with condition '%s', the following data: %s", table, cond, data);
+        logger.log("Update table '{}', with condition '{}', the following data: {}", table, cond, data);
         try {
             this.client.connect();
-            String sql = "UPDATE " + table + " SET %s WHERE " + cond;
+            String sql = "UPDATE " + table + " SET {} WHERE " + cond;
             StringBuilder assignmentValues = new StringBuilder();
             ((List<Map<String, String>>) data).forEach(map -> {
                 map.forEach((k, v) -> assignmentValues.append(assignmentValues.length() != 0 ? "," : "")
                         .append(k).append("=").append(v.equals("null") ? null : "'" + v + "'"));
                 try {
-                    this.client.prepareStatement(String.format(sql, assignmentValues.toString()));
+                    this.client.prepareStatement(ParameterizedMessage.format(sql, new String[]{assignmentValues.toString()}));
                     this.client.executeUpdate();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);

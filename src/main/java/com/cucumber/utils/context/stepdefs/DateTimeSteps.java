@@ -27,7 +27,7 @@ public class DateTimeSteps {
 
     @Then("DateTime check period from \"{}\" to \"{}\" is {}year(s)")
     public void compareYears(String date1, String date2, Object y) {
-        logger.log("Check period from '%s' to '%s' is %syears", date1, date2, y);
+        logger.log("Check period from '{}' to '{}' is {}years", date1, date2, y);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
         assertEquals("Years differ", Long.parseLong(y.toString()), ChronoUnit.YEARS.between(localDateTime1, localDateTime2));
@@ -35,7 +35,7 @@ public class DateTimeSteps {
 
     @Then("DateTime check period from \"{}\" to \"{}\" is {}day(s)")
     public void compareDays(String date1, String date2, Object d) {
-        logger.log("Check period from '%s' to '%s' is %sdays", date1, date2, d);
+        logger.log("Check period from '{}' to '{}' is {}days", date1, date2, d);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
         assertEquals("Days differ", Long.parseLong(d.toString()), ChronoUnit.DAYS.between(localDateTime1, localDateTime2));
@@ -43,7 +43,7 @@ public class DateTimeSteps {
 
     @Then("DateTime check period from \"{}\" to \"{}\" is {}hour(s)")
     public void compareHours(String date1, String date2, Object h) {
-        logger.log("Check period from '%s' to '%s' is %shours", date1, date2, h);
+        logger.log("Check period from '{}' to '{}' is {}hours", date1, date2, h);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
         assertEquals("Hours differ", Long.parseLong(h.toString()), Duration.between(localDateTime1, localDateTime2).toHours());
@@ -51,7 +51,7 @@ public class DateTimeSteps {
 
     @Then("DateTime check period from \"{}\" to \"{}\" is {}minute(s)")
     public void compareMinutes(String date1, String date2, Object m) {
-        logger.log("Check period from '%s' to '%s' is %smins", date1, date2, m);
+        logger.log("Check period from '{}' to '{}' is {}mins", date1, date2, m);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
         assertEquals("Minutes differ", Long.parseLong(m.toString()), Duration.between(localDateTime1, localDateTime2).toMinutes());
@@ -59,7 +59,7 @@ public class DateTimeSteps {
 
     @Then("DateTime check period from \"{}\" to \"{}\" is {}second(s)")
     public void compareSeconds(String date1, String date2, Object s) {
-        logger.log("Check period from '%s' to '%s' is %sseconds", date1, date2, s);
+        logger.log("Check period from '{}' to '{}' is {}seconds", date1, date2, s);
         LocalDateTime localDateTime1 = LocalDateTime.parse(date1, formatter);
         LocalDateTime localDateTime2 = LocalDateTime.parse(date2, formatter);
         assertEquals("Seconds differ", Long.parseLong(s.toString()), Duration.between(localDateTime1, localDateTime2).getSeconds());
@@ -67,7 +67,7 @@ public class DateTimeSteps {
 
     @Then("Date check period from \"{}\" to \"{}\" is {}year(s)")
     public void compareYearsFromDates(String date1, String date2, Object y) {
-        logger.log("Check date period from '%s' to '%s' is %syears", date1, date2, y);
+        logger.log("Check date period from '{}' to '{}' is {}years", date1, date2, y);
         LocalDate localDate1 = LocalDateTime.parse(date1, formatter).toLocalDate();
         LocalDate localDate2 = LocalDateTime.parse(date2, formatter).toLocalDate();
         assertEquals("Years differ", Long.parseLong(y.toString()), ChronoUnit.YEARS.between(localDate1, localDate2));
@@ -75,7 +75,7 @@ public class DateTimeSteps {
 
     @Then("Date check period from \"{}\" to \"{}\" is {}day(s)")
     public void compareDaysFromDates(String date1, String date2, Object d) {
-        logger.log("Check date period from '%s' to '%s' is %sdays", date1, date2, d);
+        logger.log("Check date period from '{}' to '{}' is {}days", date1, date2, d);
         LocalDate localDate1 = LocalDateTime.parse(date1, formatter).toLocalDate();
         LocalDate localDate2 = LocalDateTime.parse(date2, formatter).toLocalDate();
         assertEquals("Days differ", Long.parseLong(d.toString()), ChronoUnit.DAYS.between(localDate1, localDate2));

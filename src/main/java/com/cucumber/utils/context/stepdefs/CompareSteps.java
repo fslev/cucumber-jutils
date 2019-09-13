@@ -18,17 +18,17 @@ public class CompareSteps {
 
     @Then("COMPARE {} with \"{}\"")
     public void compareWithString(Object expected, Object actual) {
-        logger.log("Compare %s against %s", expected, actual);
+        logger.log("Compare {} against {}", expected, actual);
         cucumbers.compare(expected, actual);
     }
 
     @Then("Negative COMPARE {} with \"{}\"")
     public void compareNegativeWithString(Object expected, Object actual) {
-        logger.log("Negative compare %s against %s", expected, actual);
+        logger.log("Negative compare {} against {}", expected, actual);
         try {
             cucumbers.compare(expected, actual);
         } catch (AssertionError e) {
-            logger.log("Assertion Error caught. Negative compare passes %s", e.getMessage());
+            logger.log("Assertion Error caught. Negative compare passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared objects match");
@@ -37,23 +37,23 @@ public class CompareSteps {
     @Then("COMPARE {} with content from path \"{}\"")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
         String actual = cucumbers.read(filePath);
-        logger.log("Compare %s against %s", expected, actual);
+        logger.log("Compare {} against {}", expected, actual);
         cucumbers.compare(expected, actual);
     }
 
     @Then("COMPARE {} with")
     public void compareWithDocString(Object expected, String actual) {
-        logger.log("Compare %s against %s", expected, actual);
+        logger.log("Compare {} against {}", expected, actual);
         cucumbers.compare(expected, actual);
     }
 
     @Then("Negative COMPARE {} with")
     public void compareNegativeWithDocString(Object expected, String actual) {
-        logger.log("Negative compare %s against %s", expected, actual);
+        logger.log("Negative compare {} against {}", expected, actual);
         try {
             cucumbers.compare(expected, actual);
         } catch (AssertionError e) {
-            logger.log("Assertion Error caught. Negative compare passes %s", e.getMessage());
+            logger.log("Assertion Error caught. Negative compare passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared objects match");
@@ -61,7 +61,7 @@ public class CompareSteps {
 
     @Then("COMPARE {} with table")
     public void compareWithDataTable(Object expected, List actual) {
-        logger.log("Compare %s against %s", expected, actual);
+        logger.log("Compare {} against {}", expected, actual);
         cucumbers.compare(expected, actual);
     }
 }

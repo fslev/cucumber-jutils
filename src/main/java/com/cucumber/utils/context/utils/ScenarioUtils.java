@@ -3,6 +3,7 @@ package com.cucumber.utils.context.utils;
 import cucumber.runtime.java.guice.ScenarioScoped;
 import io.cucumber.core.api.Scenario;
 import io.cucumber.java.Before;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 
 @ScenarioScoped
 public class ScenarioUtils {
@@ -14,7 +15,7 @@ public class ScenarioUtils {
     }
 
     public void log(String msg, Object... args) {
-        scenario.write(String.format(msg, args));
+        scenario.write(ParameterizedMessage.format(msg, args));
     }
 
     public Scenario getScenario() {
