@@ -12,6 +12,7 @@ public class MethodPoller<T> {
 
     private Duration pollDurationSec = Duration.ofSeconds(30);
     private Long pollIntervalMillis = 3000L;
+    private Double exponentialBackOff = 1.0;
 
     private Supplier<T> pollMethod = null;
     private Predicate<T> pollResultPredicate = null;
@@ -31,6 +32,11 @@ public class MethodPoller<T> {
     public MethodPoller<T> duration(Duration pollDurationSec, Long pollIntervalMillis) {
         this.pollDurationSec = pollDurationSec != null ? pollDurationSec : this.pollDurationSec;
         this.pollIntervalMillis = pollIntervalMillis != null ? pollIntervalMillis : this.pollIntervalMillis;
+        return this;
+    }
+
+    public MethodPoller<T> exponentialBackOff(double exp) {
+        this.exponentialBackOff = exp;
         return this;
     }
 
@@ -61,6 +67,7 @@ public class MethodPoller<T> {
                 try {
                     log.debug("Poll failed, I'll take another shot after {}ms", pollIntervalMillis);
                     Thread.sleep(pollIntervalMillis);
+                    pollIntervalMillis = (long) (pollIntervalMillis * exponentialBackOff);
                     long elapsed = System.currentTimeMillis() - start;
                     pollDurationSec = pollDurationSec.minusMillis(elapsed);
                     if (pollDurationSec.isZero() || pollDurationSec.isNegative()) {

@@ -23,6 +23,17 @@ public class MethodPollerTest {
     }
 
     @Test
+    public void testPollerExponentialBackOff() {
+        int expected = 3;
+        int result = new MethodPoller<Integer>()
+                .method(() -> generateRandomNumber(4))
+                .duration(Duration.ofSeconds(10), 3000L)
+                .exponentialBackOff(1.5)
+                .until(n -> n.equals(expected)).poll();
+        assertEquals(expected, result);
+    }
+
+    @Test
     public void testPollerTimeout() {
         int expected = 5;
         int result = new MethodPoller<Integer>()
