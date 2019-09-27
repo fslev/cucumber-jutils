@@ -1,3 +1,6 @@
+### 4.45  
+Add exponentialBackOff support  
+
 ### 4.44
 Bug fix  
 
