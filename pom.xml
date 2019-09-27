@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-utils</artifactId>
-    <version>4.46-SNAPSHOT</version>
+    <version>4.45-SNAPSHOT</version>
 
     <name>Cucumber Utils</name>
     <description>A little helper for Cucumber</description>

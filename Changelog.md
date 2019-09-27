@@ -1,6 +1,3 @@
-### 4.46    
-Add exponentialBackOff support  
-
 ### 4.45  
 Add exponentialBackOff support  
 
