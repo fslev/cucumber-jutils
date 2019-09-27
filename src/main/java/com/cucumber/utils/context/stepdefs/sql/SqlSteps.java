@@ -106,7 +106,7 @@ public class SqlSteps {
                     values.append(values.length() != 0 ? "," : "").append(v.equals("null") ? null : "'" + v + "'");
                 });
                 try {
-                    this.client.prepareStatement(ParameterizedMessage.format(sql, new String[]{columns.toString(), values.toString()}));
+                    this.client.prepareStatement(ParameterizedMessage.format(sql, new Object[]{columns, values}));
                     this.client.executeUpdate();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -128,7 +128,7 @@ public class SqlSteps {
                 map.forEach((k, v) -> assignmentValues.append(assignmentValues.length() != 0 ? "," : "")
                         .append(k).append("=").append(v.equals("null") ? null : "'" + v + "'"));
                 try {
-                    this.client.prepareStatement(ParameterizedMessage.format(sql, new String[]{assignmentValues.toString()}));
+                    this.client.prepareStatement(ParameterizedMessage.format(sql, new Object[]{assignmentValues}));
                     this.client.executeUpdate();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
