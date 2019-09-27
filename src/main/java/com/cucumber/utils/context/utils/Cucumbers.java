@@ -113,8 +113,13 @@ public class Cucumbers {
     }
 
     public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+        pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, 1.0, supplier, false, false);
+    }
+
+    public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff, Supplier<Object> supplier, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         Object result = new MethodPoller<>()
                 .duration(pollDurationInSeconds, pollIntervalInMillis)
+                .exponentialBackOff(exponentialBackOff)
                 .method(supplier)
                 .until(p -> {
                     try {
