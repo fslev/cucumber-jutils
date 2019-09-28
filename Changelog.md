@@ -1,3 +1,6 @@
+### 4.47-SNAPSHOT    
+Increase Json Compare version      
+
 ### 4.46    
 Add exponentialBackOff support for Cucumbers class    
 
