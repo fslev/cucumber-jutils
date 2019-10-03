@@ -2,9 +2,9 @@ package com.cucumber.utils.features.stepdefs.placeholders;
 
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
 import cucumber.runtime.java.guice.ScenarioScoped;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 
 import static org.junit.Assert.assertEquals;
 

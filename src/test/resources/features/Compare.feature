@@ -44,6 +44,24 @@ Feature: Test comparator
   }
     """
 
+  Scenario: Compare Jsons with escaped values
+    Given param json1 =
+    """
+  { "b": "~[val1]" }
+    """
+    And param json2=
+    """
+  { "a": "test",
+    "b": "some val\\Q he \\n re\" for test" }
+    """
+    And param expectedResultedJson=
+    """
+  { "b": "\\Q#[val1]\\E" }
+    """
+    Then COMPARE #[json1] with "#[json2]"
+    And COMPARE #[expectedResultedJson] with "#[json2]"
+    And Compare JSON #[expectedResultedJson] with #[json2]
+
   Scenario: Compare jsons negative
     Given param json1 =
     """

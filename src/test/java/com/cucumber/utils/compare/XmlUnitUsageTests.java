@@ -66,7 +66,7 @@ public class XmlUnitUsageTests {
                 DifferenceEvaluators.chain(DifferenceEvaluators.Default, new DifferenceEvaluator() {
                     @Override
                     public ComparisonResult evaluate(Comparison comparison,
-                            ComparisonResult comparisonResult) {
+                                                     ComparisonResult comparisonResult) {
                         if (comparisonResult == ComparisonResult.EQUAL) {
                             return comparisonResult;
                         }

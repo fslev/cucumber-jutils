@@ -1,5 +1,6 @@
-### 4.47-SNAPSHOT    
-Increase Json Compare version      
+### 4.47      
+Increase Json Compare version  
+Extract escaped JSON values into scenario properties         
 
 ### 4.46    
 Add exponentialBackOff support for Cucumbers class    
