@@ -2,7 +2,6 @@ Feature: Test comparator
 
   Scenario: Ignore me. Just keep scrolling
 
-
   Scenario: Compare simple values
     Given param a="1"
     Given param a="1"
