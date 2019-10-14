@@ -1,6 +1,7 @@
 Feature: Test comparator
 
   Scenario: Ignore me. Just keep scrolling
+    Given #empty scenario
 
   Scenario: Compare simple values
     Given param a="1"
