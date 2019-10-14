@@ -1,6 +1,7 @@
 package com.cucumber.utils.engineering.compare;
 
 import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +46,8 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                fail(String.format("%s\nEXPECTED:\n%s\nBUT GOT:\n%s", message != null ? message : "", parsedString, actual));
+                fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
+                        new Object[]{message != null ? message : "", parsedString, actual}));
             }
         } catch (PatternSyntaxException e) {
             if (parsedString.equals(actual)) {
@@ -53,7 +55,7 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                fail(String.format("%s\nEXPECTED:\n%s\nBUT GOT:\n%s", message != null ? message : "", parsedString, actual));
+                fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}", new Object[]{message != null ? message : "", parsedString, actual}));
             }
         }
         return assignSymbols;

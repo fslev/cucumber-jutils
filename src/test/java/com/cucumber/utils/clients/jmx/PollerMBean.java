@@ -2,9 +2,9 @@ package com.cucumber.utils.clients.jmx;
 
 public interface PollerMBean {
 
-	void switchPollerActive();
+    void switchPollerActive();
 
-	void switchPollerInactive();
+    void switchPollerInactive();
 
-	boolean isPollerActive();
+    boolean isPollerActive();
 }

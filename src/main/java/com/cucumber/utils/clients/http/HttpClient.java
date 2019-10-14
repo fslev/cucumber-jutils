@@ -181,10 +181,6 @@ public class HttpClient {
         return request;
     }
 
-    private void setHeaders(HttpRequestBase request) {
-        headers.entrySet().forEach(e -> request.setHeader(e.getKey(), e.getValue()));
-    }
-
     private void validateMethod(Builder builder) {
         if (builder.method == null) {
             throw new IllegalStateException("HTTP Method missing");
@@ -213,6 +209,10 @@ public class HttpClient {
         return headers;
     }
 
+    private void setHeaders(HttpRequestBase request) {
+        headers.entrySet().forEach(e -> request.setHeader(e.getKey(), e.getValue()));
+    }
+
     public String getRequestEntity() {
         return requestEntity;
     }
@@ -235,6 +235,13 @@ public class HttpClient {
 
     public ServiceUnavailableRetryStrategy getServiceUnavailableRetryStrategy() {
         return serviceUnavailableRetryStrategy;
+    }
+
+    @Override
+    public String toString() {
+        return "HttpClient{" + "timeout=" + timeout + ", proxyHost=" + proxyHost + ", uri='"
+                + uri + ", headers=" + headers + ", requestEntity='"
+                + requestEntity + '\'' + ", method=" + method + '}';
     }
 
     public static class Builder {
@@ -342,23 +349,12 @@ public class HttpClient {
             return new HttpClient(this);
         }
     }
-
-    @Override
-    public String toString() {
-        return "HttpClient{" + "timeout=" + timeout + ", proxyHost=" + proxyHost + ", uri='"
-                + uri + ", headers=" + headers + ", requestEntity='"
-                + requestEntity + '\'' + ", method=" + method + '}';
-    }
 }
 
 
 @NotThreadSafe
 class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
     public static final String METHOD_NAME = "DELETE";
-
-    public String getMethod() {
-        return METHOD_NAME;
-    }
 
     public HttpDeleteWithBody(final String uri) {
         super();
@@ -372,6 +368,10 @@ class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
 
     public HttpDeleteWithBody() {
         super();
+    }
+
+    public String getMethod() {
+        return METHOD_NAME;
     }
 }
 

@@ -1,3 +1,33 @@
+### 5.0       
+---- Cucumber 5.x ----  
+
+### 4.47      
+Increase Json Compare version  
+Extract escaped JSON values into scenario properties         
+
+### 4.46    
+Add exponentialBackOff support for Cucumbers class    
+
+### 4.45  
+Add exponentialBackOff support  
+
+### 4.44
+Bug fix  
+
+### 4.43
+Bug fix    
+
+### 4.42
+Refactor scenario  utils    
+
+### 4.41
+Add scenario logger       
+
+### 4.40
+Bug fix      
+Increase Cucumber version    
+Update dependencies  
+
 ### 4.30    
 Remove deprecated cucumber.api.* packages    
 

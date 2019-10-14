@@ -1,6 +1,7 @@
 package com.cucumber.utils.engineering.compare.comparators;
 
 import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
+import org.apache.commons.text.StringEscapeUtils;
 import ro.skyah.comparator.JsonComparator;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 public class CustomJsonComparator implements JsonComparator {
 
@@ -28,7 +30,7 @@ public class CustomJsonComparator implements JsonComparator {
             Pattern pattern = Pattern.compile(parsedExpectedQuoted);
             if (pattern.matcher(actualString).matches()) {
                 if (hasPropertiesToGenerate) {
-                    this.generatedProperties.putAll(generator.getProperties());
+                    this.generatedProperties.putAll(escapeJsonPropertyValues(generator.getProperties()));
                 }
                 return true;
             } else {
@@ -37,7 +39,7 @@ public class CustomJsonComparator implements JsonComparator {
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual.toString())) {
                 if (hasPropertiesToGenerate) {
-                    this.generatedProperties.putAll(generator.getProperties());
+                    this.generatedProperties.putAll(escapeJsonPropertyValues(generator.getProperties()));
                 }
                 return true;
             } else {
@@ -114,5 +116,9 @@ public class CustomJsonComparator implements JsonComparator {
 
     public Map<String, String> getGeneratedProperties() {
         return generatedProperties;
+    }
+
+    private Map<String, String> escapeJsonPropertyValues(Map<String, String> properties) {
+        return properties.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> StringEscapeUtils.escapeJson(e.getValue())));
     }
 }

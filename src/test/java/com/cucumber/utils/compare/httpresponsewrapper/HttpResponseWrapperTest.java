@@ -27,7 +27,7 @@ public class HttpResponseWrapperTest {
         Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some thing", wrapper.getReasonPhrase());
         Map<String, Object> expectedMap = new HashMap<>();
-        expectedMap.put("wa", Arrays.asList(new Integer[]{1, 2, 3, 4}));
+        expectedMap.put("wa", Arrays.asList(1, 2, 3, 4));
         Assert.assertEquals(expectedMap, wrapper.getEntity());
         Assert.assertNull(wrapper.getHeaders());
     }
@@ -71,7 +71,7 @@ public class HttpResponseWrapperTest {
         HttpResponseWrapper wrapper = new HttpResponseWrapper(expectedMap);
         Assert.assertEquals("200", wrapper.getStatus());
         Assert.assertEquals("some reason", wrapper.getReasonPhrase());
-        Assert.assertEquals(Arrays.asList(new Integer[]{2, 3, 4}), wrapper.getEntity());
+        Assert.assertEquals(Arrays.asList(2, 3, 4), wrapper.getEntity());
         Assert.assertNull(wrapper.getHeaders());
     }
 

@@ -17,48 +17,48 @@ public class JsonConvertibleCompareTests {
 
     @Test
     public void compareLists() throws CompareException {
-        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
-        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
+        List<String> expected = Arrays.asList("a", "b", "c", "c");
+        List<String> actual = Arrays.asList("c", "a", "c", "b");
         JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 
     @Test
     public void compareListsWithRegex() throws CompareException {
-        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", ".*"});
-        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
+        List<String> expected = Arrays.asList("a", "b", "c", ".*");
+        List<String> actual = Arrays.asList("c", "a", "c", "b");
         JsonCompare compare = new JsonCompare(expected, actual);
         compare.compare();
     }
 
     @Test
     public void compareLists_nonextensible() throws CompareException {
-        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
-        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b"});
+        List<String> expected = Arrays.asList("a", "b", "c", "c");
+        List<String> actual = Arrays.asList("c", "a", "c", "b");
         JsonCompare compare = new JsonCompare(expected, actual, true, true, false);
         compare.compare();
     }
 
     @Test(expected = AssertionError.class)
     public void compareLists_nonextensible_negative() throws CompareException {
-        List<String> expected = Arrays.asList(new String[]{"a", "b", "c", "c"});
-        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
+        List<String> expected = Arrays.asList("a", "b", "c", "c");
+        List<String> actual = Arrays.asList("c", "a", "c", "b", "d");
         JsonCompare compare = new JsonCompare(expected, actual, false, true);
         compare.compare();
     }
 
     @Test
     public void compareLists_arrays_strict_order() throws CompareException {
-        List<String> expected = Arrays.asList(new String[]{"c", "a", "c", "b"});
-        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
+        List<String> expected = Arrays.asList("c", "a", "c", "b");
+        List<String> actual = Arrays.asList("c", "a", "c", "b", "d");
         JsonCompare compare = new JsonCompare(expected, actual, true, false, true);
         compare.compare();
     }
 
     @Test(expected = AssertionError.class)
     public void compareLists_arrays_strict_order_negative() throws CompareException {
-        List<String> expected = Arrays.asList(new String[]{"c", "a", "b", "c"});
-        List<String> actual = Arrays.asList(new String[]{"c", "a", "c", "b", "d"});
+        List<String> expected = Arrays.asList("c", "a", "b", "c");
+        List<String> actual = Arrays.asList("c", "a", "c", "b", "d");
         JsonCompare compare = new JsonCompare(expected, actual, true, false, true);
         compare.compare();
     }
