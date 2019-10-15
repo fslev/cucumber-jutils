@@ -1,3 +1,6 @@
+### 4.48      
+Increase Cucumber and HttpClient dependency versions  
+
 ### 4.47      
 Increase Json Compare version  
 Extract escaped JSON values into scenario properties         
