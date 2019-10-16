@@ -57,12 +57,8 @@ public class MethodPoller<T> {
         T result = null;
         while (!pollSucceeded && !pollTimeout) {
             long start = System.currentTimeMillis();
-            try {
-                result = pollMethod.get();
-                pollSucceeded = pollResultPredicate.test(result);
-            } catch (Exception e) {
-                pollSucceeded = false;
-            }
+            result = pollMethod.get();
+            pollSucceeded = pollResultPredicate.test(result);
             if (!pollSucceeded) {
                 try {
                     log.debug("Poll failed, I'll take another shot after {}ms", pollIntervalMillis);

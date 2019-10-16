@@ -1,3 +1,7 @@
+### 4.49      
+Change method poller behaviour
+Add Action Utilities    
+
 ### 4.48      
 Increase Cucumber and HttpClient dependency versions  
 
