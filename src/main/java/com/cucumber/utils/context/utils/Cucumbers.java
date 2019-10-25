@@ -138,7 +138,6 @@ public class Cucumbers {
         try {
             expectedWrapper = new HttpResponseWrapper(expected);
         } catch (IOException e) {
-            log.info("EXPECTED value has no HTTP Response format\n{}\n ---> PROCEED to normal comparing mechanism", expected);
             throw e;
         }
         String expectedStatus = expectedWrapper.getStatus();
