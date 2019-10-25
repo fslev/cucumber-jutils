@@ -49,11 +49,11 @@ public class Compare implements Placeholdable {
         try {
             matcher = new JsonCompare(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
         } catch (Exception e) {
-            log.info("Compared objects are NOT JSONs --> proceed to XML compare");
+            log.debug("Compared objects are NOT JSONs:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to XML compare", expected, actual);
             try {
                 matcher = new XmlCompare(message, expected, actual);
             } catch (Exception e2) {
-                log.info("Compared objects are NOT XMLs --> proceed to String REGEX compare");
+                log.debug("Compared objects are NOT XMLS:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to string REGEX compare", expected, actual);
                 matcher = new StringRegexCompare(message, expected, actual);
             }
         }

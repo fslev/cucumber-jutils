@@ -1,3 +1,6 @@
+### 4.53          
+Decrease logging level   
+
 ### 4.52        
 Log failed comparison mechanisms    
 
