@@ -1,3 +1,6 @@
+### 4.52        
+Log failed comparison mechanisms    
+
 ### 4.51        
 Refactor failed comparison message  
 
