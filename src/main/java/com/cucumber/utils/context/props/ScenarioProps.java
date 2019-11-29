@@ -20,7 +20,8 @@ public class ScenarioProps {
     }
 
     public Object get(String key) {
-        switch (key.toLowerCase()) {
+        String trimmedKey = (key == null) ? null : key.trim();
+        switch (trimmedKey.toLowerCase()) {
             case "uid":
                 return getUUID();
             case "now":
@@ -28,16 +29,17 @@ public class ScenarioProps {
             case "short-random":
                 return (int) (Math.random() * (Short.MAX_VALUE - Short.MIN_VALUE));
             default:
-                return props.get(key) instanceof String ?
-                        new ScenarioPropsParser(this, props.get(key).toString()).result() : props.get(key);
+                return props.get(trimmedKey) instanceof String ?
+                        new ScenarioPropsParser(this, props.get(trimmedKey).toString()).result() : props.get(trimmedKey);
         }
     }
 
     public void put(String key, Object val) {
-        if (props.get(key) != null) {
-            log.warn("Scenario property \"{}\" will be overridden with {}", key, val);
+        String trimmedKey = (key == null) ? null : key.trim();
+        if (props.get(trimmedKey) != null) {
+            log.warn("Scenario property \"{}\" will be overridden with {}", trimmedKey, val);
         }
-        props.put(key, val);
+        props.put(trimmedKey, val);
     }
 
     public void putAll(Map<String, Object> props) {
@@ -83,5 +85,12 @@ public class ScenarioProps {
         public String value() {
             return name;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "ScenarioProps{" +
+                "props=" + props +
+                '}';
     }
 }
