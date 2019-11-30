@@ -42,9 +42,9 @@ public class CompareSteps {
     }
 
     @Then("COMPARE {} with")
-    public void compareWithDocString(Object expected, String actual) {
-        logger.log("Compare {} against {}", expected, actual);
-        cucumbers.compare(expected, actual);
+    public void compareWithDocString(Object expected, StringBuilder actual) {
+        logger.log("Compare {} against {}", expected, actual.toString());
+        cucumbers.compare(expected, actual.toString());
     }
 
     @Then("Negative COMPARE {} with")

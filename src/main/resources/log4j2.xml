@@ -7,7 +7,7 @@
         </Console>
     </Appenders>
     <Loggers>
-        <logger name="com.cucumber.utils" level="debug" additivity="false">
+        <logger name="com.cucumber.utils" level="info" additivity="false">
             <AppenderRef ref="CUtilsConsole"/>
         </logger>
     </Loggers>

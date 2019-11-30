@@ -15,6 +15,9 @@ import java.lang.reflect.Method;
 @CucumberOptions(features = "src/test/resources/features",
         glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:output",
         "json:target/cucumber-report/report.json"}, tags = {"not @Ignore", "not @ignore"})
+@io.cucumber.junit.CucumberOptions(features = "src/test/resources/features",
+        glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:output",
+        "json:target/cucumber-report/report.json"}, tags = {"not @Ignore", "not @ignore"})
 public class CucumberUtilsTest extends AbstractTestNGCucumberTests implements ITest {
 
     private ThreadLocal<String> testName = new ThreadLocal<>();

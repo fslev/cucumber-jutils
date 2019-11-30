@@ -1,15 +1,16 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="CucumberTestSuite">
-    <test name="EngineeringJunitTests" junit="true" parallel="methods" thread-count="10" verbose="1">
+    <test name="EngineeringTests" junit="true" parallel="methods" thread-count="10" verbose="1">
         <packages>
             <package name="com.cucumber.utils.clients.*"/>
             <package name="com.cucumber.utils.compare.*"/>
             <package name="com.cucumber.utils.placeholders.*"/>
             <package name="com.cucumber.utils.poller.*"/>
             <package name="com.cucumber.utils.resource.*"/>
+            <package name="com.cucumber.utils.engineering.utils.*"/>
         </packages>
     </test>
-    <test name="CucumberTestNGTests">
+    <test name="CucumberTests">
         <packages>
             <package name="com.cucumber.utils.features.*"/>
         </packages>
