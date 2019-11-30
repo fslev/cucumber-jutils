@@ -24,7 +24,7 @@ Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tut
 
 Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
 ```  
-#### Included dependencies that are worth to mention:
+#### Included dependencies that are worth mentioning:
 
 * [**cucumber-java8**](https://github.com/cucumber/cucumber-jvm/tree/master/java8)
 * [**cucumber-guice**](https://github.com/cucumber/cucumber-jvm/tree/master/guice)

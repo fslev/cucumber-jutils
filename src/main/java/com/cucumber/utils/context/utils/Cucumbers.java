@@ -91,7 +91,7 @@ public class Cucumbers {
             compareHttpResponse(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
             return;
         } catch (IOException e) {
-            log.debug("Cannot compare with HTTP response: {}. Proceed to normal comparing mechanism", e.getMessage());
+            log.debug("Cannot compare with HTTP response: {} ---> Proceed to normal comparing mechanism", e.getMessage());
         }
         compareInternal(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
     }
@@ -138,15 +138,14 @@ public class Cucumbers {
         try {
             expectedWrapper = new HttpResponseWrapper(expected);
         } catch (IOException e) {
-            log.info("Expected value has no HTTP Response format\n{}\nProceed to normal comparing mechanism", expected);
             throw e;
         }
         String expectedStatus = expectedWrapper.getStatus();
         String expectedReason = expectedWrapper.getReasonPhrase();
         Map<String, String> expectedHeaders = expectedWrapper.getHeaders();
         Object expectedEntity = expectedWrapper.getEntity();
-        String enhancedMessage = System.lineSeparator() + "Expected:" + System.lineSeparator()
-                + expectedWrapper.toString() + System.lineSeparator() + "Actual:" + System.lineSeparator()
+        String enhancedMessage = System.lineSeparator() + "EXPECTED:" + System.lineSeparator()
+                + expectedWrapper.toString() + System.lineSeparator() + "ACTUAL:" + System.lineSeparator()
                 + actualWrapper.toString() + System.lineSeparator() + (message != null ? message : "") + System.lineSeparator();
         if (expectedStatus != null) {
             compareInternal(enhancedMessage, expectedStatus, actualWrapper.getStatus(), nonExtensibleObject, nonExtensibleArray);

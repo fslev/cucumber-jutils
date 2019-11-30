@@ -1,5 +1,24 @@
 ### 5.0       
----- Cucumber 5.x ----  
+---- Upgrade to Cucumber 5 ----  
+  
+### 4.53          
+Decrease logging level   
+
+### 4.52        
+Log failed comparison mechanisms    
+
+### 4.51        
+Refactor failed comparison message  
+
+### 4.50        
+Refactor failed comparison message      
+
+### 4.49      
+Change method poller behaviour
+Add Action Utilities    
+
+### 4.48      
+Increase Cucumber and HttpClient dependency versions  
 
 ### 4.47      
 Increase Json Compare version  

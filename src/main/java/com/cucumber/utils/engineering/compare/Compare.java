@@ -1,5 +1,7 @@
 package com.cucumber.utils.engineering.compare;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.Map;
 import static org.junit.Assert.fail;
 
 public class Compare implements Placeholdable {
+    private Logger log = LogManager.getLogger();
     protected Object expected;
     protected Object actual;
     private boolean nonExtensibleObject;
@@ -46,9 +49,11 @@ public class Compare implements Placeholdable {
         try {
             matcher = new JsonCompare(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
         } catch (Exception e) {
+            log.debug("Compared objects are NOT JSONs:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to XML compare", expected, actual);
             try {
                 matcher = new XmlCompare(message, expected, actual);
             } catch (Exception e2) {
+                log.debug("Compared objects are NOT XMLS:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to string REGEX compare", expected, actual);
                 matcher = new StringRegexCompare(message, expected, actual);
             }
         }

@@ -44,7 +44,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.17</version>
+            <version>8.0.18</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -178,6 +178,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <argLine>${surefireArgLine}</argLine>
                             <testFailureIgnore>false</testFailureIgnore>
                             <parallel>methods</parallel>
                             <threadCount>3</threadCount>
@@ -208,6 +209,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <argLine>${surefireArgLine}</argLine>
                             <testFailureIgnore>false</testFailureIgnore>
                             <parallel>methods</parallel>
                             <threadCount>3</threadCount>
@@ -323,6 +325,29 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.5</version>
+                <executions>
+                    <execution>
+                        <id>default-prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

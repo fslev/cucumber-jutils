@@ -32,8 +32,8 @@ public class ParameterTypesConfig {
     @DefaultDataTableEntryTransformer(headersToProperties = true)
     @DefaultDataTableCellTransformer
     public Object defaultTransformer(Object fromValue, Type toValueType) {
-        System.out.println(fromValue.toString().trim());
-        Object parsedValue = new ScenarioPropsParser(scenarioProps, fromValue.toString().trim()).result();
+        System.out.println(fromValue.toString());
+        Object parsedValue = new ScenarioPropsParser(scenarioProps, fromValue.toString()).result();
         System.out.println(scenarioProps);
         System.out.println(parsedValue);
         try {
@@ -46,6 +46,6 @@ public class ParameterTypesConfig {
 
     @DocStringType
     public StringBuilder convertDocString(String docString) throws IOException {
-        return new StringBuilder(new ScenarioPropsParser(scenarioProps, docString.trim()).result().toString());
+        return new StringBuilder(new ScenarioPropsParser(scenarioProps, docString).result().toString());
     }
 }
