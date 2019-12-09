@@ -12,7 +12,6 @@ public class ScenarioUtils {
     @Before(order = Integer.MIN_VALUE)
     public void init(Scenario scenario) {
         this.scenario = scenario;
-        scenario.write("Initialised scenario");
     }
 
     public void log(String msg, Object... args) {
