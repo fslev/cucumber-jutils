@@ -12,6 +12,7 @@ public class ScenarioUtils {
     @Before
     public void init(Scenario scenario) {
         this.scenario = scenario;
+        scenario.write("Initialised scenario");
     }
 
     public void log(String msg, Object... args) {
