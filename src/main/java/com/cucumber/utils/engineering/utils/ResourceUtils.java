@@ -46,12 +46,9 @@ public class ResourceUtils {
     public static Map<String, String> readDirectory(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
         URL dirURL = Thread.currentThread().getContextClassLoader().getResource(relativeDirPath);
         if (dirURL == null) {
-            throw new IOException("Directory " + relativeDirPath + " not found");
+            throw new IOException("Directory " + relativeDirPath + " not found or is empty");
         }
         Path rootPath = Paths.get(dirURL.toURI());
-        if (!Files.exists(rootPath)) {
-            throw new IOException("Directory " + rootPath + " not found");
-        }
         if (!Files.isDirectory(rootPath)) {
             throw new IOException("Not a directory " + rootPath);
         }
