@@ -12,6 +12,9 @@ import org.testng.annotations.DataProvider;
 import java.lang.reflect.Method;
 
 @RunWith(Cucumber.class)
+@io.cucumber.junit.CucumberOptions(features = "src/test/resources/features",
+        glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:output",
+        "json:target/cucumber-report/report.json"}, tags = {"not @Ignore", "not @ignore"})
 @CucumberOptions(features = "src/test/resources/features",
         glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:output",
         "json:target/cucumber-report/report.json"}, tags = {"not @Ignore", "not @ignore"})
