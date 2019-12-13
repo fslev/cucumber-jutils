@@ -1,5 +1,6 @@
 ### 4.55            
-Refactor ResourceUtils       
+Refactor ResourceUtils    
+Update dependencies     
 
 ### 4.54          
 Fix Scenario init bug     
