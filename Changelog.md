@@ -1,6 +1,13 @@
 ### 5.0       
 ---- Upgrade to Cucumber 5 ----  
   
+### 4.55            
+Refactor ResourceUtils    
+Update dependencies     
+
+### 4.54          
+Fix Scenario init bug     
+
 ### 4.53          
 Decrease logging level   
 

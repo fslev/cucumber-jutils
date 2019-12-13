@@ -9,7 +9,7 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 public class ScenarioUtils {
     private Scenario scenario;
 
-    @Before
+    @Before(order = Integer.MIN_VALUE)
     public void init(Scenario scenario) {
         this.scenario = scenario;
     }
