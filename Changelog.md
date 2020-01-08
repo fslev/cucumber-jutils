@@ -1,5 +1,6 @@
 ### 4.56            
-Update dependencies      
+Update dependencies    
+Add strings format to columns feature    
 
 ### 4.55            
 Refactor ResourceUtils    
