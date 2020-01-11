@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="CucumberTestSuite">
+<suite name="CucumberTestSuite" data-provider-thread-count="8">
     <test name="EngineeringJunitTests" junit="true" parallel="methods" thread-count="10" verbose="1">
         <packages>
             <package name="com.cucumber.utils.clients.*"/>
