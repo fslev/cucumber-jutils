@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="CucumberTestSuite">
-    <test name="EngineeringTests" junit="true" parallel="methods" thread-count="10" verbose="1">
+<suite name="CucumberTestSuite" data-provider-thread-count="8">
+    <test name="EngineeringJunitTests" junit="true" parallel="methods" thread-count="10" verbose="1">
         <packages>
             <package name="com.cucumber.utils.clients.*"/>
             <package name="com.cucumber.utils.compare.*"/>

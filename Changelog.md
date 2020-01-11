@@ -1,6 +1,10 @@
 ### 5.0       
 ---- Upgrade to Cucumber 5 ----  
   
+### 4.57              
+Update dependencies   
+Internal: Add cucumber report plugin    
+
 ### 4.56            
 Update dependencies    
 Add strings format to columns feature    
