@@ -307,7 +307,7 @@
             </build>
         </profile>
         <profile>
-            <id>publish-reports</id>
+            <id>report</id>
             <build>
                 <plugins>
                     <plugin>
@@ -333,8 +333,6 @@
                                         <!-- supports wildcard or name pattern -->
                                         <param>report.json</param>
                                     </jsonFiles>
-                                    <!-- optional, defaults to outputDirectory if not specified -->
-                                    <parallelTesting>true</parallelTesting>
                                     <!-- optional, set true to group features by its Ids -->
                                     <mergeFeaturesById>false</mergeFeaturesById>
                                     <!-- optional, set true to get a final report with latest results of the same test from different test runs -->
