@@ -1,3 +1,6 @@
+### 4.58              
+Log scenario name      
+
 ### 4.57              
 Update dependencies   
 Internal: Add cucumber report plugin    
