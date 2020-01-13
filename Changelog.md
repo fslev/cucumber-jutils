@@ -1,5 +1,8 @@
+### 4.59              
+Log scenario name after  
+
 ### 4.58              
-Log scenario name      
+Log scenario name before       
 
 ### 4.57              
 Update dependencies   
