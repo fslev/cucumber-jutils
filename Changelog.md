@@ -1,3 +1,6 @@
+### 4.60              
+Fix priority    
+
 ### 4.59              
 Log scenario name after  
 

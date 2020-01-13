@@ -19,7 +19,7 @@ public class ScenarioUtils {
         log.info("PREPARED scenario [{}]", scenario.getName());
     }
 
-    @After(order = Integer.MAX_VALUE)
+    @After(order = Integer.MIN_VALUE)
     public void finish(Scenario scenario) {
         log.info("FINISHED scenario [{}]", scenario.getName());
     }
