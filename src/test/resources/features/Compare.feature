@@ -9,6 +9,14 @@ Feature: Test comparator
     Then COMPARE #[a] with "#[b]"
     And COMPARE 1 with "1"
 
+  Scenario: Compare values with inner quotes
+    Given param expected="te"st"
+    Given param actual=
+    """
+    te"st
+    """
+    Then COMPARE #[expected] with "#[actual]"
+
   Scenario: Compare simple values negative
     Given param a="1"
     And param b="2"
@@ -153,3 +161,29 @@ Feature: Test comparator
   Scenario: Compare empty values
     Given param a=""
     Then COMPARE #[a] with ""
+
+  Scenario: Compare XMLs
+    Given param expected=
+      """
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <bookingResponse>
+        <bookingId>dlc:~[var1]</bookingId>
+    </bookingResponse>
+      """
+    And param actual=
+      """
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse>
+      """
+    Then COMPARE #[expected] with "#[actual]"
+    And COMPARE #[var1] with "booking:4663740"
+
+  Scenario: Compare XMLs from HTTP response bodies
+    Given param expectedResponse=
+      """
+    {
+      "status": 200,
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bookingResponse><bookingId>dlc:~[var1]</bookingId></bookingResponse>"
+    }
+      """
+    Then Create HTTP response wrapper with content <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse> and compare with #[expectedResponse]
+    And COMPARE #[var1] with "booking:4663740"
