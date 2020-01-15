@@ -47,10 +47,12 @@ public class Compare implements Placeholdable {
         }
         Placeholdable matcher;
         try {
+            log.debug("Compare as JSONs");
             matcher = new JsonCompare(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
         } catch (Exception e) {
             log.debug("Compared objects are NOT JSONs:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to XML compare", expected, actual);
             try {
+                log.debug("Compare as XMLs");
                 matcher = new XmlCompare(message, expected, actual);
             } catch (Exception e2) {
                 log.debug("Compared objects are NOT XMLS:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to string REGEX compare", expected, actual);

@@ -88,6 +88,7 @@ public class Cucumbers {
 
     public void compare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
         try {
+            log.debug("First, check expected and actual are in HTTP response format: {\"status\":\"...\", \"reason\":\"...\", \"body\":{},\"headers\":{}} and compare them");
             compareHttpResponse(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
             return;
         } catch (IOException e) {

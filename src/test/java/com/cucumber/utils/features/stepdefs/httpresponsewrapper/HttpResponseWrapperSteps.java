@@ -5,6 +5,7 @@ import com.cucumber.utils.context.utils.Cucumbers;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
@@ -53,6 +54,17 @@ public class HttpResponseWrapperSteps {
             return;
         }
         fail("Comparison should have failed. Instead it passed.");
+    }
+
+    @When("Create HTTP response wrapper with content {} and compare with {}")
+    public void createHttpResponseWrapper(String content, String expected) throws IOException {
+        HttpResponse mock = new DefaultHttpResponseFactory()
+                .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "some reason"),
+                        HttpClientContext.adapt(new BasicHttpContext()));
+        mock.setEntity(new StringEntity(content));
+        mock.setHeader(new BasicHeader("Content-Type", "application/xml"));
+        HttpResponseWrapper actualWrapper = new HttpResponseWrapper(mock);
+        cucumbers.compare(expected, actualWrapper);
     }
 
 }

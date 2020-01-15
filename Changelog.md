@@ -1,8 +1,20 @@
+<<<<<<< HEAD
 ### 5.0       
 ---- Upgrade to Cucumber 5 ----  
   
+=======
+### 4.61              
+Add more logs      
+
+### 4.60              
+Fix priority    
+
+### 4.59              
+Log scenario name after  
+
+>>>>>>> master
 ### 4.58              
-Log scenario name      
+Log scenario name before       
 
 ### 4.57              
 Update dependencies   

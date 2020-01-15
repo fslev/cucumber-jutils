@@ -1,6 +1,7 @@
 package com.cucumber.utils.context.utils;
 
 import io.cucumber.guice.ScenarioScoped;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,11 @@ public class ScenarioUtils {
     public void init(Scenario scenario) {
         this.scenario = scenario;
         log.info("PREPARED scenario [{}]", scenario.getName());
+    }
+
+    @After(order = Integer.MIN_VALUE)
+    public void finish(Scenario scenario) {
+        log.info("FINISHED scenario [{}]", scenario.getName());
     }
 
     public void log(String msg, Object... args) {
