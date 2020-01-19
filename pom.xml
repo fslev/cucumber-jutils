@@ -20,11 +20,11 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <httpclient.version>4.5.10</httpclient.version>
+        <httpclient.version>4.5.11</httpclient.version>
         <jsoncompare.version>2.14</jsoncompare.version>
         <xmlunit.version>2.6.3</xmlunit.version>
         <cucumber.version>5.0.0-RC4</cucumber.version>
-        <cucumber.expressions.version>8.2.1</cucumber.expressions.version>
+        <cucumber.expressions.version>8.3.1</cucumber.expressions.version>
         <guice.version>4.2.2</guice.version>
         <surefire.version>2.22.2</surefire.version>
     </properties>
@@ -45,7 +45,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.18</version>
+            <version>8.0.19</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -151,6 +151,11 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.13.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
         </dependency>
     </dependencies>
 
