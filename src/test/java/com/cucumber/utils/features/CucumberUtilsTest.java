@@ -13,10 +13,10 @@ import java.lang.reflect.Method;
 
 @RunWith(Cucumber.class)
 @io.cucumber.junit.CucumberOptions(features = "src/test/resources/features",
-        glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:output",
+        glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:target/junit/cucumber-reports.xml",
         "json:target/cucumber-report/report.json"}, tags = {"not @Ignore", "not @ignore"})
 @CucumberOptions(features = "src/test/resources/features",
-        glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:output",
+        glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:target/junit/cucumber-reports.xml",
         "json:target/cucumber-report/report.json"}, tags = {"not @Ignore", "not @ignore"})
 public class CucumberUtilsTest extends AbstractTestNGCucumberTests implements ITest {
 
