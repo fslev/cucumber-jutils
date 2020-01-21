@@ -7,6 +7,7 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
+import java.util.Map;
 
 @ScenarioScoped
 public class CompareSteps {
@@ -60,7 +61,7 @@ public class CompareSteps {
     }
 
     @Then("COMPARE {} with table")
-    public void compareWithDataTable(Object expected, List actual) {
+    public void compareWithDataTable(Object expected, List<Map<String, String>> actual) {
         logger.log("Compare {} against {}", expected, actual);
         cucumbers.compare(expected, actual);
     }

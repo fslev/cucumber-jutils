@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 
 @ScenarioScoped
 public class ParamSteps {
@@ -48,7 +49,7 @@ public class ParamSteps {
     }
 
     @Given("table {}=")
-    public void setCustomDataTable(String name, List value) {
+    public void setCustomDataTable(String name, List<Map<String, String>> value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
     }

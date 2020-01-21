@@ -102,6 +102,22 @@ Feature: Test comparator
       | bruce          | willis   |
     And COMPARE #[name] with "willis"
 
+  Scenario: Compare data tables with empty string and null values against JSON
+    Given param a="replaced_value"
+    And table expectedTable=
+      | firstName | lastName |
+      | #[a]      | [blank]  |
+      | sam       | .*       |
+      |           | ~[name]  |
+    Then COMPARE #[expectedTable] with
+    """
+      [
+        {"firstName": "replaced_value","lastName":""},
+        {"firstName": "sam","lastName":"some"},
+        {"firstName": null,"lastName":"John"}
+      ]
+    """
+
   Scenario: Compare empty data tables
     Given table empty_table=
       |  |

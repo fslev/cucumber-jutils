@@ -5,14 +5,11 @@ import com.cucumber.utils.context.props.ScenarioPropsParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import io.cucumber.datatable.DataTable;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -30,8 +27,8 @@ public class ParameterTypesConfig {
     }
 
     @DefaultParameterTransformer
-    @DefaultDataTableEntryTransformer(headersToProperties = true)
-    @DefaultDataTableCellTransformer
+    @DefaultDataTableEntryTransformer(headersToProperties = true, replaceWithEmptyString = "[blank]")
+    @DefaultDataTableCellTransformer(replaceWithEmptyString = "[blank]")
     public Object defaultTransformer(Object fromValue, Type toValueType) {
         Object parsedValue = new ScenarioPropsParser(scenarioProps, fromValue.toString()).result();
         try {
@@ -47,13 +44,10 @@ public class ParameterTypesConfig {
         return new StringBuilder(new ScenarioPropsParser(scenarioProps, docString).result().toString());
     }
 
-    @DataTableType
-    public List convertDataTable(DataTable dataTable) {
-        List<Map<String, String>> list = new ArrayList<>();
-        dataTable.asMaps().forEach(map ->
-                list.add(map.entrySet().stream().collect(Collectors.toMap(
-                        e -> new ScenarioPropsParser(scenarioProps, e.getKey()).result().toString(),
-                        e -> new ScenarioPropsParser(scenarioProps, e.getValue()).result().toString()))));
-        return list;
+    @DataTableType(replaceWithEmptyString = {"[blank]"})
+    public Map<String, String> convertDataTable(Map<String, String> tableEntry) {
+        return tableEntry.entrySet().stream().collect(Collectors.toMap(
+                e -> new ScenarioPropsParser(scenarioProps, e.getKey()).result().toString(),
+                e -> new ScenarioPropsParser(scenarioProps, e.getValue()).result().toString()));
     }
 }
