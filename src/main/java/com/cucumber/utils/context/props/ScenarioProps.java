@@ -19,7 +19,7 @@ public class ScenarioProps {
     private ScenarioProps() {
     }
 
-    public Object getAsString(String key) {
+    public String getAsString(String key) {
         Object val = get(key);
         return val != null ? val.toString() : null;
     }
