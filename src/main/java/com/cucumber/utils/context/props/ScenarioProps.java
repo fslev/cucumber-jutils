@@ -1,6 +1,5 @@
 package com.cucumber.utils.context.props;
 
-import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,10 +13,6 @@ import java.util.UUID;
 public class ScenarioProps {
     private Logger log = LogManager.getLogger();
     private Map<String, Object> props = new HashMap<>();
-
-    @Inject
-    private ScenarioProps() {
-    }
 
     public String getAsString(String key) {
         Object val = get(key);
