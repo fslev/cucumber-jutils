@@ -187,7 +187,7 @@
                             <argLine>${surefireArgLine}</argLine>
                             <testFailureIgnore>false</testFailureIgnore>
                             <parallel>methods</parallel>
-                            <threadCount>3</threadCount>
+                            <threadCount>12</threadCount>
                             <perCoreThreadCount>true</perCoreThreadCount>
                         </configuration>
                     </plugin>
