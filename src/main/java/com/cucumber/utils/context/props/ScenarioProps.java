@@ -19,6 +19,11 @@ public class ScenarioProps {
     private ScenarioProps() {
     }
 
+    public Object getAsString(String key) {
+        Object val = get(key);
+        return val != null ? val.toString() : null;
+    }
+
     public Object get(String key) {
         String trimmedKey = (key == null) ? null : key.trim();
         switch (trimmedKey.toLowerCase()) {
