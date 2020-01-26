@@ -185,8 +185,8 @@ public class Cucumbers {
     private void loadScenarioPropertyFile(String relativeFilePath) {
         try {
             String fileName = ResourceUtils.getFileName(relativeFilePath);
-            if (!Arrays.stream(propertyFileExtensions())
-                    .anyMatch(val -> fileName.endsWith(val))) {
+            if (Arrays.stream(propertyFileExtensions())
+                    .noneMatch(fileName::endsWith)) {
                 throw new RuntimeException("Invalid file extension: " + relativeFilePath + " .Must use one of the following: \"" + propertyFileExtensions());
             }
             String value = ResourceUtils.read(relativeFilePath);

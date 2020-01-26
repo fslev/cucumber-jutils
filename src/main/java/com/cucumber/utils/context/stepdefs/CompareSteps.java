@@ -28,11 +28,10 @@ public class CompareSteps {
         logger.log("Negative compare {} against {}", expected, actual);
         try {
             cucumbers.compare(expected, actual);
+            throw new AssertionError("Compared objects match");
         } catch (AssertionError e) {
             logger.log("Assertion Error caught. Negative compare passes {}", e.getMessage());
-            return;
         }
-        throw new AssertionError("Compared objects match");
     }
 
     @Then("COMPARE {} with content from path \"{}\"")
@@ -53,11 +52,10 @@ public class CompareSteps {
         logger.log("Negative compare {} against {}", expected, actual);
         try {
             cucumbers.compare(expected, actual.toString());
+            throw new AssertionError("Compared objects match");
         } catch (AssertionError e) {
             logger.log("Assertion Error caught. Negative compare passes {}", e.getMessage());
-            return;
         }
-        throw new AssertionError("Compared objects match");
     }
 
     @Then("COMPARE {} with table")
