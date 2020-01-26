@@ -49,10 +49,10 @@ public class CompareSteps {
     }
 
     @Then("Negative COMPARE {} with")
-    public void compareNegativeWithDocString(Object expected, String actual) {
+    public void compareNegativeWithDocString(Object expected, StringBuilder actual) {
         logger.log("Negative compare {} against {}", expected, actual);
         try {
-            cucumbers.compare(expected, actual);
+            cucumbers.compare(expected, actual.toString());
         } catch (AssertionError e) {
             logger.log("Assertion Error caught. Negative compare passes {}", e.getMessage());
             return;
