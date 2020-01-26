@@ -1,5 +1,6 @@
 ### 5.2       
 Update Cucumber    
+Add more supported file formats for reading properties   
 
 ### 5.1       
 Bug fix  
