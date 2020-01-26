@@ -10,8 +10,8 @@ import io.cucumber.java.*;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @ScenarioScoped
 public class ParameterTypesConfig {
@@ -46,8 +46,12 @@ public class ParameterTypesConfig {
 
     @DataTableType(replaceWithEmptyString = {"[_blank]"})
     public Map<String, String> convertDataTable(Map<String, String> tableEntry) {
-        return tableEntry.entrySet().stream().collect(Collectors.toMap(
-                e -> new ScenarioPropsParser(scenarioProps, e.getKey()).result().toString(),
-                e -> new ScenarioPropsParser(scenarioProps, e.getValue()).result().toString()));
+        Map<String, String> transformedMap = new HashMap<>();
+        for (Map.Entry<String, String> e : tableEntry.entrySet()) {
+            transformedMap.put(
+                    e.getKey() != null ? new ScenarioPropsParser(scenarioProps, e.getKey()).result().toString() : null,
+                    e.getValue() != null ? new ScenarioPropsParser(scenarioProps, e.getValue()).result().toString() : null);
+        }
+        return transformedMap;
     }
 }
