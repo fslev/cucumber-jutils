@@ -16,9 +16,9 @@ import java.util.Map;
 @ScenarioScoped
 public class ParameterTypesConfig {
 
+    private static final String EMPTY_STRING = "[_blank]";
     @Inject
     private ScenarioProps scenarioProps;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     {
@@ -27,8 +27,8 @@ public class ParameterTypesConfig {
     }
 
     @DefaultParameterTransformer
-    @DefaultDataTableEntryTransformer(headersToProperties = true, replaceWithEmptyString = "[_blank]")
-    @DefaultDataTableCellTransformer(replaceWithEmptyString = "[_blank]")
+    @DefaultDataTableEntryTransformer(headersToProperties = true, replaceWithEmptyString = EMPTY_STRING)
+    @DefaultDataTableCellTransformer(replaceWithEmptyString = EMPTY_STRING)
     public Object defaultTransformer(Object fromValue, Type toValueType) {
         Object parsedValue = new ScenarioPropsParser(scenarioProps, fromValue.toString()).result();
         try {
@@ -44,7 +44,7 @@ public class ParameterTypesConfig {
         return new StringBuilder(new ScenarioPropsParser(scenarioProps, docString).result().toString());
     }
 
-    @DataTableType(replaceWithEmptyString = {"[_blank]"})
+    @DataTableType(replaceWithEmptyString = EMPTY_STRING)
     public Map<String, String> convertDataTable(Map<String, String> tableEntry) {
         Map<String, String> transformedMap = new HashMap<>();
         for (Map.Entry<String, String> e : tableEntry.entrySet()) {
