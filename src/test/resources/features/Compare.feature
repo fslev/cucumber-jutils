@@ -106,7 +106,7 @@ Feature: Test comparator
     Given param a="replaced_value"
     And table expectedTable=
       | firstName | lastName |
-      | #[a]      | [blank]  |
+      | #[a]      | [_blank] |
       | sam       | .*       |
       |           | ~[name]  |
     Then COMPARE #[expectedTable] with
@@ -118,11 +118,17 @@ Feature: Test comparator
       ]
     """
 
-  Scenario: Compare empty data tables
+  Scenario: Compare empty null value data tables
     Given table empty_table=
       |  |
     Then COMPARE #[empty_table] with table
       |  |
+
+  Scenario: Compare empty data tables
+    Given table empty_table=
+      | [_blank] |
+    Then COMPARE #[empty_table] with table
+      | [_blank] |
 
   Scenario: Compare lists
     Given param a="cherries"

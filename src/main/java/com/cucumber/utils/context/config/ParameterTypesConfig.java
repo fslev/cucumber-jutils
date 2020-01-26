@@ -27,8 +27,8 @@ public class ParameterTypesConfig {
     }
 
     @DefaultParameterTransformer
-    @DefaultDataTableEntryTransformer(headersToProperties = true, replaceWithEmptyString = "[blank]")
-    @DefaultDataTableCellTransformer(replaceWithEmptyString = "[blank]")
+    @DefaultDataTableEntryTransformer(headersToProperties = true, replaceWithEmptyString = "[_blank]")
+    @DefaultDataTableCellTransformer(replaceWithEmptyString = "[_blank]")
     public Object defaultTransformer(Object fromValue, Type toValueType) {
         Object parsedValue = new ScenarioPropsParser(scenarioProps, fromValue.toString()).result();
         try {
@@ -44,7 +44,7 @@ public class ParameterTypesConfig {
         return new StringBuilder(new ScenarioPropsParser(scenarioProps, docString).result().toString());
     }
 
-    @DataTableType(replaceWithEmptyString = {"[blank]"})
+    @DataTableType(replaceWithEmptyString = {"[_blank]"})
     public Map<String, String> convertDataTable(Map<String, String> tableEntry) {
         return tableEntry.entrySet().stream().collect(Collectors.toMap(
                 e -> new ScenarioPropsParser(scenarioProps, e.getKey()).result().toString(),
