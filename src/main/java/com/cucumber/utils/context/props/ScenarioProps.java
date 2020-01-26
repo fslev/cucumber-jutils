@@ -61,7 +61,12 @@ public class ScenarioProps {
         PROPERTY(".property"),
         JSON(".json"),
         XML(".xml"),
-        TXT(".txt");
+        TXT(".txt"),
+        CSV(".csv"),
+        HTML(".html"),
+        MD(".md"),
+        TEXT(".text"),
+        YANG(".yang");
 
         private String name;
 
