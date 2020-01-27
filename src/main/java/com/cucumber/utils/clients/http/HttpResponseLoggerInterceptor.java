@@ -21,7 +21,7 @@ public class HttpResponseLoggerInterceptor implements HttpResponseInterceptor {
         log.debug("--- HTTP RESPONSE ---");
         log.debug("Response STATUS: {}", response.getStatusLine());
         log.debug("Response HEADERS: {}", Arrays.asList(response.getAllHeaders()));
-        log.debug("Response BODY:{}{}", () -> System.lineSeparator(), () -> {
+        log.debug("Response BODY:{}{}", System::lineSeparator, () -> {
             if (response == null) {
                 return null;
             }

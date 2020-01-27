@@ -28,7 +28,7 @@ public class JschSteps {
 
         Properties connProps = ResourceUtils.readProps(relFilePath);
         String host = connProps.getProperty("host").trim();
-        int port = Integer.valueOf(connProps.getProperty("port", "22").trim());
+        int port = Integer.parseInt(connProps.getProperty("port", "22").trim());
         String user = connProps.getProperty("user").trim();
         String pwd = connProps.getProperty("password", "").trim();
         String privateKey = connProps.getProperty("privateKey").trim();

@@ -20,7 +20,10 @@ public class ScenarioProps {
     }
 
     public Object get(String key) {
-        String trimmedKey = (key == null) ? null : key.trim();
+        if (key == null) {
+            return props.get(null);
+        }
+        String trimmedKey = key.trim();
         switch (trimmedKey.toLowerCase()) {
             case "uid":
                 return getUUID();

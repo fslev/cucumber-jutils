@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class ScenarioPropertiesGenerator {
 
     public static final String SYMBOL_START = "~\\[";
-    public static final String SYMBOL_END = "\\]";
+    public static final String SYMBOL_END = "]";
     private static final String SYMBOL_REGEX =
             SYMBOL_START + "(.*?)" + SYMBOL_END;
 

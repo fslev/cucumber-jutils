@@ -10,7 +10,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +23,10 @@ public class SqlSteps {
     @Inject
     private ScenarioUtils logger;
     private SqlClient client;
-    private Properties dataSource;
-    private List<Map<String, String>> result;
 
     @Given("SQL data source from file path \"{}\"")
-    public void setDataSource(String filePath) throws IOException {
-        this.dataSource = ResourceUtils.readProps(filePath);
+    public void setDataSource(String filePath) {
+        Properties dataSource = ResourceUtils.readProps(filePath);
         this.client = new SqlClient(dataSource.getProperty("url"), dataSource.getProperty("username"),
                 dataSource.getProperty("password"), dataSource.getProperty("driver").trim());
     }
@@ -61,7 +58,7 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            this.result = client.executeQueryAndGetRsAsList();
+            List<Map<String, String>> result = client.executeQueryAndGetRsAsList();
             cucumbers.compare(expected, result, false, true);
         } finally {
             this.client.close();

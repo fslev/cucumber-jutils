@@ -22,7 +22,7 @@ public class PollerSteps {
 
     @Then("poll until random generated number {int} is found")
     public void pollFor(int expected) {
-        cucumbers.pollAndCompare(expected, 30, () -> generateRandom());
+        cucumbers.pollAndCompare(expected, 30, this::generateRandom);
     }
 
     public int generateRandom() {

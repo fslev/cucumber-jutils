@@ -52,7 +52,7 @@ public class ResourceUtils {
         if (!Files.isDirectory(rootPath)) {
             throw new IOException("Not a directory " + rootPath);
         }
-        Map<String, String> map = Files.walk(rootPath).filter(path
+        return Files.walk(rootPath).filter(path
                 -> path.toFile().isFile()
                 && (fileExtensionPatterns.length == 0
                 || (path.getFileName().toString().contains(".") && new HashSet<>(Arrays.asList(fileExtensionPatterns))
@@ -65,7 +65,6 @@ public class ResourceUtils {
                                 throw new RuntimeException(e);
                             }
                         }));
-        return map;
     }
 
     private static String readFromRelativePath(String relativeFilePath) throws IOException {

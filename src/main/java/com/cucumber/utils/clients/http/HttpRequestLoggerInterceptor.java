@@ -27,7 +27,7 @@ public class HttpRequestLoggerInterceptor implements HttpRequestInterceptor {
             return proxy != null ? proxy.toURI() : "N/A";
         });
         log.debug("Request HEADERS: {}", Arrays.asList(request.getAllHeaders()));
-        log.debug("Request BODY:{}{}", () -> System.lineSeparator(), () -> {
+        log.debug("Request BODY:{}{}", System::lineSeparator, () -> {
             String content = null;
             HttpEntityEnclosingRequest entityEnclosingRequest;
             if (request instanceof HttpEntityEnclosingRequest) {

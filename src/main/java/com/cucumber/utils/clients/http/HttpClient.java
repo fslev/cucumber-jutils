@@ -210,7 +210,7 @@ public class HttpClient {
     }
 
     private void setHeaders(HttpRequestBase request) {
-        headers.entrySet().forEach(e -> request.setHeader(e.getKey(), e.getValue()));
+        headers.forEach(request::setHeader);
     }
 
     public String getRequestEntity() {

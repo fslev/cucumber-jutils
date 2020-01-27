@@ -44,7 +44,7 @@ public class Cucumbers {
             loadPropsFromPropertiesFile(relativeFilePath);
         } else if (relativeFilePath.endsWith(YAML.value()) || relativeFilePath.endsWith(YML.value())) {
             loadPropsFromYamlFile(relativeFilePath);
-        } else if (Arrays.stream(propertyFileExtensions()).anyMatch(val -> relativeFilePath.endsWith(val))) {
+        } else if (Arrays.stream(propertyFileExtensions()).anyMatch(relativeFilePath::endsWith)) {
             loadScenarioPropertyFile(relativeFilePath);
         } else {
             throw new RuntimeException("File type not supported for reading scenario properties." +
@@ -65,7 +65,7 @@ public class Cucumbers {
                 }
                 if (k.endsWith(YAML.value()) || k.endsWith(YML.value())) {
                     loadPropsFromYamlFile(k);
-                } else if (Arrays.stream(propertyFileExtensions()).anyMatch(val -> k.endsWith(val))) {
+                } else if (Arrays.stream(propertyFileExtensions()).anyMatch(k::endsWith)) {
                     loadScenarioPropertyFile(k);
                 }
             });
@@ -136,11 +136,7 @@ public class Cucumbers {
     private void compareHttpResponse(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws IOException {
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(actual);
         HttpResponseWrapper expectedWrapper;
-        try {
-            expectedWrapper = new HttpResponseWrapper(expected);
-        } catch (IOException e) {
-            throw e;
-        }
+        expectedWrapper = new HttpResponseWrapper(expected);
         String expectedStatus = expectedWrapper.getStatus();
         String expectedReason = expectedWrapper.getReasonPhrase();
         Map<String, String> expectedHeaders = expectedWrapper.getHeaders();
@@ -187,7 +183,8 @@ public class Cucumbers {
             String fileName = ResourceUtils.getFileName(relativeFilePath);
             if (Arrays.stream(propertyFileExtensions())
                     .noneMatch(fileName::endsWith)) {
-                throw new RuntimeException("Invalid file extension: " + relativeFilePath + " .Must use one of the following: \"" + propertyFileExtensions());
+                throw new RuntimeException("Invalid file extension: " + relativeFilePath +
+                        " .Must use one of the following: \"" + Arrays.toString(propertyFileExtensions()));
             }
             String value = ResourceUtils.read(relativeFilePath);
             scenarioProps.put(fileName.substring(0, fileName.lastIndexOf(".")), value);

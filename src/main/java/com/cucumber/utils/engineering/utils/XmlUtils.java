@@ -37,15 +37,15 @@ public class XmlUtils {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             builder.setErrorHandler(new ErrorHandler() {
                 @Override
-                public void warning(SAXParseException exception) throws SAXException {
+                public void warning(SAXParseException exception) {
                 }
 
                 @Override
-                public void error(SAXParseException exception) throws SAXException {
+                public void error(SAXParseException exception) {
                 }
 
                 @Override
-                public void fatalError(SAXParseException exception) throws SAXException {
+                public void fatalError(SAXParseException exception) {
                 }
             });
             builder.parse(new InputSource(new StringReader(xml)));
