@@ -1,5 +1,11 @@
 Feature: Test comparator
 
+  Scenario: Compare with special characters
+  This is/was a bug (https://github.com/cucumber/cucumber-jvm/issues/1881)
+    Given param a="%"
+    Given param b="%"
+    Then COMPARE #[a] with "#[b]"
+
   Scenario: Compare simple values
     Given param a="1"
     Given param a="1"
