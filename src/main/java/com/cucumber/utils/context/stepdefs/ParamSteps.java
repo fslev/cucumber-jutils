@@ -21,21 +21,19 @@ public class ParamSteps {
     private ScenarioProps scenarioProps;
 
     @Given("param {}=\"{}\"")
-    public void setParamStringQuoted(String name, String value) {
+    public void setParamString(String name, String value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
     }
 
     @Given("param {}=")
     public void setParamDocString(String name, StringBuilder value) {
-        scenarioProps.put(name, value.toString());
-        log.debug("Param {} = {}", name, value);
+        setParamString(name, value.toString());
     }
 
     @Given("param {} from file path \"{}\"")
     public void setParamFromFile(String name, String filePath) {
-        String value = cucumbers.read(filePath);
-        scenarioProps.put(name, value);
+        setParamString(name, cucumbers.read(filePath));
     }
 
     @Given("load scenario props from file \"{}\"")

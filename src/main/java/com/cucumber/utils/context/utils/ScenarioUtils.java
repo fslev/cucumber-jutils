@@ -16,12 +16,12 @@ public class ScenarioUtils {
     @Before(order = Integer.MIN_VALUE)
     public void init(Scenario scenario) {
         this.scenario = scenario;
-        log.info("PREPARED scenario [{}]", scenario.getName());
+        log.info("PREPARED scenario: [{}]", scenario.getName());
     }
 
     @After(order = Integer.MIN_VALUE)
     public void finish(Scenario scenario) {
-        log.info("FINISHED scenario [{}]", scenario.getName());
+        log.info("FINISHED scenario: [{}]", scenario.getName());
     }
 
     public void log(String msg, Object... args) {
