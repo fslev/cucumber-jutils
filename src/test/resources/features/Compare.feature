@@ -1,5 +1,7 @@
 Feature: Test comparator
 
+  Scenario: empty scenario
+
   Scenario: Compare with special characters
   This is/was a bug (https://github.com/cucumber/cucumber-jvm/issues/1881)
     Given param a="%"

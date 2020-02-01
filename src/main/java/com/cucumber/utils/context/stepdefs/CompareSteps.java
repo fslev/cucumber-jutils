@@ -36,13 +36,11 @@ public class CompareSteps {
 
     @Then("COMPARE {} with content from path \"{}\"")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
-        String actual = cucumbers.read(filePath);
-        compareWithString(expected, actual);
+        compareWithString(expected, cucumbers.read(filePath));
     }
 
     @Then("COMPARE {} with")
     public void compareWithDocString(Object expected, StringBuilder actual) {
-        logger.log("Compare {} against {}", expected, actual.toString());
         compareWithString(expected, actual.toString());
     }
 
