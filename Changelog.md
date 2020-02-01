@@ -1,3 +1,6 @@
+### 5.6
+Reformat scenario logging     
+
 ### 5.5
 Update Cucumber version     
 
