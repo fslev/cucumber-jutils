@@ -83,10 +83,12 @@ public class ScenarioProps {
 
         public static String[] propertyFileExtensions() {
             return Arrays.stream(allExtensions())
-                    .filter(val -> val.equals(PROPERTY.value())
-                            || val.equals(XML.value())
-                            || val.equals(JSON.value())
-                            || val.equals(TXT.value()))
+                    .filter(val -> val.equals(PROPERTY.value()) || val.equals(XML.value())
+                            || val.equals(JSON.value()) || val.equals(TXT.value())
+                            || val.equals(HTML.value()) || val.equals(TEXT.value())
+                            || val.equals(CSV.value()) || val.equals(MD.value())
+                            || val.equals(YANG.value())
+                    )
                     .toArray(String[]::new);
         }
 

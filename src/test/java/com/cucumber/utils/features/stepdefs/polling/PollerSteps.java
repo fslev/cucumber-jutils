@@ -25,6 +25,11 @@ public class PollerSteps {
         cucumbers.pollAndCompare(expected, 30, this::generateRandom);
     }
 
+    @Then("poll {}s until 0=0")
+    public void pollForZeroSeconds(int pollTimeoutInSeconds) {
+        cucumbers.pollAndCompare(0, pollTimeoutInSeconds, () -> 0);
+    }
+
     public int generateRandom() {
         return (int) (min + Math.random() * (max - min));
     }

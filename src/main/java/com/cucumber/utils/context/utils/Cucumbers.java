@@ -12,9 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Properties;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.function.Supplier;
 
 import static com.cucumber.utils.context.props.ScenarioProps.FileExtension.*;
@@ -53,23 +53,29 @@ public class Cucumbers {
     }
 
     /**
-     * Loads scenario properties from all supported file patterns: .properties, .yaml, .property
+     * Loads scenario properties from all supported file patterns: .properties, .yaml, .property, ...
      */
 
     public void loadScenarioPropsFromDir(String relativeDirPath) {
         try {
             Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
+            String duplicatedScenarioPropFile = getDuplicatedScenarioPropFileName(map.keySet());
+            if (duplicatedScenarioPropFile != null) {
+                throw new RuntimeException("Ambiguous loading of scenario property files from dir '" + relativeDirPath
+                        + "'\nFile '" + duplicatedScenarioPropFile
+                        + "' has a duplicated file name within the directory hierarchy\n");
+            }
             map.forEach((k, v) -> {
                 if (k.endsWith(PROPERTIES.value())) {
                     loadPropsFromPropertiesFile(k);
                 }
                 if (k.endsWith(YAML.value()) || k.endsWith(YML.value())) {
                     loadPropsFromYamlFile(k);
-                } else if (Arrays.stream(propertyFileExtensions()).anyMatch(k::endsWith)) {
+                } else if (isScenarioPropFile(k)) {
                     loadScenarioPropertyFile(k);
                 }
             });
-        } catch (Exception e) {
+        } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -187,9 +193,31 @@ public class Cucumbers {
                         " .Must use one of the following: \"" + Arrays.toString(propertyFileExtensions()));
             }
             String value = ResourceUtils.read(relativeFilePath);
-            scenarioProps.put(fileName.substring(0, fileName.lastIndexOf(".")), value);
+            scenarioProps.put(extractSimpleName(fileName), value);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getDuplicatedScenarioPropFileName(Set<String> filePaths) {
+        Set<String> fileNames = new HashSet<>();
+        for (String filePath : filePaths) {
+            if (isScenarioPropFile(filePath) && !fileNames.add(extractSimpleName(extractFileName(filePath)))) {
+                return filePath;
+            }
+        }
+        return null;
+    }
+
+    private String extractFileName(String path) {
+        return Paths.get(path).getFileName().toString();
+    }
+
+    private String extractSimpleName(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf("."));
+    }
+
+    private boolean isScenarioPropFile(String filePath) {
+        return Arrays.stream(propertyFileExtensions()).anyMatch(filePath::endsWith);
     }
 }
