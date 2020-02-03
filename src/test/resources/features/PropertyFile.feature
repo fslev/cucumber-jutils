@@ -21,6 +21,5 @@ Feature: Property File feature
     And COMPARE 4 with "#[d]"
     And COMPARE 6 with "#[f]"
 
-
   Scenario: Test error when duplicated property files are detected
-    * Load duplicated scenario props from dir props/dir2 and expect exception
+    * Load duplicated scenario props from dir duplicated_props and expect exception
