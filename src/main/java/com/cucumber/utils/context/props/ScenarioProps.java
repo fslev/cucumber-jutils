@@ -67,7 +67,6 @@ public class ScenarioProps {
         TXT(".txt"),
         CSV(".csv"),
         HTML(".html"),
-        MD(".md"),
         TEXT(".text"),
         YANG(".yang");
 
@@ -86,8 +85,7 @@ public class ScenarioProps {
                     .filter(val -> val.equals(PROPERTY.value()) || val.equals(XML.value())
                             || val.equals(JSON.value()) || val.equals(TXT.value())
                             || val.equals(HTML.value()) || val.equals(TEXT.value())
-                            || val.equals(CSV.value()) || val.equals(MD.value())
-                            || val.equals(YANG.value())
+                            || val.equals(CSV.value()) || val.equals(YANG.value())
                     )
                     .toArray(String[]::new);
         }

@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -56,28 +55,33 @@ public class Cucumbers {
      * Loads scenario properties from all supported file patterns: .properties, .yaml, .property, ...
      */
 
-    public void loadScenarioPropsFromDir(String relativeDirPath) {
+    public Set<String> loadScenarioPropsFromDir(String relativeDirPath) {
+        Set<String> properties = new HashSet<>();
         try {
             Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
-            String duplicatedScenarioPropFile = getDuplicatedScenarioPropFileName(map.keySet());
-            if (duplicatedScenarioPropFile != null) {
-                throw new RuntimeException("Ambiguous loading of scenario property files from dir '" + relativeDirPath
-                        + "'\nFile '" + duplicatedScenarioPropFile
-                        + "' has a duplicated file name within the directory hierarchy\n");
-            }
             map.forEach((k, v) -> {
                 if (k.endsWith(PROPERTIES.value())) {
-                    loadPropsFromPropertiesFile(k);
+                    if (!properties.addAll(loadPropsFromPropertiesFile(k))) {
+                        throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
+                                + "'\nProperties file '" + k + "' has properties that were already set while traversing directory.");
+                    }
                 }
                 if (k.endsWith(YAML.value()) || k.endsWith(YML.value())) {
-                    loadPropsFromYamlFile(k);
+                    if (!properties.addAll(loadPropsFromYamlFile(k))) {
+                        throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
+                                + "'\nYaml file '" + k + "' has properties that were already set while traversing directory.");
+                    }
                 } else if (isScenarioPropFile(k)) {
-                    loadScenarioPropertyFile(k);
+                    if (!properties.add(loadScenarioPropertyFile(k))) {
+                        throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
+                                + "'\nProperty file '" + k + "' has name that was already set as a scenario property while traversing directory.");
+                    }
                 }
             });
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
+        return properties;
     }
 
     public void compare(Object expected, Object actual) {
@@ -169,12 +173,13 @@ public class Cucumbers {
         placeholdersAndValues.forEach(scenarioProps::put);
     }
 
-    private void loadPropsFromPropertiesFile(String filePath) {
+    private Set<String> loadPropsFromPropertiesFile(String filePath) {
         Properties p = ResourceUtils.readProps(filePath);
         p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
+        return p.stringPropertyNames();
     }
 
-    private void loadPropsFromYamlFile(String filePath) {
+    private Set<String> loadPropsFromYamlFile(String filePath) {
         Map<String, Object> map;
         try {
             map = ResourceUtils.readYaml(filePath);
@@ -182,9 +187,10 @@ public class Cucumbers {
             throw new RuntimeException(e);
         }
         map.forEach((k, v) -> scenarioProps.put(k, v));
+        return map.keySet();
     }
 
-    private void loadScenarioPropertyFile(String relativeFilePath) {
+    private String loadScenarioPropertyFile(String relativeFilePath) {
         try {
             String fileName = ResourceUtils.getFileName(relativeFilePath);
             if (Arrays.stream(propertyFileExtensions())
@@ -192,29 +198,17 @@ public class Cucumbers {
                 throw new RuntimeException("Invalid file extension: " + relativeFilePath +
                         " .Must use one of the following: \"" + Arrays.toString(propertyFileExtensions()));
             }
+            String propertyName = extractSimpleName(fileName);
             String value = ResourceUtils.read(relativeFilePath);
-            scenarioProps.put(extractSimpleName(fileName), value);
+            scenarioProps.put(propertyName, value);
+            return propertyName;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    private String getDuplicatedScenarioPropFileName(Set<String> filePaths) {
-        Set<String> fileNames = new HashSet<>();
-        for (String filePath : filePaths) {
-            if (isScenarioPropFile(filePath) && !fileNames.add(extractSimpleName(extractFileName(filePath)))) {
-                return filePath;
-            }
-        }
-        return null;
-    }
-
-    private String extractFileName(String path) {
-        return Paths.get(path).getFileName().toString();
-    }
-
     private String extractSimpleName(String fileName) {
-        return fileName.substring(0, fileName.lastIndexOf("."));
+        return fileName.substring(0, fileName.lastIndexOf(".")).trim();
     }
 
     private boolean isScenarioPropFile(String filePath) {
