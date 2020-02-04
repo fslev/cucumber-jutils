@@ -1,7 +1,10 @@
+### 5.10  
+Refactor scenario logging  
+
 ### 5.9    
-Remove .md as a scenario property file    
+Remove .md as a scenario property file      
 Bug fix  
-Add Error support in case of duplicated scenario properties are recursively loaded from directory    
+Add Error support in case of duplicated scenario properties are recursively loaded from directory      
 
 ### 5.8    
 Bug fix  

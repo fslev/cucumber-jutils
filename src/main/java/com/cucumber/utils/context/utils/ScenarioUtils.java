@@ -21,7 +21,7 @@ public class ScenarioUtils {
 
     @After(order = Integer.MIN_VALUE)
     public void finish(Scenario scenario) {
-        log.info("FINISHED scenario: [{}]", scenario.getName());
+        log.info("{} -> FINISHED scenario [{}]", scenario.getStatus(), scenario.getName());
     }
 
     public void log(String msg, Object... args) {
