@@ -6,6 +6,23 @@ Feature: Test comparator
     Given param b="%"
     Then COMPARE #[a] with "#[b]"
 
+  Scenario: Compare with new lines
+    Given param a="test\n"
+    And param b=
+    """
+    test
+
+    """
+    Then COMPARE #[a] with "#[b]"
+    When param b=
+    """
+    test
+    some other values
+    """
+    Then Negative COMPARE #[a] with "#[b]"
+    When param a="test\n.*"
+    Then COMPARE #[a] with "#[b]"
+
   Scenario: Compare simple values
     Given param a="1"
     Given param a="1"
