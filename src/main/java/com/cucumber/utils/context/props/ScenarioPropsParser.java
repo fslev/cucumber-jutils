@@ -12,7 +12,7 @@ public class ScenarioPropsParser {
     private ScenarioProps scenarioProps;
 
     public ScenarioPropsParser(ScenarioProps scenarioProps, String target) {
-        this.target = target != null ? target.trim() : null;
+        this.target = target;
         this.scenarioProps = scenarioProps;
     }
 
