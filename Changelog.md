@@ -1,3 +1,6 @@
+### 5.12  
+Refactor scenario status output logs   
+
 ### 5.11  
 Bug fix    
 
