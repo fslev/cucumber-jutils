@@ -1,3 +1,6 @@
 Feature: Feature with empty scenario
 
-  Scenario: Empty scenario
+#toDo -> Uncomment
+# https://github.com/cucumber/cucumber-jvm/issues/1885
+
+#  Scenario: Empty scenario
