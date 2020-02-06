@@ -1,5 +1,6 @@
 ### 5.12  
 Refactor scenario status output logs   
+Update to Cucumber 5.2.0  
 
 ### 5.11  
 Bug fix    
