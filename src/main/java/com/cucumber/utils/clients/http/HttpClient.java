@@ -287,6 +287,11 @@ public class HttpClient {
             return this;
         }
 
+        public Builder addHeaders(Map<String, String> headers) {
+            this.headers.putAll(headers);
+            return this;
+        }
+
         public Builder setHeaders(Map<String, String> headers) {
             this.headers.clear();
             this.headers.putAll(headers);

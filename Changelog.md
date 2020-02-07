@@ -1,3 +1,6 @@
+### 5.13    
+Add 'add headers' support for http client    
+
 ### 5.12  
 Refactor scenario status output logs   
 Update to Cucumber 5.2.0  
