@@ -6,6 +6,7 @@ import com.cucumber.utils.context.props.ScenarioPropsParser;
 import com.cucumber.utils.engineering.compare.Compare;
 import com.cucumber.utils.engineering.poller.MethodPoller;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
+import com.cucumber.utils.exceptions.InvalidScenarioPropertyFileType;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
@@ -38,16 +39,15 @@ public class Cucumbers {
         }
     }
 
-    public void loadScenarioPropsFromFile(String relativeFilePath) {
+    public Set<String> loadScenarioPropsFromFile(String relativeFilePath) {
         if (relativeFilePath.endsWith(PROPERTIES.value())) {
-            loadPropsFromPropertiesFile(relativeFilePath);
+            return loadPropsFromPropertiesFile(relativeFilePath);
         } else if (relativeFilePath.endsWith(YAML.value()) || relativeFilePath.endsWith(YML.value())) {
-            loadPropsFromYamlFile(relativeFilePath);
+            return loadPropsFromYamlFile(relativeFilePath);
         } else if (Arrays.stream(propertyFileExtensions()).anyMatch(relativeFilePath::endsWith)) {
-            loadScenarioPropertyFile(relativeFilePath);
+            return new HashSet<>(Arrays.asList(loadScenarioPropertyFile(relativeFilePath)));
         } else {
-            throw new RuntimeException("File type not supported for reading scenario properties." +
-                    " Must have one of the extensions: " + Arrays.toString(allExtensions()));
+            throw new InvalidScenarioPropertyFileType();
         }
     }
 
@@ -60,22 +60,13 @@ public class Cucumbers {
         try {
             Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
             map.forEach((k, v) -> {
-                if (k.endsWith(PROPERTIES.value())) {
-                    if (!properties.addAll(loadPropsFromPropertiesFile(k))) {
+                try {
+                    if (!properties.addAll(loadScenarioPropsFromFile(k))) {
                         throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
-                                + "'\nProperties file '" + k + "' has properties that were already set while traversing directory.");
+                                + "'\nScenario properties file '" + k + "' has scenario properties or is named after a property that was already set while traversing directory.");
                     }
-                }
-                if (k.endsWith(YAML.value()) || k.endsWith(YML.value())) {
-                    if (!properties.addAll(loadPropsFromYamlFile(k))) {
-                        throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
-                                + "'\nYaml file '" + k + "' has properties that were already set while traversing directory.");
-                    }
-                } else if (isScenarioPropFile(k)) {
-                    if (!properties.add(loadScenarioPropertyFile(k))) {
-                        throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
-                                + "'\nProperty file '" + k + "' has name that was already set as a scenario property while traversing directory.");
-                    }
+                } catch (InvalidScenarioPropertyFileType e) {
+                    log.warn(e.getMessage());
                 }
             });
         } catch (IOException | URISyntaxException e) {
@@ -176,6 +167,7 @@ public class Cucumbers {
     private Set<String> loadPropsFromPropertiesFile(String filePath) {
         Properties p = ResourceUtils.readProps(filePath);
         p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
+        log.info("-> Loaded scenario properties from file {}", filePath);
         return p.stringPropertyNames();
     }
 
@@ -187,6 +179,7 @@ public class Cucumbers {
             throw new RuntimeException(e);
         }
         map.forEach((k, v) -> scenarioProps.put(k, v));
+        log.info("-> Loaded scenario properties from file '{}'", filePath);
         return map.keySet();
     }
 
@@ -201,6 +194,7 @@ public class Cucumbers {
             String propertyName = extractSimpleName(fileName);
             String value = ResourceUtils.read(relativeFilePath);
             scenarioProps.put(propertyName, value);
+            log.info("-> Loaded file '{}' into a scenario property", relativeFilePath);
             return propertyName;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -209,9 +203,5 @@ public class Cucumbers {
 
     private String extractSimpleName(String fileName) {
         return fileName.substring(0, fileName.lastIndexOf(".")).trim();
-    }
-
-    private boolean isScenarioPropFile(String filePath) {
-        return Arrays.stream(propertyFileExtensions()).anyMatch(filePath::endsWith);
     }
 }

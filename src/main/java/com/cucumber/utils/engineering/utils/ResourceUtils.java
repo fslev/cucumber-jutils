@@ -1,5 +1,7 @@
 package com.cucumber.utils.engineering.utils;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -16,6 +18,8 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class ResourceUtils {
+
+    private static Logger log = LogManager.getLogger();
 
     public static String read(String relativeFilePath) throws IOException {
         return readFromRelativePath(relativeFilePath);
@@ -52,19 +56,25 @@ public class ResourceUtils {
         if (!Files.isDirectory(rootPath)) {
             throw new IOException("Not a directory " + rootPath);
         }
-        return Files.walk(rootPath).filter(path
-                -> path.toFile().isFile()
-                && (fileExtensionPatterns.length == 0
-                || (path.getFileName().toString().contains(".") && new HashSet<>(Arrays.asList(fileExtensionPatterns))
-                .contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf("."))))))
-                .collect(Collectors.toMap(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString(),
-                        path -> {
-                            try {
-                                return readFromRelativePath(relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString());
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }));
+        return Files.walk(rootPath).filter(path -> {
+            if (!path.toFile().isFile()) {
+                return false;
+            }
+            if (fileExtensionPatterns.length == 0 || (path.getFileName().toString().contains(".")
+                    && new HashSet<>(Arrays.asList(fileExtensionPatterns))
+                    .contains(path.getFileName().toString().substring(path.getFileName().toString().lastIndexOf("."))))) {
+                return true;
+            }
+            log.warn("Ignore file '{}'.\nIt has none of the following extensions: {}", path.getFileName().toString(), fileExtensionPatterns);
+            return false;
+        }).collect(Collectors.toMap(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString(),
+                path -> {
+                    try {
+                        return readFromRelativePath(relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
     }
 
     private static String readFromRelativePath(String relativeFilePath) throws IOException {

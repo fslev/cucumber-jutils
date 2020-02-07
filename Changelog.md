@@ -1,3 +1,6 @@
+### 5.14    
+Add helpful logging when reading scenario properties from files   
+
 ### 5.13    
 Add 'add headers' support for http client    
 
