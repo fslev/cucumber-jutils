@@ -72,6 +72,7 @@ public class Cucumbers {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
+        log.info("Loaded from dir '{}', scenario properties with the following names:\n{}", relativeDirPath, properties);
         return properties;
     }
 
@@ -167,7 +168,7 @@ public class Cucumbers {
     private Set<String> loadPropsFromPropertiesFile(String filePath) {
         Properties p = ResourceUtils.readProps(filePath);
         p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
-        log.info("-> Loaded scenario properties from file {}", filePath);
+        log.debug("-> Loaded scenario properties from file {}", filePath);
         return p.stringPropertyNames();
     }
 
@@ -179,7 +180,7 @@ public class Cucumbers {
             throw new RuntimeException(e);
         }
         map.forEach((k, v) -> scenarioProps.put(k, v));
-        log.info("-> Loaded scenario properties from file '{}'", filePath);
+        log.debug("-> Loaded scenario properties from file '{}'", filePath);
         return map.keySet();
     }
 
@@ -194,7 +195,7 @@ public class Cucumbers {
             String propertyName = extractSimpleName(fileName);
             String value = ResourceUtils.read(relativeFilePath);
             scenarioProps.put(propertyName, value);
-            log.info("-> Loaded file '{}' into a scenario property", relativeFilePath);
+            log.debug("-> Loaded file '{}' into a scenario property", relativeFilePath);
             return propertyName;
         } catch (Exception e) {
             throw new RuntimeException(e);
