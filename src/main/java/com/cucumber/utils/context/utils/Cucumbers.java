@@ -58,12 +58,12 @@ public class Cucumbers {
     public Set<String> loadScenarioPropsFromDir(String relativeDirPath) {
         Set<String> properties = new HashSet<>();
         try {
-            Map<String, String> map = ResourceUtils.readDirectory(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
-            map.forEach((k, v) -> {
+            Set<String> filePaths = ResourceUtils.getFilesFromDir(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
+            filePaths.forEach(filePath -> {
                 try {
-                    if (!properties.addAll(loadScenarioPropsFromFile(k))) {
+                    if (!properties.addAll(loadScenarioPropsFromFile(filePath))) {
                         throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
-                                + "'\nScenario properties file '" + k + "' has scenario properties or is named after a property that was already set while traversing directory.");
+                                + "'\nScenario properties file '" + filePath + "' has scenario properties or is named after a property that was already set while traversing directory.");
                     }
                 } catch (InvalidScenarioPropertyFileType e) {
                     log.warn(e.getMessage());

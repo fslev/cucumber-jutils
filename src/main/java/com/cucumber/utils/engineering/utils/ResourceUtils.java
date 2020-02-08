@@ -11,10 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ResourceUtils {
@@ -45,9 +42,30 @@ public class ResourceUtils {
     }
 
     /**
-     * @return a Map&lt;String,String&gt; between corresponding file paths and file contents
+     * @return a Map&lt;String,String&gt; between corresponding relative file paths and file contents
      */
     public static Map<String, String> readDirectory(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
+        Set<String> files = getFilesFromDir(relativeDirPath, fileExtensionPatterns);
+        return files.stream().collect(Collectors.toMap(filePath -> filePath,
+                filePath -> {
+                    try {
+                        return readFromRelativePath(filePath);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
+    }
+
+    /**
+     * Returns relative file paths from a directory matching given extensions
+     *
+     * @param relativeDirPath
+     * @param fileExtensionPatterns
+     * @return
+     * @throws IOException
+     * @throws URISyntaxException
+     */
+    public static Set<String> getFilesFromDir(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
         URL dirURL = Thread.currentThread().getContextClassLoader().getResource(relativeDirPath);
         if (dirURL == null) {
             throw new IOException("Directory " + relativeDirPath + " not found or is empty");
@@ -67,14 +85,8 @@ public class ResourceUtils {
             }
             log.warn("Ignore file '{}'.\nIt has none of the following extensions: {}", path.getFileName().toString(), fileExtensionPatterns);
             return false;
-        }).collect(Collectors.toMap(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString(),
-                path -> {
-                    try {
-                        return readFromRelativePath(relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }));
+        }).map(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString())
+                .collect(Collectors.toSet());
     }
 
     private static String readFromRelativePath(String relativeFilePath) throws IOException {
