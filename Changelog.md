@@ -1,3 +1,6 @@
+### 5.17      
+Add replaceProps for StringFormat    
+
 ### 5.16      
 Optimize code    
 

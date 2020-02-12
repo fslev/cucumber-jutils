@@ -1,10 +1,16 @@
 package com.cucumber.utils.engineering.utils;
 
+import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesParser;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringSubstitutor;
 
 import java.util.*;
 
-public class StringFormatUtils {
+public class StringFormat {
+
+    public static <V> String replaceProps(Object source, Map<String, V> values) {
+        return StringSubstitutor.replace(source, values, ScenarioPropertiesParser.SYMBOL_START, ScenarioPropertiesParser.SYMBOL_END);
+    }
 
     /**
      * Format strings into columns
