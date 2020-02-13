@@ -36,6 +36,9 @@ public class ParameterTypesConfig {
             return null;
         }
         Object parsedValue = new ScenarioPropsParser(scenarioProps, fromValue.toString()).result();
+        if (parsedValue == null) {
+            return null;
+        }
         try {
             return objectMapper.readValue(parsedValue.toString(), objectMapper.constructType(toValueType));
             // if json string cannot be converted to object then proceed to simple value conversion
