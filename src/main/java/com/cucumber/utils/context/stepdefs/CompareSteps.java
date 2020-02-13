@@ -9,6 +9,8 @@ import io.cucumber.java.en.Then;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertNull;
+
 @ScenarioScoped
 public class CompareSteps {
 
@@ -21,6 +23,12 @@ public class CompareSteps {
     public void compareWithString(Object expected, Object actual) {
         logger.log("    Compare:\n{}\n    Against:\n{}", expected, actual);
         cucumbers.compare(expected, actual);
+    }
+
+    @Then("COMPARE {} with NULL")
+    public void compareWithNull(Object expected) {
+        logger.log("    Compare:\n{}\n    Against:\n{}", expected, null);
+        assertNull(expected);
     }
 
     @Then("Negative COMPARE {} with \"{}\"")

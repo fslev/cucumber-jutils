@@ -20,7 +20,7 @@ public class ScenarioPropsParser {
         String standalonePropertyKey = getStandaloneScenarioPropertyKey();
         if (standalonePropertyKey != null) {
             Object val = scenarioProps.get(standalonePropertyKey);
-            return val != null ? val : target;
+            return val != null ? val : scenarioProps.containsKey(standalonePropertyKey) ? null : target;
         }
         return getParsedStringWithScenarioPropertyValues(target);
     }

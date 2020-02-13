@@ -1,3 +1,6 @@
+### 5.19      
+Add support for null strings  
+
 ### 5.18      
 Upgraded Cucumber  
 

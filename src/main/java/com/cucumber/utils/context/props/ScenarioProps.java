@@ -19,6 +19,10 @@ public class ScenarioProps {
         return val != null ? val.toString() : null;
     }
 
+    public boolean containsKey(String key) {
+        return props.containsKey(key);
+    }
+
     public Object get(String key) {
         if (key == null) {
             return props.get(null);

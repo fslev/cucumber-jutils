@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.*;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +16,8 @@ import java.util.Map;
 public class ParameterTypesConfig {
 
     private static final String EMPTY_STRING = "[_blank]";
+    private static final String NULL_STRING = "[_null]";
+
     @Inject
     private ScenarioProps scenarioProps;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -30,11 +31,14 @@ public class ParameterTypesConfig {
     @DefaultDataTableEntryTransformer(headersToProperties = true, replaceWithEmptyString = EMPTY_STRING)
     @DefaultDataTableCellTransformer(replaceWithEmptyString = EMPTY_STRING)
     public Object defaultTransformer(Object fromValue, Type toValueType) {
+        if (fromValue.equals(NULL_STRING)) {
+            return null;
+        }
         Object parsedValue = new ScenarioPropsParser(scenarioProps, fromValue.toString()).result();
         try {
             return objectMapper.readValue(parsedValue.toString(), objectMapper.constructType(toValueType));
             // if json string cannot be converted to object then proceed to simple value conversion
-        } catch (IOException e) {
+        } catch (Exception e) {
             return objectMapper.convertValue(parsedValue, objectMapper.constructType(toValueType));
         }
     }
