@@ -23,6 +23,17 @@ public class MethodPollerTest {
     }
 
     @Test
+    public void testPollerWithNullDuration() {
+        int expected = 3;
+        Integer duration = null;
+        int result = new MethodPoller<Integer>()
+                .method(() -> 3)
+                .duration(duration, 100L)
+                .until(n -> n.equals(expected)).poll();
+        assertEquals(expected, result);
+    }
+
+    @Test
     public void testPollerExponentialBackOff() {
         int expected = 3;
         int result = new MethodPoller<Integer>()
