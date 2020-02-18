@@ -2,9 +2,11 @@ package com.cucumber.utils.engineering.compare;
 
 import com.cucumber.utils.engineering.compare.comparators.CustomXmlComparator;
 import com.cucumber.utils.engineering.compare.exceptions.CompareException;
+import org.w3c.dom.Element;
 import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.DifferenceEvaluators;
-import org.xmlunit.diff.ElementSelectors;
+import org.xmlunit.diff.ElementSelector;
+import org.xmlunit.util.Nodes;
 
 import java.util.Map;
 
@@ -40,9 +42,19 @@ public class XmlCompare implements Placeholdable {
     @Override
     public Map<String, String> compare() {
         assertThat(message, actual, isSimilarTo(expected).ignoreWhitespace()
-                .withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byName))
+                .withNodeMatcher(new DefaultNodeMatcher(new CustomElementSelector()))
                 .withDifferenceEvaluator(
                         DifferenceEvaluators.chain(DifferenceEvaluators.Default, comparator)));
         return comparator.getGeneratedProperties();
+    }
+
+    class CustomElementSelector implements ElementSelector {
+
+        @Override
+        public boolean canBeCompared(Element controlElement, Element testElement) {
+            return controlElement != null && testElement != null
+                    && Nodes.getQName(controlElement).equals(Nodes.getQName(testElement))
+                    && comparator.match(Nodes.getMergedNestedText(controlElement), Nodes.getMergedNestedText(testElement));
+        }
     }
 }

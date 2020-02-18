@@ -127,10 +127,20 @@ public class XmlCompareTests {
         new XmlCompare("", expected, actual, false, true).compare();
     }
 
-    @Test
+    @Test(expected = AssertionError.class)
     public void compareXmlChildOrder_negative() throws CompareException {
-        String expected = "<struct><list><int>3da</int><int x=\"y\">0da</int></list><boolean>.*</boolean></struct>";
-        String actual = "<struct><boolean>false</boolean><list><int>0da</int><int>3da</int></list></struct>";
-        new XmlCompare("", expected, actual, false, false).compare();
+        String expected = "<struct><list><int>3da</int><int>0da</int></list><boolean>.*</boolean></struct>";
+        String actual = "<struct><list><int>0da</int><int>3da</int></list><boolean>false</boolean></struct>";
+        new XmlCompare("", expected, actual, false, true).compare();
+    }
+
+    @Test
+    /**
+     * refactor xml compare mechanism
+     */
+    public void compareXmlAttrLength() throws CompareException {
+        String expected = "<struct><int a=\"2\">3da</int><boolean>.*</boolean></struct>";
+        String actual = "<struct><boolean>false</boolean><int a=\"2\" b=\"3\">3da</int></struct>";
+        new XmlCompare("", expected, actual, true, false).compare();
     }
 }

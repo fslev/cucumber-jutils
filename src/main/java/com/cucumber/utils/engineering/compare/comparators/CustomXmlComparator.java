@@ -34,9 +34,13 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         if (comparison.getType() == ComparisonType.CHILD_NODELIST_LENGTH) {
             return childNodeListLength ? comparisonResult : ComparisonResult.SIMILAR;
         }
+
         if (comparison.getType() == ComparisonType.CHILD_NODELIST_SEQUENCE) {
-            return childNodeListSequence ? comparisonResult : ComparisonResult.SIMILAR;
+            return childNodeListSequence ?
+                    comparisonResult.equals(ComparisonResult.SIMILAR) ? ComparisonResult.DIFFERENT : comparisonResult
+                    : ComparisonResult.SIMILAR;
         }
+
         if (comparison.getType() == ComparisonType.ELEMENT_NUM_ATTRIBUTES) {
             return elementNumAttributes ? comparisonResult : ComparisonResult.SIMILAR;
         }
@@ -62,15 +66,14 @@ public class CustomXmlComparator implements DifferenceEvaluator {
             String actual = ((Text) actualNode).getData();
             return compare(expected, actual);
         }
-        if (comparisonResult == ComparisonResult.EQUAL
-                || comparisonResult == ComparisonResult.SIMILAR) {
-            return comparisonResult;
-        }
-
-        return ComparisonResult.DIFFERENT;
+        return comparisonResult;
     }
 
     private ComparisonResult compare(String expected, String actual) {
+        return match(expected, actual) ? ComparisonResult.SIMILAR : ComparisonResult.DIFFERENT;
+    }
+
+    public boolean match(String expected, String actual) {
         ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
         boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty();
         String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected;
@@ -81,18 +84,18 @@ public class CustomXmlComparator implements DifferenceEvaluator {
                 if (hasPropertiesToGenerate) {
                     this.generatedProperties.putAll(generator.getProperties());
                 }
-                return ComparisonResult.SIMILAR;
+                return true;
             } else {
-                return ComparisonResult.DIFFERENT;
+                return false;
             }
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual)) {
                 if (hasPropertiesToGenerate) {
                     this.generatedProperties.putAll(generator.getProperties());
                 }
-                return ComparisonResult.EQUAL;
+                return true;
             } else {
-                return ComparisonResult.DIFFERENT;
+                return false;
             }
         }
     }
