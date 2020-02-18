@@ -110,6 +110,11 @@ Feature: Test comparator
     """
     Then Negative COMPARE #[json1] with "#[json2]"
 
+  Scenario: Compare big JSONs
+    When load all scenario props from dir "props/bigJsons"
+    Then COMPARE #[expectedLargeJson] with "#[actualLargeJson]"
+    Then Negative COMPARE #[expectedWrongLargeJson] with "#[actualLargeJson]"
+
   Scenario: Compare data tables
     Given param a="replaced_value"
     And table expectedTable=
