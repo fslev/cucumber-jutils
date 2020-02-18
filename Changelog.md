@@ -1,3 +1,6 @@
+### 5.21
+Add debug logging    
+
 ### 5.20
 Optimization  
 
