@@ -105,4 +105,32 @@ public class XmlCompareTests {
             throw e;
         }
     }
+
+    @Test
+    public void compareXmlChildLength() throws CompareException {
+        String expected = "<struct><int a=\"2\">3da</int><boolean>.*</boolean></struct>";
+        String actual = "<struct><int a=\"2\">3da</int><boolean>false</boolean></struct>";
+        new XmlCompare("", expected, actual, true, false).compare();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void compareXmlChildLength_negative() throws CompareException {
+        String expected = "<struct><int a=\"2\">3da</int><boolean>.*</boolean></struct>";
+        String actual = "<struct><int a=\"2\">3da</int><boolean>false</boolean><x>test</x></struct>";
+        new XmlCompare("", expected, actual, true, false).compare();
+    }
+
+    @Test
+    public void compareXmlChildOrder() throws CompareException {
+        String expected = "<struct><int a=\"2\">3da</int><boolean>.*</boolean></struct>";
+        String actual = "<struct><int a=\"2\">3da</int><boolean>false</boolean></struct>";
+        new XmlCompare("", expected, actual, false, true).compare();
+    }
+
+    @Test
+    public void compareXmlChildOrder_negative() throws CompareException {
+        String expected = "<struct><list><int>3da</int><int x=\"y\">0da</int></list><boolean>.*</boolean></struct>";
+        String actual = "<struct><boolean>false</boolean><list><int>0da</int><int>3da</int></list></struct>";
+        new XmlCompare("", expected, actual, false, false).compare();
+    }
 }

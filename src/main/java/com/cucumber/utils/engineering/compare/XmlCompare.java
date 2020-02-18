@@ -16,7 +16,7 @@ public class XmlCompare implements Placeholdable {
 
     private String expected;
     private String actual;
-    private CustomXmlComparator comparator = new CustomXmlComparator();
+    private CustomXmlComparator comparator;
     private String message;
 
     public XmlCompare(Object expected, Object actual) throws CompareException {
@@ -24,8 +24,13 @@ public class XmlCompare implements Placeholdable {
     }
 
     public XmlCompare(String message, Object expected, Object actual) throws CompareException {
+        this(message, expected, actual, false, false);
+    }
+
+    public XmlCompare(String message, Object expected, Object actual, boolean nonExtensible, boolean strictOrder) throws CompareException {
         this.expected = expected.toString();
         this.actual = actual.toString();
+        this.comparator = new CustomXmlComparator(nonExtensible, strictOrder, nonExtensible);
         if (!isValid(this.expected) || !isValid(this.actual)) {
             throw new CompareException("Malformed XML");
         }

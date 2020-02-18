@@ -17,13 +17,31 @@ import java.util.regex.PatternSyntaxException;
 public class CustomXmlComparator implements DifferenceEvaluator {
 
     private Map<String, String> generatedProperties = new HashMap<>();
+    private boolean childNodeListLength;
+    private boolean childNodeListSequence;
+    private boolean elementNumAttributes;
+
+    public CustomXmlComparator(boolean childNodeListLength, boolean childNodeListSequence, boolean elementNumAttributes) {
+        this.childNodeListLength = childNodeListLength;
+        this.childNodeListSequence = childNodeListSequence;
+        this.elementNumAttributes = elementNumAttributes;
+    }
 
     @Override
     public ComparisonResult evaluate(Comparison comparison, ComparisonResult comparisonResult) {
         ComparisonType comparisonType = comparison.getType();
-        if (comparisonType == ComparisonType.CHILD_NODELIST_LENGTH
-                || comparisonType == ComparisonType.CHILD_NODELIST_SEQUENCE
-                || comparisonType == ComparisonType.XML_ENCODING
+
+        if (comparison.getType() == ComparisonType.CHILD_NODELIST_LENGTH) {
+            return childNodeListLength ? comparisonResult : ComparisonResult.SIMILAR;
+        }
+        if (comparison.getType() == ComparisonType.CHILD_NODELIST_SEQUENCE) {
+            return childNodeListSequence ? comparisonResult : ComparisonResult.SIMILAR;
+        }
+        if (comparison.getType() == ComparisonType.ELEMENT_NUM_ATTRIBUTES) {
+            return elementNumAttributes ? comparisonResult : ComparisonResult.SIMILAR;
+        }
+
+        if (comparisonType == ComparisonType.XML_ENCODING
                 || comparisonType == ComparisonType.XML_VERSION
                 || comparisonType == ComparisonType.XML_STANDALONE
                 || comparisonType == ComparisonType.NO_NAMESPACE_SCHEMA_LOCATION
@@ -33,6 +51,7 @@ public class CustomXmlComparator implements DifferenceEvaluator {
 
         Node expectedNode = comparison.getControlDetails().getTarget();
         Node actualNode = comparison.getTestDetails().getTarget();
+
         if (expectedNode instanceof Attr && actualNode instanceof Attr) {
             String expected = ((Attr) expectedNode).getValue();
             String actual = ((Attr) actualNode).getValue();
