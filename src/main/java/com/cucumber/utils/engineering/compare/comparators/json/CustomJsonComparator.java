@@ -1,4 +1,4 @@
-package com.cucumber.utils.engineering.compare.comparators;
+package com.cucumber.utils.engineering.compare.comparators.json;
 
 import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
 import org.apache.commons.text.StringEscapeUtils;

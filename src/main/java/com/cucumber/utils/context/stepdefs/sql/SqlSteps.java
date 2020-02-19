@@ -59,7 +59,7 @@ public class SqlSteps {
             this.client.connect();
             this.client.prepareStatement(query);
             List<Map<String, String>> result = client.executeQueryAndGetRsAsList();
-            cucumbers.compare(expected, result, false, true);
+            cucumbers.compare(expected, result, true, true, false);
         } finally {
             this.client.close();
         }
@@ -71,7 +71,7 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            cucumbers.pollAndCompare(expected, pollDuration, () -> client.executeQueryAndGetRsAsList(), true, true);
+            cucumbers.pollAndCompare(expected, pollDuration, null, () -> client.executeQueryAndGetRsAsList(), true, true, false);
         } finally {
             this.client.close();
         }

@@ -1,4 +1,4 @@
-package com.cucumber.utils.engineering.compare.comparators;
+package com.cucumber.utils.engineering.compare.comparators.xml;
 
 import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
 import org.w3c.dom.Attr;
@@ -8,7 +8,9 @@ import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 import org.xmlunit.diff.DifferenceEvaluator;
+import org.xmlunit.util.Nodes;
 
+import javax.xml.namespace.QName;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -61,19 +63,45 @@ public class CustomXmlComparator implements DifferenceEvaluator {
             String actual = ((Attr) actualNode).getValue();
             return compare(expected, actual);
         }
+
         if (expectedNode instanceof Text && actualNode instanceof Text) {
             String expected = ((Text) expectedNode).getData();
             String actual = ((Text) actualNode).getData();
             return compare(expected, actual);
         }
+
+        if (comparisonType.equals(ComparisonType.ATTR_NAME_LOOKUP)) {
+            return compare(Nodes.getAttributes(expectedNode), Nodes.getAttributes(actualNode));
+        }
+
         return comparisonResult;
     }
 
-    private ComparisonResult compare(String expected, String actual) {
-        return match(expected, actual) ? ComparisonResult.SIMILAR : ComparisonResult.DIFFERENT;
+    private ComparisonResult compare(Map<QName, String> expectedAttributes, Map<QName, String> actualAttributes) {
+        for (Map.Entry<QName, String> expAttr : expectedAttributes.entrySet()) {
+            String actualAttrVal = actualAttributes.get(expAttr.getKey());
+            if (actualAttrVal == null) {
+                return ComparisonResult.DIFFERENT;
+            }
+            try {
+                match(expAttr.getValue(), actualAttrVal);
+            } catch (XmlMatchException e) {
+                return ComparisonResult.DIFFERENT;
+            }
+        }
+        return ComparisonResult.SIMILAR;
     }
 
-    public boolean match(String expected, String actual) {
+    private ComparisonResult compare(String expected, String actual) {
+        try {
+            generatedProperties.putAll(match(expected, actual));
+        } catch (XmlMatchException e) {
+            return ComparisonResult.DIFFERENT;
+        }
+        return ComparisonResult.SIMILAR;
+    }
+
+    public Map<String, String> match(String expected, String actual) throws XmlMatchException {
         ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
         boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty();
         String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected;
@@ -81,21 +109,15 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         try {
             Pattern pattern = Pattern.compile(parsedExpectedQuoted);
             if (pattern.matcher(actual).matches()) {
-                if (hasPropertiesToGenerate) {
-                    this.generatedProperties.putAll(generator.getProperties());
-                }
-                return true;
+                return generator.getProperties();
             } else {
-                return false;
+                throw new XmlMatchException();
             }
         } catch (PatternSyntaxException e) {
             if (parsedExpected.equals(actual)) {
-                if (hasPropertiesToGenerate) {
-                    this.generatedProperties.putAll(generator.getProperties());
-                }
-                return true;
+                return generator.getProperties();
             } else {
-                return false;
+                throw new XmlMatchException();
             }
         }
     }
@@ -103,4 +125,5 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     public Map<String, String> getGeneratedProperties() {
         return generatedProperties;
     }
+
 }

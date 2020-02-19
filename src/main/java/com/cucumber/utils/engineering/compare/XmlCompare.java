@@ -1,6 +1,7 @@
 package com.cucumber.utils.engineering.compare;
 
-import com.cucumber.utils.engineering.compare.comparators.CustomXmlComparator;
+import com.cucumber.utils.engineering.compare.comparators.xml.CustomXmlComparator;
+import com.cucumber.utils.engineering.compare.comparators.xml.XmlMatchException;
 import com.cucumber.utils.engineering.compare.exceptions.CompareException;
 import org.w3c.dom.Element;
 import org.xmlunit.diff.DefaultNodeMatcher;
@@ -26,13 +27,13 @@ public class XmlCompare implements Placeholdable {
     }
 
     public XmlCompare(String message, Object expected, Object actual) throws CompareException {
-        this(message, expected, actual, false, false);
+        this(message, expected, actual, false, false, false);
     }
 
-    public XmlCompare(String message, Object expected, Object actual, boolean nonExtensible, boolean strictOrder) throws CompareException {
+    public XmlCompare(String message, Object expected, Object actual, boolean childNodeListLength, boolean childNodeListSequence, boolean elementNumAttributes) throws CompareException {
         this.expected = expected.toString();
         this.actual = actual.toString();
-        this.comparator = new CustomXmlComparator(nonExtensible, strictOrder, nonExtensible);
+        this.comparator = new CustomXmlComparator(childNodeListLength, childNodeListSequence, elementNumAttributes);
         if (!isValid(this.expected) || !isValid(this.actual)) {
             throw new CompareException("Malformed XML");
         }
@@ -42,19 +43,25 @@ public class XmlCompare implements Placeholdable {
     @Override
     public Map<String, String> compare() {
         assertThat(message, actual, isSimilarTo(expected).ignoreWhitespace()
-                .withNodeMatcher(new DefaultNodeMatcher(new CustomElementSelector()))
+                .withNodeMatcher(new DefaultNodeMatcher(new ByNameAndTextSelector()))
                 .withDifferenceEvaluator(
-                        DifferenceEvaluators.chain(DifferenceEvaluators.Default, comparator)));
+                        DifferenceEvaluators.chain(comparator)));
         return comparator.getGeneratedProperties();
     }
 
-    class CustomElementSelector implements ElementSelector {
+    class ByNameAndTextSelector implements ElementSelector {
 
         @Override
         public boolean canBeCompared(Element controlElement, Element testElement) {
-            return controlElement != null && testElement != null
-                    && Nodes.getQName(controlElement).equals(Nodes.getQName(testElement))
-                    && comparator.match(Nodes.getMergedNestedText(controlElement), Nodes.getMergedNestedText(testElement));
+            if (controlElement == null || testElement == null || !Nodes.getQName(controlElement).equals(Nodes.getQName(testElement))) {
+                return false;
+            }
+            try {
+                comparator.match(Nodes.getMergedNestedText(controlElement), Nodes.getMergedNestedText(testElement));
+                return true;
+            } catch (XmlMatchException e) {
+                return false;
+            }
         }
     }
 }

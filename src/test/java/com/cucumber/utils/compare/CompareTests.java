@@ -38,7 +38,7 @@ public class CompareTests {
 
     @Test
     public void comparePrimitives() {
-        new Compare("", Integer.valueOf(200), Integer.valueOf(200), false, true).compare();
+        new Compare("", Integer.valueOf(200), Integer.valueOf(200), false, true, false, false, false, false).compare();
     }
 
     @Test
