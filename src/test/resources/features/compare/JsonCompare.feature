@@ -30,7 +30,7 @@ Feature: Compare JSONs
     """
     {"a": [1,2,4,3]}
     """
-    Then Compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=true, jsonArrayStrictOrder=false, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message=[_null]
+    Then Compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=true, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
 
   Scenario: Compare JSONs with jsonArrayStrictOrder
     Given param a=
