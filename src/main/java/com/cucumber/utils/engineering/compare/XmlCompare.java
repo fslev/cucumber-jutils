@@ -43,13 +43,13 @@ public class XmlCompare implements Placeholdable {
     @Override
     public Map<String, String> compare() {
         assertThat(message, actual, isSimilarTo(expected).ignoreWhitespace()
-                .withNodeMatcher(new DefaultNodeMatcher(new ByNameAndTextSelector()))
+                .withNodeMatcher(new DefaultNodeMatcher(new ByNameAttrAndTextSelector()))
                 .withDifferenceEvaluator(
                         DifferenceEvaluators.chain(comparator)));
         return comparator.getGeneratedProperties();
     }
 
-    class ByNameAndTextSelector implements ElementSelector {
+    class ByNameAttrAndTextSelector implements ElementSelector {
 
         @Override
         public boolean canBeCompared(Element controlElement, Element testElement) {
@@ -57,6 +57,7 @@ public class XmlCompare implements Placeholdable {
                 return false;
             }
             try {
+                comparator.match(Nodes.getAttributes(controlElement), Nodes.getAttributes(testElement));
                 comparator.match(Nodes.getMergedNestedText(controlElement), Nodes.getMergedNestedText(testElement));
                 return true;
             } catch (XmlMatchException e) {

@@ -78,16 +78,10 @@ public class CustomXmlComparator implements DifferenceEvaluator {
     }
 
     private ComparisonResult compare(Map<QName, String> expectedAttributes, Map<QName, String> actualAttributes) {
-        for (Map.Entry<QName, String> expAttr : expectedAttributes.entrySet()) {
-            String actualAttrVal = actualAttributes.get(expAttr.getKey());
-            if (actualAttrVal == null) {
-                return ComparisonResult.DIFFERENT;
-            }
-            try {
-                match(expAttr.getValue(), actualAttrVal);
-            } catch (XmlMatchException e) {
-                return ComparisonResult.DIFFERENT;
-            }
+        try {
+            generatedProperties.putAll(match(expectedAttributes, actualAttributes));
+        } catch (XmlMatchException e) {
+            return ComparisonResult.DIFFERENT;
         }
         return ComparisonResult.SIMILAR;
     }
@@ -99,6 +93,22 @@ public class CustomXmlComparator implements DifferenceEvaluator {
             return ComparisonResult.DIFFERENT;
         }
         return ComparisonResult.SIMILAR;
+    }
+
+    public Map<String, String> match(Map<QName, String> expectedAttributes, Map<QName, String> actualAttributes) throws XmlMatchException {
+        Map<String, String> generatedProps = new HashMap<>();
+        for (Map.Entry<QName, String> expAttr : expectedAttributes.entrySet()) {
+            String actualAttrVal = actualAttributes.get(expAttr.getKey());
+            if (actualAttrVal == null) {
+                throw new XmlMatchException();
+            }
+            try {
+                generatedProps.putAll(match(expAttr.getValue(), actualAttrVal));
+            } catch (XmlMatchException e) {
+                throw new XmlMatchException();
+            }
+        }
+        return generatedProps;
     }
 
     public Map<String, String> match(String expected, String actual) throws XmlMatchException {
