@@ -13,27 +13,32 @@ public class Compare implements Placeholdable {
     private Logger log = LogManager.getLogger();
     protected Object expected;
     protected Object actual;
-    private boolean nonExtensibleObject;
-    private boolean nonExtensibleArray;
+    private boolean jsonNonExtensibleObject;
+    private boolean jsonNonExtensibleArray;
+    private boolean jsonArrayStrictOrder;
+    private boolean xmlChildListLength;
+    private boolean xmlChildListSequence;
+    private boolean xmlElementNumAttributes;
     private String message;
 
     public Compare(Object expected, Object actual) {
-        this(null, expected, actual, false, false);
+        this(null, expected, actual, false, false, false, false, false, false);
     }
 
     public Compare(String message, Object expected, Object actual) {
-        this(message, expected, actual, false, false);
+        this(message, expected, actual, false, false, false, false, false, false);
     }
 
-    public Compare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
-        this(null, expected, actual, nonExtensibleObject, nonExtensibleArray);
-    }
-
-    public Compare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) {
+    public Compare(String message, Object expected, Object actual, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray,
+                   boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes) {
         this.expected = expected;
         this.actual = actual;
-        this.nonExtensibleObject = nonExtensibleObject;
-        this.nonExtensibleArray = nonExtensibleArray;
+        this.jsonNonExtensibleObject = jsonNonExtensibleObject;
+        this.jsonNonExtensibleArray = jsonNonExtensibleArray;
+        this.jsonArrayStrictOrder = jsonArrayStrictOrder;
+        this.xmlChildListLength = xmlChildListLength;
+        this.xmlChildListSequence = xmlChildListSequence;
+        this.xmlElementNumAttributes = xmlElementNumAttributes;
         this.message = message;
     }
 
@@ -48,12 +53,12 @@ public class Compare implements Placeholdable {
         Placeholdable matcher;
         try {
             log.debug("Compare as JSONs");
-            matcher = new JsonCompare(message, expected, actual, nonExtensibleObject, nonExtensibleArray);
+            matcher = new JsonCompare(message, expected, actual, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder);
         } catch (Exception e) {
             log.debug("Compared objects are NOT JSONs:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to XML compare", expected, actual);
             try {
                 log.debug("Compare as XMLs");
-                matcher = new XmlCompare(message, expected, actual);
+                matcher = new XmlCompare(message, expected, actual, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
             } catch (Exception e2) {
                 log.debug("Compared objects are NOT XMLS:\nEXPECTED:\n{}\nACTUAL:\n{}\n--> proceed to string REGEX compare", expected, actual);
                 matcher = new StringRegexCompare(message, expected, actual);

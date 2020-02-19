@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare;
 
-import com.cucumber.utils.engineering.compare.comparators.CustomJsonComparator;
+import com.cucumber.utils.engineering.compare.comparators.json.CustomJsonComparator;
 import com.cucumber.utils.engineering.compare.exceptions.CompareException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,14 +39,6 @@ public class JsonCompare implements Placeholdable {
 
     public JsonCompare(String message, Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray) throws CompareException {
         this(message, expected, actual, nonExtensibleObject, nonExtensibleArray, false);
-    }
-
-    public JsonCompare(Object expected, Object actual, boolean arrayStrictOrder) throws CompareException {
-        this(null, expected, actual, false, false, arrayStrictOrder);
-    }
-
-    public JsonCompare(String message, Object expected, Object actual, boolean arrayStrictOrder) throws CompareException {
-        this(message, expected, actual, false, false, arrayStrictOrder);
     }
 
     public JsonCompare(Object expected, Object actual, boolean nonExtensibleObject, boolean nonExtensibleArray, boolean arrayStrictOrder) throws CompareException {
