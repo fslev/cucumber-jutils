@@ -1,3 +1,8 @@
+### 5.22  
+Enhance comparators  
+- Expose Json array strict order compare parameter  
+- Expose Xml child length, order and attributes length   
+
 ### 5.21
 Add debug logging    
 
