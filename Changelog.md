@@ -2,6 +2,7 @@
 Enhance comparators  
 - Expose Json array strict order compare parameter  
 - Expose Xml child length, order and attributes length   
+Update dependencies  
 
 ### 5.21
 Add debug logging    
