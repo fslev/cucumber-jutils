@@ -155,6 +155,11 @@ public class Cucumbers {
     }
 
     public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
+                               Supplier<Object> supplier) {
+        pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, false, false, false, false, false, false);
+    }
+
+    public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                Supplier<Object> supplier, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
                                boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes) {
         Object result = new MethodPoller<>()
