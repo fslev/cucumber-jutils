@@ -3,7 +3,6 @@ package com.cucumber.utils.context.utils;
 import com.cucumber.utils.clients.http.wrappers.HttpResponseWrapper;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.context.props.ScenarioPropsParser;
-import com.cucumber.utils.engineering.compare.Compare;
 import com.cucumber.utils.engineering.poller.MethodPoller;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import com.cucumber.utils.exceptions.InvalidScenarioPropertyFileType;
@@ -14,7 +13,10 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import static com.cucumber.utils.context.props.ScenarioProps.FileExtension.*;
@@ -25,10 +27,14 @@ public class Cucumbers {
     private Logger log = LogManager.getLogger();
 
     private ScenarioProps scenarioProps;
+    private ScenarioPropsLoader scenarioPropsLoader;
+    private GenericCompare genericCompare;
 
     @Inject
     private Cucumbers(ScenarioProps scenarioProps) {
         this.scenarioProps = scenarioProps;
+        this.scenarioPropsLoader = new ScenarioPropsLoader(scenarioProps);
+        this.genericCompare = new GenericCompare(scenarioProps);
     }
 
     public String read(String relativeFilePath) {
@@ -41,11 +47,11 @@ public class Cucumbers {
 
     public Set<String> loadScenarioPropsFromFile(String relativeFilePath) {
         if (relativeFilePath.endsWith(PROPERTIES.value())) {
-            return loadPropsFromPropertiesFile(relativeFilePath);
+            return scenarioPropsLoader.loadPropsFromPropertiesFile(relativeFilePath);
         } else if (relativeFilePath.endsWith(YAML.value()) || relativeFilePath.endsWith(YML.value())) {
-            return loadPropsFromYamlFile(relativeFilePath);
+            return scenarioPropsLoader.loadPropsFromYamlFile(relativeFilePath);
         } else if (Arrays.stream(propertyFileExtensions()).anyMatch(relativeFilePath::endsWith)) {
-            return new HashSet<>(Arrays.asList(loadScenarioPropertyFile(relativeFilePath)));
+            return new HashSet<>(Arrays.asList(scenarioPropsLoader.loadScenarioPropertyFile(relativeFilePath)));
         } else {
             throw new InvalidScenarioPropertyFileType();
         }
@@ -119,7 +125,7 @@ public class Cucumbers {
         } catch (IOException e) {
             log.debug("Cannot compare with HTTP response: {} ---> Proceed to normal comparing mechanism", e.getMessage());
         }
-        compareInternal(message, expected, actual, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder,
+        genericCompare.compare(message, expected, actual, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder,
                 xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
     }
 
@@ -193,68 +199,20 @@ public class Cucumbers {
                 + expectedWrapper.toString() + System.lineSeparator() + "ACTUAL:" + System.lineSeparator()
                 + actualWrapper.toString() + System.lineSeparator() + (message != null ? message : "") + System.lineSeparator();
         if (expectedStatus != null) {
-            compareInternal(enhancedMessage, expectedStatus, actualWrapper.getStatus(), false, false, false, false, false, false);
+            genericCompare.compare(enhancedMessage, expectedStatus, actualWrapper.getStatus(), false, false, false, false, false, false);
         }
         if (expectedReason != null) {
-            compareInternal(enhancedMessage, expectedReason, actualWrapper.getReasonPhrase(), false, false, false, false, false, false);
+            genericCompare.compare(enhancedMessage, expectedReason, actualWrapper.getReasonPhrase(), false, false, false, false, false, false);
         }
         if (expectedHeaders != null) {
-            compareInternal(enhancedMessage, expectedHeaders, actualWrapper.getHeaders(), false, false, false, false, false, false);
+            genericCompare.compare(enhancedMessage, expectedHeaders, actualWrapper.getHeaders(), false, false, false, false, false, false);
         }
         if (expectedEntity != null) {
-            compareInternal(enhancedMessage, expectedEntity, actualWrapper.getEntity(),
+            genericCompare.compare(enhancedMessage, expectedEntity, actualWrapper.getEntity(),
                     jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder,
                     xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
         }
     }
 
-    private void compareInternal(String message, Object expected, Object actual,
-                                 boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
-                                 boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes) {
-        Map<String, String> placeholdersAndValues = new Compare(message, expected, actual,
-                jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder,
-                xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes).compare();
-        placeholdersAndValues.forEach(scenarioProps::put);
-    }
 
-    private Set<String> loadPropsFromPropertiesFile(String filePath) {
-        Properties p = ResourceUtils.readProps(filePath);
-        p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
-        log.debug("-> Loaded scenario properties from file {}", filePath);
-        return p.stringPropertyNames();
-    }
-
-    private Set<String> loadPropsFromYamlFile(String filePath) {
-        Map<String, Object> map;
-        try {
-            map = ResourceUtils.readYaml(filePath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        map.forEach((k, v) -> scenarioProps.put(k, v));
-        log.debug("-> Loaded scenario properties from file '{}'", filePath);
-        return map.keySet();
-    }
-
-    private String loadScenarioPropertyFile(String relativeFilePath) {
-        try {
-            String fileName = ResourceUtils.getFileName(relativeFilePath);
-            if (Arrays.stream(propertyFileExtensions())
-                    .noneMatch(fileName::endsWith)) {
-                throw new RuntimeException("Invalid file extension: " + relativeFilePath +
-                        " .Must use one of the following: \"" + Arrays.toString(propertyFileExtensions()));
-            }
-            String propertyName = extractSimpleName(fileName);
-            String value = ResourceUtils.read(relativeFilePath);
-            scenarioProps.put(propertyName, value);
-            log.debug("-> Loaded file '{}' into a scenario property", relativeFilePath);
-            return propertyName;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String extractSimpleName(String fileName) {
-        return fileName.substring(0, fileName.lastIndexOf(".")).trim();
-    }
 }
