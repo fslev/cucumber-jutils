@@ -35,8 +35,10 @@ public class MethodPoller<T> {
         return this;
     }
 
-    public MethodPoller<T> exponentialBackOff(double exp) {
-        this.exponentialBackOff = exp;
+    public MethodPoller<T> exponentialBackOff(Double exp) {
+        if (exp != null) {
+            this.exponentialBackOff = exp;
+        }
         return this;
     }
 

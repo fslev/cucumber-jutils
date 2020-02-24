@@ -78,12 +78,8 @@ public class HttpClientSteps {
         this.response = builder.build().execute();
     }
 
-    @Then("^HTTP compare response body with$")
+    @Then("^HTTP compare response with$")
     public void compareResponseBodyWith(StringBuilder expected) {
-        cucumbers.compare(expected.toString(), response);
-    }
-
-    @And("HTTP compare response status code with \"{}\"")
-    public void compareResponseStatusCodeWith(int expected) {
+        cucumbers.compareHttpResponse(null, expected.toString(), response);
     }
 }
