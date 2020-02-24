@@ -32,13 +32,14 @@ Feature: Compare HTTP Responses
     {"status": 200, "body":{"foo":"bar","arr":[1,"s",false,4], "1":2,"true":true, "3":2},"reason":"Bad request", "headers":{"a":1,"b":true,"c":"ok"}}
     """
     Then [Negative Test] Poll Http Response and Compare #[a] against #[b] with json body, via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
+    Then Negative Http Response compare #[a] against #[b] with json body, by body=true, status=false, headers=false, reason=false, via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
     Then Negative Poll Http Response and Compare #[a] against #[b] with json body, by body=true, status=false, headers=false, reason=false, via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
     Then Negative Poll Http Response and Compare #[a] against #[b] with json body, by body=true, status=false, headers=false, reason=true, via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
-    Then Negative Poll Http Response and Compare #[a] against #[b] with json body, by body=true, status=false, headers=false, reason=true, via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
-    And param a=
+    And param b=
     """
-    {"status": 200, "body":{"foo":"bar","arr":[1,"s",4,false], "1":2,"true":false, "3":2},"reason":"Bad request", "headers":{"a":1,"b":true,"c":"ok"}}
+    {"status": 200, "body":{"1":"100","true":false,"foo":"bar","arr":[false,1,"s"]},"reason":"Bad request", "headers":{"a":1,"b":true}}
     """
+    Then [Negative Test] Negative Poll Http Response and Compare #[a] against #[b] with json body, by body=true, status=false, headers=false, reason=false, via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
 
 
   Scenario: Compare HTTP responses with xml body

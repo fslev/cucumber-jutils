@@ -22,6 +22,9 @@ import org.apache.http.protocol.BasicHttpContext;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 @ScenarioScoped
 public class CompareSteps {
 
@@ -34,23 +37,26 @@ public class CompareSteps {
     private ScenarioUtils scenarioUtils;
 
     @Given("Negative compare {} against {} via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
-    public void compareNegative(String expectedJson, String actualJson, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) {
+    public void compareNegative(String expectedJson, String actualJson, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) {
         try {
             compare(expectedJson, actualJson, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
-            throw new AssertionError("Are equal");
+            fail("Are equal");
         } catch (AssertionError e) {
             scenarioUtils.log("PASSED: Not equal\n{}", e);
         }
     }
 
     @Given("Compare {} against {} via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
-    public void compare(String expectedJson, String actualJson, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) {
+    public void compare(String expectedJson, String actualJson, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                        boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) {
         scenarioUtils.log("Compare\n{}\nwith\n{}", expectedJson, actualJson);
         cucumbers.compare(message, expectedJson, actualJson, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
     }
 
     @Given("Http Response Compare {} against {} with {} body, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
-    public void compareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
+    public void compareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray,
+                                    boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
         scenarioUtils.log("Compare\n{}\nwith\n{}", expectedJson, actual);
         HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, Integer.parseInt(actual.getStatus()), actual.getReasonPhrase()),
@@ -63,26 +69,30 @@ public class CompareSteps {
     }
 
     @Given("[Negative Test] Http Response compare {} against {} with {} body, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
-    public void compareHttpResponseNegative(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
+    public void compareHttpResponseNegative(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                            boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
         try {
             compareHttpResponse(expectedJson, actual, bodyType, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
-            throw new AssertionError("Are equal");
+            fail("Are equal");
         } catch (AssertionError e) {
             scenarioUtils.log("PASSED: Not equal\n{}", e);
         }
     }
 
     @Given("[Negative Test] Poll Http Response and Compare {} against {} with {} body, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
-    public void pollAndCompareHttpResponseNegative(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
+    public void pollAndCompareHttpResponseNegative(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                                   boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
         try {
             pollAndCompareHttpResponse(expectedJson, actual, bodyType, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
+            fail("Are equal");
         } catch (AssertionError e) {
             scenarioUtils.log("PASSED: Not equal\n{}", e);
         }
     }
 
     @Given("Poll Http Response and Compare {} against {} with {} body, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
-    public void pollAndCompareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
+    public void pollAndCompareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                           boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
         scenarioUtils.log("Poll and Compare\n{}\nwith\n{}", expectedJson, actual);
         final HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, Integer.parseInt(actual.getStatus()), actual.getReasonPhrase()),
@@ -103,10 +113,28 @@ public class CompareSteps {
                 jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
     }
 
+    @Given("Negative Http Response compare {} against {} with {} body, by body={}, status={}, headers={}, reason={}, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
+    public void negativeCompareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType,
+                                            boolean body, boolean status, boolean headers, boolean reason,
+                                            boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                            boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
+        scenarioUtils.log("Negative Compare\n{}\nwith\n{}", expectedJson, actual);
+        final HttpResponse mock = new DefaultHttpResponseFactory()
+                .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, Integer.parseInt(actual.getStatus()), actual.getReasonPhrase()),
+                        HttpClientContext.adapt(new BasicHttpContext()));
+        StringEntity entity = new StringEntity(bodyType.equals("json") ? new ObjectMapper().convertValue(actual.getEntity(), JsonNode.class).toString() :
+                actual.getEntity().toString());
+        mock.setEntity(entity);
+        actual.getHeaders().forEach((k, v) -> mock.setHeader(new BasicHeader(k, v)));
+        cucumbers.negativeCompareHttpResponse(message, expectedJson, mock, body, status, headers, reason,
+                jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
+    }
+
     @Given("Negative Poll Http Response and Compare {} against {} with {} body, by body={}, status={}, headers={}, reason={}, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
-    public void negativePollAndCompareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType, boolean jsonNonExtensibleObject,
+    public void negativePollAndCompareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType,
                                                    boolean body, boolean status, boolean headers, boolean reason,
-                                                   boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder, boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
+                                                   boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                                   boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException {
         scenarioUtils.log("Negative Poll and Compare\n{}\nwith\n{}", expectedJson, actual);
         final HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, Integer.parseInt(actual.getStatus()), actual.getReasonPhrase()),
@@ -120,12 +148,41 @@ public class CompareSteps {
                 () -> {
                     if (a.getAndIncrement() < 5) {
                         mock.setReasonPhrase("test");
-                        return mock;
                     } else {
                         mock.setReasonPhrase(actual.getReasonPhrase());
-                        return mock;
                     }
+                    return mock;
                 }, body, status, headers, reason,
+                jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
+    }
+
+    @Given("[Negative Test] Negative Poll Http Response and Compare {} against {} with {} body, by body={}, status={}, headers={}, reason={}, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
+    public void negativeNegativePollAndCompareHttpResponse(String expectedJson, HttpResponseWrapper actual, String bodyType,
+                                                           boolean body, boolean status, boolean headers, boolean reason,
+                                                           boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                                           boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
+        try {
+            negativePollAndCompareHttpResponse1(expectedJson, actual, bodyType, body, status, headers, reason, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
+            fail("Are equal");
+        } catch (AssertionError e) {
+            scenarioUtils.log("NOT equals. OK");
+            assertTrue(e.getMessage(), e.getMessage().contains("timeout"));
+        }
+    }
+
+    public void negativePollAndCompareHttpResponse1(String expectedJson, HttpResponseWrapper actual, String bodyType,
+                                                    boolean body, boolean status, boolean headers, boolean reason,
+                                                    boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
+                                                    boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException {
+        final HttpResponse mock = new DefaultHttpResponseFactory()
+                .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, Integer.parseInt(actual.getStatus()), actual.getReasonPhrase()),
+                        HttpClientContext.adapt(new BasicHttpContext()));
+        StringEntity entity = new StringEntity(bodyType.equals("json") ? new ObjectMapper().convertValue(actual.getEntity(), JsonNode.class).toString() :
+                actual.getEntity().toString());
+        mock.setEntity(entity);
+        actual.getHeaders().forEach((k, v) -> mock.setHeader(new BasicHeader(k, v)));
+        cucumbers.negativePollAndCompareHttpResponse(message, expectedJson, 5, 100L, 1.5,
+                () -> mock, body, status, headers, reason,
                 jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
     }
 }

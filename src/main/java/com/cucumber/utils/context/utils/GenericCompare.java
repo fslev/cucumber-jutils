@@ -189,8 +189,9 @@ final class GenericCompare {
                 .method(supplier)
                 .until(p -> {
                     try {
-                        negativeCompareHttpResponse(message, expected, p, jsonNonExtensibleObject, body, status, headers, reason,
-                                jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
+                        negativeCompareHttpResponse(message, expected, p, body, status, headers, reason,
+                                jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder,
+                                xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
                         error.set(null);
                         return true;
                     } catch (AssertionError e) {
