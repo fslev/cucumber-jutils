@@ -150,16 +150,16 @@ public class Cucumbers {
         }
     }
 
-    public <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean body, boolean status, boolean headers, boolean reason,
+    public <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean byBody, boolean byStatus, boolean byHeaders, boolean byReason,
                                                                      boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder) {
-        negativeCompareHttpResponse(message, expected, actual, body, status, headers, reason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder, false, false, false);
+        negativeCompareHttpResponse(message, expected, actual, byBody, byStatus, byHeaders, byReason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder, false, false, false);
     }
 
-    public <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean body, boolean status, boolean headers, boolean reason,
+    public <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean byBody, boolean byStatus, boolean byHeaders, boolean byReason,
                                                                      boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
                                                                      boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) {
         try {
-            genericCompare.negativeCompareHttpResponse(message, expected, actual, body, status, headers, reason,
+            genericCompare.negativeCompareHttpResponse(message, expected, actual, byBody, byStatus, byHeaders, byReason,
                     jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder, xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -195,19 +195,19 @@ public class Cucumbers {
     }
 
     public <T extends HttpResponse> void negativePollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                                                                            boolean body, boolean status, boolean headers, boolean reason,
+                                                                            boolean byBody, boolean byStatus, boolean byHeaders, boolean byReason,
                                                                             Supplier<T> supplier, boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder) {
         negativePollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier,
-                body, status, headers, reason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
+                byBody, byStatus, byHeaders, byReason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
                 false, false, false);
     }
 
     public <T extends HttpResponse> void negativePollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                                                                            Supplier<T> supplier, boolean body, boolean status, boolean headers, boolean reason,
+                                                                            Supplier<T> supplier, boolean byBody, boolean byStatus, boolean byHeaders, boolean byReason,
                                                                             boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
                                                                             boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) {
         genericCompare.negativePollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier,
-                body, status, headers, reason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
+                byBody, byStatus, byHeaders, byReason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
                 xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
     }
 }

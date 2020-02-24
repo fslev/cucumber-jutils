@@ -1,5 +1,8 @@
 # Changelog
 
+### 5.25
+Bug fixes  
+
 ### 5.24
 Refactor scenario properties loader from files   
 Refactor and change compare mechanisms        

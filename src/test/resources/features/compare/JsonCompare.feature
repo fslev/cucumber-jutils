@@ -63,7 +63,7 @@ Feature: Compare JSONs
     """
     {"a": [2,1,3], "b":false}
     """
-    Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=true, jsonNonExtensibleArray=false, jsonArrayStrictOrder=true, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
+    Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=true, jsonArrayStrictOrder=true, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
     Given param a=
     """
     {"a": [2,1,3,4], "b":false}

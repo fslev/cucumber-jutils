@@ -113,7 +113,7 @@ final class GenericCompare {
         }
     }
 
-    <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean body, boolean status, boolean headers, boolean reason,
+    <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean byBody, boolean byStatus, boolean byHeaders, boolean byReason,
                                                               boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
                                                               boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) throws IOException {
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(actual);
@@ -127,59 +127,67 @@ final class GenericCompare {
                 + expectedWrapper.toString() + System.lineSeparator() + "ACTUAL:" + System.lineSeparator()
                 + actualWrapper.toString() + System.lineSeparator() + (message != null ? message : "") + System.lineSeparator();
         if (expectedStatus != null) {
+            boolean match = false;
             try {
                 compare(enhancedMessage, expectedStatus, actualWrapper.getStatus());
-                if (status) {
-                    throw new NegativeMatchAssertionError("Equal HTTP Response statuses");
-                }
+                match = true;
             } catch (AssertionError e) {
-                if (!status) {
+                if (!byStatus) {
                     throw e;
                 }
+            }
+            if (byStatus && match) {
+                throw new NegativeMatchAssertionError("Equal HTTP Response statuses");
             }
         }
         if (expectedReason != null) {
+            boolean match = false;
             try {
                 compare(enhancedMessage, expectedReason, actualWrapper.getReasonPhrase());
-                if (reason) {
-                    throw new NegativeMatchAssertionError("Equal HTTP Response reason phrases");
-                }
+                match = true;
             } catch (AssertionError e) {
-                if (!reason) {
+                if (!byReason) {
                     throw e;
                 }
+            }
+            if (byReason && match) {
+                throw new NegativeMatchAssertionError("Equal HTTP Response reason phrases");
             }
         }
         if (expectedHeaders != null) {
+            boolean match = false;
             try {
                 compare(enhancedMessage, expectedHeaders, actualWrapper.getHeaders());
-                if (headers) {
-                    throw new NegativeMatchAssertionError("Equal HTTP Response headers");
-                }
+                match = true;
             } catch (AssertionError e) {
-                if (!headers) {
+                if (!byHeaders) {
                     throw e;
                 }
             }
+            if (byHeaders && match) {
+                throw new NegativeMatchAssertionError("Equal HTTP Response headers");
+            }
         }
         if (expectedEntity != null) {
+            boolean match = false;
             try {
                 compare(enhancedMessage, expectedEntity, actualWrapper.getEntity(),
                         jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
                         xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
-                if (body) {
-                    throw new NegativeMatchAssertionError("Equal HTTP Response bodies");
-                }
+                match = true;
             } catch (AssertionError e) {
-                if (!body) {
+                if (!byBody) {
                     throw e;
                 }
+            }
+            if (byBody && match) {
+                throw new NegativeMatchAssertionError("Equal HTTP Response bodies");
             }
         }
     }
 
     <T extends HttpResponse> void negativePollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                                                                     Supplier<T> supplier, boolean body, boolean status, boolean headers, boolean reason,
+                                                                     Supplier<T> supplier, boolean byBody, boolean byStatus, boolean byHeaders, boolean byReason,
                                                                      boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
                                                                      boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes) {
         AtomicReference<AssertionError> error = new AtomicReference<>();
@@ -189,7 +197,7 @@ final class GenericCompare {
                 .method(supplier)
                 .until(p -> {
                     try {
-                        negativeCompareHttpResponse(message, expected, p, body, status, headers, reason,
+                        negativeCompareHttpResponse(message, expected, p, byBody, byStatus, byHeaders, byReason,
                                 jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder,
                                 xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes);
                         error.set(null);

@@ -22,7 +22,6 @@ import org.apache.http.protocol.BasicHttpContext;
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 @ScenarioScoped
@@ -41,10 +40,11 @@ public class CompareSteps {
                                 boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) {
         try {
             compare(expectedJson, actualJson, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
-            fail("Are equal");
         } catch (AssertionError e) {
             scenarioUtils.log("PASSED: Not equal\n{}", e);
+            return;
         }
+        fail("Are equal");
     }
 
     @Given("Compare {} against {} via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
@@ -73,10 +73,11 @@ public class CompareSteps {
                                             boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
         try {
             compareHttpResponse(expectedJson, actual, bodyType, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
-            fail("Are equal");
         } catch (AssertionError e) {
             scenarioUtils.log("PASSED: Not equal\n{}", e);
+            return;
         }
+        fail("Are equal");
     }
 
     @Given("[Negative Test] Poll Http Response and Compare {} against {} with {} body, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
@@ -84,10 +85,11 @@ public class CompareSteps {
                                                    boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
         try {
             pollAndCompareHttpResponse(expectedJson, actual, bodyType, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
-            fail("Are equal");
         } catch (AssertionError e) {
             scenarioUtils.log("PASSED: Not equal\n{}", e);
+            return;
         }
+        fail("Are equal");
     }
 
     @Given("Poll Http Response and Compare {} against {} with {} body, via jsonNonExtensibleObject={}, jsonNonExtensibleArray={}, jsonArrayStrictOrder={}, xmlChildListLength={}, xmlChildListSequence={}, xmlElementNumAttributes={} and message={}")
@@ -163,11 +165,11 @@ public class CompareSteps {
                                                            boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes, String message) throws UnsupportedEncodingException, JsonProcessingException {
         try {
             negativePollAndCompareHttpResponse1(expectedJson, actual, bodyType, body, status, headers, reason, jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder, xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes, message);
-            fail("Are equal");
         } catch (AssertionError e) {
-            scenarioUtils.log("NOT equals. OK");
-            assertTrue(e.getMessage(), e.getMessage().contains("timeout"));
+            scenarioUtils.log("Passed");
+            return;
         }
+        fail("Are equal");
     }
 
     public void negativePollAndCompareHttpResponse1(String expectedJson, HttpResponseWrapper actual, String bodyType,
