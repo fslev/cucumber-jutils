@@ -95,11 +95,7 @@ public class Cucumbers {
     }
 
     public void pollAndCompare(String message, Object expected, int pollDurationInSeconds, Supplier<Object> supplier) {
-        pollAndCompare(message, expected, pollDurationInSeconds, null, supplier);
-    }
-
-    public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Supplier<Object> supplier) {
-        pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, null, supplier);
+        pollAndCompare(message, expected, pollDurationInSeconds, null, null, supplier);
     }
 
     public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
@@ -121,9 +117,12 @@ public class Cucumbers {
     }
 
 
+    public <T extends HttpResponse> void compareHttpResponse(Object expected, T actual) {
+        compareHttpResponse(null, expected, actual);
+    }
+
     public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual) {
-        compareHttpResponse(message, expected, actual, false, false, false,
-                false, false, false);
+        compareHttpResponse(message, expected, actual, false, false, false);
     }
 
     public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual,
@@ -151,26 +150,64 @@ public class Cucumbers {
         }
     }
 
+    public <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean body, boolean status, boolean headers, boolean reason,
+                                                                     boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder) {
+        negativeCompareHttpResponse(message, expected, actual, body, status, headers, reason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder, false, false, false);
+    }
+
+    public <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean body, boolean status, boolean headers, boolean reason,
+                                                                     boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
+                                                                     boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) {
+        try {
+            genericCompare.negativeCompareHttpResponse(message, expected, actual, body, status, headers, reason,
+                    jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder, xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T extends HttpResponse> void pollAndCompareHttpResponse(Object expected, Integer pollDurationInSeconds, Supplier<T> supplier) {
+        pollAndCompareHttpResponse(null, expected, pollDurationInSeconds, supplier);
+    }
+
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Supplier<T> supplier) {
         pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, null, null, supplier);
     }
 
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                                                             Supplier<T> supplier) {
+                                                                    Supplier<T> supplier) {
         pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier,
                 false, false, false);
     }
 
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                                                             Supplier<T> supplier, boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder) {
+                                                                    Supplier<T> supplier, boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder) {
         pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
                 false, false, false);
     }
 
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                                                             Supplier<T> supplier, boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
-                                                             boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) {
+                                                                    Supplier<T> supplier, boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
+                                                                    boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) {
         genericCompare.pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff,
-                supplier, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder, xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
+                supplier, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
+                xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
+    }
+
+    public <T extends HttpResponse> void negativePollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
+                                                                            boolean body, boolean status, boolean headers, boolean reason,
+                                                                            Supplier<T> supplier, boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder) {
+        negativePollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier,
+                body, status, headers, reason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
+                false, false, false);
+    }
+
+    public <T extends HttpResponse> void negativePollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
+                                                                            Supplier<T> supplier, boolean body, boolean status, boolean headers, boolean reason,
+                                                                            boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
+                                                                            boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) {
+        genericCompare.negativePollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier,
+                body, status, headers, reason, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
+                xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
     }
 }
