@@ -1,5 +1,9 @@
 # Changelog
 
+### 5.24
+Refactor scenario properties loader from files   
+Refactor and change compare mechanisms        
+
 ### 5.23
 Upgrade Cucumber  
 Upgrade Json Compare    
