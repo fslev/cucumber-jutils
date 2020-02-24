@@ -24,8 +24,7 @@ public class ParameterTypesConfig {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     {
-        objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-                .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+        objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
     }
 
     @DefaultParameterTransformer
