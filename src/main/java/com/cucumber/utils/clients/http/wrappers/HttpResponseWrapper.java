@@ -1,5 +1,6 @@
 package com.cucumber.utils.clients.http.wrappers;
 
+import com.cucumber.utils.exceptions.InvalidHttpResponseJsonFormatException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +28,7 @@ public class HttpResponseWrapper {
     public HttpResponseWrapper() {
     }
 
-    public HttpResponseWrapper(Object object) throws IOException {
+    public HttpResponseWrapper(Object object) throws Exception {
         if (object instanceof HttpResponse) {
             fromHttpResponse((HttpResponse) object);
         } else {
@@ -35,7 +36,7 @@ public class HttpResponseWrapper {
         }
     }
 
-    private void fromObject(Object content) throws IOException {
+    private void fromObject(Object content) throws InvalidHttpResponseJsonFormatException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         try {
@@ -47,7 +48,7 @@ public class HttpResponseWrapper {
             this.reasonPhrase = wrapper.reasonPhrase;
             this.headers = wrapper.headers;
         } catch (Exception e) {
-            throw new IOException("HTTP Response wrapper of invalid format");
+            throw new InvalidHttpResponseJsonFormatException(content.toString());
         }
     }
 
@@ -62,7 +63,7 @@ public class HttpResponseWrapper {
                 content = EntityUtils.toString(entity);
                 this.entity = content;
             } catch (Exception e) {
-                throw new IOException("HTTP Response wrapper of invalid format", e);
+                throw new IOException("Cannot extract entity from HTTP Response", e);
             } finally {
                 EntityUtils.consume(entity);
                 if (content != null) {

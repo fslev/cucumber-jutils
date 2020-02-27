@@ -7,7 +7,6 @@ import com.cucumber.utils.engineering.poller.MethodPoller;
 import com.cucumber.utils.exceptions.NegativeMatchAssertionError;
 import org.apache.http.HttpResponse;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
@@ -75,7 +74,7 @@ final class GenericCompare {
                     } catch (AssertionError e) {
                         error.set(e);
                         return false;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }).poll();
@@ -86,7 +85,7 @@ final class GenericCompare {
 
     <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual,
                                                       boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
-                                                      boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) throws IOException {
+                                                      boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) throws Exception {
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(actual);
         HttpResponseWrapper expectedWrapper;
         expectedWrapper = new HttpResponseWrapper(expected);
@@ -115,7 +114,7 @@ final class GenericCompare {
 
     <T extends HttpResponse> void negativeCompareHttpResponse(String message, Object expected, T actual, boolean byBody, boolean byStatus, boolean byHeaders, boolean byReason,
                                                               boolean jsonBodyNonExtensibleObject, boolean jsonBodyNonExtensibleArray, boolean jsonBodyArrayStrictOrder,
-                                                              boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) throws IOException {
+                                                              boolean xmlBodyChildListLength, boolean xmlBodyChildListSequence, boolean xmlBodyElementNumAttributes) throws Exception {
         HttpResponseWrapper actualWrapper = new HttpResponseWrapper(actual);
         HttpResponseWrapper expectedWrapper;
         expectedWrapper = new HttpResponseWrapper(expected);
@@ -205,7 +204,7 @@ final class GenericCompare {
                     } catch (AssertionError e) {
                         error.set(e);
                         return false;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 }).poll();

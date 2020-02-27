@@ -145,7 +145,7 @@ public class Cucumbers {
         try {
             genericCompare.compareHttpResponse(message, expected, actual, jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder,
                     xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -161,7 +161,7 @@ public class Cucumbers {
         try {
             genericCompare.negativeCompareHttpResponse(message, expected, actual, byBody, byStatus, byHeaders, byReason,
                     jsonBodyNonExtensibleObject, jsonBodyNonExtensibleArray, jsonBodyArrayStrictOrder, xmlBodyChildListLength, xmlBodyChildListSequence, xmlBodyElementNumAttributes);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

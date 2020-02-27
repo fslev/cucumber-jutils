@@ -16,6 +16,7 @@ import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -26,6 +27,18 @@ public class HttpResponseWrapperSteps {
     @Inject
     private Cucumbers cucumbers;
 
+
+    @Then("Compare Http Response with invalid expected={}")
+    public void compareHttpResponseWithInvalidExpected(String expected) throws UnsupportedEncodingException {
+        HttpResponse mock = new DefaultHttpResponseFactory()
+                .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "some reason"),
+                        HttpClientContext.adapt(new BasicHttpContext()));
+        try {
+            cucumbers.compareHttpResponse(expected, mock);
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains("Invalid HTTP Response Json format"));
+        }
+    }
 
     @Then("Compare two random HTTP response wrappers")
     public void compareHttpResponseWrappers() throws IOException {

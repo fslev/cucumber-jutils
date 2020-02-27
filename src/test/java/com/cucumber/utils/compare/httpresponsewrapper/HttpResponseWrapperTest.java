@@ -18,10 +18,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertTrue;
+
 public class HttpResponseWrapperTest {
 
     @Test
-    public void testWrapperInitFromString() throws IOException {
+    public void testWrapperInitFromString() throws Exception {
         String content = "{\"status\":200,\"reason\":\"some thing\",\"body\":{\"wa\":[1,2,3,4]}}";
         HttpResponseWrapper wrapper = new HttpResponseWrapper(content);
         Assert.assertEquals("200", wrapper.getStatus());
@@ -33,7 +35,7 @@ public class HttpResponseWrapperTest {
     }
 
     @Test
-    public void testWrapperInitFromStringStatus() throws IOException {
+    public void testWrapperInitFromStringStatus() throws Exception {
         String content = "{\"status\":\"200\"}";
         HttpResponseWrapper wrapper = new HttpResponseWrapper(content);
         Assert.assertEquals("200", wrapper.getStatus());
@@ -41,13 +43,13 @@ public class HttpResponseWrapperTest {
     }
 
     @Test(expected = IOException.class)
-    public void testWrapperInitFromEmptyString() throws IOException {
+    public void testWrapperInitFromEmptyString() throws Exception {
         String content = "";
         new HttpResponseWrapper(content);
     }
 
     @Test
-    public void testWrapperInitFromEmptyJsonString() throws IOException {
+    public void testWrapperInitFromEmptyJsonString() throws Exception {
         String content = "{}";
         HttpResponseWrapper wrapper = new HttpResponseWrapper(content);
         Assert.assertNull(wrapper.getStatus());
@@ -56,14 +58,24 @@ public class HttpResponseWrapperTest {
         Assert.assertNull(wrapper.getHeaders());
     }
 
-    @Test(expected = IOException.class)
-    public void testWrapperInitFromOtherJsonString() throws IOException {
+    @Test(expected = Exception.class)
+    public void testWrapperInitFromOtherJsonString() throws Exception {
         String content = "{\"reasonPhrase\":\"test\"}";
         new HttpResponseWrapper(content);
     }
 
     @Test
-    public void testWrapperInitFromMap() throws IOException {
+    public void testWrapperInitFromOtherJsonStringMessage() {
+        String content = "{\"reasonPhrase\":\"test\"}";
+        try {
+            new HttpResponseWrapper(content);
+        } catch (Exception e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("Invalid HTTP Response Json formats"));
+        }
+    }
+
+    @Test
+    public void testWrapperInitFromMap() throws Exception {
         Map<String, Object> expectedMap = new HashMap<>();
         expectedMap.put("status", 200);
         expectedMap.put("reason", "some reason");
@@ -76,7 +88,7 @@ public class HttpResponseWrapperTest {
     }
 
     @Test
-    public void testWrapperInitFromHttpResponse() throws IOException {
+    public void testWrapperInitFromHttpResponse() throws Exception {
         HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "some reason"),
                         HttpClientContext.adapt(new BasicHttpContext()));
