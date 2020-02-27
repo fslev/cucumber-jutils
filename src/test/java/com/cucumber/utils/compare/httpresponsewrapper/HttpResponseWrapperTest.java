@@ -42,7 +42,7 @@ public class HttpResponseWrapperTest {
         Assert.assertNull(wrapper.getHeaders());
     }
 
-    @Test(expected = IOException.class)
+    @Test(expected = Exception.class)
     public void testWrapperInitFromEmptyString() throws Exception {
         String content = "";
         new HttpResponseWrapper(content);
@@ -70,7 +70,7 @@ public class HttpResponseWrapperTest {
         try {
             new HttpResponseWrapper(content);
         } catch (Exception e) {
-            assertTrue(e.getMessage(), e.getMessage().contains("Invalid HTTP Response Json formats"));
+            assertTrue(e.getMessage(), e.getMessage().contains("Invalid HTTP Response Json format"));
         }
     }
 
