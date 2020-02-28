@@ -1,5 +1,8 @@
 # Changelog
 
+### 5.27  
+Upgrade Cucumber    
+
 ### 5.26
 Show suggestive message while comparing invalid HTTP Responses    
 
