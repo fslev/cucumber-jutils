@@ -2,6 +2,7 @@ package com.cucumber.utils.clients.http;
 
 import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.ServiceUnavailableRetryStrategy;
 import org.apache.http.client.config.RequestConfig;
@@ -42,7 +43,7 @@ public class HttpClient {
     private HttpRequestRetryHandler requestRetryHandler;
     private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
     private HttpClientBuilder clientBuilder;
-
+    private CookieStore cookieStore;
     private CloseableHttpClient client;
     private HttpRequestBase request;
 
@@ -66,7 +67,7 @@ public class HttpClient {
         this.requestRetryHandler = builder.requestRetryHandler;
         this.serviceUnavailableRetryStrategy = builder.serviceUnavailableRetryStrategy;
         this.clientBuilder = builder.clientBuilder;
-
+        this.cookieStore = builder.cookieStore;
         this.client = getClient();
         this.request = getRequest();
     }
@@ -101,6 +102,9 @@ public class HttpClient {
         }
         if (serviceUnavailableRetryStrategy != null) {
             clientBuilder.setServiceUnavailableRetryStrategy(serviceUnavailableRetryStrategy);
+        }
+        if (cookieStore != null) {
+            clientBuilder.setDefaultCookieStore(cookieStore);
         }
         return clientBuilder.addInterceptorLast(new HttpResponseLoggerInterceptor())
                 .addInterceptorLast(new HttpRequestLoggerInterceptor()).build();
@@ -257,6 +261,7 @@ public class HttpClient {
         private HttpRequestRetryHandler requestRetryHandler;
         private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
         private HttpClientBuilder clientBuilder = HttpClients.custom();
+        private CookieStore cookieStore;
 
         public Builder useProxy(String proxyHost, int proxyPort, String proxyScheme) {
             this.proxyHost = new HttpHost(proxyHost, proxyPort, proxyScheme);
@@ -347,6 +352,11 @@ public class HttpClient {
 
         public Builder clientBuilder(HttpClientBuilder clientBuilder) {
             this.clientBuilder = clientBuilder;
+            return this;
+        }
+
+        public Builder cookieStore(CookieStore cookieStore) {
+            this.cookieStore = cookieStore;
             return this;
         }
 

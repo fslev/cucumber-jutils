@@ -1,5 +1,8 @@
 # Changelog
 
+### 5.30
+Add cookies support       
+
 ### 5.29  
 Upgrade Cucumber to 5.5.0  
 Upgrade other dependencies     
