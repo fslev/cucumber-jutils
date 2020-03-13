@@ -1,7 +1,11 @@
 # Changelog
 
+### 5.29  
+Upgrade Cucumber to 5.5.0  
+Upgrade other dependencies     
+
 ### 5.28  
-Upgrade Cucumber  
+Upgrade Cucumber to 5.4.2   
 
 ### 5.27  
 Upgrade Cucumber    
