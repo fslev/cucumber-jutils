@@ -96,7 +96,7 @@ Scenario: Test scenario properties
 
 As you can see, in order to use the value of a scenario property within your _Cucumber_ scenario, you must call it by its name, using the special symbols **#[ ]**.  
 _Under the hood_: If your Cucumber step definition uses anonymous parameter types ***{}***, then any **#[property.name]** sequence is parsed and the corresponding value is mapped to the corresponding argument:     
-```java
+```java/home/florin/IdeaProjects/cucumber/cucumber-utils-tutorial
     @Given("the string with scenario properties \"{}\"")
     public void setString(String str) {
         this.str = str;
@@ -119,15 +119,20 @@ animal=Rabbit
 ***Note:***  _Supported file types_ for setting scenario properties:  
 * ***.properties***
 * ***.yaml***
+* ***.yml***
 * ***.property***
 * ***.json***
 * ***.xml***
-* ***.txt***  
+* ***.txt***
+* ***.text***
+* ***.html***
+* ***.csv***
+* ***.yang***  
     
-If a scenario property is read from a **.property**, **.json**, **.xml** or **.txt** file, then the name of the scenario property will actually be the name of the file, without extension:  
+If a scenario property is read from a **.property**, **.json**, **.xml**, **.html**, **.csv**, **.yang**, **.text** or **.txt** file, then the name of the scenario property will actually be the name of the file, without extension:  
 ```gherkin
 Scenario: Test placeholder fill with scenario property file
-  * load scenario props from file "placeholders/animal.property"
+  * load scenario props from file "placeholders/animal.property"**.xml**
   Then COMPARE #[animal] with "Rabbit"
 ```  
 where, *animal.property* file contains:
