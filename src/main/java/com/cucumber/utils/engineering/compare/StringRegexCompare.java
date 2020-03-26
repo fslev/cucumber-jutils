@@ -1,6 +1,8 @@
 package com.cucumber.utils.engineering.compare;
 
 import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.util.HashMap;
@@ -16,6 +18,7 @@ public class StringRegexCompare implements Placeholdable {
     private String actual;
     private Map<String, String> assignSymbols = new HashMap<>();
     private String message;
+    private Logger log = LogManager.getLogger();
 
     public StringRegexCompare(Object expected, Object actual) {
         this(null, expected, actual);
@@ -46,6 +49,9 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
+                log.warn(ParameterizedMessage.format("Comparison mechanism failed while comparing string via regex. Expected contains regex:{}",
+                        new Object[]{expected}));
+                log.warn("If you want to override regex comparison with literal comparison, quote expected string by using \\Q and \\E.");
                 fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
                         new Object[]{message != null ? message : "", parsedString, actual}));
             }
