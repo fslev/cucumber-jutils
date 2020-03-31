@@ -237,8 +237,8 @@ Feature: Test comparator
     And COMPARE #[var1] with "booking:4663740"
 
   Scenario: Compare regex
-    # This should not log any warning related to regular expressions
+    # These should also log warnings related to regex special characters
     And Negative COMPARE abc with "[0-9]"
-    # This should log regex related warning messages
     And Negative COMPARE [0-9] with "[0-9]"
+    # This should not
     And COMPARE \Q[0-9]\E with "[0-9]"
