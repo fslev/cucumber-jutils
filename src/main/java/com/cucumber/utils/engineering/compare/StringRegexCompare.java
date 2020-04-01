@@ -1,6 +1,7 @@
 package com.cucumber.utils.engineering.compare;
 
 import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
+import com.cucumber.utils.engineering.utils.RegexUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -49,9 +50,13 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                log.warn(ParameterizedMessage.format("Comparison mechanism failed while comparing string via regex. Expected contains regex:{}",
-                        new Object[]{expected}));
-                log.warn("If you want to override regex comparison with literal comparison, quote expected string by using \\Q and \\E.");
+                if (RegexUtils.getRegexCharsFromString(expected).size() != 0) {
+                    log.warn(ParameterizedMessage.format(" \n Comparison mechanism failed while comparing strings." +
+                                    " \n Make sure expected String has no unintentional regex special characters that failed the comparison. " +
+                                    "\n If so, try to quote them by using \\Q and \\E or simply \\ " +
+                                    "\n Special regex characters found: {} \n Expected: {}",
+                            new Object[]{RegexUtils.getRegexCharsFromString(expected), expected}));
+                }
                 fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
                         new Object[]{message != null ? message : "", parsedString, actual}));
             }

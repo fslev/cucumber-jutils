@@ -237,5 +237,6 @@ Feature: Test comparator
     And COMPARE #[var1] with "booking:4663740"
 
   Scenario: Compare regex
-    And Negative COMPARE [0-9] with "[0-9]"
+    Given Negative COMPARE [0-9] with "[0-9]"
+    And Negative COMPARE test with "negativeTest"
     And COMPARE \Q[0-9]\E with "[0-9]"
