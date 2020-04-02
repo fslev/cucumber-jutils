@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
@@ -23,7 +22,8 @@ public class RegexUtils {
     }
 
     public static List<String> getRegexCharsFromString(String str) {
-        if (str != null && !str.isEmpty()) {
+        System.out.println(str);
+        if (str == null && !str.isEmpty()) {
             return Collections.emptyList();
         } else {
             return specialRegexCharacters.stream().filter(str::contains).collect(Collectors.toList());
