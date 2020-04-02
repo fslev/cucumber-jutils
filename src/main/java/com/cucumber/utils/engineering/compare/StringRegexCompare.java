@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -50,12 +51,13 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                if (RegexUtils.getRegexCharsFromString(expected).size() != 0) {
+                List<String> specialRegexCharList = RegexUtils.getRegexCharsFromString(expected);
+                if (!specialRegexCharList.isEmpty()) {
                     log.warn(ParameterizedMessage.format(" \n Comparison mechanism failed while comparing strings." +
                                     " \n Make sure expected String has no unintentional regex special characters that failed the comparison. " +
-                                    "\n If so, try to quote them by using \\Q and \\E or simply \\ " +
-                                    "\n Special regex characters found: {} \n Expected: {}",
-                            new Object[]{RegexUtils.getRegexCharsFromString(expected), expected}));
+                                    "\n If so, try to quote them by using \\Q and \\E or simply \\" +
+                                    "\n Found the following list of special regex characters inside expected: {}\nExpected:\n{}",
+                            new Object[]{specialRegexCharList, expected}));
                 }
                 fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
                         new Object[]{message != null ? message : "", parsedString, actual}));
