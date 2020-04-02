@@ -1,5 +1,8 @@
 # Changelog
 
+### 5.31
+Add warning message when String comparison fails and string has unintentional special regex characters    
+
 ### 5.30
 Add cookies support       
 
