@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 public class RegexUtils {
+    final static ArrayList<String> specialRegexCharacters = new
+            ArrayList<>(Arrays.asList("\\", "^", "$", ".", "|", "!", "?", "*", "+", "(", ")", "[", "{", "<", ">"));
 
     public static boolean isRegex(String str) {
         try {
@@ -17,15 +20,7 @@ public class RegexUtils {
         }
     }
 
-    public static List getRegexCharsFromString(String str) {
-        List regexCharsFromString = new ArrayList();
-        ArrayList<String> specialRegexCharacters = new
-                ArrayList(Arrays.asList("\\", "^", "$", ".", "|", "!", "?", "*", "+", "(", ")", "[", "{", "<", ">"));
-        specialRegexCharacters.forEach(specialRegexCharacter -> {
-            if (str.contains(specialRegexCharacter)) {
-                regexCharsFromString.add(specialRegexCharacter);
-            }
-        });
-        return regexCharsFromString;
+    public static List<String> getRegexCharsFromString(String str) {
+        return specialRegexCharacters.stream().filter(str::contains).collect(Collectors.toList());
     }
 }
