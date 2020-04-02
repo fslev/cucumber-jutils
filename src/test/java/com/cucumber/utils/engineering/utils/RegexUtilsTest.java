@@ -16,7 +16,6 @@ public class RegexUtilsTest {
 
     @Test
     public void testNullStringContainsSpecialRegexCharacters() {
-        String s = null;
-        assertEquals(Collections.emptyList(), RegexUtils.getRegexCharsFromString(s));
+        assertEquals(Collections.emptyList(), RegexUtils.getRegexCharsFromString(null));
     }
 }
