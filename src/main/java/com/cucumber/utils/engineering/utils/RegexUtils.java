@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class RegexUtils {
     final static ArrayList<String> specialRegexCharacters = new
             ArrayList<>(Arrays.asList("\\", "^", "$", ".", "|", "!", "?", "*", "+", "(", ")", "[", "{", "<", ">"));
-    private static Predicate<Boolean> p;
 
     public static boolean isRegex(String str) {
         try {
