@@ -23,7 +23,7 @@ public class RegexUtils {
 
     public static List<String> getRegexCharsFromString(String str) {
         System.out.println(str);
-        if (str == null && !str.isEmpty()) {
+        if (str == null || str.isEmpty()) {
             return Collections.emptyList();
         } else {
             return specialRegexCharacters.stream().filter(str::contains).collect(Collectors.toList());
