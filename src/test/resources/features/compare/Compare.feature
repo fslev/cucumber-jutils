@@ -235,3 +235,10 @@ Feature: Test comparator
       """
     Then Create HTTP response wrapper with content <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse> and compare with #[expectedResponse]
     And COMPARE #[var1] with "booking:4663740"
+
+  Scenario: Compare regex
+    # This should not log any warning related to regular expressions
+    And Negative COMPARE abc with "[0-9]"
+    # This should log regex related warning messages
+    And Negative COMPARE [0-9] with "[0-9]"
+    And COMPARE \Q[0-9]\E with "[0-9]"
