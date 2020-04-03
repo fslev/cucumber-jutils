@@ -1,7 +1,8 @@
 # Changelog
 
 ### 5.31
-Add warning message when String comparison fails and string has unintentional special regex characters    
+Add warning message when String comparison fails and string has unintentional special regex characters
+Increase cucumber version to 5.6.0    
 
 ### 5.30
 Add cookies support       
