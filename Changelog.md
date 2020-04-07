@@ -1,5 +1,8 @@
 # Changelog
 
+###5.33
+Fix negative compare step
+
 ###5.32
 Increase cucumber version to 5.6.0 
 
