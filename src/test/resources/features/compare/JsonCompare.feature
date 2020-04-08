@@ -69,3 +69,11 @@ Feature: Compare JSONs
     {"a": [2,1,3,4], "b":false}
     """
     Then Compare #[a] against #[b] via jsonNonExtensibleObject=true, jsonNonExtensibleArray=false, jsonArrayStrictOrder=true, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
+
+  Scenario: Check unintentional regex chars at Json compare
+    # This should not log any warning related to regular expressions
+    And Negative COMPARE {"a":"foobar"} with "{"a":"[0-9]"}"
+    And Negative COMPARE {"a":"foobar"} with "{"[0-9]":"foobar"}"
+    # This should log regex related warning messages
+    And Negative COMPARE {"a":"[0-9]"} with "{"a":"[0-9]"}"
+    And Negative COMPARE {"[0-9]":"foobar"} with "{"[0-9]":"foobar"}"

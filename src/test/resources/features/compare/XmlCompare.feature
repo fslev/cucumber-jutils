@@ -200,3 +200,12 @@ Feature: Compare XMLs
     And COMPARE #[contract] with "foo bar 1000"
     And COMPARE #[from] with "Tove"
     Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=true, xmlElementNumAttributes=false and message=Interesting
+
+
+  Scenario: Check unintentional regex chars at XML compare
+    * load all scenario props from dir "xml/regex_chars"
+      # This should not log any warning related to regular expressions
+    And Negative COMPARE <xml><a>foobar</a></xml> with "<xml><a>[0-9]</a></xml>"
+    # This should log regex related warning messages
+    And Negative COMPARE <xml><a>[0-9]</a></xml> with "<xml><a>[0-9]</a></xml>"
+    And Negative COMPARE #[test1] with "<xml><a>[0-9]</a></xml>"
