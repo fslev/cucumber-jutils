@@ -53,10 +53,10 @@ public class StringRegexCompare implements Placeholdable {
             } else {
                 List<String> specialRegexCharList = RegexUtils.getRegexCharsFromString(expected);
                 if (!specialRegexCharList.isEmpty()) {
-                    log.warn(" \n Comparison mechanism failed while comparing strings." +
+                    log.warn(" \n\n Comparison mechanism failed while comparing strings." +
                                     " \n Make sure expected String has no unintentional regex special characters that failed the comparison. " +
                                     "\n If so, try to quote them by using \\Q and \\E or simply \\" +
-                                    "\n Found the following list of special regex characters inside expected: {}\nExpected:\n{}",
+                                    "\n Found the following list of special regex characters inside expected: {}\nExpected:\n{}\n",
                             specialRegexCharList, expected);
                 }
                 fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
