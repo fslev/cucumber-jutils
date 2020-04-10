@@ -4,16 +4,17 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.AbstractMap;
 import java.util.Map;
 import java.util.function.Function;
 
 class Xml {
 
     static <R> void walkAndProcessNode(Node node, Function<String, R> processFct, String parentPath, Map<String, R> results) {
-        R result = processNode(node, processFct);
         String currentPath = getNodePath(node, parentPath);
-        if (result != null) {
-            results.put(currentPath, result);
+        Map.Entry<String, R> result = processNode(currentPath, node, processFct);
+        if (result != null && result.getValue() != null) {
+            results.put(result.getKey(), result.getValue());
         }
         if (node.hasAttributes()) {
             NamedNodeMap attributes = node.getAttributes();
@@ -30,13 +31,21 @@ class Xml {
         }
     }
 
-    private static <R> R processNode(Node node, Function<String, R> processFct) {
+    /**
+     * @param path
+     * @param node
+     * @param processFct
+     * @param <R>
+     * @return a simple mapping between processed node result and its corresponding path
+     */
+    private static <R> Map.Entry<String, R> processNode(String path, Node node, Function<String, R> processFct) {
         switch (node.getNodeType()) {
             case Node.ELEMENT_NODE:
-                return processFct.apply(node.getNodeName());
+                return new AbstractMap.SimpleEntry<>(path, processFct.apply(node.getNodeName()));
             case Node.ATTRIBUTE_NODE:
+                return new AbstractMap.SimpleEntry<>(path + "{attr:" + node.getNodeName() + "}", processFct.apply(node.getNodeValue()));
             case Node.TEXT_NODE:
-                return processFct.apply(node.getNodeValue());
+                return new AbstractMap.SimpleEntry<>(path + "/{val}", processFct.apply(node.getNodeValue()));
         }
         return null;
     }
@@ -49,8 +58,6 @@ class Xml {
                 } else {
                     return parentPath + "/" + node.getNodeName();
                 }
-            case Node.ATTRIBUTE_NODE:
-                return parentPath + "{" + node.getNodeName() + "}";
             default:
                 return parentPath;
         }

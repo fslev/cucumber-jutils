@@ -40,11 +40,15 @@ public class XmlUtilsTest {
         Map<String, List<String>> result = XmlUtils.walkXmlAndProcessNodes(ResourceUtils.read("xml/regex_chars/test1.xml"),
                 extractSpecialRegexCharsFct);
         assertEquals(Arrays.asList("."), result.get("/cata.log"));
-        assertTrue(Arrays.asList(".", "?").containsAll(result.get("/cata.log/product{product_image}")));
-        assertEquals(Arrays.asList("."), result.get("/cata.log/product/catalog_item[2]/size[2]/color_swatch[2]{image}"));
-        assertTrue(Arrays.asList("+", "[", "*").containsAll(result.get("/cata.log/product/catalog_item[2]/size[2]/color_swatch[4]{image}")));
-        assertEquals(Arrays.asList("("), result.get("/cata.log/product/catalog_item[2]/size[2]/color_swatch[4]"));
-        assertEquals(Arrays.asList("$"), result.get("/cata.log/product/catalog_item[2]/size[4]{description}"));
+        assertEquals(Arrays.asList("."), result.get("/cata.log/product/catalog_item[1]/item_num.ber"));
+        assertTrue(Arrays.asList("[", "^").containsAll(result.get("/cata.log/product/catalog_item[1]/item_num.ber/{val}")));
+        assertEquals(Arrays.asList("."), result.get("/cata.log/product/catalog_item[1]/pr.ice"));
+        assertEquals(Arrays.asList("["), result.get("/cata.log/product/catalog_item[1]/pr.ice/{val}"));
+        assertTrue(Arrays.asList(".", "?").containsAll(result.get("/cata.log/product{attr:product_image}")));
+        assertEquals(Arrays.asList("."), result.get("/cata.log/product/catalog_item[2]/size[2]/color_swatch[2]{attr:image}"));
+        assertTrue(Arrays.asList("+", "[", "*").containsAll(result.get("/cata.log/product/catalog_item[2]/size[2]/color_swatch[4]{attr:image}")));
+        assertEquals(Arrays.asList("("), result.get("/cata.log/product/catalog_item[2]/size[2]/color_swatch[4]/{val}"));
+        assertEquals(Arrays.asList("$"), result.get("/cata.log/product/catalog_item[2]/size[4]{attr:description}"));
     }
 
     @Test
