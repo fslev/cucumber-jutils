@@ -242,17 +242,3 @@ Feature: Test comparator
     # This should log regex related warning messages
     And Negative COMPARE [0-9] with "[0-9]"
     And COMPARE \Q[0-9]\E with "[0-9]"
-
-  Scenario: Check unintentional regex chars at Json compare
-    # This should not log any warning related to regular expressions
-    And Negative COMPARE {"a":"foobar"} with "{"a":"[0-9]"}"
-    And Negative COMPARE {"a":"foobar"} with "{"[0-9]":"foobar"}"
-    # This should log regex related warning messages
-    And Negative COMPARE {"a":"[0-9]"} with "{"a":"[0-9]"}"
-    And Negative COMPARE {"[0-9]":"foobar"} with "{"[0-9]":"foobar"}"
-
-  Scenario: Check unintentional regex chars at XML compare
-    # This should not log any warning related to regular expressions
-    And Negative COMPARE <xml><a>foobar</a></xml> with "<xml><a>[0-9]</a></xml>"
-    # This should log regex related warning messages
-    And Negative COMPARE <xml><a>[0-9]</a></xml> with "<xml><a>[0-9]</a></xml>"
