@@ -61,8 +61,7 @@ public class Json {
 
     @Test
     public <R> void test() throws JsonProcessingException {
-        //String js = "{\"status\":\"20.0\",\"arr?ay\":[\"fistElement*\", \"secondElement^\"]}";
-        String js = "{\"a*1\":\"a.2\",\"b1|\":\"b2?\"}";
+        String js = "{\"status\": \"20*0\",\"fiel*d\":{\"auto.Renew\": false,\"an|therField\": \"andot^erkey\",\"json*^ArrayKey\": \"abc.fd%\"}}";
         JsonCompare compare = new JsonCompare();
         compare.checkJsonContainsSpecialRegexCharsAndWarn(js);
 
