@@ -34,7 +34,7 @@ public class Json {
             for (int i = 0; i < arrayNode.size(); i++) {
                 walkAndProcessJson(jsonNode.get(i), processFunction, parentPath + "[" + i + "]", results);
             }
-        } else if (jsonNode.isValueNode()) {
+        } else if (jsonNode.getNodeType().equals(JsonNodeType.STRING)) {
             result = processValue(parentPath, jsonNode, processFunction);
             addNewResultToMap(results, result);
         }
@@ -46,12 +46,8 @@ public class Json {
         }
     }
 
-
     private static <R> Map.Entry<String, R> processValue(String path, JsonNode node, Function<String, R> processFct) {
-        if (node.getNodeType().equals(JsonNodeType.STRING)) {
-            return new AbstractMap.SimpleEntry<>(path + "/{value}", processFct.apply(node.toString()));
-        }
-        return null;
+        return new AbstractMap.SimpleEntry<>(path + "/{value}", processFct.apply(node.toString()));
     }
 
     private static <R> Map.Entry<String, R> processKey(String path, String key, Function<String, R> processFct) {
