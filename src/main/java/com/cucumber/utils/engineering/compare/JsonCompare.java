@@ -32,8 +32,7 @@ public class JsonCompare implements Placeholdable {
         this(null, expected, actual, false, false, false);
     }
 
-    public JsonCompare() {
-    }
+    public JsonCompare(){}
 
     public JsonCompare(String message, Object expected, Object actual) throws CompareException {
         this(message, expected, actual, false, false, false);
@@ -93,6 +92,7 @@ public class JsonCompare implements Placeholdable {
                     break;
                 }
             } else {
+                checkJsonContainsSpecialRegexCharsAndWarn(expected.toString());
                 throw e;
             }
         }
