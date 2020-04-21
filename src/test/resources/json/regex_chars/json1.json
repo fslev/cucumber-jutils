@@ -1,0 +1,25 @@
+{
+  "foo.bar": {
+    "a^b": "some ? value here+",
+    "array": [
+      false,
+      {
+        "a": "te.st",
+        ".a": "nice",
+        "b": {
+          "array": [
+            "lor+em",
+            {
+              "ips+um": "spe[cial"
+            },
+            true,
+            1,
+            null,
+            "te.s$t"
+          ]
+        }
+      },
+      null
+    ]
+  }
+}
