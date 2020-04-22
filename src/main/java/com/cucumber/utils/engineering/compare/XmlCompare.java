@@ -85,7 +85,7 @@ public class XmlCompare implements Placeholdable {
                 return regexChars.isEmpty() ? null : regexChars;
             });
             if (!specialRegexChars.isEmpty()) {
-                String prettyResult = specialRegexChars.entrySet().stream().map(e -> e.getKey() + ": " + e.getValue().toString())
+                String prettyResult = specialRegexChars.entrySet().stream().map(e -> e.getKey() + " contains: " + e.getValue().toString())
                         .collect(Collectors.joining("\n"));
                 log.warn(" \n\n Comparison mechanism failed while comparing XMLs." +
                                 " \n One reason for this, might be that XML may have unintentional regex special characters. " +
