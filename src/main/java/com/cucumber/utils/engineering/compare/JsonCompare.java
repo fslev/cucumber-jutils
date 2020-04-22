@@ -2,20 +2,23 @@ package com.cucumber.utils.engineering.compare;
 
 import com.cucumber.utils.engineering.compare.comparators.json.CustomJsonComparator;
 import com.cucumber.utils.engineering.compare.exceptions.CompareException;
+import com.cucumber.utils.engineering.utils.JsonUtils;
+import com.cucumber.utils.engineering.utils.RegexUtils;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ro.skyah.comparator.CompareMode;
 import ro.skyah.comparator.JSONCompare;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class JsonCompare implements Placeholdable {
+    private Logger log = LogManager.getLogger();
 
     private JsonNode expected;
     private JsonNode actual;
@@ -87,6 +90,7 @@ public class JsonCompare implements Placeholdable {
                     break;
                 }
             } else {
+                checkJsonContainsSpecialRegexCharsAndWarn(expected.toString());
                 throw e;
             }
         }
@@ -105,5 +109,25 @@ public class JsonCompare implements Placeholdable {
             modes.add(CompareMode.JSON_ARRAY_STRICT_ORDER);
         }
         return modes.toArray(new CompareMode[0]);
+    }
+
+    private void checkJsonContainsSpecialRegexCharsAndWarn(String json) {
+        try {
+            Map<String, List<String>> specialRegexChars = JsonUtils.walkJsonAndProcessNodes(json, nodeValue -> {
+                List<String> regexChars = RegexUtils.getRegexCharsFromString(nodeValue);
+                return regexChars.isEmpty() ? null : regexChars;
+            });
+            if (!specialRegexChars.isEmpty()) {
+                String prettyResult = specialRegexChars.entrySet().stream().map(e -> e.getKey() + " contains: " + e.getValue().toString())
+                        .collect(Collectors.joining("\n"));
+                log.warn(" \n\n Comparison mechanism failed while comparing JSONs." +
+                                " \n One reason for this, might be that Json may have unintentional regex special characters. " +
+                                "\n If so, try to quote them by using \\Q and \\E or simply \\" +
+                                "\n Found the following list of special regex characters inside expected:\n\n{}\n\nExpected:\n{}\n",
+                        prettyResult, expected);
+            }
+        } catch (Exception e) {
+            log.warn("Cannot extract special regex characters from json", e);
+        }
     }
 }

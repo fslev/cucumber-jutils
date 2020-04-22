@@ -3,19 +3,26 @@ package com.cucumber.utils.engineering.compare;
 import com.cucumber.utils.engineering.compare.comparators.xml.CustomXmlComparator;
 import com.cucumber.utils.engineering.compare.comparators.xml.XmlMatchException;
 import com.cucumber.utils.engineering.compare.exceptions.CompareException;
+import com.cucumber.utils.engineering.utils.RegexUtils;
+import com.cucumber.utils.engineering.utils.XmlUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Element;
 import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.DifferenceEvaluators;
 import org.xmlunit.diff.ElementSelector;
 import org.xmlunit.util.Nodes;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.cucumber.utils.engineering.utils.XmlUtils.isValid;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isSimilarTo;
 
 public class XmlCompare implements Placeholdable {
+    private Logger log = LogManager.getLogger();
 
     private String expected;
     private String actual;
@@ -42,10 +49,15 @@ public class XmlCompare implements Placeholdable {
 
     @Override
     public Map<String, String> compare() {
-        assertThat(message, actual, isSimilarTo(expected).ignoreWhitespace()
-                .withNodeMatcher(new DefaultNodeMatcher(new ByNameAttrAndTextSelector()))
-                .withDifferenceEvaluator(
-                        DifferenceEvaluators.chain(comparator)));
+        try {
+            assertThat(message, actual, isSimilarTo(expected).ignoreWhitespace()
+                    .withNodeMatcher(new DefaultNodeMatcher(new ByNameAttrAndTextSelector()))
+                    .withDifferenceEvaluator(
+                            DifferenceEvaluators.chain(comparator)));
+        } catch (AssertionError e) {
+            checkXmlContainsSpecialRegexCharsAndWarn(expected);
+            throw e;
+        }
         return comparator.getGeneratedProperties();
     }
 
@@ -63,6 +75,26 @@ public class XmlCompare implements Placeholdable {
             } catch (XmlMatchException e) {
                 return false;
             }
+        }
+    }
+
+    private void checkXmlContainsSpecialRegexCharsAndWarn(String xml) {
+        try {
+            Map<String, List<String>> specialRegexChars = XmlUtils.walkXmlAndProcessNodes(xml, nodeValue -> {
+                List<String> regexChars = RegexUtils.getRegexCharsFromString(nodeValue);
+                return regexChars.isEmpty() ? null : regexChars;
+            });
+            if (!specialRegexChars.isEmpty()) {
+                String prettyResult = specialRegexChars.entrySet().stream().map(e -> e.getKey() + " contains: " + e.getValue().toString())
+                        .collect(Collectors.joining("\n"));
+                log.warn(" \n\n Comparison mechanism failed while comparing XMLs." +
+                                " \n One reason for this, might be that XML may have unintentional regex special characters. " +
+                                "\n If so, try to quote them by using \\Q and \\E or simply \\" +
+                                "\n Found the following list of special regex characters inside expected:\n\n{}\n\nExpected:\n{}\n",
+                        prettyResult, expected);
+            }
+        } catch (Exception e) {
+            log.warn("Cannot extract special regex characters from xml");
         }
     }
 }
