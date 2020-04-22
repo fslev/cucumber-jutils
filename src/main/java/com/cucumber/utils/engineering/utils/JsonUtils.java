@@ -5,9 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +31,7 @@ public class JsonUtils {
         }
     }
 
-    public static <R> Map<String, R> walkJsonAndProcessNodes(String json, Function<String, R> processFunction) throws IOException, SAXException, ParserConfigurationException {
+    public static <R> Map<String, R> walkJsonAndProcessNodes(String json, Function<String, R> processFunction) throws IOException {
         Map<String, R> resultsMap = new HashMap<>();
         JsonNode jsonNode = toJson(json);
         Json.walkAndProcessJson(jsonNode, processFunction, "", resultsMap);
