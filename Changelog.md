@@ -1,7 +1,10 @@
 # Changelog
 
 ###In progress
-Add warning message when XML comparison fails due to unintentional special regex characters  
+
+###5.34
+Add warning message when JSON comparison fails due to unintentional special regex characters    
+Add warning message when XML comparison fails due to unintentional special regex characters    
 
 ###5.33
 Fix negative compare step  
