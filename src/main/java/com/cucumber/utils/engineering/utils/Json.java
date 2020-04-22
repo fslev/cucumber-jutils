@@ -17,7 +17,6 @@ public class Json {
     static <R> void walkAndProcessJson(JsonNode jsonNode, Function<String, R> processFunction, String parentPath, Map<String, R> results) throws JsonProcessingException {
         Map.Entry<String, R> result = null;
         if (jsonNode.isObject()) {
-            result = processValue(parentPath, jsonNode, processFunction);
             addNewResultToMap(results, result);
             ObjectNode objectNode = (ObjectNode) jsonNode;
             Iterator<Map.Entry<String, JsonNode>> iter = objectNode.fields();

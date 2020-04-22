@@ -32,6 +32,17 @@ public class StringRegexCompare implements Placeholdable {
         this.message = message;
     }
 
+    private void logWarningMessageAboutUnintentionalRegexChars() {
+        List<String> specialRegexCharList = RegexUtils.getRegexCharsFromString(expected);
+        if (!specialRegexCharList.isEmpty()) {
+            log.warn(" \n\n Comparison mechanism failed while comparing strings." +
+                            " \n Make sure expected String has no unintentional regex special characters that failed the comparison. " +
+                            "\n If so, try to quote them by using \\Q and \\E or simply \\" +
+                            "\n Found the following list of special regex characters inside expected: {}\nExpected:\n{}\n",
+                    specialRegexCharList, expected);
+        }
+    }
+
     @Override
     public Map<String, String> compare() {
         ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
@@ -51,14 +62,7 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                List<String> specialRegexCharList = RegexUtils.getRegexCharsFromString(expected);
-                if (!specialRegexCharList.isEmpty()) {
-                    log.warn(" \n\n Comparison mechanism failed while comparing strings." +
-                                    " \n Make sure expected String has no unintentional regex special characters that failed the comparison. " +
-                                    "\n If so, try to quote them by using \\Q and \\E or simply \\" +
-                                    "\n Found the following list of special regex characters inside expected: {}\nExpected:\n{}\n",
-                            specialRegexCharList, expected);
-                }
+                logWarningMessageAboutUnintentionalRegexChars();
                 fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
                         new Object[]{message != null ? message : "", parsedString, actual}));
             }
@@ -68,7 +72,7 @@ public class StringRegexCompare implements Placeholdable {
                     this.assignSymbols.putAll(generator.getProperties());
                 }
             } else {
-                //toDo: special regex chars warning message should also come here
+                logWarningMessageAboutUnintentionalRegexChars();
                 fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}", new Object[]{message != null ? message : "", parsedString, actual}));
             }
         }
