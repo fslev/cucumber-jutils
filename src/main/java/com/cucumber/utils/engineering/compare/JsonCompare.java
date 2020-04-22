@@ -32,8 +32,6 @@ public class JsonCompare implements Placeholdable {
         this(null, expected, actual, false, false, false);
     }
 
-    public JsonCompare(){}
-
     public JsonCompare(String message, Object expected, Object actual) throws CompareException {
         this(message, expected, actual, false, false, false);
     }
@@ -113,14 +111,14 @@ public class JsonCompare implements Placeholdable {
         return modes.toArray(new CompareMode[0]);
     }
 
-    public void checkJsonContainsSpecialRegexCharsAndWarn(String json) {
+    private void checkJsonContainsSpecialRegexCharsAndWarn(String json) {
         try {
             Map<String, List<String>> specialRegexChars = JsonUtils.walkJsonAndProcessNodes(json, nodeValue -> {
                 List<String> regexChars = RegexUtils.getRegexCharsFromString(nodeValue);
                 return regexChars.isEmpty() ? null : regexChars;
             });
             if (!specialRegexChars.isEmpty()) {
-                String prettyResult = specialRegexChars.entrySet().stream().map(e -> e.getKey() + ": " + e.getValue().toString())
+                String prettyResult = specialRegexChars.entrySet().stream().map(e -> e.getKey() + " contains: " + e.getValue().toString())
                         .collect(Collectors.joining("\n"));
                 log.warn(" \n\n Comparison mechanism failed while comparing JSONs." +
                                 " \n One reason for this, might be that Json may have unintentional regex special characters. " +
@@ -129,8 +127,7 @@ public class JsonCompare implements Placeholdable {
                         prettyResult, expected);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            log.warn("Cannot extract special regex characters from json");
+            log.warn("Cannot extract special regex characters from json", e);
         }
     }
 }
