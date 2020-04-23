@@ -203,6 +203,7 @@ Feature: Compare XMLs
 
 
   Scenario: Check unintentional regex chars at XML compare
+  This test scenario is valid only if logger is set to debug LEVEL or bellow
     * load all scenario props from dir "xml/regex_chars"
       # This should not log any warning related to regular expressions
     And Negative COMPARE <xml><a>foobar</a></xml> with "<xml><a>[0-9]</a></xml>"

@@ -237,6 +237,7 @@ Feature: Test comparator
     And COMPARE #[var1] with "booking:4663740"
 
   Scenario: Check unintentional regex chars at String compare
+  This test scenario is valid only if logger is set to debug LEVEL or bellow
     # This should not log any warning related to regular expressions
     And Negative COMPARE abc with "[0-9]"
     # This should log regex related warning messages

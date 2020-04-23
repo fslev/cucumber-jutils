@@ -90,7 +90,7 @@ public class JsonCompare implements Placeholdable {
                     break;
                 }
             } else {
-                checkJsonContainsSpecialRegexCharsAndWarn(expected.toString());
+                debugIfJsonContainsSpecialRegexChars(expected.toString());
                 throw e;
             }
         }
@@ -111,7 +111,10 @@ public class JsonCompare implements Placeholdable {
         return modes.toArray(new CompareMode[0]);
     }
 
-    private void checkJsonContainsSpecialRegexCharsAndWarn(String json) {
+    private void debugIfJsonContainsSpecialRegexChars(String json) {
+        if (!log.isDebugEnabled()) {
+            return;
+        }
         try {
             Map<String, List<String>> specialRegexChars = JsonUtils.walkJsonAndProcessNodes(json, nodeValue -> {
                 List<String> regexChars = RegexUtils.getRegexCharsFromString(nodeValue);
