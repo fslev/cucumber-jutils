@@ -7,7 +7,7 @@ import io.cucumber.java.en.Given;
 public class CommonSteps {
 
     /**
-     * Cucumbe native JSON reporting plugin does not support comments
+     * Cucumber native JSON reporting plugin does not support comments
      * Therefore, the step from bellow simulates comments
      *
      * @param s
