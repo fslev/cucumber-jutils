@@ -55,7 +55,7 @@ public class XmlCompare implements Placeholdable {
                     .withDifferenceEvaluator(
                             DifferenceEvaluators.chain(comparator)));
         } catch (AssertionError e) {
-            checkXmlContainsSpecialRegexCharsAndWarn(expected);
+            checkXmlContainsSpecialRegexCharsAndDebug(expected);
             throw e;
         }
         return comparator.getGeneratedProperties();
@@ -78,7 +78,10 @@ public class XmlCompare implements Placeholdable {
         }
     }
 
-    private void checkXmlContainsSpecialRegexCharsAndWarn(String xml) {
+    private void checkXmlContainsSpecialRegexCharsAndDebug(String xml) {
+        if (!log.isDebugEnabled()) {
+            return;
+        }
         try {
             Map<String, List<String>> specialRegexChars = XmlUtils.walkXmlAndProcessNodes(xml, nodeValue -> {
                 List<String> regexChars = RegexUtils.getRegexCharsFromString(nodeValue);
@@ -87,14 +90,14 @@ public class XmlCompare implements Placeholdable {
             if (!specialRegexChars.isEmpty()) {
                 String prettyResult = specialRegexChars.entrySet().stream().map(e -> e.getKey() + " contains: " + e.getValue().toString())
                         .collect(Collectors.joining("\n"));
-                log.warn(" \n\n Comparison mechanism failed while comparing XMLs." +
+                log.debug(" \n\n Comparison mechanism failed while comparing XMLs." +
                                 " \n One reason for this, might be that XML may have unintentional regex special characters. " +
                                 "\n If so, try to quote them by using \\Q and \\E or simply \\" +
                                 "\n Found the following list of special regex characters inside expected:\n\n{}\n\nExpected:\n{}\n",
                         prettyResult, expected);
             }
         } catch (Exception e) {
-            log.warn("Cannot extract special regex characters from xml");
+            log.debug("Cannot extract special regex characters from xml");
         }
     }
 }
