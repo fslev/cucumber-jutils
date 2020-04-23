@@ -4,7 +4,7 @@
 
 ###5.35
 Add steps for comments and collapsible bodies
-Log debug message when JSON/XML comparison fails due to unintentional special regex characters instead of warning
+Log debug message when comparison fails due to unintentional special regex characters instead of warning
 Check if debug is enabled on logger before checking for regex
 
 ###5.34

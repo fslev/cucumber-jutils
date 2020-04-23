@@ -69,9 +69,12 @@ public class StringRegexCompare implements Placeholdable {
     }
 
     private void checkStringContainsUnintentionalRegexChars(String expected) {
+        if (!log.isDebugEnabled()) {
+            return;
+        }
         List<String> specialRegexCharList = RegexUtils.getRegexCharsFromString(expected);
         if (!specialRegexCharList.isEmpty()) {
-            log.warn(" \n\n Comparison mechanism failed while comparing strings." +
+            log.debug(" \n\n Comparison mechanism failed while comparing strings." +
                             " \n Make sure expected String has no unintentional regex special characters that failed the comparison. " +
                             "\n If so, try to quote them by using \\Q and \\E or simply \\" +
                             "\n Found the following list of special regex characters inside expected: {}\nExpected:\n{}\n",
