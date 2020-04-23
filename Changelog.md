@@ -2,6 +2,10 @@
 
 ###In progress
 
+###5.35
+Add steps for comments and collapsible bodies
+Log debug message when JSON comparison fails due to unintentional special regex characters instead of warning
+
 ###5.34
 Add warning message when JSON comparison fails due to unintentional special regex characters    
 Add warning message when XML comparison fails due to unintentional special regex characters    
