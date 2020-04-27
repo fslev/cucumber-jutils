@@ -1,5 +1,6 @@
 package com.cucumber.utils.context.stepdefs;
 
+import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.context.utils.ScenarioUtils;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
@@ -19,6 +20,12 @@ public class DateTimeSteps {
     private DateTimeFormatter formatter;
     @Inject
     private ScenarioUtils logger;
+    @Inject
+    ScenarioProps scenarioProps;
+
+    public enum Operation {
+        PLUS, MINUS
+    }
 
     @Given("DateTime pattern=\"{}\"")
     public void format(String pattern) {
@@ -73,6 +80,14 @@ public class DateTimeSteps {
         assertEquals("Years differ", Long.parseLong(y.toString()), ChronoUnit.YEARS.between(localDate1, localDate2));
     }
 
+    @Then("Date check period from \"{}\" to \"{}\" is {}months(s)")
+    public void compareMonthsFromDates(String date1, String date2, Object m) {
+        logger.log("Check date period from '{}' to '{}' is {}years", date1, date2, m);
+        LocalDate localDate1 = LocalDateTime.parse(date1, formatter).toLocalDate();
+        LocalDate localDate2 = LocalDateTime.parse(date2, formatter).toLocalDate();
+        assertEquals("Years differ", Long.parseLong(m.toString()), ChronoUnit.MONTHS.between(localDate1, localDate2));
+    }
+
     @Then("Date check period from \"{}\" to \"{}\" is {}day(s)")
     public void compareDaysFromDates(String date1, String date2, Object d) {
         logger.log("Check date period from '{}' to '{}' is {}days", date1, date2, d);
@@ -80,4 +95,17 @@ public class DateTimeSteps {
         LocalDate localDate2 = LocalDateTime.parse(date2, formatter).toLocalDate();
         assertEquals("Days differ", Long.parseLong(d.toString()), ChronoUnit.DAYS.between(localDate1, localDate2));
     }
+
+    @Then("date param {}=\"now {} {} {}\" with format pattern={}")
+    public void formatDate(String param, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern);
+        switch (operation) {
+            case MINUS:
+                scenarioProps.put(param, LocalDateTime.now().minus(value, chronoUnit).format(dateTimeFormatter));
+            case PLUS:
+                scenarioProps.put(param, LocalDateTime.now().plus(value, chronoUnit).format(dateTimeFormatter));
+        }
+    }
+
+
 }

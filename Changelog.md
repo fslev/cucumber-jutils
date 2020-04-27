@@ -2,6 +2,9 @@
 
 ###In progress
 
+###5.36
+Add date format support for scenario properties
+
 ###5.35
 Add steps for comments and collapsible bodies  
 Log debug message when comparison fails due to unintentional special regex characters instead of warning  
