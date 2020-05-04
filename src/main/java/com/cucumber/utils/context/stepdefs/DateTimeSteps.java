@@ -49,8 +49,10 @@ public class DateTimeSteps {
         switch (operation) {
             case MINUS:
                 scenarioProps.put(param, LocalDateTime.now().minus(value, chronoUnit).format(dateTimeFormatter));
+                break;
             case PLUS:
                 scenarioProps.put(param, LocalDateTime.now().plus(value, chronoUnit).format(dateTimeFormatter));
+                break;
         }
     }
 
@@ -60,8 +62,10 @@ public class DateTimeSteps {
         switch (operation) {
             case MINUS:
                 scenarioProps.put(param, LocalDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).format(dateTimeFormatter));
+                break;
             case PLUS:
                 scenarioProps.put(param, LocalDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
+                break;
         }
     }
 
