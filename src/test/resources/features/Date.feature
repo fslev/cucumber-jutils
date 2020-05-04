@@ -8,6 +8,7 @@ Feature: Date feature
     Then Check period from "2019-02-03 22:02:12" to "2019-02-03 23:59:10" is #[expected] MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
     Given param expected="58"
     Then Check period from "2019-02-03 23:58:12" to "2019-02-03 23:59:10" is #[expected] SECONDS using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "2019-02-03 01:02:12" to "2019-02-03 23:59:10" doesn't match 36 HOURS using date time pattern yyyy-MM-dd HH:mm:ss
 
   Scenario: Compare two dates
     Then Check period from "2019-01-03" to "2019-02-03" is 1 MONTHS using date pattern yyyy-MM-dd
@@ -15,6 +16,8 @@ Feature: Date feature
     Then Check period from "2018-02-03" to "2019-02-03" is 365 DAYS using date pattern yyyy-MM-dd
     Then Check period from "2020-02-03" to "2021-02-03" is 1 YEARS using date pattern yyyy-MM-dd
     Then Check period from "2020-02-03" to "2021-02-03" is 366 DAYS using date pattern yyyy-MM-dd
+    Then Check period from "2020-02-03" to "2021-02-03" doesn't match 36 DAYS using date pattern yyyy-MM-dd
+
 
   Scenario: Format dates from current date
     Given date param currentTime="now PLUS 0 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss

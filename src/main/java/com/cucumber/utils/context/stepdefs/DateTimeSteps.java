@@ -19,7 +19,7 @@ public class DateTimeSteps {
     @Inject
     private ScenarioUtils logger;
     @Inject
-    ScenarioProps scenarioProps;
+    private ScenarioProps scenarioProps;
 
     public enum Operation {
         PLUS, MINUS
@@ -63,5 +63,36 @@ public class DateTimeSteps {
             case PLUS:
                 scenarioProps.put(param, LocalDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
         }
+    }
+
+
+    @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date pattern {}")
+    public void negativeCompareDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        logger.log("Negative check date period from '{}' to '{}' is {}{} using date pattern {}", date1, date2, value, chronoUnit, pattern);
+        LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
+        LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
+        try {
+            assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
+        } catch (AssertionError e) {
+            logger.log("Negative compare passes" + e.getMessage());
+            return;
+        }
+        throw new AssertionError("Compared objects match");
+    }
+
+    @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date time pattern {}")
+    public void negativeCompareDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+        logger.log("Negative check date period from '{}' to '{}' is {}{} using date time pattern {}", date1, date2, value, chronoUnit, pattern);
+        LocalDateTime localDate1 = LocalDateTime.parse(date1, dateTimeFormatter);
+        LocalDateTime localDate2 = LocalDateTime.parse(date2, dateTimeFormatter);
+        try {
+            assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
+        } catch (AssertionError e) {
+            logger.log("Negative compare passes" + e.getMessage());
+            return;
+        }
+        throw new AssertionError("Compared objects match");
     }
 }
