@@ -19,7 +19,7 @@ Feature: Date feature
     Then Check period from "2020-02-03" to "2021-02-03" doesn't match 36 DAYS using date pattern yyyy-MM-dd
 
 
-  Scenario: Format dates from current date
+  Scenario: Format date times from current date
     Given date param currentTime="now PLUS 0 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param years="now PLUS 15 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param days="now PLUS 15 DAYS" with format pattern=yyyy-MM-dd HH:mm:ss
@@ -30,6 +30,17 @@ Feature: Date feature
     Then Check period from "#[currentTime]" to "#[days]" is 15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[months]" is 15 MONTHS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[minutes]" is 15 MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
+
+  Scenario: Format dates from current date
+    Given date param currentDate="now PLUS 0 YEARS" with format pattern=yyyy-MM-dd
+    And date param futureDateYeas="now PLUS 15 YEARS" with format pattern=yyyy-MM-dd
+    And date param futureDateDays="now PLUS 1 DAYS" with format pattern=yyyy-MM-dd
+    And date param pastDateDays="now MINUS 31 DAYS" with format pattern=yyyy-MM-dd
+
+    Then Check period from "#[currentDate]" to "#[futureDateYeas]" is 15 YEARS using date pattern yyyy-MM-dd
+    And Check period from "#[currentDate]" to "#[futureDateDays]" is 1 DAYS using date pattern yyyy-MM-dd
+    And Check period from "#[currentDate]" to "#[pastDateDays]" is -31 DAYS using date pattern yyyy-MM-dd
+    And Check period from "#[pastDateDays]" to "#[currentDate]" is 31 DAYS using date pattern yyyy-MM-dd
 
 
   Scenario: Format dates from custom date
