@@ -15,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 @ScenarioScoped
 public class DateTimeSteps {
-    private DateTimeFormatter formatter;
     @Inject
     private ScenarioUtils logger;
     @Inject
@@ -79,7 +78,7 @@ public class DateTimeSteps {
         try {
             assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
         } catch (AssertionError e) {
-            logger.log("Negative compare passes" + e.getMessage());
+            logger.log("Negative compare passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared objects match");
@@ -94,7 +93,7 @@ public class DateTimeSteps {
         try {
             assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
         } catch (AssertionError e) {
-            logger.log("Negative compare passes" + e.getMessage());
+            logger.log("Negative compare passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared objects match");
