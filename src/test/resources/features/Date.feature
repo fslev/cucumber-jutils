@@ -43,14 +43,21 @@ Feature: Date feature
     And Check period from "#[pastDateDays]" to "#[currentDate]" is 31 DAYS using date pattern yyyy-MM-dd
 
 
-  Scenario: Format dates from custom date
+  Scenario: Format dates from custom date time
     Given date param currentTime="from 2020-04-28 18:05:58 PLUS 0 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param years="from 2020-04-28 18:05:58 PLUS 1 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param months="from 2020-04-28 18:05:58 PLUS 1 MONTHS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param days="from 2020-04-28 18:05:58 PLUS 1 DAYS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param minutes="from 2020-04-28 18:05:58 PLUS 1 MINUTES" with format pattern=yyyy-MM-dd HH:mm:ss
+    And date param seconds="from #[currentTime] PLUS 2 SECONDS" with format pattern=yyyy-MM-dd HH:mm:ss
+    And date param secondsBefore="from #[minutes] MINUS 61 SECONDS" with format pattern=yyyy-MM-dd HH:mm:ss
 
     Then Check period from "#[currentTime]" to "#[years]" is 1 YEARS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[days]" is 1 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[months]" is 1 MONTHS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[minutes]" is 1 MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "#[currentTime]" to "#[seconds]" is 0 MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "#[currentTime]" to "#[seconds]" is 2 SECONDS using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "#[currentTime]" to "#[secondsBefore]" is 0 YEARS using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "#[currentTime]" to "#[secondsBefore]" is 0 MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "#[currentTime]" to "#[secondsBefore]" is -1 SECONDS using date time pattern yyyy-MM-dd HH:mm:ss
