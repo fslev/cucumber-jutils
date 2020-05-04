@@ -26,8 +26,8 @@ public class DateTimeSteps {
 
     @Then("Check period from \"{}\" to \"{}\" is {} {} using date pattern {}")
     public void compareDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         logger.log("Check date period from '{}' to '{}' is {}{} using date pattern {}", date1, date2, value, chronoUnit, pattern);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
         LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
         assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
@@ -35,8 +35,8 @@ public class DateTimeSteps {
 
     @Then("Check period from \"{}\" to \"{}\" is {} {} using date time pattern {}")
     public void compareDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         logger.log("Check date period from '{}' to '{}' is {}{} using date time pattern {}", date1, date2, value, chronoUnit, pattern);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         LocalDateTime localDate1 = LocalDateTime.parse(date1, dateTimeFormatter);
         LocalDateTime localDate2 = LocalDateTime.parse(date2, dateTimeFormatter);
         assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
@@ -53,6 +53,7 @@ public class DateTimeSteps {
                 scenarioProps.put(param, LocalDateTime.now().plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
+        logger.log("Set date param {}: {}", param, scenarioProps.get(param));
     }
 
     @Then("date param {}=\"from {} {} {} {}\" with format pattern={}")
@@ -66,13 +67,14 @@ public class DateTimeSteps {
                 scenarioProps.put(param, LocalDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
+        logger.log("Set date param {}: {}", param, scenarioProps.get(param));
     }
 
 
     @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date pattern {}")
     public void negativeCompareDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         logger.log("Negative check date period from '{}' to '{}' is {}{} using date pattern {}", date1, date2, value, chronoUnit, pattern);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
         LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
         try {
@@ -86,8 +88,8 @@ public class DateTimeSteps {
 
     @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date time pattern {}")
     public void negativeCompareDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         logger.log("Negative check date period from '{}' to '{}' is {}{} using date time pattern {}", date1, date2, value, chronoUnit, pattern);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         LocalDateTime localDate1 = LocalDateTime.parse(date1, dateTimeFormatter);
         LocalDateTime localDate2 = LocalDateTime.parse(date2, dateTimeFormatter);
         try {
