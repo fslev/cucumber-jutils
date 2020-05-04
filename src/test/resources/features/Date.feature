@@ -14,6 +14,7 @@ Feature: Date feature
     Then Date with format yyyy-MM-dd HH:mm:ss check period from "2018-02-03 01:00:00" to "2019-02-03 00:00:00" is 365days
     Then Date with format yyyy-MM-dd HH:mm:ss check period from "2020-02-03 01:00:00" to "2021-02-03 00:00:00" is 1year
     Then Date with format yyyy-MM-dd HH:mm:ss check period from "2020-02-03 01:00:00" to "2021-02-03 00:00:00" is 366days
+    Then Date with format yyyy-MM-dd check period from "2020-02-03" to "2021-02-03" is 366days
 
   Scenario: Format dates from current date
     Given date param currentTime="now PLUS 0 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
