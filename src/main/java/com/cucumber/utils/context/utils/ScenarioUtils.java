@@ -21,7 +21,10 @@ public class ScenarioUtils {
 
     @After(order = Integer.MIN_VALUE)
     public void finish(Scenario scenario) {
-        log.info("{} | Scenario [{}]", scenario.getStatus(), scenario.getName());
+        if ("FAILED".equals(scenario.getStatus().toString())) {
+            log.info("{} | Scenario {}:{}", scenario.getStatus(), scenario.getUri(), scenario.getLine());
+        } else
+            log.info("{} | Scenario {}", scenario.getStatus(), scenario.getName());
     }
 
     public void log(String msg, Object... args) {
