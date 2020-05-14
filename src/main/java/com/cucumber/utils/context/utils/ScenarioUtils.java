@@ -4,6 +4,7 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import io.cucumber.java.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
@@ -21,10 +22,11 @@ public class ScenarioUtils {
 
     @After(order = Integer.MIN_VALUE)
     public void finish(Scenario scenario) {
-        if ("FAILED".equals(scenario.getStatus().toString())) {
-            log.info("{} | Scenario {}:{}", scenario.getStatus(), scenario.getUri(), scenario.getLine());
+        if (Status.PASSED.equals(scenario.getStatus())) {
+            log.info("{} | Scenario [{}]", scenario.getStatus(), scenario.getName());
         } else
-            log.info("{} | Scenario {}", scenario.getStatus(), scenario.getName());
+            log.info("{} | Scenario [{}] \n {}:{}", scenario.getStatus(), scenario.getName(),
+                    scenario.getUri(), scenario.getLine());
     }
 
     public void log(String msg, Object... args) {
