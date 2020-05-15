@@ -66,3 +66,17 @@ Feature: Test placeholder fill
     Given load all scenario props from dir "placeholders/properties"
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]"
+
+
+  Scenario: Test dynamic scenario properties
+  There are cases where dynamic scenario properties (such as #[uid], #[now]) are generated with same value
+  if they reside in the same file, or inside the same argument
+    Given param a="unique1-#[uid]-and-unique2-#[uid]"
+    When COMPARE unique1-~[val1]-and-unique2-~[val2] with "#[a]"
+    # Two different values should be generated.
+    Then Negative COMPARE #[val1] with "#[val2]"
+
+    Given load scenario props from file "placeholders/properties/jsonWithUids.json"
+    # Same here, Two different values should be generated.
+    When COMPARE {"a":"~[val1]", "b":"~[val2]"} with "#[jsonWithUids]"
+    Then Negative COMPARE #[val1] with "#[val2]"
