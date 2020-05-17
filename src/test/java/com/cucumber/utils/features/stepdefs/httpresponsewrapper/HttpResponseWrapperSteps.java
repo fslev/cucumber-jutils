@@ -36,7 +36,7 @@ public class HttpResponseWrapperSteps {
         try {
             cucumbers.compareHttpResponse(expected, mock);
         } catch (Exception e) {
-            assertTrue(e.getMessage().contains("Invalid HTTP Response Json format"));
+            assertTrue(e.getMessage(), e.getMessage().contains("Invalid HTTP Response Json format"));
         }
     }
 
