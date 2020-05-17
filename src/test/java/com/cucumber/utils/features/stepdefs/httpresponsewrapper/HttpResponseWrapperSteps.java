@@ -27,7 +27,6 @@ public class HttpResponseWrapperSteps {
     @Inject
     private Cucumbers cucumbers;
 
-
     @Then("Compare Http Response with invalid expected={}")
     public void compareHttpResponseWithInvalidExpected(String expected) throws UnsupportedEncodingException {
         HttpResponse mock = new DefaultHttpResponseFactory()
@@ -77,5 +76,4 @@ public class HttpResponseWrapperSteps {
         mock.setHeader(new BasicHeader("Content-Type", "application/xml"));
         cucumbers.compareHttpResponse(null, expected, mock);
     }
-
 }
