@@ -23,7 +23,7 @@ public class JsonCompareTests {
         String expected = "{\"b\":\"(~[sym1]\"}";
         String actual = "{\"a\":\"val2\",\"b\":\"(val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("val1", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -33,7 +33,7 @@ public class JsonCompareTests {
         String expected = "{\"!b\":\"val1\",\"a\":\"val2\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -42,7 +42,7 @@ public class JsonCompareTests {
         String expected = "{\"a\":{\"abc-~[sym1]\":{\"o\":\"2\"},\"abc-~[sym2]\":{\"o\":\"0\"}}}";
         String actual = "{\"a\":{\"abc-X\":{\"o\":\"1\"},\"abc-Y\":{\"o\":\"0\"},\"abc-X\":{\"o\":\"2\"}}}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("X", symbols.get("sym1"));
         assertEquals("Y", symbols.get("sym2"));
         assertEquals(2, symbols.size());
@@ -60,7 +60,7 @@ public class JsonCompareTests {
         String expected = "{\"a\":\"val2\",\"c\":\"val1\",\"!.*\":\".*\"}";
         String actual = "{\"a\":\"val2\",\"c\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -77,7 +77,7 @@ public class JsonCompareTests {
         String expected = "{\"!b\":\"~[sym1]\",\"a\":\"~[sym2]\",\"c\":\"~[sym3]\"}";
         String actual = "{\"a\":\"val2\",\"d\":\"val3\",\"c\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("val2", symbols.get("sym2"));
         assertEquals("val1", symbols.get("sym3"));
         assertEquals(2, symbols.size());
@@ -88,7 +88,7 @@ public class JsonCompareTests {
         String expected = "{\"b\":\"val1\",\"a\":[1,2,3,4]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -97,7 +97,7 @@ public class JsonCompareTests {
         String expected = "{\"b\":\"val1\",\"a\":[1,2,3,4,\"!.*\"]}";
         String actual = "{\"a\":[4,3,2,1],\"b\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -114,7 +114,7 @@ public class JsonCompareTests {
         String expected = "{\"b\":\"val1\",\"a\":[2,\"~[sym1]\",4,\"~[sym2]\"]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("5", symbols.get("sym1"));
         assertEquals("3", symbols.get("sym2"));
         assertEquals(2, symbols.size());
@@ -125,7 +125,7 @@ public class JsonCompareTests {
         String expected = "{\"b\":\"val1\",\"a\":[\"~[sym1]\",2,3,5]}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
         matcher.compare();
     }
@@ -135,7 +135,7 @@ public class JsonCompareTests {
         String expected = "{\"b\":\"!t~[sym1]1\"}";
         String actual = "{\"a\":[5,4,3,2,1],\"b\":\"val1\"}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -183,7 +183,7 @@ public class JsonCompareTests {
                 + "    \"greeting\": \"Hello, Holly Hawkins! You have 1 unread messages.\",\n"
                 + "    \"favoriteFruit\": \"banana\"\n" + "  }\n" + "]";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("1", symbols.get("friendId"));
         assertEquals("-90.447286", symbols.get("longitude"));
         assertEquals(2, symbols.size());
@@ -217,7 +217,7 @@ public class JsonCompareTests {
                 "  }\n" +
                 "}";
         JsonCompare matcher = new JsonCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("Actual symbol result: " + symbols.get("businessKey"), "1551172176725.com|email-verif|1d55b4f3-6ec1-4d89-ba58-2ba2a3eaa80e", symbols.get("businessKey"));
         assertEquals(1, symbols.size());
     }

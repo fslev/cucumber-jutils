@@ -1,73 +1,75 @@
-package com.cucumber.utils.placeholders;
+package com.cucumber.utils.context.props;
 
-import com.cucumber.utils.engineering.placeholders.AbstractPropertiesParser;
-import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesParser;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class ScenarioPropertiesParserTests {
+public class ScenarioPropsParserTest {
+
+    private ScenarioProps scenarioProps;
+
+    @Before
+    public void init() {
+        this.scenarioProps = new ScenarioProps();
+    }
 
     @Test
     public void testGlobalPlaceholderFillInSimpleText() {
         String a = "The #[animal] is running through the #[location]";
-        AbstractPropertiesParser parser = new ScenarioPropertiesParser(a);
-        Map<String, String> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        assertEquals("The chupacabra is running through the forest", parser.parse(values));
+        scenarioProps.putAll(values);
+        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
     public void testGlobalPlaceholderFillInSimpleTextAndInvalidParameters() {
         String a = "The #[animal] is running through the #[location]";
-        AbstractPropertiesParser parser = new ScenarioPropertiesParser(a);
-        Map<String, String> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
-        assertEquals("The #[animal] is running through the #[location]", parser.parse(values));
+        scenarioProps.putAll(values);
+        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
     public void testScenarioPlaceholderFillInSimpleText() {
         String a = "The #[animal] is running through the #[location]";
-        AbstractPropertiesParser parser = new ScenarioPropertiesParser(a);
-        Map<String, String> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        assertEquals("The chupacabra is running through the forest", parser.parse(values));
+        scenarioProps.putAll(values);
+        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
     public void testScenarioPlaceholderFillInSimpleTextAndInvalidParameters() {
         String a = "The #[animal] is running through the #[location]";
-        AbstractPropertiesParser parser = new ScenarioPropertiesParser(a);
-        Map<String, String> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
-        assertEquals("The #[animal] is running through the #[location]", parser.parse(values));
-        assertEquals(new HashSet<>(Arrays.asList("animal", "location")), parser.getPropertyKeys());
+        scenarioProps.putAll(values);
+        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
     public void testGlobalAndScenarioPlaceholderFillInSimpleText() {
         String a = "The #[animal] is running through the #[location]";
-        AbstractPropertiesParser globalParser = new ScenarioPropertiesParser(a);
-        Map<String, String> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        AbstractPropertiesParser scenarioParser = new ScenarioPropertiesParser(globalParser.parse(values));
-        assertEquals("The chupacabra is running through the forest", scenarioParser.parse(values));
+        scenarioProps.putAll(values);
+        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
     public void testGlobalAndScenarioPlaceholderFillInJson() {
-        Map<String, String> values = new HashMap<>();
+        Map<String, Object> values = new HashMap<>();
         values.put("val1", "result 1");
         values.put("val2", "result 2");
         values.put("val3", "result 3");
@@ -119,9 +121,8 @@ public class ScenarioPropertiesParserTests {
                 + "        \"name\": \"De~[var4]sa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"~[val1]\": \"banana\"\n" + "  }\n" + "]";
-        AbstractPropertiesParser scenarioParser = new ScenarioPropertiesParser(actual);
-        String result = scenarioParser.parse(values);
+        scenarioProps.putAll(values);
+        String result = ScenarioPropsParser.parse(actual, scenarioProps).toString();
         assertEquals(result, expected, result);
-        assertEquals(new HashSet<>(Arrays.asList("val3", "val2", "val1")), scenarioParser.getPropertyKeys());
     }
 }

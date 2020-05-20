@@ -16,7 +16,6 @@ import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -28,7 +27,7 @@ public class HttpResponseWrapperSteps {
     private Cucumbers cucumbers;
 
     @Then("Compare Http Response with invalid expected={}")
-    public void compareHttpResponseWithInvalidExpected(String expected) throws UnsupportedEncodingException {
+    public void compareHttpResponseWithInvalidExpected(String expected) {
         HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "some reason"),
                         HttpClientContext.adapt(new BasicHttpContext()));

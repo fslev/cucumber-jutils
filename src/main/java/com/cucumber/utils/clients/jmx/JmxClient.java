@@ -16,22 +16,12 @@ import java.util.Map;
 
 public class JmxClient {
 
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-    private String url;
-    private String role;
-    private String pwd;
-    private JMXConnector jmxConnector;
-    private MBeanServerConnection mbsConnection;
-
-    public JmxClient(String url) {
-        this(url, null, null);
-    }
+    private final JMXConnector jmxConnector;
+    private final MBeanServerConnection mbsConnection;
 
     public JmxClient(String url, String role, String pwd) {
-        this.url = url;
-        this.role = role;
-        this.pwd = pwd;
         try {
             if (role != null && pwd != null) {
                 Map<String, String[]> env = new HashMap<>();

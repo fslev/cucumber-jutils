@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class StringFormatTest {
 
@@ -41,7 +42,7 @@ public class StringFormatTest {
 
     @Test
     public void testStringToColumnsFormatterWithNullColumns() {
-        assertEquals(null, StringFormat.toColumns(10, null));
+        assertNull(StringFormat.toColumns(10, null));
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -18,15 +18,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class JsonCompare implements Placeholdable {
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-    private JsonNode expected;
-    private JsonNode actual;
-    private CustomJsonComparator comparator = new CustomJsonComparator();
-    private boolean nonExtensibleObject;
-    private boolean nonExtensibleArray;
-    private boolean arrayStrictOrder;
-    private String message;
+    private final JsonNode expected;
+    private final JsonNode actual;
+    private final CustomJsonComparator comparator = new CustomJsonComparator();
+    private final boolean nonExtensibleObject;
+    private final boolean nonExtensibleArray;
+    private final boolean arrayStrictOrder;
+    private final String message;
 
     public JsonCompare(Object expected, Object actual) throws CompareException {
         this(null, expected, actual, false, false, false);
@@ -71,18 +71,18 @@ public class JsonCompare implements Placeholdable {
     }
 
     @Override
-    public Map<String, String> compare() {
+    public Map<String, Object> compare() {
         try {
             JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
         } catch (AssertionError e) {
-            if (!comparator.getGeneratedFieldProperties().isEmpty()) {
+            if (!comparator.getFieldProperties().isEmpty()) {
                 while (true) {
-                    comparator.getDepletedFieldPropertyList().add(new HashMap<>(comparator.getGeneratedFieldProperties()));
-                    comparator.getGeneratedFieldProperties().clear();
+                    comparator.getDepletedFieldPropertyList().add(new HashMap<>(comparator.getFieldProperties()));
+                    comparator.getFieldProperties().clear();
                     try {
                         JSONCompare.assertEquals(message, expected, actual, comparator, compareModes());
                     } catch (AssertionError e1) {
-                        if (!comparator.getGeneratedFieldProperties().isEmpty()) {
+                        if (!comparator.getFieldProperties().isEmpty()) {
                             continue;
                         }
                         throw e1;
@@ -94,7 +94,7 @@ public class JsonCompare implements Placeholdable {
                 throw e;
             }
         }
-        return comparator.getGeneratedProperties();
+        return comparator.getValueProperties();
     }
 
     private CompareMode[] compareModes() {

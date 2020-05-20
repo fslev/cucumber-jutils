@@ -14,20 +14,15 @@ import static com.cucumber.utils.context.props.ScenarioProps.FileExtension.*;
 
 final class ScenarioPropsLoader {
 
-    private Logger log = LogManager.getLogger();
-    private ScenarioProps scenarioProps;
+    private static final Logger log = LogManager.getLogger();
 
-    ScenarioPropsLoader(ScenarioProps scenarioProps) {
-        this.scenarioProps = scenarioProps;
-    }
-
-    Set<String> loadScenarioPropsFromDir(String relativeDirPath) {
+    static Set<String> loadScenarioPropsFromDir(String relativeDirPath, ScenarioProps scenarioProps) {
         Set<String> properties = new HashSet<>();
         try {
             Set<String> filePaths = ResourceUtils.getFilesFromDir(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
             filePaths.forEach(filePath -> {
                 try {
-                    if (!properties.addAll(loadScenarioPropsFromFile(filePath))) {
+                    if (!properties.addAll(loadScenarioPropsFromFile(filePath, scenarioProps))) {
                         throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
                                 + "'\nScenario properties file '" + filePath + "' has scenario properties or is named after a property that was already set while traversing directory.");
                     }
@@ -42,26 +37,26 @@ final class ScenarioPropsLoader {
         return properties;
     }
 
-     Set<String> loadScenarioPropsFromFile(String relativeFilePath) {
+    static Set<String> loadScenarioPropsFromFile(String relativeFilePath, ScenarioProps scenarioProps) {
         if (relativeFilePath.endsWith(PROPERTIES.value())) {
-            return loadPropsFromPropertiesFile(relativeFilePath);
+            return loadPropsFromPropertiesFile(relativeFilePath, scenarioProps);
         } else if (relativeFilePath.endsWith(YAML.value()) || relativeFilePath.endsWith(YML.value())) {
-            return loadPropsFromYamlFile(relativeFilePath);
+            return loadPropsFromYamlFile(relativeFilePath, scenarioProps);
         } else if (Arrays.stream(propertyFileExtensions()).anyMatch(relativeFilePath::endsWith)) {
-            return new HashSet<>(Arrays.asList(loadScenarioPropertyFile(relativeFilePath)));
+            return new HashSet<>(Collections.singletonList(loadScenarioPropertyFile(relativeFilePath, scenarioProps)));
         } else {
             throw new InvalidScenarioPropertyFileType();
         }
     }
 
-    private Set<String> loadPropsFromPropertiesFile(String filePath) {
+    private static Set<String> loadPropsFromPropertiesFile(String filePath, ScenarioProps scenarioProps) {
         Properties p = ResourceUtils.readProps(filePath);
         p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
         log.debug("-> Loaded scenario properties from file {}", filePath);
         return p.stringPropertyNames();
     }
 
-    private Set<String> loadPropsFromYamlFile(String filePath) {
+    private static Set<String> loadPropsFromYamlFile(String filePath, ScenarioProps scenarioProps) {
         Map<String, Object> map;
         try {
             map = ResourceUtils.readYaml(filePath);
@@ -73,7 +68,7 @@ final class ScenarioPropsLoader {
         return map.keySet();
     }
 
-    private String loadScenarioPropertyFile(String relativeFilePath) {
+    private static String loadScenarioPropertyFile(String relativeFilePath, ScenarioProps scenarioProps) {
         try {
             String fileName = ResourceUtils.getFileName(relativeFilePath);
             if (Arrays.stream(propertyFileExtensions())

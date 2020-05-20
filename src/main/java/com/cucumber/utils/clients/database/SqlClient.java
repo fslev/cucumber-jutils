@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 public class SqlClient {
-    private static int MAX_ROWS = 100;
-    private Logger log = LogManager.getLogger();
-    private String url;
-    private String user;
-    private String pwd;
-    private String driverClassName;
+    private static final int MAX_ROWS = 100;
+    private final Logger log = LogManager.getLogger();
+    private final String url;
+    private final String user;
+    private final String pwd;
+    private final String driverClassName;
 
     private Connection conn;
     private PreparedStatement pst;
