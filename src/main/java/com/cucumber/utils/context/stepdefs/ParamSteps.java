@@ -7,6 +7,10 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.ParseException;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import java.util.List;
 import java.util.Map;
@@ -50,5 +54,17 @@ public class ParamSteps {
     public void setCustomDataTable(String name, List<Map<String, String>> value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
+    }
+
+    @Given("param {}={}")
+    public void setSpelParam(String name, String value) {
+        try {
+            ExpressionParser expressionParser = new SpelExpressionParser();
+            Expression exp = expressionParser.parseExpression(value);
+            scenarioProps.put(name, exp.getValue());
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+        }
     }
 }
