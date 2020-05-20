@@ -18,7 +18,7 @@ public class CompareTests {
         String expected = null;
         String actual = null;
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -46,7 +46,7 @@ public class CompareTests {
         String expected = "{\"b\":\"(~[sym1]\"}";
         String actual = "{\"a\":\"val2\",\"b\":\"(val1\"}";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("val1", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -56,7 +56,7 @@ public class CompareTests {
         String expected = "{\"~[sym1]\":\"2\"}";
         String actual = "{\"a\":\"2\"}";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("a", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -66,7 +66,7 @@ public class CompareTests {
         String expected = "{\"a\":{\"abc-~[sym1]\":{\"o\":\"0\"}}}";
         String actual = "{\"a\":{\"abc-X\":{\"o\":\"1\"},\"abc-Y\":{\"o\":\"0\"},\"abc-X\":{\"o\":\"2\"}}}";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("Y", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -83,7 +83,7 @@ public class CompareTests {
         String expected = "{\"~[sym1]\":\"~[sym2]\"}";
         String actual = "{\"a\":\"3\",\"b\":\"100\"}";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("a", symbols.get("sym1"));
         assertEquals("3", symbols.get("sym2"));
         assertEquals(2, symbols.size());
@@ -94,7 +94,7 @@ public class CompareTests {
         String expected = "{\"~[sym1]\":\"100\"}";
         String actual = "{\"a\":\"3\",\"x\":\"o\",\"b\":\"100\",\"c\":\"90\"}";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("b", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -111,7 +111,7 @@ public class CompareTests {
         String expected = "{\"~[sym1]\":\"~[val1]\",\"~[sym2]\":\"~[val2]\"}";
         String actual = "{\"a\":\"3\",\"b\":\"100\"}";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("a", symbols.get("sym1"));
         assertEquals("3", symbols.get("val1"));
         assertEquals("b", symbols.get("sym2"));
@@ -124,7 +124,7 @@ public class CompareTests {
         String expected = "[{\"~[sym1]\":\"~[sym2]\"},{\"x\":false}]";
         String actual = "[{\"c\":0},{\"x\":false}]";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("c", symbols.get("sym1"));
         assertEquals("0", symbols.get("sym2"));
         assertEquals(2, symbols.size());
@@ -135,7 +135,7 @@ public class CompareTests {
         String expected = "[{\"~[sym1]\":false}]";
         String actual = "[{\"c\":0},{\"x\":false}]";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("x", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -147,7 +147,7 @@ public class CompareTests {
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
                 + "<int a=\"(attrValue1\">some text here</int><str a=\"some result\"><a>sub text</a></str></struct>";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("(attrValue1", symbols.get("sym1"));
         assertEquals("olAttrVal", symbols.get("sym2"));
         assertEquals("text", symbols.get("sym3"));
@@ -161,7 +161,7 @@ public class CompareTests {
         String actual =
                 "<struct<int a=\"val1\">some val3 here</int><boolean a=\"boval2ue\">false</boolean></struct>";
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("val1", symbols.get("sym1"));
         assertEquals("val2", symbols.get("sym2"));
         assertEquals("val3", symbols.get("sym3"));
@@ -170,13 +170,13 @@ public class CompareTests {
 
     @Test
     public void compareJsonConvertibleWithAssignSymbols() {
-        List<Map<String, String>> expected = new ArrayList<>();
-        List<Map<String, String>> actual = new ArrayList<>();
+        List<Map<String, Object>> expected = new ArrayList<>();
+        List<Map<String, Object>> actual = new ArrayList<>();
         //Fill expected
-        Map<String, String> map1 = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
         map1.put("firstName", "~[sym1]");
         map1.put("lastName", "Davids1");
-        Map<String, String> map2 = new HashMap<>();
+        Map<String, Object> map2 = new HashMap<>();
         map2.put("firstName", "Eric");
         map2.put("lastName", "~[sym2]");
         expected.add(map1);
@@ -191,7 +191,7 @@ public class CompareTests {
         actual.add(map1);
         actual.add(map2);
         Compare compare = new Compare(expected, actual);
-        Map<String, String> symbols = compare.compare();
+        Map<String, Object> symbols = compare.compare();
         assertEquals("John1", symbols.get("sym1"));
         assertEquals("Davids", symbols.get("sym2"));
         assertEquals(2, symbols.size());
@@ -199,10 +199,10 @@ public class CompareTests {
 
     @Test
     public void compareJsonConvertible_extensible() {
-        List<Map<String, String>> expected = new ArrayList<>();
-        List<Map<String, String>> actual = new ArrayList<>();
+        List<Map<String, Object>> expected = new ArrayList<>();
+        List<Map<String, Object>> actual = new ArrayList<>();
         //Fill expected
-        Map<String, String> map1 = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
         map1.put("firstName", "John1");
         map1.put("lastName", "Davids1");
         expected.add(map1);
@@ -210,7 +210,7 @@ public class CompareTests {
         map1 = new HashMap<>();
         map1.put("firstName", "Eric");
         map1.put("lastName", "Davids");
-        Map<String, String> map2 = new HashMap<>();
+        Map<String, Object> map2 = new HashMap<>();
         map2.put("firstName", "John1");
         map2.put("lastName", "Davids1");
         actual.add(map1);

@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
         tags = {"not @Ignore", "not @ignore"})
 public class CucumberUtilsTest extends AbstractTestNGCucumberTests implements ITest {
 
-    private ThreadLocal<String> testName = new ThreadLocal<>();
+    private final ThreadLocal<String> testName = new ThreadLocal<>();
 
     @Override
     @DataProvider(parallel = true)

@@ -14,7 +14,7 @@ import java.util.Map;
 @ScenarioScoped
 public class ParamSteps {
 
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
     @Inject
     private Cucumbers cucumbers;
     @Inject

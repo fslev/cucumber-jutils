@@ -18,7 +18,7 @@ import java.io.IOException;
 @Ignore
 public class HttpClientTest {
 
-    private Logger log = LogManager.getLogger(this.getClass());
+    private final Logger log = LogManager.getLogger(this.getClass());
 
     @Test
     public void testServiceRetryStrategy() throws IOException {

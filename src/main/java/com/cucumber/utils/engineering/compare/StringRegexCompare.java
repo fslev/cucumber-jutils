@@ -1,12 +1,11 @@
 package com.cucumber.utils.engineering.compare;
 
-import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
+import com.cucumber.utils.context.props.internal.ScenarioPropsGenerator;
 import com.cucumber.utils.engineering.utils.RegexUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -15,12 +14,11 @@ import java.util.regex.PatternSyntaxException;
 import static org.junit.Assert.fail;
 
 public class StringRegexCompare implements Placeholdable {
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-    private String expected;
-    private String actual;
-    private Map<String, String> assignSymbols = new HashMap<>();
-    private String message;
+    private final String expected;
+    private final String actual;
+    private final String message;
 
     public StringRegexCompare(Object expected, Object actual) {
         this(null, expected, actual);
@@ -33,39 +31,29 @@ public class StringRegexCompare implements Placeholdable {
     }
 
     @Override
-    public Map<String, String> compare() {
-        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
-        if (generator.targetIsStandaloneProperty()) {
-            assignSymbols.putAll(generator.getProperties());
-            return assignSymbols;
-        }
-        boolean hasAssignSymbols = !generator.getProperties().isEmpty();
-        String parsedString = expected;
-        if (hasAssignSymbols) {
-            parsedString = generator.getParsedTarget();
-        }
-        try {
-            Pattern pattern = Pattern.compile(parsedString, Pattern.DOTALL | Pattern.MULTILINE);
-            if (pattern.matcher(actual).matches()) {
-                if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(generator.getProperties());
+    public Map<String, Object> compare() {
+        ScenarioPropsGenerator generator = new ScenarioPropsGenerator(expected, actual).match();
+        Map<String, Object> generatedProperties = generator.getProperties();
+        if (generator.getStandalonePlaceholderName() == null) {
+            String substitutedExpected = generator.getSubstitutedSource().toString();
+            String expectedWithQuotedSubstitutes = generator.getSourceWithQuotedSubstitutes();
+            try {
+                Pattern pattern = Pattern.compile(expectedWithQuotedSubstitutes, Pattern.DOTALL | Pattern.MULTILINE);
+                if (!pattern.matcher(actual).matches()) {
+                    checkStringContainsUnintentionalRegexChars(expectedWithQuotedSubstitutes);
+                    fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
+                            new Object[]{message != null ? message : "", expectedWithQuotedSubstitutes, actual}));
                 }
-            } else {
+                return generatedProperties;
+            } catch (PatternSyntaxException e) {
                 checkStringContainsUnintentionalRegexChars(expected);
-                fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}",
-                        new Object[]{message != null ? message : "", parsedString, actual}));
-            }
-        } catch (PatternSyntaxException e) {
-            if (parsedString.equals(actual)) {
-                if (hasAssignSymbols) {
-                    this.assignSymbols.putAll(generator.getProperties());
+                if (!substitutedExpected.equals(actual)) {
+                    fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}", new Object[]{message != null ? message : "", substitutedExpected, actual}));
                 }
-            } else {
-                checkStringContainsUnintentionalRegexChars(expected);
-                fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}", new Object[]{message != null ? message : "", parsedString, actual}));
+                return generatedProperties;
             }
         }
-        return assignSymbols;
+        return generatedProperties;
     }
 
     private void checkStringContainsUnintentionalRegexChars(String expected) {

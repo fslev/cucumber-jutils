@@ -22,12 +22,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.xmlunit.matchers.CompareMatcher.isSimilarTo;
 
 public class XmlCompare implements Placeholdable {
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-    private String expected;
-    private String actual;
-    private CustomXmlComparator comparator;
-    private String message;
+    private final String expected;
+    private final String actual;
+    private final CustomXmlComparator comparator;
+    private final String message;
 
     public XmlCompare(Object expected, Object actual) throws CompareException {
         this(null, expected, actual);
@@ -48,7 +48,7 @@ public class XmlCompare implements Placeholdable {
     }
 
     @Override
-    public Map<String, String> compare() {
+    public Map<String, Object> compare() {
         try {
             assertThat(message, actual, isSimilarTo(expected).ignoreWhitespace()
                     .withNodeMatcher(new DefaultNodeMatcher(new ByNameAttrAndTextSelector()))

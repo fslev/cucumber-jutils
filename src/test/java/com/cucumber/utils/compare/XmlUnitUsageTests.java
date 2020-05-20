@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.xmlunit.matchers.CompareMatcher.isSimilarTo;
 
@@ -26,19 +27,19 @@ public class XmlUnitUsageTests {
     @Test
     public void checkXmlIsValid_negative() {
         String controlXml = "<struct<int a=\"2\">3da</int><boolean>false</boolean></struct>";
-        assertTrue(!XmlUtils.isValid(controlXml));
+        assertFalse(XmlUtils.isValid(controlXml));
     }
 
     @Test
     public void checkXmlHasInvalidAttributes_negative() {
         String controlXml = "<struct><int>3da</int a=\"2\"><boolean>false</boolean></struct>";
-        assertTrue(!XmlUtils.isValid(controlXml));
+        assertFalse(XmlUtils.isValid(controlXml));
     }
 
     @Test
     public void checkXmlHasInvalidAttributeValues_negative() {
         String controlXml = "<struct><int a=2>3da</int><boolean>false</boolean></struct>";
-        assertTrue(!XmlUtils.isValid(controlXml));
+        assertFalse(XmlUtils.isValid(controlXml));
     }
 
     @Test

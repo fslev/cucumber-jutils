@@ -14,20 +14,18 @@ import java.util.function.Supplier;
 @ScenarioScoped
 public class Cucumbers {
 
-    private ScenarioProps scenarioProps;
-    private ScenarioPropsLoader scenarioPropsLoader;
-    private GenericCompare genericCompare;
+    private final ScenarioProps scenarioProps;
+    private final GenericCompare genericCompare;
 
     @Inject
     private Cucumbers(ScenarioProps scenarioProps) {
         this.scenarioProps = scenarioProps;
-        this.scenarioPropsLoader = new ScenarioPropsLoader(scenarioProps);
         this.genericCompare = new GenericCompare(scenarioProps);
     }
 
     public String read(String relativeFilePath) {
         try {
-            return new ScenarioPropsParser(scenarioProps, ResourceUtils.read(relativeFilePath)).result().toString();
+            return ScenarioPropsParser.parse(ResourceUtils.read(relativeFilePath), scenarioProps).toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -38,7 +36,7 @@ public class Cucumbers {
      * @return names of loaded properties
      */
     public Set<String> loadScenarioPropsFromFile(String relativeFilePath) {
-        return scenarioPropsLoader.loadScenarioPropsFromFile(relativeFilePath);
+        return ScenarioPropsLoader.loadScenarioPropsFromFile(relativeFilePath, scenarioProps);
     }
 
     /**
@@ -48,7 +46,7 @@ public class Cucumbers {
      */
 
     public Set<String> loadScenarioPropsFromDir(String relativeDirPath) {
-        return scenarioPropsLoader.loadScenarioPropsFromDir(relativeDirPath);
+        return ScenarioPropsLoader.loadScenarioPropsFromDir(relativeDirPath, scenarioProps);
     }
 
     public void compare(Object expected, Object actual) {

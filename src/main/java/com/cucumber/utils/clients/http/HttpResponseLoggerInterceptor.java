@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class HttpResponseLoggerInterceptor implements HttpResponseInterceptor {
 
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
     @Override
     public void process(HttpResponse response, HttpContext context) {

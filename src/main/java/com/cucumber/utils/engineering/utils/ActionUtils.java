@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 public class ActionUtils {
-    private static Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
     public static void retryIfThrowsUp(Runnable runnable) {
         retryIfThrowsUp(runnable, Throwable.class, 30, 500);

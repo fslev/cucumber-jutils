@@ -11,7 +11,7 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 
 @ScenarioScoped
 public class ScenarioUtils {
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
     private Scenario scenario;
 
     @Before(order = Integer.MIN_VALUE)

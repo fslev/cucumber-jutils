@@ -14,7 +14,7 @@ public class ShellSteps {
     private Cucumbers cucumbers;
     @Inject
     private ScenarioUtils logger;
-    private ShellClient shellClient = new ShellClient();
+    private final ShellClient shellClient = new ShellClient();
 
     @Then("SHELL execute command \"{}\" and check response=\"{}\"")
     public void executeAndCompare(String cmd, String expected) {

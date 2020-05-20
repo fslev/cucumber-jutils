@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class ResourceUtils {
 
-    private static Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
     public static String read(String relativeFilePath) throws IOException {
         return readFromRelativePath(relativeFilePath);

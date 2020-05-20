@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.compare.comparators.xml;
 
-import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesGenerator;
+import com.cucumber.utils.engineering.compare.StringRegexCompare;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
@@ -13,15 +13,13 @@ import org.xmlunit.util.Nodes;
 import javax.xml.namespace.QName;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 public class CustomXmlComparator implements DifferenceEvaluator {
 
-    private Map<String, String> generatedProperties = new HashMap<>();
-    private boolean childNodeListLength;
-    private boolean childNodeListSequence;
-    private boolean elementNumAttributes;
+    private final Map<String, Object> generatedProperties = new HashMap<>();
+    private final boolean childNodeListLength;
+    private final boolean childNodeListSequence;
+    private final boolean elementNumAttributes;
 
     public CustomXmlComparator(boolean childNodeListLength, boolean childNodeListSequence, boolean elementNumAttributes) {
         this.childNodeListLength = childNodeListLength;
@@ -95,8 +93,8 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         return ComparisonResult.SIMILAR;
     }
 
-    public Map<String, String> match(Map<QName, String> expectedAttributes, Map<QName, String> actualAttributes) throws XmlMatchException {
-        Map<String, String> generatedProps = new HashMap<>();
+    public Map<String, Object> match(Map<QName, String> expectedAttributes, Map<QName, String> actualAttributes) throws XmlMatchException {
+        Map<String, Object> generatedProps = new HashMap<>();
         for (Map.Entry<QName, String> expAttr : expectedAttributes.entrySet()) {
             String actualAttrVal = actualAttributes.get(expAttr.getKey());
             if (actualAttrVal == null) {
@@ -111,28 +109,15 @@ public class CustomXmlComparator implements DifferenceEvaluator {
         return generatedProps;
     }
 
-    public Map<String, String> match(String expected, String actual) throws XmlMatchException {
-        ScenarioPropertiesGenerator generator = new ScenarioPropertiesGenerator(expected, actual);
-        boolean hasPropertiesToGenerate = !generator.getProperties().isEmpty();
-        String parsedExpected = hasPropertiesToGenerate ? generator.getParsedTarget() : expected;
-        String parsedExpectedQuoted = hasPropertiesToGenerate ? generator.getParsedTarget(true) : expected;
+    public Map<String, Object> match(String expected, String actual) throws XmlMatchException {
         try {
-            Pattern pattern = Pattern.compile(parsedExpectedQuoted);
-            if (pattern.matcher(actual).matches()) {
-                return generator.getProperties();
-            } else {
-                throw new XmlMatchException();
-            }
-        } catch (PatternSyntaxException e) {
-            if (parsedExpected.equals(actual)) {
-                return generator.getProperties();
-            } else {
-                throw new XmlMatchException();
-            }
+            return new StringRegexCompare(expected, actual).compare();
+        } catch (AssertionError e) {
+            throw new XmlMatchException();
         }
     }
 
-    public Map<String, String> getGeneratedProperties() {
+    public Map<String, Object> getGeneratedProperties() {
         return generatedProperties;
     }
 

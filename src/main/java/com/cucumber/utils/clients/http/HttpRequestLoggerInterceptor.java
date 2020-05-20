@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 public class HttpRequestLoggerInterceptor implements HttpRequestInterceptor {
 
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
     @Override
     public void process(HttpRequest request, HttpContext context) {
@@ -40,7 +40,7 @@ public class HttpRequestLoggerInterceptor implements HttpRequestInterceptor {
                 } finally {
                     try {
                         EntityUtils.consume(entity);
-                        if (entityEnclosingRequest != null && content != null) {
+                        if (content != null) {
                             entityEnclosingRequest.setEntity(new StringEntity(content));
                         }
                     } catch (IOException e) {

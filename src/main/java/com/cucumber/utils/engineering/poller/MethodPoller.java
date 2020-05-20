@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class MethodPoller<T> {
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
     private Duration pollDurationSec = Duration.ofSeconds(30);
     private Long pollIntervalMillis = 3000L;
