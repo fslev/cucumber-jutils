@@ -10,16 +10,16 @@ import java.util.Map;
 import static org.junit.Assert.fail;
 
 public class Compare implements Placeholdable {
-    private Logger log = LogManager.getLogger();
-    protected Object expected;
-    protected Object actual;
-    private boolean jsonNonExtensibleObject;
-    private boolean jsonNonExtensibleArray;
-    private boolean jsonArrayStrictOrder;
-    private boolean xmlChildListLength;
-    private boolean xmlChildListSequence;
-    private boolean xmlElementNumAttributes;
-    private String message;
+    private final Logger log = LogManager.getLogger();
+    protected final Object expected;
+    protected final Object actual;
+    private final boolean jsonNonExtensibleObject;
+    private final boolean jsonNonExtensibleArray;
+    private final boolean jsonArrayStrictOrder;
+    private final boolean xmlChildListLength;
+    private final boolean xmlChildListSequence;
+    private final boolean xmlElementNumAttributes;
+    private final String message;
 
     public Compare(Object expected, Object actual) {
         this(null, expected, actual, false, false, false, false, false, false);
@@ -46,7 +46,7 @@ public class Compare implements Placeholdable {
     /**
      * Returns a map of placeholders if the expected object contains special placeholders for assigning placeholders to variables ('~[...]')
      */
-    public Map<String, String> compare() {
+    public Map<String, Object> compare() {
         if (nullsMatch()) {
             return new HashMap<>();
         }

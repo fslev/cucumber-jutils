@@ -71,6 +71,7 @@ Feature: Test placeholder fill
   Scenario: Test dynamic scenario properties
   There are cases where dynamic scenario properties (such as #[uid], #[now]) are generated with same value
   if they reside in the same file, or inside the same argument
+
     Given param a="unique1-#[uid]-and-unique2-#[uid]"
     When COMPARE unique1-~[val1]-and-unique2-~[val2] with "#[a]"
     # Two different values should be generated.

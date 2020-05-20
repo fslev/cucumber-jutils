@@ -15,7 +15,7 @@ public class StringRegexCompareTests {
         String expected = "result";
         String actual = "result";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -24,7 +24,7 @@ public class StringRegexCompareTests {
         int expected = 1;
         int actual = 1;
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -33,7 +33,7 @@ public class StringRegexCompareTests {
         String expected = "~[sym1]";
         int actual = 10;
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("10", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -51,7 +51,7 @@ public class StringRegexCompareTests {
         Integer expected = 1;
         int actual = 1;
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -60,7 +60,7 @@ public class StringRegexCompareTests {
         boolean expected = true;
         Boolean actual = true;
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -85,7 +85,7 @@ public class StringRegexCompareTests {
         String expected = "va(lue";
         String actual = "va(lue";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -94,7 +94,7 @@ public class StringRegexCompareTests {
         String expected = "va.*ue";
         String actual = "va(lue";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -111,7 +111,7 @@ public class StringRegexCompareTests {
         String expected = "The ~[sym1] is running through the ~[sym2]";
         String actual = "The rabbit is running through the forest";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("rabbit", symbols.get("sym1"));
         assertEquals("forest", symbols.get("sym2"));
         assertEquals(2, symbols.size());
@@ -122,7 +122,7 @@ public class StringRegexCompareTests {
         String expected = ".* Rabbit ~[sym1] in the .*";
         String actual = "The Rabbit is running in the forest";
         StringRegexCompare matcher = new StringRegexCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("is running", symbols.get("sym1"));
         assertEquals(1, symbols.size());
     }
@@ -146,4 +146,35 @@ public class StringRegexCompareTests {
             throw e;
         }
     }
+
+    @Test
+    public void compareStringWithAssignSymbolsAgainstStringWithRegexCharacters() {
+        String expected = "This is regex ~[regex]";
+        String actual = "This is regex a|b|c|d";
+        StringRegexCompare matcher = new StringRegexCompare(expected, actual);
+        Map<String, Object> symbols = matcher.compare();
+        assertEquals("a|b|c|d", symbols.get("regex"));
+        assertEquals(1, symbols.size());
+    }
+
+    @Test
+    public void compareStringWithAssignSymbolsAndRegexAgainstStringWithRegexCharacters() {
+        String expected = ".* is regex ~[regex]";
+        String actual = "This is regex a|b|c|d";
+        StringRegexCompare matcher = new StringRegexCompare(expected, actual);
+        Map<String, Object> symbols = matcher.compare();
+        assertEquals("a|b|c|d", symbols.get("regex"));
+        assertEquals(1, symbols.size());
+    }
+
+    @Test
+    public void compareStringWithAssignSymbolsAndInvalidRegexAgainstStringWithRegexCharacters() {
+        String expected = "[ is regex ~[regex]";
+        String actual = "[ is regex a|b|c|d";
+        StringRegexCompare matcher = new StringRegexCompare(expected, actual);
+        Map<String, Object> symbols = matcher.compare();
+        assertEquals("a|b|c|d", symbols.get("regex"));
+        assertEquals(1, symbols.size());
+    }
+
 }

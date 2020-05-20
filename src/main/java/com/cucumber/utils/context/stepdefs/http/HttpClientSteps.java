@@ -20,7 +20,7 @@ public class HttpClientSteps {
 
     @Inject
     private Cucumbers cucumbers;
-    private HttpClient.Builder builder = new HttpClient.Builder();
+    private final HttpClient.Builder builder = new HttpClient.Builder();
     private HttpResponse response;
 
     @Given("HTTP REST service at address \"{}\"")

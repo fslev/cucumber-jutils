@@ -12,14 +12,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 final class GenericCompare {
-    private ScenarioProps scenarioProps;
+    private final ScenarioProps scenarioProps;
 
     GenericCompare(ScenarioProps scenarioProps) {
         this.scenarioProps = scenarioProps;
     }
 
     void compare(String message, Object expected, Object actual) {
-        Map<String, String> placeholdersAndValues = new Compare(message, expected, actual,
+        Map<String, Object> placeholdersAndValues = new Compare(message, expected, actual,
                 false, false, false, false, false, false).compare();
         placeholdersAndValues.forEach(scenarioProps::put);
     }
@@ -27,7 +27,7 @@ final class GenericCompare {
     void compare(String message, Object expected, Object actual,
                  boolean jsonNonExtensibleObject, boolean jsonNonExtensibleArray, boolean jsonArrayStrictOrder,
                  boolean xmlChildListLength, boolean xmlChildListSequence, boolean xmlElementNumAttributes) {
-        Map<String, String> placeholdersAndValues = new Compare(message, expected, actual,
+        Map<String, Object> placeholdersAndValues = new Compare(message, expected, actual,
                 jsonNonExtensibleObject, jsonNonExtensibleArray, jsonArrayStrictOrder,
                 xmlChildListLength, xmlChildListSequence, xmlElementNumAttributes).compare();
         placeholdersAndValues.forEach(scenarioProps::put);

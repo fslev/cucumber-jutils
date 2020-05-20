@@ -25,7 +25,7 @@ public class XmlCompareTests {
         String actual = "<struct><boolean a=\"boolAttrValue\">false</boolean>"
                 + "<int a=\"(attrValue1\">some text here</int><str a=\"some result\"><a>sub text</a></str></struct>";
         XmlCompare matcher = new XmlCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("(attrValue1", symbols.get("sym1"));
         assertEquals("olAttrVal", symbols.get("sym2"));
         assertEquals("text", symbols.get("sym3"));
@@ -47,7 +47,7 @@ public class XmlCompareTests {
         String expected = "<struct></struct>";
         String actual = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><struct></struct>";
         XmlCompare matcher = new XmlCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -57,7 +57,7 @@ public class XmlCompareTests {
         String actual =
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?><struct><boolean>false</boolean><int>test</int></struct>";
         XmlCompare matcher = new XmlCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertTrue(symbols.isEmpty());
     }
 
@@ -87,7 +87,7 @@ public class XmlCompareTests {
                 + "            <last-name>string</last-name>\n" + "        </author>\n"
                 + "    </book>\n" + "</bookstore>";
         XmlCompare matcher = new XmlCompare(expected, actual);
-        Map<String, String> symbols = matcher.compare();
+        Map<String, Object> symbols = matcher.compare();
         assertEquals("2016-02-27", symbols.get("pubDate"));
         assertEquals("string", symbols.get("lastName"));
         assertEquals("6738.774", symbols.get("price"));
