@@ -41,7 +41,7 @@ public class StringRegexCompare implements Placeholdable {
                 Pattern pattern = Pattern.compile(expectedWithQuotedSubstitutes, Pattern.DOTALL | Pattern.MULTILINE);
                 if (!pattern.matcher(actual).matches()) {
                     checkStringContainsUnintentionalRegexChars(expectedWithQuotedSubstitutes);
-                    fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}\n\nHint: Quote any regex patterns present inside Expected",
+                    fail(ParameterizedMessage.format("{}\nEXPECTED:\n{}\nBUT GOT:\n{}\n\nHint: Quote any regex patterns present inside Expected\n",
                             new Object[]{message != null ? message : "", expectedWithQuotedSubstitutes, actual}));
                 }
                 return generatedProperties;
