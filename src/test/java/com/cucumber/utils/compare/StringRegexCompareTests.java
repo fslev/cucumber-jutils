@@ -5,8 +5,7 @@ import org.junit.Test;
 
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class StringRegexCompareTests {
 
@@ -165,6 +164,49 @@ public class StringRegexCompareTests {
         Map<String, Object> symbols = matcher.compare();
         assertEquals("a|b|c|d", symbols.get("regex"));
         assertEquals(1, symbols.size());
+    }
+
+    @Test
+    public void compareStringWithAssignSymbolsAndSeparateRegexAgainstStringWithRegexCharacters() {
+        String expected = ".* is regex ~[regex] \\Q[0-9]*\\E";
+        String actual = "This is regex a|b|c|d [0-9]*";
+        StringRegexCompare matcher = new StringRegexCompare(expected, actual);
+        Map<String, Object> symbols = matcher.compare();
+        assertEquals("a|b|c|d", symbols.get("regex"));
+        assertEquals(1, symbols.size());
+    }
+
+    @Test
+    public void compareStringWithAssignSymbolsAndSeparateRegexAgainstStringWithRegexCharacters_negaive() {
+        String expected = ".* is regex ~[regex] [0-9]*";
+        String actual = "This is regex a|b|c|d [0-9]*";
+        try {
+            new StringRegexCompare(expected, actual).compare();
+        } catch (AssertionError e) {
+            assertEquals("\nEXPECTED:\n" +
+                    ".* is regex \\Qa|b|c|d\\E [0-9]*\n" +
+                    "BUT GOT:\n" +
+                    "This is regex a|b|c|d [0-9]*\n\nHint: Quote any regex patterns present inside Expected", e.getMessage());
+            return;
+        }
+        fail("Values should not match ! But they do...");
+    }
+
+    @Test
+    public void compareStringWithAssignSymbolsAndRegexAgainstStringWithRegexCharacters_negative() {
+        String expected = ".* is regex ~[regex]lorem";
+        String actual = "This is regex a|b|c|d";
+        try {
+            new StringRegexCompare(expected, actual).compare();
+        } catch (AssertionError e) {
+            assertEquals("\n" +
+                    "EXPECTED:\n" +
+                    ".* is regex ~[regex]lorem\n" +
+                    "BUT GOT:\n" +
+                    "This is regex a|b|c|d", e.getMessage());
+            return;
+        }
+        fail("Values should not match ! But they do...");
     }
 
     @Test
