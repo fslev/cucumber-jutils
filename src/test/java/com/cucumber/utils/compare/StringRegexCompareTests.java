@@ -186,7 +186,7 @@ public class StringRegexCompareTests {
             assertEquals("\nEXPECTED:\n" +
                     ".* is regex \\Qa|b|c|d\\E [0-9]*\n" +
                     "BUT GOT:\n" +
-                    "This is regex a|b|c|d [0-9]*\n\nHint: Quote any regex patterns present inside Expected\n", e.getMessage());
+                    "This is regex a|b|c|d [0-9]*\n", e.getMessage());
             return;
         }
         fail("Values should not match ! But they do...");
@@ -203,7 +203,7 @@ public class StringRegexCompareTests {
                     "EXPECTED:\n" +
                     ".* is regex ~[regex]lorem\n" +
                     "BUT GOT:\n" +
-                    "This is regex a|b|c|d", e.getMessage());
+                    "This is regex a|b|c|d\n", e.getMessage());
             return;
         }
         fail("Values should not match ! But they do...");
