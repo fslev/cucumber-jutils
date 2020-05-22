@@ -37,6 +37,17 @@ public class StringRegexCompareTests {
         assertEquals(1, symbols.size());
     }
 
+    @Test
+    public void compareStringWithManyAssignSymbolsBetweenNewLines() {
+        String expected = "~[prop1],\n This is a ~[prop2]\n ~[prop3]!";
+        String actual = "Hello,\n This is a world of many nations \n And 7 continents...!";
+        StringRegexCompare matcher = new StringRegexCompare(expected, actual);
+        Map<String, Object> symbols = matcher.compare();
+        assertEquals("Hello", symbols.get("prop1"));
+        assertEquals("world of many nations ", symbols.get("prop2"));
+        assertEquals("And 7 continents...", symbols.get("prop3"));
+    }
+
     @Test(expected = AssertionError.class)
     public void compareSimpleInt_negative() {
         int expected = 1;
