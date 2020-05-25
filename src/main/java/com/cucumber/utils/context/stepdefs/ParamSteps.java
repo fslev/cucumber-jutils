@@ -27,7 +27,7 @@ public class ParamSteps {
     @Given("param {}=\"{}\"")
     public void setParamString(String name, String value) {
         scenarioProps.put(name, value);
-        log.debug("Param {} = {}", name, value);
+        log.info("Param {} = {}", name, value);
     }
 
     @Given("param {}=")
@@ -54,17 +54,5 @@ public class ParamSteps {
     public void setCustomDataTable(String name, List<Map<String, String>> value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
-    }
-
-    @Given("param {}={}")
-    public void setSpelParam(String name, String value) {
-        try {
-            ExpressionParser expressionParser = new SpelExpressionParser();
-            Expression exp = expressionParser.parseExpression(value);
-            scenarioProps.put(name, exp.getValue());
-        } catch (ParseException e) {
-            e.printStackTrace();
-
-        }
     }
 }

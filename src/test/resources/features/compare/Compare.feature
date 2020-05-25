@@ -118,10 +118,10 @@ Feature: Test comparator
   Scenario: Compare data tables
     Given param a="replaced_value"
     And table expectedTable=
-      | firstName | lastName |
-      | #[a]      | travolta |
-      | sam       | .*       |
-      | bruce     | ~[name]  |
+      | firstName      | lastName |
+      | replaced_value | travolta |
+      | sam            | carter   |
+      | bruce          | willis   |
 
     Then COMPARE #[expectedTable] with table
       | firstName      | lastName |
@@ -244,3 +244,11 @@ Feature: Test comparator
     # This should log regex related warning messages
     And Negative COMPARE [0-9] with "[0-9]"
     And COMPARE \Q[0-9]\E with "[0-9]"
+
+
+  Scenario: Compare empty spel
+    And param c="#{T(java.lang.String).format('%d-%d', 1, 3)}"
+    And COMPARE 1-3 with "#[c]"
+    Given param a="#{T(Math).random()}"
+    Then Negative COMPARE #[a] with "dfsfa"
+

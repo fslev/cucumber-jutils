@@ -5,7 +5,7 @@ Feature: Test placeholder fill
     And param a="#[a]"
     Then COMPARE #[a] with "test"
 
-  Scenario Outline: Test scneario property from example table
+  Scenario Outline: Test scenario property from example table
     * COMPARE <expected> with "<withProperties>"
     Examples:
       | withProperties  | expected        |
