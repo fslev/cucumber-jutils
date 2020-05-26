@@ -260,7 +260,7 @@ Feature: Test comparator
     And param spel="This is expression: #{T(java.lang.String).format('%d-%d', 1, 3)} and this is another expression: #{'#[car]'.toLowerCase()} car"
     And COMPARE This is expression: 1-3 and this is another expression: alfa romeo disco volante car with "#[spel]"
 
-  # In order for this scenario to work we need to change setParam method from ParamSteps to accept Object instead of String
+  # In order for this scenario to work we need to change setParamString method from ParamSteps to accept Object instead of String. Thus method name should also change to 'setScenarioProperty'...
   # This is a thing which should have changed a long time ago, since scenario props accept Objects
   Scenario: Process standalone SpEL
     Given param myJson="#{new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("a",1).put("b",2)}"
