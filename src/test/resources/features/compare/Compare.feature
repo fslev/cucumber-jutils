@@ -245,14 +245,34 @@ Feature: Test comparator
     And Negative COMPARE [0-9] with "[0-9]"
     And COMPARE \Q[0-9]\E with "[0-9]"
 
-
-  Scenario: Compare empty spel
+  #toDo: Move bellow scenarios to a separate feature file SpEL.feature, directly under features dir
+  #toDo: test spel defined inside external files which are loaded inside scenario props
+  
+  Scenario: Check simple SpEL parsing
     And param c="#{T(java.lang.String).format('%d-%d', 1, 3)}"
     And COMPARE 1-3 with "#[c]"
-    Given param a="#{T(Math).random()}"
-    Then Negative COMPARE #[a] with "dfsfa"
+    Given param a="This is a random number: #{T(Math).random()}"
+    Then COMPARE This is a random number: 0.[0-9]* with "#[a]"
 
-  Scenario: Process and compare multiple String embedded SpEL
+  Scenario: Process and compare multiple String embedded SpELs
     * param car="Alfa Romeo Disco Volante"
     And param spel="This is expression: #{T(java.lang.String).format('%d-%d', 1, 3)} and this is another expression: #{'#[car]'.toLowerCase()} car"
     And COMPARE This is expression: 1-3 and this is another expression: alfa romeo disco volante car with "#[spel]"
+
+  # In order for this scenario to work we need to change setParam method from ParamSteps to accept Object instead of String
+  # This is a thing which should have changed a long time ago, since scenario props accept Objects
+  Scenario: Process standalone SpEL
+    Given param myJson="#{new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("a",1).put("b",2)}"
+    Given param a=
+    """
+    #{new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("a",1).put("b",2)}
+    """
+
+    Then COMPARE #[myJson] with "{"b":2, "a":1}"
+
+  Scenario: Process standalone SpEL inside docString
+    Given param a=
+    """
+    #{new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("a",1).put("b",2)}
+    """
+    Then COMPARE #[myJson] with "{"b":2, "a":1}"
