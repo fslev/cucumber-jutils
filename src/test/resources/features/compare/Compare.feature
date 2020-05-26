@@ -247,6 +247,7 @@ Feature: Test comparator
 
   #toDo: Move bellow scenarios to a separate feature file SpEL.feature, directly under features dir
   #toDo: test spel defined inside external files which are loaded inside scenario props
+  #toDo: Add negative test scenarios
 
   Scenario: Check simple SpEL parsing
     And param c="#{T(java.lang.String).format('%d-%d', 1, 3)}"
