@@ -252,3 +252,7 @@ Feature: Test comparator
     Given param a="#{T(Math).random()}"
     Then Negative COMPARE #[a] with "dfsfa"
 
+  Scenario: Process and compare multiple String embedded SpEL
+    * param car="Alfa Romeo Disco Volante"
+    And param spel="This is expression: #{T(java.lang.String).format('%d-%d', 1, 3)} and this is another expression: #{'#[car]'.toLowerCase()} car"
+    And COMPARE This is expression: 1-3 and this is another expression: alfa romeo disco volante car with "#[spel]"
