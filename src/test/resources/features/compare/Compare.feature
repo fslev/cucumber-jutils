@@ -247,7 +247,7 @@ Feature: Test comparator
 
   #toDo: Move bellow scenarios to a separate feature file SpEL.feature, directly under features dir
   #toDo: test spel defined inside external files which are loaded inside scenario props
-  
+
   Scenario: Check simple SpEL parsing
     And param c="#{T(java.lang.String).format('%d-%d', 1, 3)}"
     And COMPARE 1-3 with "#[c]"
@@ -267,8 +267,7 @@ Feature: Test comparator
     """
     #{new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("a",1).put("b",2)}
     """
-
-    Then COMPARE #[myJson] with "{"b":2, "a":1}"
+    Then COMPARE {"b":2, "a":1} with "#[myJson]"
 
   Scenario: Process standalone SpEL inside docString
     Given param a=
