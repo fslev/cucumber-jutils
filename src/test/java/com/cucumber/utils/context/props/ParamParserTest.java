@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class ScenarioPropsParserTest {
+public class ParamParserTest {
 
     private ScenarioProps scenarioProps;
 
@@ -24,7 +24,7 @@ public class ScenarioPropsParserTest {
         values.put("animal", "chupacabra");
         values.put("location", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
+        assertEquals("The chupacabra is running through the forest", ParamParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class ScenarioPropsParserTest {
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
+        assertEquals("The #[animal] is running through the #[location]", ParamParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ScenarioPropsParserTest {
         values.put("animal", "chupacabra");
         values.put("location", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
+        assertEquals("The chupacabra is running through the forest", ParamParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ScenarioPropsParserTest {
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
+        assertEquals("The #[animal] is running through the #[location]", ParamParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class ScenarioPropsParserTest {
         values.put("animal", "chupacabra");
         values.put("location", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
+        assertEquals("The chupacabra is running through the forest", ParamParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class ScenarioPropsParserTest {
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"~[val1]\": \"banana\"\n" + "  }\n" + "]";
         scenarioProps.putAll(values);
-        String result = ScenarioPropsParser.parse(actual, scenarioProps).toString();
+        String result = ParamParser.parse(actual, scenarioProps).toString();
         assertEquals(result, expected, result);
     }
 }

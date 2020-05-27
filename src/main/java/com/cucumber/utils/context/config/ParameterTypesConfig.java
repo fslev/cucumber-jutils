@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.config;
 
 import com.cucumber.utils.context.props.ScenarioProps;
-import com.cucumber.utils.context.props.ScenarioPropsParser;
+import com.cucumber.utils.context.props.ParamParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
@@ -34,7 +34,7 @@ public class ParameterTypesConfig {
         if (fromValue == null || fromValue.equals(NULL_STRING)) {
             return null;
         }
-        Object parsedValue = ScenarioPropsParser.parse(fromValue.toString(), scenarioProps);
+        Object parsedValue = ParamParser.parse(fromValue.toString(), scenarioProps);
         if (parsedValue == null) {
             return null;
         }
@@ -48,7 +48,7 @@ public class ParameterTypesConfig {
 
     @DocStringType
     public StringBuilder convertDocString(String docString) {
-        return new StringBuilder(ScenarioPropsParser.parse(docString, scenarioProps).toString());
+        return new StringBuilder(ParamParser.parse(docString, scenarioProps).toString());
     }
 
     @DataTableType(replaceWithEmptyString = EMPTY_STRING)
@@ -56,8 +56,8 @@ public class ParameterTypesConfig {
         Map<String, String> transformedMap = new HashMap<>();
         for (Map.Entry<String, String> e : tableEntry.entrySet()) {
             transformedMap.put(
-                    e.getKey() != null ? ScenarioPropsParser.parse(e.getKey(), scenarioProps).toString() : null,
-                    e.getValue() != null ? ScenarioPropsParser.parse(e.getValue(), scenarioProps).toString() : null);
+                    e.getKey() != null ? ParamParser.parse(e.getKey(), scenarioProps).toString() : null,
+                    e.getValue() != null ? ParamParser.parse(e.getValue(), scenarioProps).toString() : null);
         }
         return transformedMap;
     }

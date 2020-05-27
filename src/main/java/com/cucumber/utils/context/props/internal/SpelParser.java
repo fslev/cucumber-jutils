@@ -1,14 +1,16 @@
 package com.cucumber.utils.context.props.internal;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import java.util.regex.Pattern;
 
-//toDO: Add Unit tests
-public class ScenarioPropsSpelSubstitutor {
+public class SpelParser {
 
+    private static final Logger log = LogManager.getLogger();
     public static final String PREFIX = "#{";
     public static final String SUFFIX = "}";
 
@@ -19,7 +21,7 @@ public class ScenarioPropsSpelSubstitutor {
         if (source == null || source.isEmpty()) {
             return source;
         }
-        return StringParser.replacePlaceholders(source, PREFIX, SUFFIX, captureGroupPattern, e -> parseExpression(e), e -> parseExpression(e) != null);
+        return StringParser.replacePlaceholders(source, PREFIX, SUFFIX, captureGroupPattern, SpelParser::parseExpression, e -> parseExpression(e) != null);
     }
 
     private static Object parseExpression(String expression) {
@@ -28,8 +30,7 @@ public class ScenarioPropsSpelSubstitutor {
             Expression exp = expressionParser.parseExpression(expression);
             return exp.getValue(Object.class);
         } catch (Exception e) {
-//            e.printStackTrace();
-//            log.warn
+            log.warn("Could not parse SpEL expression: {}", e.getMessage());
             return expression;
         }
 

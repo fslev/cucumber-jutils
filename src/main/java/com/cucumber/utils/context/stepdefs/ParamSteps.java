@@ -25,7 +25,7 @@ public class ParamSteps {
     private ScenarioProps scenarioProps;
 
     @Given("param {}=\"{}\"")
-    public void setParamString(String name, String value) {
+    public void setParamString(String name, Object value) {
         scenarioProps.put(name, value);
         log.info("Param {} = {}", name, value);
     }
