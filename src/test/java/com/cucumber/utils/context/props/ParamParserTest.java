@@ -154,4 +154,10 @@ public class ParamParserTest {
         String s = "#{#[a]+#[b]}";
         assertEquals(1001, ParamParser.parse(s, scenarioProps));
     }
+
+    @Test
+    public void testEmpptySpel() {
+        String s = "#{}";
+        assertEquals("#{}", ParamParser.parse(s, scenarioProps));
+    }
 }
