@@ -19,11 +19,18 @@ public class SpelParserTest {
         assertEquals("xn--test-8na.com", SpelParser.parse(s));
     }
 
-
     @Test
     public void invalidSpelExpression() {
         String s = "#{(java.net.IDN).toASCII('testá.com')}";
         assertEquals("(java.net.IDN).toASCII('testá.com')", SpelParser.parse(s));
     }
 
+    @Test
+    public void spELGeneratesNull() {
+        assertNull(SpelParser.parse("#{T(com.cucumber.utils.context.props.internal.SpelParserTest).returnsNull()}"));
+    }
+
+    public static Object returnsNull() {
+        return null;
+    }
 }
