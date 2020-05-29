@@ -2,6 +2,13 @@
 
 ###In progress
 
+###5.38
+Add SpEL support
+
+###5.37
+Log scenario URI when test fails
+
+
 ###5.36
 Add date format support for scenario properties
 
