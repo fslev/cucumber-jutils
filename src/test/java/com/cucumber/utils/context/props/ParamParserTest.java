@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ParamParserTest {
 
@@ -124,5 +125,33 @@ public class ParamParserTest {
         scenarioProps.putAll(values);
         String result = ParamParser.parse(actual, scenarioProps).toString();
         assertEquals(result, expected, result);
+    }
+
+    @Test
+    public void testSimpleSpel() {
+        String s = "#{T(java.net.IDN).toASCII('testá.com')}";
+        assertEquals("xn--test-8na.com", ParamParser.parse(s, scenarioProps));
+        s = "Domain #{T(java.net.IDN).toASCII('testá.com')}-> idn";
+        assertEquals("Domain xn--test-8na.com-> idn", ParamParser.parse(s, scenarioProps));
+    }
+
+    @Test
+    public void testInvalidSpel() {
+        String s = "This is: #{T(java.net.I).toASCII('testá.com')}";
+        assertEquals("This is: #{T(java.net.I).toASCII('testá.com')}", ParamParser.parse(s, scenarioProps));
+    }
+
+    @Test
+    public void testSpelGeneratesObject() {
+        String s = "#{new Long(1000)}";
+        assertTrue(ParamParser.parse(s, scenarioProps) instanceof Long);
+    }
+
+    @Test
+    public void testSpelWithScenarioProps() {
+        scenarioProps.put("a", 1000);
+        scenarioProps.put("b", 1);
+        String s = "#{#[a]+#[b]}";
+        assertEquals(1001, ParamParser.parse(s, scenarioProps));
     }
 }
