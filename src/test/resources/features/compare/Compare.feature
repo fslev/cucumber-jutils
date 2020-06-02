@@ -118,10 +118,10 @@ Feature: Test comparator
   Scenario: Compare data tables
     Given param a="replaced_value"
     And table expectedTable=
-      | firstName      | lastName |
-      | replaced_value | travolta |
-      | sam            | carter   |
-      | bruce          | willis   |
+      | firstName | lastName |
+      | #[a]      | travolta |
+      | sam       | .*       |
+      | bruce     | ~[name]  |
 
     Then COMPARE #[expectedTable] with table
       | firstName      | lastName |

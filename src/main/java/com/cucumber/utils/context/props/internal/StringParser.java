@@ -49,7 +49,7 @@ class StringParser {
             if (val == null && !placeholderHasValue.test(placeholderName)) {
                 continue;
             }
-            str = str.replace(prefix + placeholderName + suffix, val != null ? val.toString() : "null");
+            str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), Matcher.quoteReplacement(val != null ? val.toString() : "null"));
         }
         return str;
     }
