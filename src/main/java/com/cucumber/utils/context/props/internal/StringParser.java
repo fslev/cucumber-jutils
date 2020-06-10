@@ -46,7 +46,7 @@ class StringParser {
         List<String> placeholderNames = captureValues(source, captureGroupPattern);
         for (String placeholderName : placeholderNames) {
             Object val = placeholderValue.apply(placeholderName);
-            if (val == null && !placeholderHasValue.test(placeholderName)) {
+            if (!placeholderHasValue.test(placeholderName)) {
                 continue;
             }
             str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), Matcher.quoteReplacement(val != null ? val.toString() : "null"));
