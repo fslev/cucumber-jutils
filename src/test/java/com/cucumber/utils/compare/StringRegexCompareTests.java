@@ -38,6 +38,19 @@ public class StringRegexCompareTests {
     }
 
     @Test
+    public void compareStringWithManyConsecutiveAssignSymbols() {
+        String expected = "~[prop1]~[prop2]~[prop3]~[prop4]";
+        String actual = "Andorra";
+        StringRegexCompare matcher = new StringRegexCompare(expected, actual);
+        Map<String, Object> symbols = matcher.compare();
+        assertEquals("Andorra", symbols.get("prop1"));
+        assertTrue(symbols.get("prop2").toString().isEmpty());
+        assertTrue(symbols.get("prop3").toString().isEmpty());
+        assertTrue(symbols.get("prop4").toString().isEmpty());
+        assertEquals(4, symbols.size());
+    }
+
+    @Test
     public void compareStringWithManyAssignSymbolsBetweenNewLines() {
         String expected = "~[prop1],\n This is a ~[prop2]\n ~[prop3]!";
         String actual = "Hello,\n This is a world of many nations \n And 7 continents...!";
