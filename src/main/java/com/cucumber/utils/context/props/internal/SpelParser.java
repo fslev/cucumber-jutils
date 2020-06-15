@@ -23,7 +23,7 @@ public class SpelParser {
         }
         return StringParser.replacePlaceholders
                 (source, PREFIX, SUFFIX, captureGroupPattern, SpelParser::parseExpression,
-                        k -> parseExpression(k) != null && parseExpression(k) != k);
+                        k -> isExpressionValid(k) && k != parseExpression(k));
     }
 
     private static Object parseExpression(String expression) {
@@ -35,6 +35,16 @@ public class SpelParser {
             log.warn("Could not parse SpEL expression: {}", e.getMessage());
             return expression;
         }
-
     }
+
+    private static Boolean isExpressionValid(String expression) {
+        try {
+            ExpressionParser expressionParser = new SpelExpressionParser();
+            expressionParser.parseExpression(expression);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }
