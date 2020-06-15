@@ -42,21 +42,27 @@ class StringParser {
         }
 
         String standalonePlaceholderName = captureStandalonePlaceholderName(source, prefix, suffix, captureGroupPattern);
+        System.out.println(standalonePlaceholderName + " System.out.println(\"carmen\");");
         if (standalonePlaceholderName != null) {
             Object val = placeholderValue.apply(standalonePlaceholderName);
-            System.out.println(" !ObjectUtils.isEmpty(val) " + !ObjectUtils.isEmpty(val));
-            System.out.println("predicat" + placeholderHasValue.test(standalonePlaceholderName));
+            System.out.println(val + " vvvvvv");
+            System.out.println("----");
+            System.out.println(ObjectUtils.isEmpty(val) + "empty");
             return !ObjectUtils.isEmpty(val) ? val : placeholderHasValue.test(standalonePlaceholderName) ? null : source;
         }
         String str = source;
         List<String> placeholderNames = captureValues(source, captureGroupPattern);
         for (String placeholderName : placeholderNames) {
             Object val = placeholderValue.apply(placeholderName);
+            System.out.println(placeholderName+"placeholderName");
+            System.out.println("val" + val);
             if (!placeholderHasValue.test(placeholderName)) {
+                System.out.println("--------------------");
                 continue;
             }
             str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), Matcher.quoteReplacement(val != null ? val.toString() : "null"));
         }
+        System.out.println(str + " str");
         return str;
     }
 }

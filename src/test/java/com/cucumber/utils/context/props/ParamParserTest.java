@@ -156,7 +156,7 @@ public class ParamParserTest {
     }
 
     @Test
-    public void testEmptySpel() {
+    public void testEmpptySpel() {
         String s = "#{}";
         assertEquals("#{}", ParamParser.parse(s, scenarioProps));
     }
