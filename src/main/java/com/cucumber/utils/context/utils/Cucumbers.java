@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.utils;
 
 import com.cucumber.utils.context.props.ScenarioProps;
-import com.cucumber.utils.context.props.ParamParser;
+import com.cucumber.utils.context.props.ScenarioPropsParser;
 import com.cucumber.utils.engineering.utils.ResourceUtils;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
@@ -25,7 +25,7 @@ public class Cucumbers {
 
     public String read(String relativeFilePath) {
         try {
-            return ParamParser.parse(ResourceUtils.read(relativeFilePath), scenarioProps).toString();
+            return ScenarioPropsParser.parse(ResourceUtils.read(relativeFilePath), scenarioProps).toString();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

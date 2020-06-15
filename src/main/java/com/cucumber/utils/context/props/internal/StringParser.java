@@ -41,11 +41,10 @@ class StringParser {
 
         String standalonePlaceholderName = captureStandalonePlaceholderName(source, prefix, suffix, captureGroupPattern);
         if (standalonePlaceholderName != null) {
-            Object val = placeholderValue.apply(standalonePlaceholderName);
             if (!placeholderHasValue.test(standalonePlaceholderName)) {
                 return source;
             }
-            return val;
+            return placeholderValue.apply(standalonePlaceholderName);
         }
         String str = source;
         List<String> placeholderNames = captureValues(source, captureGroupPattern);
@@ -54,7 +53,7 @@ class StringParser {
             if (!placeholderHasValue.test(placeholderName)) {
                 continue;
             }
-            str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), Matcher.quoteReplacement(val != null ? val.toString() : "null"));
+            str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), Matcher.quoteReplacement(val != null ? val.toString() : null));
         }
         return str;
     }

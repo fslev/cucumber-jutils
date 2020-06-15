@@ -3,7 +3,6 @@ package com.cucumber.utils.context.props.internal;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.expression.Expression;
-import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 import java.util.regex.Pattern;
@@ -29,8 +28,7 @@ public class SpelParser {
 
     private static Object parseExpression(String expression) {
         try {
-            ExpressionParser expressionParser = new SpelExpressionParser();
-            Expression exp = expressionParser.parseExpression(expression);
+            Expression exp = new SpelExpressionParser().parseExpression(expression);
             return exp.getValue(Object.class);
         } catch (Exception e) {
             log.warn("Could not parse SpEL expression: {}", e.getMessage());
@@ -40,8 +38,7 @@ public class SpelParser {
 
     private static Boolean isExpressionValid(String expression) {
         try {
-            ExpressionParser expressionParser = new SpelExpressionParser();
-            expressionParser.parseExpression(expression);
+            new SpelExpressionParser().parseExpression(expression);
             return true;
         } catch (Exception e) {
             return false;

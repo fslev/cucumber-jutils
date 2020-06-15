@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ParamParserTest {
+public class ScenarioPropsParserTest {
 
     private ScenarioProps scenarioProps;
 
@@ -25,7 +25,7 @@ public class ParamParserTest {
         values.put("animal", "chupacabra");
         values.put("location", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ParamParser.parse(a, scenarioProps));
+        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class ParamParserTest {
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The #[animal] is running through the #[location]", ParamParser.parse(a, scenarioProps));
+        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ParamParserTest {
         values.put("animal", "chupacabra");
         values.put("location", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ParamParser.parse(a, scenarioProps));
+        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ParamParserTest {
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The #[animal] is running through the #[location]", ParamParser.parse(a, scenarioProps));
+        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class ParamParserTest {
         values.put("animal", "chupacabra");
         values.put("location", "forest");
         scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ParamParser.parse(a, scenarioProps));
+        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
     }
 
     @Test
@@ -123,28 +123,28 @@ public class ParamParserTest {
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"~[val1]\": \"banana\"\n" + "  }\n" + "]";
         scenarioProps.putAll(values);
-        String result = ParamParser.parse(actual, scenarioProps).toString();
+        String result = ScenarioPropsParser.parse(actual, scenarioProps).toString();
         assertEquals(result, expected, result);
     }
 
     @Test
     public void testSimpleSpel() {
         String s = "#{T(java.net.IDN).toASCII('testá.com')}";
-        assertEquals("xn--test-8na.com", ParamParser.parse(s, scenarioProps));
+        assertEquals("xn--test-8na.com", ScenarioPropsParser.parse(s, scenarioProps));
         s = "Domain #{T(java.net.IDN).toASCII('testá.com')}-> idn";
-        assertEquals("Domain xn--test-8na.com-> idn", ParamParser.parse(s, scenarioProps));
+        assertEquals("Domain xn--test-8na.com-> idn", ScenarioPropsParser.parse(s, scenarioProps));
     }
 
     @Test
     public void testInvalidSpel() {
         String s = "This is: #{T(java.net.I).toASCII('testá.com')}";
-        assertEquals("This is: #{T(java.net.I).toASCII('testá.com')}", ParamParser.parse(s, scenarioProps));
+        assertEquals("This is: #{T(java.net.I).toASCII('testá.com')}", ScenarioPropsParser.parse(s, scenarioProps));
     }
 
     @Test
     public void testSpelGeneratesObject() {
         String s = "#{new Long(1000)}";
-        assertTrue(ParamParser.parse(s, scenarioProps) instanceof Long);
+        assertTrue(ScenarioPropsParser.parse(s, scenarioProps) instanceof Long);
     }
 
     @Test
@@ -152,13 +152,13 @@ public class ParamParserTest {
         scenarioProps.put("a", 1000);
         scenarioProps.put("b", 1);
         String s = "#{#[a]+#[b]}";
-        assertEquals(1001, ParamParser.parse(s, scenarioProps));
+        assertEquals(1001, ScenarioPropsParser.parse(s, scenarioProps));
     }
 
     @Test
     public void testEmptySpel() {
         String s = "#{}";
-        assertEquals("#{}", ParamParser.parse(s, scenarioProps));
+        assertEquals("#{}", ScenarioPropsParser.parse(s, scenarioProps));
     }
 
     @Test
