@@ -21,7 +21,9 @@ public class SpelParser {
         if (source == null || source.isEmpty()) {
             return source;
         }
-        return StringParser.replacePlaceholders(source, PREFIX, SUFFIX, captureGroupPattern, SpelParser::parseExpression, e -> parseExpression(e) != null);
+        return StringParser.replacePlaceholders
+                (source, PREFIX, SUFFIX, captureGroupPattern, SpelParser::parseExpression,
+                        k -> parseExpression(k) != null && parseExpression(k) != k);
     }
 
     private static Object parseExpression(String expression) {

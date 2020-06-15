@@ -1,5 +1,8 @@
 package com.cucumber.utils.context.props.internal;
 
+
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -37,20 +40,29 @@ class StringParser {
         if (source == null || source.isEmpty()) {
             return source;
         }
+
         String standalonePlaceholderName = captureStandalonePlaceholderName(source, prefix, suffix, captureGroupPattern);
+        System.out.println(standalonePlaceholderName + " System.out.println(\"carmen\");");
         if (standalonePlaceholderName != null) {
             Object val = placeholderValue.apply(standalonePlaceholderName);
-            return val != null ? val : placeholderHasValue.test(standalonePlaceholderName) ? null : source;
+            System.out.println(val + " vvvvvv");
+            System.out.println("----");
+            System.out.println(ObjectUtils.isEmpty(val) + "empty");
+            return !ObjectUtils.isEmpty(val) ? val : placeholderHasValue.test(standalonePlaceholderName) ? null : source;
         }
         String str = source;
         List<String> placeholderNames = captureValues(source, captureGroupPattern);
         for (String placeholderName : placeholderNames) {
             Object val = placeholderValue.apply(placeholderName);
+            System.out.println(placeholderName+"placeholderName");
+            System.out.println("val" + val);
             if (!placeholderHasValue.test(placeholderName)) {
+                System.out.println("--------------------");
                 continue;
             }
             str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), Matcher.quoteReplacement(val != null ? val.toString() : "null"));
         }
+        System.out.println(str + " str");
         return str;
     }
 }
