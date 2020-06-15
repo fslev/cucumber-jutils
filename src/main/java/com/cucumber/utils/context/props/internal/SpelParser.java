@@ -17,13 +17,14 @@ public class SpelParser {
     public static final Pattern captureGroupPattern = Pattern.compile(Pattern.quote(PREFIX) + "(.*?)" + Pattern.quote(SUFFIX),
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
+
     public static Object parse(String source) {
         if (source == null || source.isEmpty()) {
             return source;
         }
         return StringParser.replacePlaceholders
                 (source, PREFIX, SUFFIX, captureGroupPattern, SpelParser::parseExpression,
-                        k -> parseExpression(k) != null && parseExpression(k) != k);
+                        k -> isExpressionValid(k) && k != parseExpression(k));
     }
 
     private static Object parseExpression(String expression) {
@@ -35,6 +36,16 @@ public class SpelParser {
             log.warn("Could not parse SpEL expression: {}", e.getMessage());
             return expression;
         }
-
     }
+
+    private static Boolean isExpressionValid(String expression) {
+        try {
+            ExpressionParser expressionParser = new SpelExpressionParser();
+            expressionParser.parseExpression(expression);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

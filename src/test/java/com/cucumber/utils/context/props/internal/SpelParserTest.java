@@ -22,7 +22,7 @@ public class SpelParserTest {
     @Test
     public void invalidSpelExpression() {
         String s = "#{(java.net.IDN).toASCII('testá.com')}";
-        assertEquals("(java.net.IDN).toASCII('testá.com')", SpelParser.parse(s));
+        assertEquals("#{(java.net.IDN).toASCII('testá.com')}", SpelParser.parse(s));
     }
 
     @Test
