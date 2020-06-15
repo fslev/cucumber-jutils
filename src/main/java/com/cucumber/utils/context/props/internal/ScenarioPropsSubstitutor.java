@@ -13,10 +13,6 @@ public class ScenarioPropsSubstitutor {
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
     public static Object replace(String source, ScenarioProps scenarioProps) {
-        System.out.println("replace");
-        return StringParser.replacePlaceholders(source, PREFIX, SUFFIX, captureGroupPattern, scenarioProps::get, k -> {
-            Object val = scenarioProps.get(k);
-            return (val != null || scenarioProps.containsKey(k));
-        });
+        return StringParser.replacePlaceholders(source, PREFIX, SUFFIX, captureGroupPattern, scenarioProps::get, scenarioProps::containsKey);
     }
 }
