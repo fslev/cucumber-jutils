@@ -107,4 +107,11 @@ public class ScenarioPropsSubstitutorTest {
         s = "Millis from from 1970: #[now]";
         assertTrue(ScenarioPropsSubstitutor.replace(s, scenarioProps).toString().matches("Millis from from 1970: [0-9]*"));
     }
+
+    @Test
+    public void testSubstitutionWithEmptyScenarioProps() {
+        String s = "#[p]";
+        scenarioProps.put("p", "");
+        assertEquals("", ScenarioPropsSubstitutor.replace(s, scenarioProps));
+    }
 }
