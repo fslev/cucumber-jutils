@@ -42,7 +42,9 @@ public class ScenarioPropsGenerator {
         }
         List<String> capturedValues = StringParser.captureValues(target.toString(), patternWithPlaceholdersAsCaptureGroups(source, placeholderNames));
         for (int i = 0; i < capturedValues.size(); i++) {
-            properties.put(placeholderNames.get(i), capturedValues.get(i));
+            if (i < placeholderNames.size()) {
+                properties.put(placeholderNames.get(i), capturedValues.get(i));
+            }
         }
         return this;
     }

@@ -49,11 +49,12 @@ class StringParser {
         String str = source;
         List<String> placeholderNames = captureValues(source, captureGroupPattern);
         for (String placeholderName : placeholderNames) {
-            Object val = placeholderValue.apply(placeholderName);
             if (!placeholderHasValue.test(placeholderName)) {
                 continue;
             }
-            str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), Matcher.quoteReplacement(val != null ? val.toString() : null));
+            Object val = placeholderValue.apply(placeholderName);
+            str = str.replaceFirst(Pattern.quote(prefix + placeholderName + suffix), val != null ? Matcher.quoteReplacement(val.toString()) : "null");
+
         }
         return str;
     }

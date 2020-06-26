@@ -23,7 +23,7 @@ public class SpelParser {
         }
         return StringParser.replacePlaceholders
                 (source, PREFIX, SUFFIX, captureGroupPattern, SpelParser::parseExpression,
-                        k -> isExpressionValid(k) && k != parseExpression(k));
+                        SpelParser::isExpressionValid);
     }
 
     private static Object parseExpression(String expression) {
@@ -38,7 +38,7 @@ public class SpelParser {
 
     private static Boolean isExpressionValid(String expression) {
         try {
-            new SpelExpressionParser().parseExpression(expression);
+            new SpelExpressionParser().parseExpression(expression).getValue(Object.class);
             return true;
         } catch (Exception e) {
             return false;
