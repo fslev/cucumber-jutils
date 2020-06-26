@@ -9,9 +9,9 @@ import java.util.Arrays;
 
 public class ShellClient {
 
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
 
-    private ProcessBuilder processBuilder;
+    private final ProcessBuilder processBuilder;
 
     public ShellClient() {
         this.processBuilder = new ProcessBuilder();

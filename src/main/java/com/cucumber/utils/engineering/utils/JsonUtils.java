@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 public class JsonUtils {
 
-    private static Logger log = LogManager.getLogger();
+    private static final Logger log = LogManager.getLogger();
 
     public static JsonNode toJson(String content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

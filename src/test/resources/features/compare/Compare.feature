@@ -190,6 +190,7 @@ Feature: Test comparator
       "orderType": "#[orderType]"
     }
     """
+    # a nice un-intended feature: #[body] is defined on multiple lines
     And param expected from file path "placeholders/expected1.json"
     Then COMPARE #[expected] with
     """

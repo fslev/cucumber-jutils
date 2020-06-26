@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class XmlUtilsTest {
 
-    private Function<String, List<String>> extractSpecialRegexCharsFct = s -> {
+    private final Function<String, List<String>> extractSpecialRegexCharsFct = s -> {
         List<String> regexChars = RegexUtils.getRegexCharsFromString(s);
         return regexChars.isEmpty() ? null : regexChars;
     };

@@ -2,6 +2,14 @@
 
 ###In progress
 
+###5.38
+Add SpEL support  
+Enhance String parser for dynamic scenario properties  
+
+###5.37
+Log scenario URI when test fails
+
+
 ###5.36
 Add date format support for scenario properties
 

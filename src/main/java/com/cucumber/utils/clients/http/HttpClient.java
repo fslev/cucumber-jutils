@@ -32,20 +32,20 @@ import java.util.List;
 import java.util.Map;
 
 public class HttpClient {
-    private Integer timeout;
-    private HttpHost proxyHost;
-    private String uri;
-    private Map<String, String> headers;
-    private String requestEntity;
-    private Method method;
-    private SSLContext sslContext;
-    private HostnameVerifier hostnameVerifier;
-    private HttpRequestRetryHandler requestRetryHandler;
-    private ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
-    private HttpClientBuilder clientBuilder;
-    private CookieStore cookieStore;
-    private CloseableHttpClient client;
-    private HttpRequestBase request;
+    private final Integer timeout;
+    private final HttpHost proxyHost;
+    private final String uri;
+    private final Map<String, String> headers;
+    private final String requestEntity;
+    private final Method method;
+    private final SSLContext sslContext;
+    private final HostnameVerifier hostnameVerifier;
+    private final HttpRequestRetryHandler requestRetryHandler;
+    private final ServiceUnavailableRetryStrategy serviceUnavailableRetryStrategy;
+    private final HttpClientBuilder clientBuilder;
+    private final CookieStore cookieStore;
+    private final CloseableHttpClient client;
+    private final HttpRequestBase request;
 
     protected HttpClient(Builder builder) {
 
@@ -252,8 +252,8 @@ public class HttpClient {
         private Integer timeout;
         private HttpHost proxyHost;
         private String address;
-        private URIBuilder uriBuilder = new URIBuilder();
-        private Map<String, String> headers = new HashMap<>();
+        private final URIBuilder uriBuilder = new URIBuilder();
+        private final Map<String, String> headers = new HashMap<>();
         private String requestEntity;
         private Method method;
         private SSLContext sslContext;

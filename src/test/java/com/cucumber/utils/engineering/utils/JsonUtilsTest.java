@@ -1,9 +1,7 @@
 package com.cucumber.utils.engineering.utils;
 
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class JsonUtilsTest {
 
-    private Function<String, List<String>> extractSpecialRegexCharsFct = s -> {
+    private final Function<String, List<String>> extractSpecialRegexCharsFct = s -> {
         List<String> regexChars = RegexUtils.getRegexCharsFromString(s);
         return regexChars.isEmpty() ? null : regexChars;
     };
@@ -26,7 +24,7 @@ public class JsonUtilsTest {
     }
 
     @Test
-    public void testSimpleJsonSpecialRegexCharacters() throws ParserConfigurationException, SAXException, IOException {
+    public void testSimpleJsonSpecialRegexCharacters() throws IOException {
         String json = ResourceUtils.read("json/regex_chars/json1.json");
         Map<String, List<String>> results = JsonUtils.walkJsonAndProcessNodes(json, extractSpecialRegexCharsFct);
         assertEquals(Arrays.asList("."), results.get("foo.bar/{key}"));
@@ -42,7 +40,7 @@ public class JsonUtilsTest {
     }
 
     @Test
-    public void testSimpleJsonSpecialRegexCharactersFromArray() throws ParserConfigurationException, SAXException, IOException {
+    public void testSimpleJsonSpecialRegexCharactersFromArray() throws IOException {
         String json = "[\"te?st\", {\"^a..\":\"?\"}, false]";
         Map<String, List<String>> results = JsonUtils.walkJsonAndProcessNodes(json, extractSpecialRegexCharsFct);
         assertEquals(Arrays.asList("?"), results.get("[1]/{value}"));

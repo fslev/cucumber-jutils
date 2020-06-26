@@ -14,14 +14,14 @@ import java.util.Map;
 @ScenarioScoped
 public class ParamSteps {
 
-    private Logger log = LogManager.getLogger();
+    private final Logger log = LogManager.getLogger();
     @Inject
     private Cucumbers cucumbers;
     @Inject
     private ScenarioProps scenarioProps;
 
     @Given("param {}=\"{}\"")
-    public void setParamString(String name, String value) {
+    public void setParamString(String name, Object value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
     }

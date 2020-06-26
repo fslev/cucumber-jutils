@@ -1,0 +1,5 @@
+{
+  "a": "#{T(Math).random()}",
+  "b": false,
+  "c": "#{'ABCde'.toLowerCase()}"
+}

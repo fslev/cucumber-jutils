@@ -11,12 +11,12 @@ import java.util.Properties;
 public class JschClient {
 
     private static final int TIMEOUT_SECONDS = 60000;
-    private Logger log = LogManager.getLogger();
-    private String host;
-    private int port;
-    private String user;
-    private String privateKey;
-    private Session session;
+    private final Logger log = LogManager.getLogger();
+    private final String host;
+    private final int port;
+    private final String user;
+    private final String privateKey;
+    private final Session session;
 
     public JschClient(String host, int port, String user, String pwd, String privateKey, Properties config) {
         this.host = host;

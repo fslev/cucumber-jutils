@@ -44,19 +44,19 @@ public class ResourceReadTests {
     public void testInDepthReadFromDirectory() throws IOException, URISyntaxException {
         Map<String, String> actualData = ResourceUtils.readDirectory("foobar/dir");
         assertEquals(7, actualData.size());
-        assertTrue(actualData.get("foobar/dir/foobar1.json").equals("1"));
-        assertTrue(actualData.get("foobar/dir/foo/foo1.json").equals("2"));
-        assertTrue(actualData.get("foobar/dir/foo/foo2.json").equals("3"));
-        assertTrue(actualData.get("foobar/dir/foo/bar/bar1.json").equals("4"));
-        assertTrue(actualData.get("foobar/dir/foo/bar/bar2.json").equals("5"));
-        assertTrue(actualData.get("foobar/dir/foo/bar/bar").equals("test"));
+        assertEquals("1", actualData.get("foobar/dir/foobar1.json"));
+        assertEquals("2", actualData.get("foobar/dir/foo/foo1.json"));
+        assertEquals("3", actualData.get("foobar/dir/foo/foo2.json"));
+        assertEquals("4", actualData.get("foobar/dir/foo/bar/bar1.json"));
+        assertEquals("5", actualData.get("foobar/dir/foo/bar/bar2.json"));
+        assertEquals("test", actualData.get("foobar/dir/foo/bar/bar"));
     }
 
     @Test
     public void testInDepthReadFromDirectoryFilesWithoutExtension() throws IOException, URISyntaxException {
         Map<String, String> actualData = ResourceUtils.readDirectory("foobar/dir1", ".properties");
         assertEquals(1, actualData.size());
-        assertTrue(actualData.get("foobar/dir1/test2.properties").equals("pass"));
+        assertEquals("pass", actualData.get("foobar/dir1/test2.properties"));
     }
 
     @Test(expected = IOException.class)
@@ -73,10 +73,10 @@ public class ResourceReadTests {
     public void testInDepthReadFromClasspathDir() throws IOException, URISyntaxException {
         Map<String, String> actualData = ResourceUtils.readDirectory("");
         assertTrue(actualData.size() > 0);
-        assertTrue(actualData.get("foobar/dir/foobar1.json").equals("1"));
-        assertTrue(actualData.get("foobar/dir/foo/foo1.json").equals("2"));
-        assertTrue(actualData.get("foobar/dir/foo/foo2.json").equals("3"));
-        assertTrue(actualData.get("foobar/dir/foo/bar/bar1.json").equals("4"));
-        assertTrue(actualData.get("foobar/dir/foo/bar/bar2.json").equals("5"));
+        assertEquals("1", actualData.get("foobar/dir/foobar1.json"));
+        assertEquals("2", actualData.get("foobar/dir/foo/foo1.json"));
+        assertEquals("3", actualData.get("foobar/dir/foo/foo2.json"));
+        assertEquals("4", actualData.get("foobar/dir/foo/bar/bar1.json"));
+        assertEquals("5", actualData.get("foobar/dir/foo/bar/bar2.json"));
     }
 }

@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.utils;
 
-import com.cucumber.utils.engineering.placeholders.ScenarioPropertiesParser;
+import com.cucumber.utils.context.props.internal.ScenarioPropsSubstitutor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringSubstitutor;
 
@@ -9,7 +9,7 @@ import java.util.*;
 public class StringFormat {
 
     public static <V> String replaceProps(Object source, Map<String, V> values) {
-        return StringSubstitutor.replace(source, values, ScenarioPropertiesParser.SYMBOL_START, ScenarioPropertiesParser.SYMBOL_END);
+        return StringSubstitutor.replace(source, values, ScenarioPropsSubstitutor.PREFIX, ScenarioPropsSubstitutor.SUFFIX);
     }
 
     /**
