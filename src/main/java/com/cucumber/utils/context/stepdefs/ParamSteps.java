@@ -47,7 +47,7 @@ public class ParamSteps {
     }
 
     @Given("table {}=")
-    public void setCustomDataTable(String name, List<Map<String, String>> value) {
+    public void setCustomDataTable(String name, List<Map<String, Object>> value) {
         scenarioProps.put(name, value);
         log.debug("Param {} = {}", name, value);
     }
