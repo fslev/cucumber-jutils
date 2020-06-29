@@ -59,11 +59,12 @@ Feature: Test clients
       | 3929581         | 262173  |
 
   Scenario: Test SYBASE client
+    * param expected="1549"
     Given SQL data source from file path "config/database/sybase.properties"
     Then SQL execute query "select TOP 2 domainname, adminc from domain order by domain_id asc" and compare result with
-      | domainname                | adminc |
-      | hypothekenfinanzierung.de | 1549   |
-      | asb-bw.de                 | 1568   |
+      | domainname                | adminc      |
+      | hypothekenfinanzierung.de | #[expected] |
+      | asb-bw.de                 | 1568        |
 
 
 
