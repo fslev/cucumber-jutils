@@ -4,8 +4,8 @@
 
 ###5.39
 Bug fix
-Use Object at datatable conversion type
-SQL query client returns List<Map<String, Object>> instead of List<Map<String, String>> 
+Use Map<String, Object> at datatable conversion type
+SQL query client returns List<Map<String, Object>> instead of List<Map<String, String>>
 
 ###5.38
 Add SpEL support  
