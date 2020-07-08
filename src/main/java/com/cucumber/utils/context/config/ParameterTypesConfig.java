@@ -35,8 +35,8 @@ public class ParameterTypesConfig {
             return null;
         }
         Object parsedValue = ScenarioPropsParser.parse(fromValue.toString(), scenarioProps);
-        if (parsedValue == null) {
-            return null;
+        if (parsedValue == null || toValueType.equals(Object.class)) {
+            return parsedValue;
         }
         try {
             return objectMapper.readValue(parsedValue.toString(), objectMapper.constructType(toValueType));
@@ -52,12 +52,12 @@ public class ParameterTypesConfig {
     }
 
     @DataTableType(replaceWithEmptyString = EMPTY_STRING)
-    public Map<String, String> convertDataTable(Map<String, String> tableEntry) {
-        Map<String, String> transformedMap = new HashMap<>();
+    public Map<String, Object> convertDataTable(Map<String, String> tableEntry) {
+        Map<String, Object> transformedMap = new HashMap<>();
         for (Map.Entry<String, String> e : tableEntry.entrySet()) {
             transformedMap.put(
                     e.getKey() != null ? ScenarioPropsParser.parse(e.getKey(), scenarioProps).toString() : null,
-                    e.getValue() != null ? ScenarioPropsParser.parse(e.getValue(), scenarioProps).toString() : null);
+                    e.getValue() != null ? ScenarioPropsParser.parse(e.getValue(), scenarioProps) : null);
         }
         return transformedMap;
     }

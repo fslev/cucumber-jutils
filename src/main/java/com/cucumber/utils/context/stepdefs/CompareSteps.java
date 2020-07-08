@@ -59,7 +59,7 @@ public class CompareSteps {
     }
 
     @Then("COMPARE {} with table")
-    public void compareWithDataTable(Object expected, List<Map<String, String>> actual) {
+    public void compareWithDataTable(Object expected, List<Map<String, Object>> actual) {
         logger.log("    Compare:\n{}\n    Against:\n{}", expected, actual);
         cucumbers.compare(expected, actual);
     }
