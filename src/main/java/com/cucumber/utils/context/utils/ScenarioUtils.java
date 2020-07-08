@@ -30,7 +30,7 @@ public class ScenarioUtils {
     }
 
     public void log(String msg, Object... args) {
-        scenario.write(ParameterizedMessage.format(msg, args));
+        scenario.log(ParameterizedMessage.format(msg, args));
     }
 
     public Scenario getScenario() {

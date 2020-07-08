@@ -2,6 +2,9 @@
 
 ###In progress
 
+###5.39
+Update dependencies 
+
 ###5.38
 Add SpEL support  
 Enhance String parser for dynamic scenario properties  
