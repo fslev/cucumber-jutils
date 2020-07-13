@@ -1,6 +1,6 @@
 package com.cucumber.utils.features.stepdefs.polling;
 
-import com.cucumber.utils.context.utils.Cucumbers;
+import com.cucumber.utils.context.Cucumbers;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;

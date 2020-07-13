@@ -1,6 +1,7 @@
 package com.cucumber.utils.features.stepdefs.httpresponsewrapper;
 
-import com.cucumber.utils.context.utils.Cucumbers;
+import com.cucumber.utils.context.Cucumbers;
+import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
@@ -25,6 +26,8 @@ public class HttpResponseWrapperSteps {
 
     @Inject
     private Cucumbers cucumbers;
+    @Inject
+    private ScenarioProps scenarioProps;
 
     @Then("Compare Http Response with invalid expected={}")
     public void compareHttpResponseWithInvalidExpected(String expected) {
@@ -34,7 +37,7 @@ public class HttpResponseWrapperSteps {
         try {
             cucumbers.compareHttpResponse(expected, mock);
         } catch (Exception e) {
-            assertTrue(e.getMessage(), e.getMessage().contains("Invalid HTTP Response Json format"));
+            assertTrue(e.getMessage(), e.getMessage().contains("Cannot convert HTTP Response"));
         }
     }
 
@@ -60,7 +63,7 @@ public class HttpResponseWrapperSteps {
         try {
             cucumbers.compareHttpResponse(null, "{\"a\":100}", mock);
         } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("Invalid HTTP Response Json format"));
+            assertTrue(e.getMessage().contains("Cannot convert HTTP Response"));
             return;
         }
         fail("Comparison should have failed. Instead it passed.");
@@ -71,7 +74,8 @@ public class HttpResponseWrapperSteps {
         HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "some reason"),
                         HttpClientContext.adapt(new BasicHttpContext()));
-        mock.setEntity(new StringEntity(content));
+        StringEntity entity = new StringEntity(content);
+        mock.setEntity(entity);
         mock.setHeader(new BasicHeader("Content-Type", "application/xml"));
         cucumbers.compareHttpResponse(null, expected, mock);
     }

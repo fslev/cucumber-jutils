@@ -3,11 +3,9 @@
     <test name="EngineeringJunitTests" junit="true" parallel="methods" thread-count="10" verbose="1">
         <packages>
             <package name="com.cucumber.utils.clients.*"/>
-            <package name="com.cucumber.utils.compare.*"/>
-            <package name="com.cucumber.utils.placeholders.*"/>
             <package name="com.cucumber.utils.poller.*"/>
             <package name="com.cucumber.utils.resource.*"/>
-            <package name="com.cucumber.utils.engineering.utils.*"/>
+            <package name="com.cucumber.utils.engineering.*"/>
             <package name="com.cucumber.utils.context.*"/>
         </packages>
     </test>

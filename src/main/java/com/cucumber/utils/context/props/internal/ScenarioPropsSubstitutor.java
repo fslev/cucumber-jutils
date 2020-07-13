@@ -1,7 +1,9 @@
 package com.cucumber.utils.context.props.internal;
 
 import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.engineering.utils.StringParser;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ScenarioPropsSubstitutor {
@@ -13,7 +15,11 @@ public class ScenarioPropsSubstitutor {
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
     public static Object replace(String source, ScenarioProps scenarioProps) {
-        return StringParser.replacePlaceholders(source, PREFIX, SUFFIX, captureGroupPattern, scenarioProps::get,
+        List<String> placeholderNames = StringParser.captureValues(source, captureGroupPattern);
+        if (placeholderNames.isEmpty()) {
+            return source;
+        }
+        return StringParser.replacePlaceholders(placeholderNames, source, PREFIX, SUFFIX, scenarioProps::get,
                 k -> scenarioProps.get(k) != null || scenarioProps.containsKey(k));
     }
 }
