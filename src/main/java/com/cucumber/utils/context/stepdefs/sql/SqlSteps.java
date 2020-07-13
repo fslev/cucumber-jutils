@@ -44,12 +44,12 @@ public class SqlSteps {
     }
 
     @Then("SQL execute query \"{}\" and compare result with {}")
-    public void executeQueryAndCompareWithJson(String query, List<Map<String, String>> expected) throws SQLException {
+    public void executeQueryAndCompareWithJson(String query, List<Map<String, Object>> expected) throws SQLException {
         executeQueryAndCompare(query, expected);
     }
 
     @Then("SQL execute query \"{}\" and compare result with")
-    public void executeQueryAndCompareWithTable(String query, List<Map<String, String>> expected) throws SQLException {
+    public void executeQueryAndCompareWithTable(String query, List<Map<String, Object>> expected) throws SQLException {
         executeQueryAndCompare(query, expected);
     }
 
@@ -58,7 +58,7 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            List<Map<String, String>> result = client.executeQueryAndGetRsAsList();
+            List<Map<String, Object>> result = client.executeQueryAndGetRsAsList();
             cucumbers.compare(expected, result, true, true, false);
         } finally {
             this.client.close();
@@ -66,7 +66,7 @@ public class SqlSteps {
     }
 
     @Then("SQL execute query \"{}\" and poll for {int}s while comparing result with")
-    public void executeQueryAndPollAndCompare(String query, int pollDuration, List<Map<String, String>> expected) throws SQLException {
+    public void executeQueryAndPollAndCompare(String query, int pollDuration, List<Map<String, Object>> expected) throws SQLException {
         logger.log("Execute query '{}', poll {}s while comparing with: {}", query, pollDuration, expected);
         try {
             this.client.connect();
@@ -90,7 +90,7 @@ public class SqlSteps {
     }
 
     @Then("SQL INSERT into table \"{}\" the following data")
-    public void insertDataInsideTable(String table, List<Map<String, String>> data) throws SQLException {
+    public void insertDataInsideTable(String table, List<Map<String, Object>> data) throws SQLException {
         logger.log("Insert into table '{}', data: {}", table, data);
         try {
             this.client.connect();
@@ -115,7 +115,7 @@ public class SqlSteps {
     }
 
     @Then("SQL UPDATE table \"{}\" WHERE \"{}\" with the following data")
-    public void updateDataFromTable(String table, String cond, List<Map<String, String>> data) throws SQLException {
+    public void updateDataFromTable(String table, String cond, List<Map<String, Object>> data) throws SQLException {
         logger.log("Update table '{}', with condition '{}', the following data: {}", table, cond, data);
         try {
             this.client.connect();

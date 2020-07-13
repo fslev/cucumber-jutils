@@ -62,20 +62,19 @@ public class SqlClient {
         }
     }
 
-    public List<Map<String, String>> executeQueryAndGetRsAsList() {
+    public List<Map<String, Object>> executeQueryAndGetRsAsList() {
         log.debug("---- SQL QUERY REQUEST ----");
         log.debug("SQL query: {}", sql);
-        List<Map<String, String>> tableData = new ArrayList<>();
+        List<Map<String, Object>> tableData = new ArrayList<>();
         ResultSet rs = null;
         try {
             rs = pst.executeQuery();
             ResultSetMetaData md = rs.getMetaData();
             int columns = md.getColumnCount();
             while (rs.next()) {
-                Map<String, String> rowData = new HashMap<>();
+                Map<String, Object> rowData = new HashMap<>();
                 for (int i = 1; i <= columns; i++) {
-                    Object value = rs.getObject(i);
-                    rowData.put(md.getColumnLabel(i), value != null ? value.toString() : null);
+                    rowData.put(md.getColumnLabel(i), rs.getObject(i));
                 }
                 tableData.add(rowData);
             }
