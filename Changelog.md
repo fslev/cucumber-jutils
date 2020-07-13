@@ -2,6 +2,10 @@
 
 ###In progress
 
+###6.0
+Upgrade to Cucumber 6.x.x  
+Upgrade other dependencies   
+
 ###5.39
 Bug fix
 Use Map<String, Object> at datatable conversion type
@@ -13,7 +17,6 @@ Enhance String parser for dynamic scenario properties
 
 ###5.37
 Log scenario URI when test fails
-
 
 ###5.36
 Add date format support for scenario properties
