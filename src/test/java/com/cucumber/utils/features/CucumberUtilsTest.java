@@ -15,11 +15,11 @@ import java.lang.reflect.Method;
 @io.cucumber.junit.CucumberOptions(features = "src/test/resources/features",
         glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:target/junit/cucumber-reports.xml",
         "json:target/cucumber-report/report.json", "timeline:target/cucumber-report/timeline"},
-        tags = ("not @Ignore or not @ignore"))
+        tags = ("not @Ignore and not @ignore"))
 @CucumberOptions(features = "src/test/resources/features",
         glue = {"com.cucumber.utils"}, plugin = {"pretty", "junit:target/junit/cucumber-reports.xml",
         "json:target/cucumber-report/report.json", "timeline:target/cucumber-report/timeline"},
-        tags = ("not @Ignore or not @ignore"))
+        tags = ("not @Ignore and not @ignore"))
 public class CucumberUtilsTest extends AbstractTestNGCucumberTests implements ITest {
 
     private final ThreadLocal<String> testName = new ThreadLocal<>();
