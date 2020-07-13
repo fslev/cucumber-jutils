@@ -2,8 +2,14 @@
 
 ###In progress
 
+###6.0
+Upgrade to Cucumber 6.x.x  
+Upgrade other dependencies   
+
 ###5.39
-Update dependencies 
+Bug fix
+Use Map<String, Object> at datatable conversion type
+SQL query client returns List<Map<String, Object>> instead of List<Map<String, String>>
 
 ###5.38
 Add SpEL support  
@@ -11,7 +17,6 @@ Enhance String parser for dynamic scenario properties
 
 ###5.37
 Log scenario URI when test fails
-
 
 ###5.36
 Add date format support for scenario properties
