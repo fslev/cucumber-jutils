@@ -5,6 +5,12 @@
 ###6.0
 Upgrade to Cucumber 6.x.x  
 Upgrade other dependencies   
+Refactoring  
+- simplified 'Cucumbers.java' compare and compareHttpResponse methods   
+  - use MatchConditions: MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.DO_NOT_MATCH, etc  
+- changed 'Cucumbers.java' class package  
+- added new pre-defined step for comparing objects using Match Conditions  
+- other internal refactorings  
 
 ###5.39
 Bug fix
