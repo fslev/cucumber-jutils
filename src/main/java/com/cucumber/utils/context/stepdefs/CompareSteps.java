@@ -29,7 +29,7 @@ public class CompareSteps {
 
     @Then("COMPARE {} with \"{}\" using matchConditions={}")
     public void compare(Object expected, Object actual, Set<MatchCondition> matchConditions) {
-        logger.log("    Compare:\n{}\n    Against:\n{}\nwith match conditions", expected, actual);
+        logger.log("    Compare:\n{}\n    Against:\n{}\n    with match conditions: {}", expected, actual, matchConditions);
         cucumbers.compare(expected, actual, matchConditions.toArray(new MatchCondition[0]));
     }
 
