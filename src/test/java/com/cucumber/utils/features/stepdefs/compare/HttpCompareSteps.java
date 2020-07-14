@@ -5,7 +5,7 @@ import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.engineering.match.condition.MatchCondition;
-import com.cucumber.utils.engineering.utils.XmlUtils;
+import com.cucumber.utils.helper.XmlUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;

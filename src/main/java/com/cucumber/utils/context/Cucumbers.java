@@ -62,13 +62,14 @@ public class Cucumbers {
         genericCompare.pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);
     }
 
-       public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual, MatchCondition... matchConditions) {
+    public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual, MatchCondition... matchConditions) {
         try {
             genericCompare.compareHttpResponse(message, expected, actual, matchConditions);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                                                     Supplier<T> supplier, MatchCondition... matchConditions) {
         genericCompare.pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);

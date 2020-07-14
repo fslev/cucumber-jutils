@@ -1,6 +1,6 @@
 package com.cucumber.utils.resource;
 
-import com.cucumber.utils.engineering.utils.JsonUtils;
+import com.cucumber.utils.helper.JsonUtils;
 import com.cucumber.utils.helper.ResourceUtils;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;

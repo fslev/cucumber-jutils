@@ -4,8 +4,8 @@ import com.cucumber.utils.engineering.match.comparators.xml.CustomXmlComparator;
 import com.cucumber.utils.engineering.match.comparators.xml.XmlMatchException;
 import com.cucumber.utils.engineering.match.condition.MatchCondition;
 import com.cucumber.utils.engineering.utils.RegexUtils;
-import com.cucumber.utils.engineering.utils.XmlUtils;
 import com.cucumber.utils.exceptions.InvalidTypeException;
+import com.cucumber.utils.helper.XmlUtils;
 import org.w3c.dom.Element;
 import org.xmlunit.diff.DefaultNodeMatcher;
 import org.xmlunit.diff.DifferenceEvaluators;
@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.cucumber.utils.engineering.utils.XmlUtils.isValid;
+import static com.cucumber.utils.helper.XmlUtils.isValid;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.fail;
 import static org.xmlunit.matchers.CompareMatcher.isSimilarTo;

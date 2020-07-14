@@ -1,6 +1,6 @@
 package com.cucumber.utils.engineering.match;
 
-import com.cucumber.utils.engineering.utils.XmlUtils;
+import com.cucumber.utils.helper.XmlUtils;
 import org.junit.Test;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;

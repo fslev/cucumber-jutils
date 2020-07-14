@@ -2,9 +2,9 @@ package com.cucumber.utils.engineering.match;
 
 import com.cucumber.utils.engineering.match.comparators.json.CustomJsonComparator;
 import com.cucumber.utils.engineering.match.condition.MatchCondition;
-import com.cucumber.utils.engineering.utils.JsonUtils;
 import com.cucumber.utils.engineering.utils.RegexUtils;
 import com.cucumber.utils.exceptions.InvalidTypeException;
+import com.cucumber.utils.helper.JsonUtils;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
