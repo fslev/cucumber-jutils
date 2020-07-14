@@ -1,4 +1,6 @@
-# Cucumber Utils
+# Cucumber JUtils
+
+## Cucumber Utils has been renamed to Cucumber JUtils
 
 # Summary
 A Java library meant to help you write organized and clean **Cucumber** tests.  
