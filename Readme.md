@@ -24,7 +24,7 @@ Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tut
   <version>${latest.version}</version>
 </dependency>
 
-Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
+Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ```  
 #### Included dependencies that are worth mentioning:
 
