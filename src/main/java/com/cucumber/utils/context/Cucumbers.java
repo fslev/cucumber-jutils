@@ -57,49 +57,18 @@ public class Cucumbers {
         genericCompare.compare(message, expected, actual, matchConditions);
     }
 
-    public void pollAndCompare(Object expected, int pollDurationInSeconds, Supplier<Object> supplier, MatchCondition... matchConditions) {
-        pollAndCompare(null, expected, pollDurationInSeconds, supplier, matchConditions);
-    }
-
-    public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Supplier<Object> supplier, MatchCondition... matchConditions) {
-        pollAndCompare(message, expected, pollDurationInSeconds, null, null, supplier, matchConditions);
-    }
-
-    public void pollAndCompare(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                               Supplier<Object> supplier, MatchCondition... matchConditions) {
-        pollAndCompare(null, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);
-    }
-
     public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                Supplier<Object> supplier, MatchCondition... matchConditions) {
         genericCompare.pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);
     }
 
-    public <T extends HttpResponse> void compareHttpResponse(Object expected, T actual, MatchCondition... matchConditions) {
-        compareHttpResponse(null, expected, actual, matchConditions);
-    }
-
-    public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual, MatchCondition... matchConditions) {
+       public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual, MatchCondition... matchConditions) {
         try {
             genericCompare.compareHttpResponse(message, expected, actual, matchConditions);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
-    public <T extends HttpResponse> void pollAndCompareHttpResponse(Object expected, Integer pollDurationInSeconds, Supplier<T> supplier, MatchCondition... matchConditions) {
-        pollAndCompareHttpResponse(null, expected, pollDurationInSeconds, supplier, matchConditions);
-    }
-
-    public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Supplier<T> supplier, MatchCondition... matchConditions) {
-        pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, null, null, supplier, matchConditions);
-    }
-
-    public <T extends HttpResponse> void pollAndCompareHttpResponse(Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
-                                                                    Supplier<T> supplier, MatchCondition... matchConditions) {
-        pollAndCompareHttpResponse(null, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);
-    }
-
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                                                     Supplier<T> supplier, MatchCondition... matchConditions) {
         genericCompare.pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);

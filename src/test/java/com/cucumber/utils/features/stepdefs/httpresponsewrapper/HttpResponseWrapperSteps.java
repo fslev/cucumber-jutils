@@ -35,7 +35,7 @@ public class HttpResponseWrapperSteps {
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "some reason"),
                         HttpClientContext.adapt(new BasicHttpContext()));
         try {
-            cucumbers.compareHttpResponse(expected, mock);
+            cucumbers.compareHttpResponse(null, expected, mock);
         } catch (Exception e) {
             assertTrue(e.getMessage(), e.getMessage().contains("Cannot convert HTTP Response"));
         }
