@@ -9,7 +9,7 @@ Refactoring
 - simplified 'Cucumbers.java' compare and compareHttpResponse methods   
   - use MatchConditions: MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.DO_NOT_MATCH, etc 
   - remove overloaded methods   
-- changed 'Cucumbers.java' class to package 'com.cucumber.utils.context'   
+- moved 'Cucumbers.java' class to package 'com.cucumber.utils.context'   
 - moved ActionUtils, ResourceUtils, JsonUtils, XmlUtils and StringFormat classes to 'helper' package  
 - added new pre-defined step for comparing objects using Match Conditions  
 - other internal refactorings  
