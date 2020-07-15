@@ -76,7 +76,7 @@ Compare until condition is met or until timeout:
 ```java
 // Compare every 1000 millis until generated random number is 3 or until total time duration is 10s   
 int expected = 3;
-cucumbers.pollAndCompare(expected, 1000, 10, () -> generateRandomNumber());
+cucumbers.pollAndCompare("Comparison failed", expected, 30, 3000, 1.0, () -> generateRandomNumber());
 ```
 <a name="2-state-sharing-mechanism"></a>
 ## 2. State-sharing mechanism
