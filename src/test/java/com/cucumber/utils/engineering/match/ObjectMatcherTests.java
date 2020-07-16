@@ -5,8 +5,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ObjectMatcherTests {
 
@@ -14,6 +13,13 @@ public class ObjectMatcherTests {
     public void compareNulls() {
         Map<String, Object> symbols = ObjectMatcher.match(null, null, null, null);
         assertTrue(symbols.isEmpty());
+    }
+
+    @Test
+    public void compareNullWithAssignSymbol() {
+        Map<String, Object> symbols = ObjectMatcher.match(null, "~[val]", null, null);
+        assertEquals(1, symbols.size());
+        assertNull(symbols.get("val"));
     }
 
     @Test(expected = AssertionError.class)
