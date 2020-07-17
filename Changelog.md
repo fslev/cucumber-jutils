@@ -1,8 +1,8 @@
 # Changelog
 
-###In progress
+### In progress
 
-###6.0
+### 6.0
 Upgrade to Cucumber 6.x.x  
 Upgrade other dependencies   
 Refactoring  
@@ -14,34 +14,34 @@ Refactoring
 - added new pre-defined step for comparing objects using Match Conditions  
 - other internal refactorings  
 
-###5.39
+### 5.39
 Bug fix  
 Use Map<String, Object> at datatable conversion type  
 SQL query client returns List<Map<String, Object>> instead of List<Map<String, String>>  
 
-###5.38
+### 5.38
 Add SpEL support  
 Enhance String parser for dynamic scenario properties  
 
-###5.37
+### 5.37
 Log scenario URI when test fails
 
-###5.36
+### 5.36
 Add date format support for scenario properties
 
-###5.35
+### 5.35
 Add steps for comments and collapsible bodies  
 Log debug message when comparison fails due to unintentional special regex characters instead of warning  
 Check if debug is enabled on logger before checking for regex  
 
-###5.34
+### 5.34
 Add warning message when JSON comparison fails due to unintentional special regex characters    
 Add warning message when XML comparison fails due to unintentional special regex characters    
 
-###5.33
+### 5.33
 Fix negative compare step  
 
-###5.32
+### 5.32
 Increase cucumber version to 5.6.0 
 
 ### 5.31
