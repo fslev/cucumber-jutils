@@ -10,7 +10,7 @@ Refactoring
   - use MatchConditions: MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.DO_NOT_MATCH, etc 
   - remove overloaded methods   
 - moved 'Cucumbers.java' class to package 'com.cucumber.utils.context'   
-- moved ActionUtils, ResourceUtils, JsonUtils, XmlUtils and StringFormat classes to 'helper' package  
+- moved ActionUtils, ResourceUtils, JsonUtils, XmlUtils and StringFormat classes to 'com.cucumber.utils.helper' package  
 - added new pre-defined step for comparing objects using Match Conditions  
 - other internal refactorings  
 
