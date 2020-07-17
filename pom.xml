@@ -102,12 +102,12 @@
             <artifactId>cucumber-guice</artifactId>
             <version>${cucumber.version}</version>
         </dependency>
+        <!--Others-->
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
         </dependency>
-        <!--Others-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
