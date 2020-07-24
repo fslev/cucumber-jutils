@@ -1,4 +1,6 @@
-# Cucumber Utils
+# Cucumber JUtils
+
+Cucumber Utils has been renamed to Cucumber JUtils
 
 # Summary
 A Java library meant to help you write organized and clean **Cucumber** tests.  
@@ -18,11 +20,11 @@ Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tut
 ```
 <dependency>
   <groupId>io.github.fslev</groupId>
-  <artifactId>cucumber-utils</artifactId>
+  <artifactId>cucumber-jutils</artifactId>
   <version>${latest.version}</version>
 </dependency>
 
-Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
+Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ```  
 #### Included dependencies that are worth mentioning:
 
@@ -33,7 +35,7 @@ Gradle: compile("io.github.fslev:cucumber-utils:${latest.version}")
 * [**apache-http-client**](https://github.com/apache/httpcomponents-client)
 
 # Configuration
-In order to integrate **cucumber-utils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
+In order to integrate **cucumber-jutils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
 ```
 com.cucumber.utils
 ```  
@@ -189,7 +191,7 @@ Then check HTTP response status = 200
 <a name="3-customized-clients"></a>     
 ## 3. Customized clients
 
-The following clients are available via Cucumber-Utils:
+The following clients are available via Cucumber-JUtils:
 - HTTP client
 - SQL clients (MySQL, PostgreSQL, Sybase, etc -> depending on the sql driver you configure)
 - Shell and Jsch clients
