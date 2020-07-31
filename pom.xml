@@ -23,7 +23,7 @@
         <httpclient.version>4.5.12</httpclient.version>
         <jsoncompare.version>2.15</jsoncompare.version>
         <xmlunit.version>2.7.0</xmlunit.version>
-        <cucumber.version>6.3.0</cucumber.version>
+        <cucumber.version>6.4.0</cucumber.version>
         <guice.version>4.2.3</guice.version>
         <surefire.version>2.22.2</surefire.version>
         <jackson.version>2.11.1</jackson.version>
