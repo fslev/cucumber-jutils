@@ -31,5 +31,5 @@ com.cucumber.utils
 Feature related documentation can be found [here](https://github.com/fslev/cucumber-utils/wiki)
 
 # Tutorial
-Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tutorial) for a better picture on how this library is/should be used.  
+Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tutorial) for a better picture on how this library should be used.  
 
