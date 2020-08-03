@@ -5,10 +5,10 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 public class InvalidHttpResponseFormatException extends InvalidTypeException {
     private final static String MESSAGE = "Invalid HTTP Response Type\nExpected JSON format:\n{}\nBut Got:\n{}";
     private final static String EXPECTED_FORMAT = "{\n" +
-            "  \"status\": <int> | \"<string>\",\n" +
-            "  \"body\": {<jsonObject>} | [<jsonArray>] | \"<string>\",\n" +
+            "  \"status\": <number> | \"<text>\",\n" +
+            "  \"body\": {<jsonObject>} | [<jsonArray>] | \"<text>\",\n" +
             "  \"headers\": {<jsonObject>},\n" +
-            "  \"reason\": \"<string>\"\n" +
+            "  \"reason\": \"<text>\"\n" +
             "}";
 
     public InvalidHttpResponseFormatException(String source) {
