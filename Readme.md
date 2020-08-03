@@ -27,8 +27,9 @@ In order to integrate **cucumber-jutils** within your test project you must conf
 ```
 com.cucumber.utils
 ```  
-### Documentation can be found [here](https://github.com/fslev/cucumber-utils/wiki)
+# Documentation
+Feature related documentation can be found [here](https://github.com/fslev/cucumber-utils/wiki)
 
-### Tutorial
+# Tutorial
 Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tutorial) for a better picture on how this library is/should be used.  
 
