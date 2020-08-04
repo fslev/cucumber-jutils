@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.stepdefs;
 
+import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
-import com.cucumber.utils.context.utils.ScenarioUtils;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;

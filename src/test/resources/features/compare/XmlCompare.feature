@@ -36,9 +36,8 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then Compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
-    Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=true, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
-
+    Then COMPARE #[a] with "#[b]" using matchConditions=[]
+    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_LENGTH", "DO_NOT_MATCH"]
 
   Scenario: Compare XML with xmlChildListSequence
     Given param a=
@@ -77,8 +76,8 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then Compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
-    Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=true, xmlElementNumAttributes=false and message=[_null]
+    Then COMPARE #[a] with "#[b]" using matchConditions=[]
+    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
 
   Scenario: Compare XML with xmlElementNumAttributes
     Given param a=
@@ -117,8 +116,8 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then Compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
-    Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=true and message=[_null]
+    Then COMPARE #[a] with "#[b]" using matchConditions=[]
+    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES", "DO_NOT_MATCH"]
 
   Scenario: Compare XML with extra expected attributes
     Given param a=
@@ -157,7 +156,7 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=false and message=[_null]
+    Then COMPARE #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
 
   Scenario: Compare XML with assign symbols
     Given param a=
@@ -196,11 +195,10 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then Compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=false, xmlElementNumAttributes=true and message=[_null]
+    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES"]
     And COMPARE #[contract] with "foo bar 1000"
     And COMPARE #[from] with "Tove"
-    Then Negative compare #[a] against #[b] via jsonNonExtensibleObject=false, jsonNonExtensibleArray=false, jsonArrayStrictOrder=false, xmlChildListLength=false, xmlChildListSequence=true, xmlElementNumAttributes=false and message=Interesting
-
+    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
 
   Scenario: Check unintentional regex chars at XML compare
   This test scenario is valid only if logger is set to debug LEVEL or bellow

@@ -1,8 +1,8 @@
 package com.cucumber.utils.context.stepdefs.jsch;
 
 import com.cucumber.utils.clients.jsch.JschClient;
-import com.cucumber.utils.context.utils.Cucumbers;
-import com.cucumber.utils.engineering.utils.ResourceUtils;
+import com.cucumber.utils.context.Cucumbers;
+import com.cucumber.utils.helper.ResourceUtils;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.After;

@@ -1,10 +1,12 @@
 package com.cucumber.utils.context.props.internal;
 
+import com.cucumber.utils.engineering.utils.StringParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.expression.Expression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class SpelParser {
@@ -21,9 +23,12 @@ public class SpelParser {
         if (source == null || source.isEmpty()) {
             return source;
         }
-        return StringParser.replacePlaceholders
-                (source, PREFIX, SUFFIX, captureGroupPattern, SpelParser::parseExpression,
-                        SpelParser::isExpressionValid);
+        List<String> placeholderNames = StringParser.captureValues(source, captureGroupPattern);
+        if (placeholderNames.isEmpty()) {
+            return source;
+        }
+        return StringParser.replacePlaceholders(placeholderNames, source, PREFIX, SUFFIX, SpelParser::parseExpression,
+                SpelParser::isExpressionValid);
     }
 
     private static Object parseExpression(String expression) {
