@@ -4,12 +4,9 @@ import com.cucumber.utils.engineering.match.condition.MatchCondition;
 import com.cucumber.utils.exceptions.InvalidTypeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.util.Map;
 import java.util.Set;
-
-import static org.junit.Assert.fail;
 
 public class ObjectMatcher {
     private final static Logger LOG = LogManager.getLogger();
@@ -38,13 +35,5 @@ public class ObjectMatcher {
             }
         }
         return matcher.match();
-    }
-
-    private static boolean nullsMatch(String message, Object expected, Object actual) {
-        if (expected == null ^ actual == null) {
-            fail(ParameterizedMessage.format("{}\nEXPECTED:\n[{}]\nBUT GOT:\n[{}]",
-                    new Object[]{message != null ? message : "", expected, actual}));
-        } else return expected == null;
-        return false;
     }
 }
