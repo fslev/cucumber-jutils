@@ -1,6 +1,6 @@
 package com.cucumber.utils.clients.http.wrappers;
 
-import com.cucumber.utils.exceptions.InvalidHttpResponseJsonFormatException;
+import com.cucumber.utils.exceptions.InvalidHttpResponseFormatException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +36,7 @@ public class HttpResponseWrapper {
         }
     }
 
-    private void fromObject(Object content) throws InvalidHttpResponseJsonFormatException {
+    private void fromObject(Object content) throws InvalidHttpResponseFormatException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
         try {
@@ -48,7 +48,7 @@ public class HttpResponseWrapper {
             this.reasonPhrase = wrapper.reasonPhrase;
             this.headers = wrapper.headers;
         } catch (Exception e) {
-            throw new InvalidHttpResponseJsonFormatException(content.toString());
+            throw new InvalidHttpResponseFormatException(content.toString());
         }
     }
 

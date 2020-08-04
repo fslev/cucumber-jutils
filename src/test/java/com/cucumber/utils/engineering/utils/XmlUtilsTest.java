@@ -1,5 +1,7 @@
 package com.cucumber.utils.engineering.utils;
 
+import com.cucumber.utils.helper.ResourceUtils;
+import com.cucumber.utils.helper.XmlUtils;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 

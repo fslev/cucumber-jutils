@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.props;
 
-import com.cucumber.utils.context.props.internal.SpelParser;
 import com.cucumber.utils.context.props.internal.ScenarioPropsSubstitutor;
+import com.cucumber.utils.context.props.internal.SpelParser;
 
 public class ScenarioPropsParser {
 

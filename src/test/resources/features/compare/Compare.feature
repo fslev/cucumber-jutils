@@ -20,6 +20,7 @@ Feature: Test comparator
     some other values
     """
     Then Negative COMPARE #[a] with "#[b]"
+    And COMPARE #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
     When param a="test\n.*"
     Then COMPARE #[a] with "#[b]"
 
@@ -72,6 +73,25 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
+
+  Scenario: Compare jsons with match conditions
+    Given param json1 =
+    """
+  {
+    "name": "J.*n",
+    "age": "\\d+",
+    "cars": ["Ford", "~[car]", "Fiat"]
+  }
+    """
+    And param json2=
+    """
+  {
+	"name": "John",
+	"age": 30,
+	"cars": ["BMW","Ford","Fiat","Other"]
+  }
+    """
+    Then COMPARE #[json1] with "#[json2]" using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
 
   Scenario: Compare Jsons with escaped values
     Given param json1 =

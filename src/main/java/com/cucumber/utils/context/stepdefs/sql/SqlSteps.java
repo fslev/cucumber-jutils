@@ -1,9 +1,10 @@
 package com.cucumber.utils.context.stepdefs.sql;
 
 import com.cucumber.utils.clients.database.SqlClient;
-import com.cucumber.utils.context.utils.Cucumbers;
-import com.cucumber.utils.context.utils.ScenarioUtils;
-import com.cucumber.utils.engineering.utils.ResourceUtils;
+import com.cucumber.utils.context.Cucumbers;
+import com.cucumber.utils.context.ScenarioUtils;
+import com.cucumber.utils.engineering.match.condition.MatchCondition;
+import com.cucumber.utils.helper.ResourceUtils;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
@@ -59,7 +60,7 @@ public class SqlSteps {
             this.client.connect();
             this.client.prepareStatement(query);
             List<Map<String, Object>> result = client.executeQueryAndGetRsAsList();
-            cucumbers.compare(expected, result, true, true, false);
+            cucumbers.compare(expected, result, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY);
         } finally {
             this.client.close();
         }
@@ -71,7 +72,8 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            cucumbers.pollAndCompare(null, expected, pollDuration, null, null, () -> client.executeQueryAndGetRsAsList(), true, true, false);
+            cucumbers.pollAndCompare(null, expected, pollDuration, null, null,
+                    () -> client.executeQueryAndGetRsAsList(), MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY);
         } finally {
             this.client.close();
         }

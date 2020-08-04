@@ -1,13 +1,15 @@
 package com.cucumber.utils.context.stepdefs;
 
-import com.cucumber.utils.context.utils.Cucumbers;
-import com.cucumber.utils.context.utils.ScenarioUtils;
+import com.cucumber.utils.context.Cucumbers;
+import com.cucumber.utils.context.ScenarioUtils;
+import com.cucumber.utils.engineering.match.condition.MatchCondition;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertNull;
 
@@ -20,9 +22,15 @@ public class CompareSteps {
     private ScenarioUtils logger;
 
     @Then("COMPARE {} with \"{}\"")
-    public void compareWithString(Object expected, Object actual) {
+    public void compare(Object expected, Object actual) {
         logger.log("    Compare:\n{}\n    Against:\n{}", expected, actual);
         cucumbers.compare(expected, actual);
+    }
+
+    @Then("COMPARE {} with \"{}\" using matchConditions={}")
+    public void compare(Object expected, Object actual, Set<MatchCondition> matchConditions) {
+        logger.log("    Compare:\n{}\n    Against:\n{}\n    with match conditions: {}", expected, actual, matchConditions);
+        cucumbers.compare(expected, actual, matchConditions.toArray(new MatchCondition[0]));
     }
 
     @Then("COMPARE {} with NULL")
@@ -45,12 +53,12 @@ public class CompareSteps {
 
     @Then("COMPARE {} with content from path \"{}\"")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
-        compareWithString(expected, cucumbers.read(filePath));
+        compare(expected, cucumbers.read(filePath));
     }
 
     @Then("COMPARE {} with")
     public void compareWithDocString(Object expected, StringBuilder actual) {
-        compareWithString(expected, actual.toString());
+        compare(expected, actual.toString());
     }
 
     @Then("Negative COMPARE {} with")

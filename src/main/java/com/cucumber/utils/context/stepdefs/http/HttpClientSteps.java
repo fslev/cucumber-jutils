@@ -2,7 +2,7 @@ package com.cucumber.utils.context.stepdefs.http;
 
 import com.cucumber.utils.clients.http.HttpClient;
 import com.cucumber.utils.clients.http.Method;
-import com.cucumber.utils.context.utils.Cucumbers;
+import com.cucumber.utils.context.Cucumbers;
 import com.google.inject.Inject;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.guice.ScenarioScoped;
@@ -80,6 +80,6 @@ public class HttpClientSteps {
 
     @Then("^HTTP compare response with$")
     public void compareResponseBodyWith(StringBuilder expected) {
-        cucumbers.compareHttpResponse(null, expected.toString(), response);
+        cucumbers.compare(null, expected.toString(), response);
     }
 }
