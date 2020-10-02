@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.fslev</groupId>
@@ -22,7 +23,7 @@
         <httpclient.version>4.5.12</httpclient.version>
         <jsoncompare.version>2.15</jsoncompare.version>
         <xmlunit.version>2.7.0</xmlunit.version>
-        <cucumber.version>6.4.0</cucumber.version>
+        <cucumber.version>6.8.0</cucumber.version>
         <guice.version>4.2.3</guice.version>
         <surefire.version>2.22.2</surefire.version>
         <jackson.version>2.11.2</jackson.version>
@@ -209,6 +210,9 @@
                             <testFailureIgnore>false</testFailureIgnore>
                             <parallel>methods</parallel>
                             <threadCount>3</threadCount>
+                            <systemPropertyVariables>
+                                <testng.dtd.https>false</testng.dtd.https>
+                            </systemPropertyVariables>
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                             </suiteXmlFiles>
