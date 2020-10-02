@@ -1,6 +1,9 @@
 # Changelog
 
-### In progress
+### 6.1
+Upgrade to Cucumber 6.8.0  
+Upgrade other dependencies     
+
 
 ### 6.0
 Upgrade to Cucumber 6.x.x  
