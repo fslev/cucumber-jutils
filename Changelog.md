@@ -1,5 +1,10 @@
 # Changelog
 
+### 6.2
+Support for reading files from absolute paths  
+Upgrade Cucumber to 6.8.1  
+Upgrade other dependencies  
+
 ### 6.1
 Upgrade to Cucumber 6.8.0  
 Upgrade other dependencies     

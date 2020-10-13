@@ -19,10 +19,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <httpclient.version>4.5.12</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <jsoncompare.version>2.15</jsoncompare.version>
         <xmlunit.version>2.7.0</xmlunit.version>
-        <cucumber.version>6.8.0</cucumber.version>
+        <cucumber.version>6.8.1</cucumber.version>
         <guice.version>4.2.3</guice.version>
         <surefire.version>2.22.2</surefire.version>
         <jackson.version>2.11.2</jackson.version>
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.16</version>
+            <version>42.2.17</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.jtds</groupId>
@@ -140,7 +140,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
+            <version>4.13.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
