@@ -27,6 +27,11 @@ Feature: Test placeholder fill
     And The string with scenario placeholders "This is a #[figure]"
     Then Check filled string equals "This is a circle"
 
+  Scenario: Test scenario property loaded from file
+    * load file "placeholders/figure.property" to scenario property "var"
+    And The string with scenario placeholders "This is a #[var]"
+    Then Check filled string equals "This is a circle"
+
   Scenario: Test placeholder fill with global and scenario values
     Given param animal="bear"
     And load scenario props from file "scenario.properties"

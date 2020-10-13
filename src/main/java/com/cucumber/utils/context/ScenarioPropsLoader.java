@@ -43,7 +43,7 @@ final class ScenarioPropsLoader {
         } else if (filePath.endsWith(YAML.value()) || filePath.endsWith(YML.value())) {
             return loadPropsFromYamlFile(filePath, scenarioProps);
         } else if (Arrays.stream(propertyFileExtensions()).anyMatch(filePath::endsWith)) {
-            return new HashSet<>(Collections.singletonList(loadScenarioPropertyFile(filePath, scenarioProps)));
+            return new HashSet<>(Collections.singletonList(loadScenarioPropertyFile(filePath, scenarioProps, null)));
         } else {
             throw new InvalidScenarioPropertyFileType();
         }
@@ -68,7 +68,7 @@ final class ScenarioPropsLoader {
         return map.keySet();
     }
 
-    private static String loadScenarioPropertyFile(String filePath, ScenarioProps scenarioProps) {
+    public static String loadScenarioPropertyFile(String filePath, ScenarioProps scenarioProps, String propertyName) {
         try {
             String fileName = ResourceUtils.getFileName(filePath);
             if (Arrays.stream(propertyFileExtensions())
@@ -76,11 +76,11 @@ final class ScenarioPropsLoader {
                 throw new RuntimeException("Invalid file extension: " + filePath +
                         " .Must use one of the following: \"" + Arrays.toString(propertyFileExtensions()));
             }
-            String propertyName = extractSimpleName(fileName);
+            String key = propertyName == null ? extractSimpleName(fileName) : propertyName;
             String value = ResourceUtils.read(filePath);
-            scenarioProps.put(propertyName, value);
+            scenarioProps.put(key, value);
             log.debug("-> Loaded file '{}' into a scenario property", filePath);
-            return propertyName;
+            return key;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

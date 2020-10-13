@@ -1,5 +1,8 @@
 # Changelog
 
+### 6.4
+Support custom name for scenario property loaded from file      
+
 ### 6.3
 Code refactoring  
 

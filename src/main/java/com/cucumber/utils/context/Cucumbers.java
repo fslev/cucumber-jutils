@@ -32,6 +32,10 @@ public class Cucumbers {
         }
     }
 
+    public void loadFileToScenarioProperty(String relativeFilePath, String propertyName) {
+        ScenarioPropsLoader.loadScenarioPropertyFile(relativeFilePath, scenarioProps, propertyName);
+    }
+
     /**
      * @param relativeFilePath
      * @return names of loaded properties
