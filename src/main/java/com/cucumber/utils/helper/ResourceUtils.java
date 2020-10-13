@@ -18,24 +18,25 @@ public class ResourceUtils {
 
     private static final Logger log = LogManager.getLogger();
 
-    public static String read(String relativeFilePath) throws IOException {
-        return readFromRelativePath(relativeFilePath);
+    public static String read(String filePath) throws IOException {
+        return readFromPath(filePath);
     }
 
-    public static Properties readProps(String relativeFilePath) {
+    public static Properties readProps(String filePath) {
         Properties props = new Properties();
         try {
-            props.load(new StringReader(read(relativeFilePath)));
+            props.load(new StringReader(read(filePath)));
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
         return props;
     }
 
-    public static Map<String, Object> readYaml(String relativeFilePath) throws IOException {
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath)) {
+    public static Map<String, Object> readYaml(String filePath) throws IOException {
+        try (InputStream is = !isAbsolute(filePath) ? Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath)
+                : Files.newInputStream(Paths.get(filePath))) {
             if (is == null) {
-                throw new IOException("File " + relativeFilePath + " not found");
+                throw new IOException("File " + filePath + " not found");
             }
             return new Yaml().load(is);
         }
@@ -44,12 +45,12 @@ public class ResourceUtils {
     /**
      * @return a Map&lt;String,String&gt; between corresponding relative file paths and file contents
      */
-    public static Map<String, String> readDirectory(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
-        Set<String> files = getFilesFromDir(relativeDirPath, fileExtensionPatterns);
+    public static Map<String, String> readDirectory(String dirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
+        Set<String> files = getFilesFromDir(dirPath, fileExtensionPatterns);
         return files.stream().collect(Collectors.toMap(filePath -> filePath,
                 filePath -> {
                     try {
-                        return readFromRelativePath(filePath);
+                        return readFromPath(filePath);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -59,18 +60,26 @@ public class ResourceUtils {
     /**
      * Returns relative file paths from a directory matching given extensions
      *
-     * @param relativeDirPath
+     * @param dirPath
      * @param fileExtensionPatterns
      * @return
      * @throws IOException
      * @throws URISyntaxException
      */
-    public static Set<String> getFilesFromDir(String relativeDirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
-        URL dirURL = Thread.currentThread().getContextClassLoader().getResource(relativeDirPath);
-        if (dirURL == null) {
-            throw new IOException("Directory " + relativeDirPath + " not found or is empty");
+    public static Set<String> getFilesFromDir(String dirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
+        Path rootPath;
+        if (!isAbsolute(dirPath)) {
+            URL dirURL = Thread.currentThread().getContextClassLoader().getResource(dirPath);
+            if (dirURL == null) {
+                throw new IOException("Directory " + dirPath + " not found or is empty");
+            }
+            rootPath = Paths.get(dirURL.toURI());
+        } else {
+            rootPath = Paths.get(dirPath);
+            if (!Files.exists(rootPath)) {
+                throw new IOException("Directory " + dirPath + " not found or is empty");
+            }
         }
-        Path rootPath = Paths.get(dirURL.toURI());
         if (!Files.isDirectory(rootPath)) {
             throw new IOException("Not a directory " + rootPath);
         }
@@ -85,15 +94,16 @@ public class ResourceUtils {
             }
             log.warn("Ignore file '{}'.\nIt has none of the following extensions: {}", path.getFileName().toString(), fileExtensionPatterns);
             return false;
-        }).map(path -> relativeDirPath + (!relativeDirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString())
+        }).map(path -> dirPath + (!dirPath.isEmpty() ? File.separator : "") + rootPath.relativize(path).toString())
                 .collect(Collectors.toSet());
     }
 
-    private static String readFromRelativePath(String relativeFilePath) throws IOException {
-        try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(relativeFilePath);
+    private static String readFromPath(String filePath) throws IOException {
+        try (InputStream is = !isAbsolute(filePath) ? Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath)
+                : Files.newInputStream(Paths.get(filePath));
              ByteArrayOutputStream result = new ByteArrayOutputStream()) {
             if (is == null) {
-                throw new IOException("File " + relativeFilePath + " not found");
+                throw new IOException("File " + filePath + " not found");
             }
             byte[] buffer = new byte[1024];
             int length;
@@ -104,11 +114,24 @@ public class ResourceUtils {
         }
     }
 
-    public static String getFileName(String relativeFilePath) throws IOException, URISyntaxException {
-        Path filePath = Paths.get(Thread.currentThread().getContextClassLoader().getResource(relativeFilePath).toURI());
-        if (!Files.exists(filePath)) {
-            throw new IOException("File " + relativeFilePath + " not found");
+    public static String getFileName(String filePath) throws IOException, URISyntaxException {
+        Path path;
+        if (!isAbsolute(filePath)) {
+            URL url = Thread.currentThread().getContextClassLoader().getResource(filePath);
+            if (url == null) {
+                throw new IOException("File " + filePath + " not found");
+            }
+            path = Paths.get(url.toURI());
+        } else {
+            path = Paths.get(filePath);
+            if (!Files.exists(path)) {
+                throw new IOException("File " + filePath + " not found");
+            }
         }
-        return filePath.getFileName().toString();
+        return path.getFileName().toString();
+    }
+
+    private static boolean isAbsolute(String path) {
+        return Paths.get(path).isAbsolute();
     }
 }

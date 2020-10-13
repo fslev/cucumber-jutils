@@ -16,14 +16,14 @@ final class ScenarioPropsLoader {
 
     private static final Logger log = LogManager.getLogger();
 
-    static Set<String> loadScenarioPropsFromDir(String relativeDirPath, ScenarioProps scenarioProps) {
+    static Set<String> loadScenarioPropsFromDir(String dirPath, ScenarioProps scenarioProps) {
         Set<String> properties = new HashSet<>();
         try {
-            Set<String> filePaths = ResourceUtils.getFilesFromDir(relativeDirPath, ScenarioProps.FileExtension.allExtensions());
+            Set<String> filePaths = ResourceUtils.getFilesFromDir(dirPath, ScenarioProps.FileExtension.allExtensions());
             filePaths.forEach(filePath -> {
                 try {
                     if (!properties.addAll(loadScenarioPropsFromFile(filePath, scenarioProps))) {
-                        throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + relativeDirPath
+                        throw new RuntimeException("\nAmbiguous loading of scenario properties from dir '" + dirPath
                                 + "'\nScenario properties file '" + filePath + "' has scenario properties or is named after a property that was already set while traversing directory.");
                     }
                 } catch (InvalidScenarioPropertyFileType e) {
@@ -33,17 +33,17 @@ final class ScenarioPropsLoader {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        log.info("Loaded from dir '{}', scenario properties with the following names:\n{}", relativeDirPath, properties);
+        log.info("Loaded from dir '{}', scenario properties with the following names:\n{}", dirPath, properties);
         return properties;
     }
 
-    static Set<String> loadScenarioPropsFromFile(String relativeFilePath, ScenarioProps scenarioProps) {
-        if (relativeFilePath.endsWith(PROPERTIES.value())) {
-            return loadPropsFromPropertiesFile(relativeFilePath, scenarioProps);
-        } else if (relativeFilePath.endsWith(YAML.value()) || relativeFilePath.endsWith(YML.value())) {
-            return loadPropsFromYamlFile(relativeFilePath, scenarioProps);
-        } else if (Arrays.stream(propertyFileExtensions()).anyMatch(relativeFilePath::endsWith)) {
-            return new HashSet<>(Collections.singletonList(loadScenarioPropertyFile(relativeFilePath, scenarioProps)));
+    static Set<String> loadScenarioPropsFromFile(String filePath, ScenarioProps scenarioProps) {
+        if (filePath.endsWith(PROPERTIES.value())) {
+            return loadPropsFromPropertiesFile(filePath, scenarioProps);
+        } else if (filePath.endsWith(YAML.value()) || filePath.endsWith(YML.value())) {
+            return loadPropsFromYamlFile(filePath, scenarioProps);
+        } else if (Arrays.stream(propertyFileExtensions()).anyMatch(filePath::endsWith)) {
+            return new HashSet<>(Collections.singletonList(loadScenarioPropertyFile(filePath, scenarioProps)));
         } else {
             throw new InvalidScenarioPropertyFileType();
         }
@@ -68,18 +68,18 @@ final class ScenarioPropsLoader {
         return map.keySet();
     }
 
-    private static String loadScenarioPropertyFile(String relativeFilePath, ScenarioProps scenarioProps) {
+    private static String loadScenarioPropertyFile(String filePath, ScenarioProps scenarioProps) {
         try {
-            String fileName = ResourceUtils.getFileName(relativeFilePath);
+            String fileName = ResourceUtils.getFileName(filePath);
             if (Arrays.stream(propertyFileExtensions())
                     .noneMatch(fileName::endsWith)) {
-                throw new RuntimeException("Invalid file extension: " + relativeFilePath +
+                throw new RuntimeException("Invalid file extension: " + filePath +
                         " .Must use one of the following: \"" + Arrays.toString(propertyFileExtensions()));
             }
             String propertyName = extractSimpleName(fileName);
-            String value = ResourceUtils.read(relativeFilePath);
+            String value = ResourceUtils.read(filePath);
             scenarioProps.put(propertyName, value);
-            log.debug("-> Loaded file '{}' into a scenario property", relativeFilePath);
+            log.debug("-> Loaded file '{}' into a scenario property", filePath);
             return propertyName;
         } catch (Exception e) {
             throw new RuntimeException(e);
