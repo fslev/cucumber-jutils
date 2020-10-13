@@ -68,7 +68,7 @@ final class ScenarioPropsLoader {
         return map.keySet();
     }
 
-    public static String loadScenarioPropertyFile(String filePath, ScenarioProps scenarioProps, String propertyName) {
+    static String loadScenarioPropertyFile(String filePath, ScenarioProps scenarioProps, String propertyName) {
         try {
             String fileName = ResourceUtils.getFileName(filePath);
             if (Arrays.stream(propertyFileExtensions())
