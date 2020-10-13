@@ -33,8 +33,7 @@ public class ResourceUtils {
     }
 
     public static Map<String, Object> readYaml(String filePath) throws IOException {
-        try (InputStream is = !isAbsolute(filePath) ? Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath)
-                : Files.newInputStream(Paths.get(filePath))) {
+        try (InputStream is = getInputStream(filePath)) {
             if (is == null) {
                 throw new IOException("File " + filePath + " not found");
             }
@@ -67,19 +66,7 @@ public class ResourceUtils {
      * @throws URISyntaxException
      */
     public static Set<String> getFilesFromDir(String dirPath, String... fileExtensionPatterns) throws IOException, URISyntaxException {
-        Path rootPath;
-        if (!isAbsolute(dirPath)) {
-            URL dirURL = Thread.currentThread().getContextClassLoader().getResource(dirPath);
-            if (dirURL == null) {
-                throw new IOException("Directory " + dirPath + " not found or is empty");
-            }
-            rootPath = Paths.get(dirURL.toURI());
-        } else {
-            rootPath = Paths.get(dirPath);
-            if (!Files.exists(rootPath)) {
-                throw new IOException("Directory " + dirPath + " not found or is empty");
-            }
-        }
+        Path rootPath = getPath(dirPath);
         if (!Files.isDirectory(rootPath)) {
             throw new IOException("Not a directory " + rootPath);
         }
@@ -99,12 +86,7 @@ public class ResourceUtils {
     }
 
     private static String readFromPath(String filePath) throws IOException {
-        try (InputStream is = !isAbsolute(filePath) ? Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath)
-                : Files.newInputStream(Paths.get(filePath));
-             ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-            if (is == null) {
-                throw new IOException("File " + filePath + " not found");
-            }
+        try (InputStream is = getInputStream(filePath); ByteArrayOutputStream result = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[1024];
             int length;
             while ((length = is.read(buffer)) != -1) {
@@ -115,6 +97,10 @@ public class ResourceUtils {
     }
 
     public static String getFileName(String filePath) throws IOException, URISyntaxException {
+        return getPath(filePath).getFileName().toString();
+    }
+
+    private static Path getPath(String filePath) throws IOException, URISyntaxException {
         Path path;
         if (!isAbsolute(filePath)) {
             URL url = Thread.currentThread().getContextClassLoader().getResource(filePath);
@@ -128,7 +114,16 @@ public class ResourceUtils {
                 throw new IOException("File " + filePath + " not found");
             }
         }
-        return path.getFileName().toString();
+        return path;
+    }
+
+    private static InputStream getInputStream(String filePath) throws IOException {
+        InputStream is = !isAbsolute(filePath) ? Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath)
+                : Files.newInputStream(Paths.get(filePath));
+        if (is == null) {
+            throw new IOException("File " + filePath + " not found");
+        }
+        return is;
     }
 
     private static boolean isAbsolute(String path) {

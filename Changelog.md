@@ -1,5 +1,8 @@
 # Changelog
 
+### 6.3
+Code refactoring  
+
 ### 6.2
 Support for reading files from absolute paths  
 Upgrade Cucumber to 6.8.1  
