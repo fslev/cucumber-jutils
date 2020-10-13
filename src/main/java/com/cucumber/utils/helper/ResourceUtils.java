@@ -34,9 +34,6 @@ public class ResourceUtils {
 
     public static Map<String, Object> readYaml(String filePath) throws IOException {
         try (InputStream is = getInputStream(filePath)) {
-            if (is == null) {
-                throw new IOException("File " + filePath + " not found");
-            }
             return new Yaml().load(is);
         }
     }
