@@ -3,11 +3,9 @@ package com.cucumber.utils.engineering.match.comparators.json;
 import com.cucumber.utils.engineering.match.StringMatcher;
 import com.cucumber.utils.engineering.match.condition.MatchCondition;
 import com.cucumber.utils.exceptions.InvalidTypeException;
-import org.apache.commons.text.StringEscapeUtils;
 import ro.skyah.comparator.JsonComparator;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CustomJsonComparator implements JsonComparator {
 
@@ -22,7 +20,7 @@ public class CustomJsonComparator implements JsonComparator {
 
     public boolean compareValues(Object expected, Object actual) {
         try {
-            this.valueProperties.putAll(escapeJsonPropertyValues(new StringMatcher(null, expected, actual, matchConditions).match()));
+            this.valueProperties.putAll(escapePropertyValues(new StringMatcher(null, expected, actual, matchConditions).match()));
             return true;
         } catch (AssertionError | InvalidTypeException e) {
             return false;
@@ -78,7 +76,21 @@ public class CustomJsonComparator implements JsonComparator {
         return valueProperties;
     }
 
-    private Map<String, Object> escapeJsonPropertyValues(Map<String, Object> properties) {
-        return properties.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> StringEscapeUtils.escapeJson(e.getValue().toString())));
+    private Map<String, Object> escapePropertyValues(Map<String, Object> properties) {
+        Map<String, Object> escapedValues = new HashMap<>();
+        properties.forEach((k, v) -> escapedValues.put(k, v != null ? escape(v.toString()) : null));
+        return escapedValues;
+    }
+
+    private static String escape(String raw) {
+        String escaped = raw;
+        escaped = escaped.replace("\\", "\\\\");
+        escaped = escaped.replace("\"", "\\\"");
+        escaped = escaped.replace("\b", "\\b");
+        escaped = escaped.replace("\f", "\\f");
+        escaped = escaped.replace("\n", "\\n");
+        escaped = escaped.replace("\r", "\\r");
+        escaped = escaped.replace("\t", "\\t");
+        return escaped;
     }
 }

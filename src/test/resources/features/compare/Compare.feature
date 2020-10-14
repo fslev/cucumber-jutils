@@ -6,6 +6,12 @@ Feature: Test comparator
     Given param b="%"
     Then COMPARE #[a] with "#[b]"
 
+  Scenario: Compare characters with slashes against assign variable
+    Given param a="~[var]"
+    Given param b="/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
+    Then COMPARE #[a] with "#[b]"
+    And COMPARE #[var] with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
+
   Scenario: Compare with new lines
     Given param a="test\n"
     And param b=

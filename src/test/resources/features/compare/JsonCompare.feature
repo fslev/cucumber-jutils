@@ -78,3 +78,9 @@ Feature: Compare JSONs
     # This should log regex related warning messages
     And Negative COMPARE {"a":"[0-9]"} with "{"a":"[0-9]"}"
     And Negative COMPARE {"[0-9]":"foobar"} with "{"[0-9]":"foobar"}"
+
+  Scenario: Compare JSON with slashes against assign variable
+    Given param a="{"path":"~[var]"}"
+    Given param b="{"ignore":false, "path":"/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"}"
+    Then COMPARE #[a] with "#[b]"
+    And COMPARE \Q#[var]\E with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"

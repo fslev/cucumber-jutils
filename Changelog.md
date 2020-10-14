@@ -1,5 +1,8 @@
 # Changelog
 
+### 6.5
+Bug fix: fix escape values while two Jsons are compared         
+
 ### 6.4
 Support custom name for scenario property loaded from file      
 
