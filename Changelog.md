@@ -1,5 +1,10 @@
 # Changelog
 
+### 6.6
+Migrated Cucumber functionalities to separate library jtest-utils    
+Note: This version backwards incompatible  
+Major versions will be incremented only when Cucumber major version is upgraded  
+
 ### 6.5
 Bug fix: fix escape values while two Jsons are compared         
 
