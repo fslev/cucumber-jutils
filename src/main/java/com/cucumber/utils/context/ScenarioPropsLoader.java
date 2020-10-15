@@ -2,7 +2,7 @@ package com.cucumber.utils.context;
 
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.exceptions.InvalidScenarioPropertyFileType;
-import io.jtest.utils.ResourceUtils;
+import io.jtest.utils.common.ResourceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

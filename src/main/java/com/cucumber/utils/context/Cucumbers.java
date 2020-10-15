@@ -4,8 +4,8 @@ import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.context.props.ScenarioPropsParser;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
-import io.jtest.utils.Matcher;
-import io.jtest.utils.ResourceUtils;
+import io.jtest.utils.common.ResourceUtils;
+import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.http.HttpResponse;
 
@@ -57,20 +57,20 @@ public class Cucumbers {
     }
 
     public void compare(String message, Object expected, Object actual, MatchCondition... matchConditions) {
-        scenarioProps.putAll(Matcher.match(message, expected, actual, matchConditions));
+        scenarioProps.putAll(ObjectMatcher.match(message, expected, actual, matchConditions));
     }
 
     public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                Supplier<Object> supplier, MatchCondition... matchConditions) {
-        scenarioProps.putAll(Matcher.pollAndMatch(message, expected, supplier, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, matchConditions));
+        scenarioProps.putAll(ObjectMatcher.pollAndMatch(message, expected, supplier, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, matchConditions));
     }
 
     public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual, MatchCondition... matchConditions) {
-        scenarioProps.putAll(Matcher.matchHttpResponse(message, expected, actual, matchConditions));
+        scenarioProps.putAll(ObjectMatcher.matchHttpResponse(message, expected, actual, matchConditions));
     }
 
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                                                     Supplier<T> supplier, MatchCondition... matchConditions) {
-        scenarioProps.putAll(Matcher.pollAndMatchHttpResponse(message, expected, supplier, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, matchConditions));
+        scenarioProps.putAll(ObjectMatcher.pollAndMatchHttpResponse(message, expected, supplier, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, matchConditions));
     }
 }

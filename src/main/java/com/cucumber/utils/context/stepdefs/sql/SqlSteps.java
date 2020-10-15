@@ -6,8 +6,8 @@ import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.jtest.utils.ResourceUtils;
 import io.jtest.utils.clients.database.SqlClient;
+import io.jtest.utils.common.ResourceUtils;
 import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 

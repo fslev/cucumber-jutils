@@ -7,8 +7,8 @@ import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.jtest.utils.ResourceUtils;
 import io.jtest.utils.clients.jsch.JschClient;
+import io.jtest.utils.common.ResourceUtils;
 
 import java.util.Properties;
 
