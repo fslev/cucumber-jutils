@@ -1,7 +1,5 @@
 package com.cucumber.utils.context.stepdefs.http;
 
-import com.cucumber.utils.clients.http.HttpClient;
-import com.cucumber.utils.clients.http.Method;
 import com.cucumber.utils.context.Cucumbers;
 import com.google.inject.Inject;
 import io.cucumber.datatable.DataTable;
@@ -10,6 +8,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.jtest.utils.clients.http.HttpClient;
+import io.jtest.utils.clients.http.Method;
 import org.apache.http.HttpResponse;
 
 import java.util.List;

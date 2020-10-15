@@ -2,10 +2,11 @@ package com.cucumber.utils.context;
 
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.cucumber.utils.context.props.ScenarioPropsParser;
-import com.cucumber.utils.engineering.match.condition.MatchCondition;
-import com.cucumber.utils.helper.ResourceUtils;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
+import io.jtest.utils.Matcher;
+import io.jtest.utils.ResourceUtils;
+import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.http.HttpResponse;
 
 import java.io.IOException;
@@ -16,12 +17,10 @@ import java.util.function.Supplier;
 public class Cucumbers {
 
     private final ScenarioProps scenarioProps;
-    private final Compare genericCompare;
 
     @Inject
     private Cucumbers(ScenarioProps scenarioProps) {
         this.scenarioProps = scenarioProps;
-        this.genericCompare = new Compare(scenarioProps);
     }
 
     public String read(String relativeFilePath) {
@@ -58,24 +57,20 @@ public class Cucumbers {
     }
 
     public void compare(String message, Object expected, Object actual, MatchCondition... matchConditions) {
-        genericCompare.compare(message, expected, actual, matchConditions);
+        scenarioProps.putAll(Matcher.match(message, expected, actual, matchConditions));
     }
 
     public void pollAndCompare(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                Supplier<Object> supplier, MatchCondition... matchConditions) {
-        genericCompare.pollAndCompare(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);
+        scenarioProps.putAll(Matcher.pollAndMatch(message, expected, supplier, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, matchConditions));
     }
 
     public <T extends HttpResponse> void compareHttpResponse(String message, Object expected, T actual, MatchCondition... matchConditions) {
-        try {
-            genericCompare.compareHttpResponse(message, expected, actual, matchConditions);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        scenarioProps.putAll(Matcher.matchHttpResponse(message, expected, actual, matchConditions));
     }
 
     public <T extends HttpResponse> void pollAndCompareHttpResponse(String message, Object expected, Integer pollDurationInSeconds, Long pollIntervalInMillis, Double exponentialBackOff,
                                                                     Supplier<T> supplier, MatchCondition... matchConditions) {
-        genericCompare.pollAndCompareHttpResponse(message, expected, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, supplier, matchConditions);
+        scenarioProps.putAll(Matcher.pollAndMatchHttpResponse(message, expected, supplier, pollDurationInSeconds, pollIntervalInMillis, exponentialBackOff, matchConditions));
     }
 }

@@ -1,14 +1,14 @@
 package com.cucumber.utils.context.stepdefs.sql;
 
-import com.cucumber.utils.clients.database.SqlClient;
 import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.engineering.match.condition.MatchCondition;
-import com.cucumber.utils.helper.ResourceUtils;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.jtest.utils.ResourceUtils;
+import io.jtest.utils.clients.database.SqlClient;
+import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.sql.SQLException;

@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.props.internal;
 
 import com.cucumber.utils.context.props.ScenarioProps;
-import com.cucumber.utils.engineering.utils.StringParser;
+import io.jtest.utils.StringParser;
 
 import java.util.List;
 import java.util.regex.Pattern;

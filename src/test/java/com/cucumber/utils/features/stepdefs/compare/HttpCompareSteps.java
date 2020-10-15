@@ -1,16 +1,16 @@
 package com.cucumber.utils.features.stepdefs.compare;
 
-import com.cucumber.utils.clients.http.wrappers.HttpResponseWrapper;
 import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
-import com.cucumber.utils.engineering.match.condition.MatchCondition;
-import com.cucumber.utils.helper.XmlUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
+import io.jtest.utils.XmlUtils;
+import io.jtest.utils.clients.http.wrappers.HttpResponseWrapper;
+import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.protocol.HttpClientContext;

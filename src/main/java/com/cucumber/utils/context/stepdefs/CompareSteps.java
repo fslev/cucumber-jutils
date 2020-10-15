@@ -2,10 +2,10 @@ package com.cucumber.utils.context.stepdefs;
 
 import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.engineering.match.condition.MatchCondition;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
+import io.jtest.utils.matcher.condition.MatchCondition;
 
 import java.util.List;
 import java.util.Map;
