@@ -1,5 +1,8 @@
 # Changelog
 
+### 6.7
+Upgrade dependencies  
+
 ### 6.6
 Migrated Cucumber functionalities to separate library jtest-utils    
 Note: This version backwards incompatible  
