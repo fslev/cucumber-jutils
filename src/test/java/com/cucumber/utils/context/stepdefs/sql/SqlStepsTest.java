@@ -108,4 +108,15 @@ public class SqlStepsTest {
         assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
     }
+
+    @Test
+    public void testExecutePollAndCompare() throws SQLException {
+        List<Map<String, Object>> expectedResult = new ArrayList<>();
+        expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
+        expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
+        expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
+        sqlSteps.executeQueryAndPollAndCompare("does not matter", 10, expectedResult);
+        assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
+        assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
+    }
 }
