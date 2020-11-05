@@ -19,7 +19,7 @@ public class Cucumbers {
     private final ScenarioProps scenarioProps;
 
     @Inject
-    private Cucumbers(ScenarioProps scenarioProps) {
+    public Cucumbers(ScenarioProps scenarioProps) {
         this.scenarioProps = scenarioProps;
     }
 
