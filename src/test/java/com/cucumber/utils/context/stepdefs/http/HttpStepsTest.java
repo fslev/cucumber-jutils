@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
+import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -41,9 +42,9 @@ public class HttpStepsTest {
     private final HttpSteps httpSteps = new HttpSteps();
 
     @Before
-    public void mockHttpClient() throws Exception {
-        HttpClient client = mock(HttpClient.class);
-        CloseableHttpResponse mockResponse = mock(CloseableHttpResponse.class);
+    public void mock() throws Exception {
+        HttpClient client = PowerMockito.mock(HttpClient.class);
+        CloseableHttpResponse mockResponse = PowerMockito.mock(CloseableHttpResponse.class);
 
         when(mockResponse.getStatusLine()).thenReturn(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "FINE!"));
         when(mockResponse.getEntity()).thenReturn(new StringEntity("{\"firstName\":\"Lara\",\"lastName\":\"Ol\"}"));
