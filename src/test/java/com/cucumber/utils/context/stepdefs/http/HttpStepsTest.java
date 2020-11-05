@@ -59,13 +59,13 @@ public class HttpStepsTest {
 
     @Test
     public void testExecuteAndCompare() throws IOException {
-        httpSteps.executeAndCompare("http://test.ro", Method.GET, Map.of("1", "1"), Map.of("1", "1"),
+        httpSteps.executeAndCompare("http://test.ro", Method.GET, Map.of("1", "1"), Map.of("1", "1"), null,
                 "{\"status\":200,\"body\":{\"firstName\":\"Lar.*\"}}");
     }
 
     @Test(expected = RuntimeException.class)
     public void testExecuteAndCompare_exception() throws IOException {
-        httpSteps.executeAndCompare("http://test.ro", Method.GET, Map.of("1", "1"), Map.of("1", "1"),
+        httpSteps.executeAndCompare("http://test.ro", Method.GET, Map.of("1", "1"), Map.of("1", "1"), null,
                 "{\"status\":wrong}");
     }
 }
