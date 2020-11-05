@@ -1,11 +1,11 @@
 package com.cucumber.utils.features.stepdefs.httpresponsewrapper;
 
-import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.jtest.utils.matcher.ObjectMatcher;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
@@ -25,8 +25,6 @@ import static org.junit.Assert.fail;
 public class HttpResponseWrapperSteps {
 
     @Inject
-    private Cucumbers cucumbers;
-    @Inject
     private ScenarioProps scenarioProps;
 
     @Then("Compare Http Response with invalid expected={}")
@@ -35,7 +33,7 @@ public class HttpResponseWrapperSteps {
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, HttpStatus.SC_OK, "some reason"),
                         HttpClientContext.adapt(new BasicHttpContext()));
         try {
-            cucumbers.compareHttpResponse(null, expected, mock);
+            ObjectMatcher.matchHttpResponse(null, expected, mock);
         } catch (Exception e) {
             assertTrue(e.getMessage(), e.getMessage().contains("Cannot convert HTTP Response"));
         }
@@ -49,7 +47,7 @@ public class HttpResponseWrapperSteps {
         mock.setEntity(new StringEntity("{\"a\":100}"));
         mock.setHeader(new BasicHeader("Content-Type", "application/json"));
         mock.setHeader(new BasicHeader("Accept", "application/json"));
-        cucumbers.compareHttpResponse(null, "{\"status\":200,\"body\":{\"a\":100}}", mock);
+        ObjectMatcher.matchHttpResponse(null, "{\"status\":200,\"body\":{\"a\":100}}", mock);
     }
 
     @Then("Compare two random HTTP response wrappers negative")
@@ -61,7 +59,7 @@ public class HttpResponseWrapperSteps {
         mock.setHeader(new BasicHeader("Content-Type", "application/json"));
         mock.setHeader(new BasicHeader("Accept", "application/json"));
         try {
-            cucumbers.compareHttpResponse(null, "{\"a\":100}", mock);
+            scenarioProps.putAll(ObjectMatcher.matchHttpResponse(null, "{\"a\":100}", mock));
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("Cannot convert HTTP Response"));
             return;
@@ -77,6 +75,6 @@ public class HttpResponseWrapperSteps {
         StringEntity entity = new StringEntity(content);
         mock.setEntity(entity);
         mock.setHeader(new BasicHeader("Content-Type", "application/xml"));
-        cucumbers.compareHttpResponse(null, expected, mock);
+        scenarioProps.putAll(ObjectMatcher.matchHttpResponse(null, expected, mock));
     }
 }

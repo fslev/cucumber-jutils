@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class SpelParser {
 
-    private static final Logger log = LogManager.getLogger();
+    private static final Logger LOG = LogManager.getLogger();
     public static final String PREFIX = "#{";
     public static final String SUFFIX = "}";
 
@@ -36,7 +36,7 @@ public class SpelParser {
             Expression exp = new SpelExpressionParser().parseExpression(expression);
             return exp.getValue(Object.class);
         } catch (Exception e) {
-            log.warn("Could not parse SpEL expression: {}", e.getMessage());
+            LOG.warn("Could not parse SpEL expression: {}", e.getMessage());
             return expression;
         }
     }

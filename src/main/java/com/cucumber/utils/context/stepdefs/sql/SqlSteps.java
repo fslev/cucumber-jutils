@@ -1,13 +1,14 @@
 package com.cucumber.utils.context.stepdefs.sql;
 
-import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
+import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.jtest.utils.clients.database.SqlClient;
 import io.jtest.utils.common.ResourceUtils;
+import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
@@ -20,7 +21,7 @@ import java.util.Properties;
 public class SqlSteps {
 
     @Inject
-    private Cucumbers cucumbers;
+    private ScenarioProps scenarioProps;
     @Inject
     private ScenarioUtils logger;
     private SqlClient client;
@@ -60,7 +61,7 @@ public class SqlSteps {
             this.client.connect();
             this.client.prepareStatement(query);
             List<Map<String, Object>> result = client.executeQueryAndGetRsAsList();
-            cucumbers.compare(expected, result, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY);
+            scenarioProps.putAll(ObjectMatcher.match(null, expected, result, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY));
         } finally {
             this.client.close();
         }
@@ -72,8 +73,8 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            cucumbers.pollAndCompare(null, expected, pollDuration, null, null,
-                    () -> client.executeQueryAndGetRsAsList(), MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY);
+            scenarioProps.putAll(ObjectMatcher.pollAndMatch(null, expected, () -> client.executeQueryAndGetRsAsList(), pollDuration,
+                    null, null, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY));
         } finally {
             this.client.close();
         }

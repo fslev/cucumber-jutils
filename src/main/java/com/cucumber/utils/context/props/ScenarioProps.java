@@ -9,7 +9,7 @@ import java.util.*;
 @ScenarioScoped
 public class ScenarioProps {
 
-    private final Logger log = LogManager.getLogger();
+    private static final Logger LOG = LogManager.getLogger();
     private final Map<String, Object> props = new HashMap<>();
 
     public String getAsString(String key) {
@@ -38,7 +38,7 @@ public class ScenarioProps {
     public void put(String key, Object val) {
         String trimmedKey = (key == null) ? null : key.trim();
         if (props.get(trimmedKey) != null) {
-            log.warn("Scenario property \"{}\" will be overridden with {}", trimmedKey, val);
+            LOG.warn("Scenario property \"{}\" will be overridden with {}", trimmedKey, val);
         }
         props.put(trimmedKey, val);
     }

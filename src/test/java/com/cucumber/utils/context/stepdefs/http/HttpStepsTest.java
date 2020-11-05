@@ -1,6 +1,5 @@
 package com.cucumber.utils.context.stepdefs.http;
 
-import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
 import io.jtest.utils.clients.http.HttpClient;
@@ -36,8 +35,6 @@ public class HttpStepsTest {
     private ScenarioUtils scenarioUtils;
     @Spy
     private final ScenarioProps scenarioProps = new ScenarioProps();
-    @Spy
-    private final Cucumbers cucumbers = new Cucumbers(scenarioProps);
 
     private final HttpSteps httpSteps = new HttpSteps();
 
@@ -54,7 +51,7 @@ public class HttpStepsTest {
 
         doReturn(mockResponse).when(client).execute();
 
-        Whitebox.setInternalState(httpSteps, cucumbers);
+        Whitebox.setInternalState(httpSteps, scenarioProps);
         Whitebox.setInternalState(httpSteps, scenarioUtils);
     }
 

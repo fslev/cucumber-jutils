@@ -1,6 +1,6 @@
 package com.cucumber.utils.context.stepdefs;
 
-import com.cucumber.utils.context.Cucumbers;
+import com.cucumber.utils.context.ScenarioPropsUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
@@ -14,16 +14,14 @@ import java.util.Map;
 @ScenarioScoped
 public class ParamSteps {
 
-    private final Logger log = LogManager.getLogger();
-    @Inject
-    private Cucumbers cucumbers;
+    private static final Logger LOG = LogManager.getLogger();
     @Inject
     private ScenarioProps scenarioProps;
 
     @Given("param {}=\"{}\"")
     public void setParamString(String name, Object value) {
         scenarioProps.put(name, value);
-        log.debug("Param {} = {}", name, value);
+        LOG.debug("Param {} = {}", name, value);
     }
 
     @Given("param {}=")
@@ -33,27 +31,27 @@ public class ParamSteps {
 
     @Given("param {} from file path \"{}\"")
     public void setParamFromFile(String name, String filePath) {
-        setParamString(name, cucumbers.read(filePath));
+        setParamString(name, ScenarioPropsUtils.parse(filePath, scenarioProps));
     }
 
     @Given("load scenario props from file \"{}\"")
     public void loadScenarioPropertiesFromFile(String filePath) {
-        cucumbers.loadScenarioPropsFromFile(filePath);
+        ScenarioPropsUtils.loadPropsFromFile(filePath, scenarioProps);
     }
 
     @Given("load file \"{}\" to scenario property \"{}\"")
     public void loadScenarioPropertiesFromFile(String filePath, String propertyName) {
-        cucumbers.loadFileToScenarioProperty(filePath, propertyName);
+        ScenarioPropsUtils.loadFileAsScenarioProperty(filePath, scenarioProps, propertyName);
     }
 
     @Given("load all scenario props from dir \"{}\"")
     public void setScenarioPropertiesFromDir(String dirPath) {
-        cucumbers.loadScenarioPropsFromDir(dirPath);
+        ScenarioPropsUtils.loadPropsFromDir(dirPath, scenarioProps);
     }
 
     @Given("table {}=")
     public void setCustomDataTable(String name, List<Map<String, Object>> value) {
         scenarioProps.put(name, value);
-        log.debug("Param {} = {}", name, value);
+        LOG.debug("Param {} = {}", name, value);
     }
 }

@@ -1,6 +1,5 @@
 package com.cucumber.utils.context.stepdefs.sql;
 
-import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
 import io.jtest.utils.clients.database.SqlClient;
@@ -42,8 +41,6 @@ public class SqlStepsTest {
     private ScenarioUtils scenarioUtils;
     @Spy
     private final ScenarioProps scenarioProps = new ScenarioProps();
-    @Spy
-    private final Cucumbers cucumbers = new Cucumbers(scenarioProps);
 
     private final SqlSteps sqlSteps = new SqlSteps();
 
@@ -69,7 +66,7 @@ public class SqlStepsTest {
 
     @Before
     public void injectMocksIntoSqlSteps() {
-        Whitebox.setInternalState(sqlSteps, cucumbers);
+        Whitebox.setInternalState(sqlSteps, scenarioProps);
         Whitebox.setInternalState(sqlSteps, scenarioUtils);
         Whitebox.setInternalState(sqlSteps, sqlClient);
     }

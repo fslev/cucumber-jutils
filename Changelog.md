@@ -1,7 +1,10 @@
 # Changelog
 
-### 6.8-SNAPSHOT
+### 6.9-SNAPSHOT
+
+### 6.8
 Refactor HTTP steps    
+Remove redundant Cucumbers class. Use ObjectMatcher and ScenarioPropsUtils classes instead.       
 
 ### 6.7
 Upgrade dependencies  

@@ -11,21 +11,21 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 
 @ScenarioScoped
 public class ScenarioUtils {
-    private final Logger log = LogManager.getLogger();
+    private final static Logger LOG = LogManager.getLogger();
     private Scenario scenario;
 
     @Before(order = Integer.MIN_VALUE)
     public void init(Scenario scenario) {
         this.scenario = scenario;
-        log.info("Prepared scenario: [{}]", scenario.getName());
+        LOG.info("Prepared scenario: [{}]", scenario.getName());
     }
 
     @After(order = Integer.MIN_VALUE)
     public void finish(Scenario scenario) {
         if (Status.PASSED.equals(scenario.getStatus())) {
-            log.info("{} | Scenario [{}]", scenario.getStatus(), scenario.getName());
+            LOG.info("{} | Scenario [{}]", scenario.getStatus(), scenario.getName());
         } else
-            log.info("{} | Scenario [{}] \n {}:{}", scenario.getStatus(), scenario.getName(),
+            LOG.info("{} | Scenario [{}] \n {}:{}", scenario.getStatus(), scenario.getName(),
                     scenario.getUri(), scenario.getLine());
     }
 

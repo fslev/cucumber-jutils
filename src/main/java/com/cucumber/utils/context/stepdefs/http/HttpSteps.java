@@ -1,12 +1,13 @@
 package com.cucumber.utils.context.stepdefs.http;
 
-import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
+import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.jtest.utils.clients.http.HttpClient;
 import io.jtest.utils.clients.http.Method;
+import io.jtest.utils.matcher.ObjectMatcher;
 import org.apache.http.client.methods.CloseableHttpResponse;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class HttpSteps {
 
     @Inject
-    private Cucumbers cucumbers;
+    private ScenarioProps scenarioProps;
     @Inject
     private ScenarioUtils scenarioUtils;
 
@@ -29,7 +30,7 @@ public class HttpSteps {
             builder.entity(entity);
         }
         try (CloseableHttpResponse response = builder.build().execute()) {
-            cucumbers.compareHttpResponse(null, expected, response);
+            scenarioProps.putAll(ObjectMatcher.matchHttpResponse(null, expected, response));
         }
     }
 }

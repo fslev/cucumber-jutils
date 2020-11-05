@@ -1,10 +1,12 @@
 package com.cucumber.utils.context.stepdefs;
 
-import com.cucumber.utils.context.Cucumbers;
+import com.cucumber.utils.context.ScenarioPropsUtils;
 import com.cucumber.utils.context.ScenarioUtils;
+import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
+import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
 
 import java.util.List;
@@ -17,20 +19,20 @@ import static org.junit.Assert.assertNull;
 public class CompareSteps {
 
     @Inject
-    private Cucumbers cucumbers;
+    private ScenarioProps scenarioProps;
     @Inject
     private ScenarioUtils logger;
 
     @Then("COMPARE {} with \"{}\"")
     public void compare(Object expected, Object actual) {
         logger.log("    Compare:\n{}\n    Against:\n{}", expected, actual);
-        cucumbers.compare(expected, actual);
+        scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
     @Then("COMPARE {} with \"{}\" using matchConditions={}")
     public void compare(Object expected, Object actual, Set<MatchCondition> matchConditions) {
         logger.log("    Compare:\n{}\n    Against:\n{}\n    with match conditions: {}", expected, actual, matchConditions);
-        cucumbers.compare(expected, actual, matchConditions.toArray(new MatchCondition[0]));
+        scenarioProps.putAll(ObjectMatcher.match(null, expected, actual, matchConditions.toArray(new MatchCondition[0])));
     }
 
     @Then("COMPARE {} with NULL")
@@ -43,7 +45,7 @@ public class CompareSteps {
     public void compareNegativeWithString(Object expected, Object actual) {
         logger.log("    Negative Compare:\n{}\n    Against:\n{}", expected, actual);
         try {
-            cucumbers.compare(expected, actual);
+            scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
         } catch (AssertionError e) {
             logger.log("Assertion Error caught. Negative compare passes {}", e.getMessage());
             return;
@@ -53,7 +55,7 @@ public class CompareSteps {
 
     @Then("COMPARE {} with content from path \"{}\"")
     public void compareWithContentFromFilepath(Object expected, String filePath) {
-        compare(expected, cucumbers.read(filePath));
+        compare(expected, ScenarioPropsUtils.parse(filePath, scenarioProps));
     }
 
     @Then("COMPARE {} with")
@@ -69,6 +71,6 @@ public class CompareSteps {
     @Then("COMPARE {} with table")
     public void compareWithDataTable(Object expected, List<Map<String, Object>> actual) {
         logger.log("    Compare:\n{}\n    Against:\n{}", expected, actual);
-        cucumbers.compare(expected, actual);
+        scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
 }

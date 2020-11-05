@@ -1,6 +1,5 @@
 package com.cucumber.utils.features.stepdefs.compare;
 
-import com.cucumber.utils.context.Cucumbers;
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -10,6 +9,7 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.jtest.utils.clients.http.wrappers.HttpResponseWrapper;
 import io.jtest.utils.common.XmlUtils;
+import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
@@ -29,8 +29,6 @@ public class HttpCompareSteps {
 
     @Inject
     private ScenarioProps scenarioProps;
-    @Inject
-    private Cucumbers cucumbers;
     @Inject
     private ScenarioUtils scenarioUtils;
 
@@ -53,7 +51,7 @@ public class HttpCompareSteps {
         }
         mock.setEntity(entity);
         actual.getHeaders().forEach((k, v) -> mock.setHeader(new BasicHeader(k, v)));
-        cucumbers.compareHttpResponse(message, expectedJson, mock, matchConditions.toArray(new MatchCondition[0]));
+        scenarioProps.putAll(ObjectMatcher.matchHttpResponse(message, expectedJson, mock, matchConditions.toArray(new MatchCondition[0])));
     }
 
     @Given("Poll Http Response and Compare {} against {} with matchConditions={} and message={}")
@@ -75,14 +73,13 @@ public class HttpCompareSteps {
         mock.setEntity(entity);
         actual.getHeaders().forEach((k, v) -> mock.setHeader(new BasicHeader(k, v)));
         final AtomicInteger a = new AtomicInteger();
-        cucumbers.pollAndCompareHttpResponse(message, expectedJson, 5, 100L, 1.5,
-                () -> {
+        scenarioProps.putAll(ObjectMatcher.pollAndMatchHttpResponse(message, expectedJson, () -> {
                     if (a.getAndIncrement() < 5) {
                         return new DefaultHttpResponseFactory().newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, 200, "mock"), new BasicHttpContext());
                     } else {
                         return mock;
                     }
-                },
-                matchConditions.toArray(new MatchCondition[0]));
+                }, 5, 100L, 1.5,
+                matchConditions.toArray(new MatchCondition[0])));
     }
 }

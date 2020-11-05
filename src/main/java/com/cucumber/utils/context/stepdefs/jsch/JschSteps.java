@@ -1,6 +1,6 @@
 package com.cucumber.utils.context.stepdefs.jsch;
 
-import com.cucumber.utils.context.Cucumbers;
+import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.After;
@@ -9,6 +9,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.jtest.utils.clients.jsch.JschClient;
 import io.jtest.utils.common.ResourceUtils;
+import io.jtest.utils.matcher.ObjectMatcher;
 
 import java.util.Properties;
 
@@ -18,7 +19,7 @@ public class JschSteps {
     private JschClient client;
 
     @Inject
-    private Cucumbers cucumbers;
+    private ScenarioProps scenarioProps;
 
     @Given("JSCH connection from properties file \"{}\"")
     public void init(String relFilePath) {
@@ -40,7 +41,7 @@ public class JschSteps {
     @Then("JSCH execute command \"{}\" and check response=\"{}\"")
     public void executeCmd(String cmd, String expected) {
         String actual = this.client.sendCommand(cmd).trim();
-        cucumbers.compare(expected, actual);
+        scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
     @After("@jsch_cleanup")
