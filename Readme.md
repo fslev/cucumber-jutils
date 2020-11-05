@@ -1,5 +1,9 @@
 # Cucumber JUtils
 
+![Build status](https://github.com/fslev/cucumber-utils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-utils/badge.svg?branch=master)](https://coveralls.io/github/fslev/cucumber-utils?branch=master)
+
+
 Cucumber Utils has been renamed to Cucumber JUtils
 
 # Summary
