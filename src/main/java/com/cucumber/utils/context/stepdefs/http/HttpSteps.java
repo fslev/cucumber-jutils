@@ -20,7 +20,7 @@ public class HttpSteps {
     @Inject
     private ScenarioUtils scenarioUtils;
 
-    @Given("HTTP Execute REST service with url={}, method={}, queryParams={}, headers={}, entity={} and check response={}")
+    @Given("HTTP Execute REST API with url={}, method={}, queryParams={}, headers={}, entity={} and check response={}")
     public void executeAndCompare(String url, Method method, Map<String, String> queryParams, Map<String, String> headers,
                                   String entity, String expected) throws IOException {
         scenarioUtils.log("{} {}\nQuery params: {}\nHeaders: {}\nEntity: {}", method, url, queryParams, headers, entity);
