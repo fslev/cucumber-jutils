@@ -77,12 +77,34 @@ public class SqlStepsTest {
     }
 
     @Test
-    public void testSqlSteps() throws SQLException {
+    public void testExecuteAndCompareWithObject() throws SQLException {
         List<Map<String, Object>> expectedResult = new ArrayList<>();
         expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
         sqlSteps.executeQueryAndCompare("does not matter", expectedResult);
+        assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
+        assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
+    }
+
+    @Test
+    public void testExecuteAndCompareWithJson() throws SQLException {
+        List<Map<String, Object>> expectedResult = new ArrayList<>();
+        expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
+        expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
+        expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
+        sqlSteps.executeQueryAndCompareWithJson("does not matter", expectedResult);
+        assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
+        assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
+    }
+
+    @Test
+    public void testExecuteAndCompareWithTable() throws SQLException {
+        List<Map<String, Object>> expectedResult = new ArrayList<>();
+        expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
+        expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
+        expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
+        sqlSteps.executeQueryAndCompareWithTable("does not matter", expectedResult);
         assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
     }
