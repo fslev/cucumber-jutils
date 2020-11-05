@@ -1,5 +1,8 @@
 # Changelog
 
+### 6.8-SNAPSHOT
+Refactor HTTP steps    
+
 ### 6.7
 Upgrade dependencies  
 
