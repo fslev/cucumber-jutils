@@ -1,8 +1,9 @@
 # Changelog
 
-### 6.9-SNAPSHOT
-Upgrade dependencies  
+### 6.10-SNAPSHOT
 
+### 6.9
+Upgrade dependencies  
 
 ### 6.8
 Refactor HTTP steps    
