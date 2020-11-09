@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.10-SNAPSHOT
+Log warning when SpEL expression is invalid  
 
 ### 6.9
 Upgrade dependencies  
