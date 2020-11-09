@@ -1,6 +1,8 @@
 # Changelog
 
-### 6.10-SNAPSHOT
+### 6.11-SNAPSHOT  
+
+### 6.10
 Log warning when SpEL expression is invalid  
 Upgrade jtest-utils (refactored http client)  
 
