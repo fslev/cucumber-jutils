@@ -25,7 +25,7 @@ public class HttpSteps {
     public void executeAndCompare(String url, Method method, Map<String, String> queryParams, Map<String, String> headers,
                                   String entity, String expected) throws IOException {
         scenarioUtils.log("{} {}\nQuery params: {}\nHeaders: {}\nEntity: {}", method, url, queryParams, headers, entity);
-        HttpClient.Builder builder = new HttpClient.Builder().address(url).method(method).setQueryParams(queryParams).setHeaders(headers);
+        HttpClient.Builder builder = new HttpClient.Builder().address(url).method(method).queryParams(queryParams).headers(headers);
         if (entity != null) {
             builder.entity(entity);
         }
