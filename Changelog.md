@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.11-SNAPSHOT  
+### 6.12-SNAPSHOT  
+
+### 6.11  
+Upgrade jtest-utils (http client - accepts nullables)    
 
 ### 6.10
 Log warning when SpEL expression is invalid  
