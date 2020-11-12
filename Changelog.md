@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.12-SNAPSHOT  
+Log scenario parameters setup   
 
 ### 6.11  
 Upgrade jtest-utils (http client - accepts nullables)    
