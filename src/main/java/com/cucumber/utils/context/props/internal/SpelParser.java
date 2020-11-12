@@ -18,7 +18,6 @@ public class SpelParser {
     public static final Pattern captureGroupPattern = Pattern.compile(Pattern.quote(PREFIX) + "(.*?)" + Pattern.quote(SUFFIX),
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
-
     public static Object parse(String source) {
         if (source == null || source.isEmpty()) {
             return source;
