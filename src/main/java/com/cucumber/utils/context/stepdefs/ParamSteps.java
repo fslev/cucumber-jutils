@@ -1,6 +1,7 @@
 package com.cucumber.utils.context.stepdefs;
 
 import com.cucumber.utils.context.ScenarioPropsUtils;
+import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
@@ -17,10 +18,13 @@ public class ParamSteps {
     private static final Logger LOG = LogManager.getLogger();
     @Inject
     private ScenarioProps scenarioProps;
+    @Inject
+    private ScenarioUtils scenarioUtils;
 
     @Given("param {}=\"{}\"")
     public void setParamString(String name, Object value) {
         scenarioProps.put(name, value);
+        scenarioUtils.log("param {} = {}", name, value);
         LOG.debug("Param {} = {}", name, value);
     }
 
@@ -52,6 +56,7 @@ public class ParamSteps {
     @Given("table {}=")
     public void setCustomDataTable(String name, List<Map<String, Object>> value) {
         scenarioProps.put(name, value);
+        scenarioUtils.log("param {} = {}", name, value);
         LOG.debug("Param {} = {}", name, value);
     }
 }
