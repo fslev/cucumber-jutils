@@ -1,7 +1,10 @@
 # Changelog
 
-### 6.12-SNAPSHOT  
-Log scenario parameters setup   
+### 6.13-SNAPSHOT
+
+### 6.12  
+Log scenario parameters setup  
+Upgrade dependencies   
 
 ### 6.11  
 Upgrade jtest-utils (http client - accepts nullables)    
