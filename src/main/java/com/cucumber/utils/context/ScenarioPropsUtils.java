@@ -106,7 +106,7 @@ public final class ScenarioPropsUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        map.forEach((k, v) -> scenarioProps.put(k, v));
+        map.forEach(scenarioProps::put);
         LOG.debug("-> Loaded scenario properties from file '{}'", filePath);
         return map.keySet();
     }

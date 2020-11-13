@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.13-SNAPSHOT
+Refactoring  
 
 ### 6.12  
 Log scenario parameters setup  
