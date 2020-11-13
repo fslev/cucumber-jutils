@@ -2,6 +2,7 @@
 
 ### 6.13-SNAPSHOT
 Refactoring  
+Make object mapper static  
 
 ### 6.12  
 Log scenario parameters setup  

@@ -21,9 +21,9 @@ public class ParameterTypesConfig {
 
     @Inject
     private ScenarioProps scenarioProps;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    {
+    static {
         objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
     }
 
