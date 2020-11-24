@@ -23,7 +23,7 @@
         <guice.version>4.2.3</guice.version>
         <surefire.version>2.22.2</surefire.version>
         <spring-expression-version>5.3.1</spring-expression-version>
-        <jtest.utils.version>1.4</jtest.utils.version>
+        <jtest.utils.version>1.5</jtest.utils.version>
     </properties>
 
     <dependencies>

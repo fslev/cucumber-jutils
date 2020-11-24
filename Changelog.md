@@ -1,8 +1,11 @@
 # Changelog
 
-### 6.13-SNAPSHOT
+### 6.14-SNAPSHOT
+
+### 6.13
 Refactoring  
 Make object mapper static  
+Upgrade dependencies  
 
 ### 6.12  
 Log scenario parameters setup  
