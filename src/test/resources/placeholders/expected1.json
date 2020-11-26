@@ -4,8 +4,6 @@
   #[
   body
 ],
-"headers": {
-"Content-type": "#[contentType]",
-"Accept": "#[accept]"
-}
+"headers": [{"Content-type": "#[contentType]"},
+{"Accept": "#[accept]"}]
 }

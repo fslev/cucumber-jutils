@@ -50,7 +50,7 @@ public class HttpCompareSteps {
             }
         }
         mock.setEntity(entity);
-        actual.getHeaders().forEach((k, v) -> mock.setHeader(new BasicHeader(k, v)));
+        actual.getHeaders().forEach(h -> mock.setHeader(new BasicHeader(h.getKey(), h.getValue())));
         scenarioProps.putAll(ObjectMatcher.matchHttpResponse(message, expectedJson, mock, matchConditions.toArray(new MatchCondition[0])));
     }
 
@@ -71,7 +71,7 @@ public class HttpCompareSteps {
             }
         }
         mock.setEntity(entity);
-        actual.getHeaders().forEach((k, v) -> mock.setHeader(new BasicHeader(k, v)));
+        actual.getHeaders().forEach(h -> mock.setHeader(new BasicHeader(h.getKey(), h.getValue())));
         final AtomicInteger a = new AtomicInteger();
         scenarioProps.putAll(ObjectMatcher.pollAndMatchHttpResponse(message, expectedJson, () -> {
                     if (a.getAndIncrement() < 5) {

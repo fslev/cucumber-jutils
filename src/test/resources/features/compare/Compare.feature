@@ -225,10 +225,10 @@ Feature: Test comparator
       "body": {
         "orderType": "KVM"
       },
-      "headers": {
-        "Content-type": "application/json",
-        "Accept": "application/json"
-      }
+      "headers": [{
+        "Content-type": "application/json"},
+        {"Accept": "application/json"}
+      ]
     }
     """
     And COMPARE #[expected] with content from path "placeholders/actual1.json"

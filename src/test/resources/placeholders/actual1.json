@@ -3,8 +3,12 @@
   "body": {
     "orderType": "KVM"
   },
-  "headers": {
-    "Content-type": "#[contentType]",
-    "Accept": "#[accept]"
-  }
+  "headers": [
+    {
+      "Content-type": "#[contentType]"
+    },
+    {
+      "Accept": "#[accept]"
+    }
+  ]
 }
