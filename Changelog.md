@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.15-SNAPSHOT
+### 6.16-SNAPSHOT
+
+### 6.15
+Upgrade dependencies  
 
 ### 6.14
 Upgrade jtest-utils -> HTTP response headers are Set<Map.Entry> instead of Map  
