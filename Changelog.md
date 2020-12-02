@@ -1,6 +1,7 @@
 # Changelog
 
-### 6.17-SNAPSHOT
+### 6.17
+Upgrade Json Compare  
 
 ### 6.16
 Refactor assertion error message  
