@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.16-SNAPSHOT
+### 6.17-SNAPSHOT
+
+### 6.16
+Refactor assertion error message  
 
 ### 6.15
 Upgrade dependencies  
