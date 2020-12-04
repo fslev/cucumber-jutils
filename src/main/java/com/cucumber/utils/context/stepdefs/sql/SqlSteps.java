@@ -135,7 +135,7 @@ public class SqlSteps {
                 }
             });
         } finally {
-            this.client.connect();
+            this.client.close();
         }
     }
 }
