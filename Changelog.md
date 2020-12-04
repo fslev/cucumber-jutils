@@ -2,6 +2,7 @@
 
 ### 6.17
 Upgrade Json Compare  
+Log loaded scenario properties  
 
 ### 6.16
 Refactor assertion error message  

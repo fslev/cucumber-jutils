@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @ScenarioScoped
 public class ParamSteps {
@@ -40,17 +41,20 @@ public class ParamSteps {
 
     @Given("load scenario props from file \"{}\"")
     public void loadScenarioPropertiesFromFile(String filePath) {
-        ScenarioPropsUtils.loadPropsFromFile(filePath, scenarioProps);
+        Set<String> propertyNames = ScenarioPropsUtils.loadPropsFromFile(filePath, scenarioProps);
+        scenarioUtils.log("Loaded scenario properties having names: {}", propertyNames);
     }
 
     @Given("load file \"{}\" to scenario property \"{}\"")
     public void loadScenarioPropertiesFromFile(String filePath, String propertyName) {
         ScenarioPropsUtils.loadFileAsScenarioProperty(filePath, scenarioProps, propertyName);
+        scenarioUtils.log("Loaded scenario property with name: {}", propertyName);
     }
 
     @Given("load all scenario props from dir \"{}\"")
     public void setScenarioPropertiesFromDir(String dirPath) {
-        ScenarioPropsUtils.loadPropsFromDir(dirPath, scenarioProps);
+        Set<String> propertyNames = ScenarioPropsUtils.loadPropsFromDir(dirPath, scenarioProps);
+        scenarioUtils.log("Loaded scenario properties having names: {}", propertyNames);
     }
 
     @Given("table {}=")
