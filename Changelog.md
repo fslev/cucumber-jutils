@@ -1,8 +1,14 @@
 # Changelog
 
+### 6.19-SNAPSHOT
+
+### 6.18
+Refactoring  
+Log loaded scenario properties  
+Upgrade dependencies  
+
 ### 6.17
 Upgrade Json Compare  
-Log loaded scenario properties  
 
 ### 6.16
 Refactor assertion error message  
