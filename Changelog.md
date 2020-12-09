@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.19-SNAPSHOT
+Upgrade dependencies  
 
 ### 6.18
 Refactoring  
