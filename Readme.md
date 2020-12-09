@@ -27,7 +27,7 @@ Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ```  
 
 #### Included dependencies that are worth mentioning:
-* [**jtest-utils**](https://github.com/fslev/jtest-utils)
+[**Jtest-Utils**](https://github.com/fslev/jtest-utils)
 
 # Configuration
 In order to integrate **cucumber-jutils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
