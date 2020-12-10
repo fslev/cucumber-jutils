@@ -7,6 +7,7 @@ import io.jtest.utils.common.ResourceUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -74,7 +75,7 @@ public final class ScenarioPropsUtils {
         }
     }
 
-    public static String loadFileAsScenarioProperty(String filePath, ScenarioProps scenarioProps, String propertyName) {
+    public static String loadFileAsScenarioProperty(String filePath, ScenarioProps scenarioProps, @Nullable String propertyName) {
         try {
             String fileName = ResourceUtils.getFileName(filePath);
             if (Arrays.stream(propertyFileExtensions())

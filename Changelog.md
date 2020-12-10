@@ -2,6 +2,7 @@
 
 ### 6.19-SNAPSHOT
 Upgrade dependencies  
+Refactor code  
 
 ### 6.18
 Refactoring  
