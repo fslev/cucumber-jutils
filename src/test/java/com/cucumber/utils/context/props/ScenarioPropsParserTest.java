@@ -1,13 +1,13 @@
 package com.cucumber.utils.context.props;
 
-import com.cucumber.utils.context.props.internal.SpelParser;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ScenarioPropsParserTest {
 
@@ -159,10 +159,5 @@ public class ScenarioPropsParserTest {
     public void testEmptySpel() {
         String s = "#{}";
         assertEquals("#{}", ScenarioPropsParser.parse(s, scenarioProps));
-    }
-
-    @Test
-    public void testSpELWhichGeneratesNull() {
-        assertNull(SpelParser.parse("#{T(com.cucumber.utils.context.props.internal.SpelParserTest).returnsNull()}"));
     }
 }

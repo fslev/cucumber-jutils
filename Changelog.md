@@ -3,6 +3,7 @@
 ### 6.19-SNAPSHOT
 Upgrade dependencies  
 Refactor code  
+Move SpELParser to jtest-utils  
 
 ### 6.18
 Refactoring  

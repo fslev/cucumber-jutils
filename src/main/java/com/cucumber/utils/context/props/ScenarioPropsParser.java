@@ -1,14 +1,14 @@
 package com.cucumber.utils.context.props;
 
 import com.cucumber.utils.context.props.internal.ScenarioPropsSubstitutor;
-import com.cucumber.utils.context.props.internal.SpelParser;
+import io.jtest.utils.common.SpELParser;
 
 public class ScenarioPropsParser {
 
     public static Object parse(String source, ScenarioProps scenarioProps) {
         Object o = ScenarioPropsSubstitutor.replace(source, scenarioProps);
         if (o instanceof String) {
-            return SpelParser.parse(o.toString());
+            return SpELParser.parse(o.toString());
         }
         return o;
     }

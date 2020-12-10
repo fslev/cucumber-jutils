@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.fslev</groupId>
@@ -22,8 +23,7 @@
         <cucumber.version>6.9.0</cucumber.version>
         <guice.version>4.2.3</guice.version>
         <surefire.version>2.22.2</surefire.version>
-        <spring-expression-version>5.3.2</spring-expression-version>
-        <jtest.utils.version>1.10</jtest.utils.version>
+        <jtest.utils.version>1.11</jtest.utils.version>
     </properties>
 
     <dependencies>
@@ -58,11 +58,6 @@
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
-            <version>${spring-expression-version}</version>
         </dependency>
         <!-- Test dependencies -->
         <dependency>
