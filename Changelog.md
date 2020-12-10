@@ -1,6 +1,8 @@
 # Changelog
 
-### 6.19-SNAPSHOT
+### 6.20-SNAPSHOT
+
+### 6.19
 Upgrade dependencies  
 Refactor code  
 Move SpELParser to jtest-utils  
