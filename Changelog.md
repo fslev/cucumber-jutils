@@ -1,6 +1,8 @@
 # Changelog
 
-### 6.20-SNAPSHOT
+### 6.21-SNAPSHOT
+
+### 6.20
 Fix short-random predefined scenario property  
 Add int-random predefined scenario property  
 
