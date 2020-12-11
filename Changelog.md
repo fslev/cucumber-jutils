@@ -1,6 +1,8 @@
 # Changelog
 
 ### 6.20-SNAPSHOT
+Fix short-random predefined scenario property  
+Add int-random predefined scenario property  
 
 ### 6.19
 Upgrade dependencies  

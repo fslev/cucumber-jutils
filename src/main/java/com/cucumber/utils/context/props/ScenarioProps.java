@@ -28,7 +28,9 @@ public class ScenarioProps {
             case "now":
                 return System.currentTimeMillis();
             case "short-random":
-                return (int) (Math.random() * (Short.MAX_VALUE - Short.MIN_VALUE));
+                return (int) (Math.random() * (Short.MAX_VALUE));
+            case "int-random":
+                return (int) (Math.random() * (Integer.MAX_VALUE));
             default:
                 return props.get(trimmedKey) instanceof String ?
                         ScenarioPropsParser.parse(props.get(trimmedKey).toString(), this) : props.get(trimmedKey);
