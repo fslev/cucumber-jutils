@@ -1,6 +1,10 @@
 # Changelog
 
-### 6.21-SNAPSHOT
+### 6.22-SNAPSHOT
+
+### 6.21
+Upgrade dependencies  
+Refactored and enhanced shell client   
 
 ### 6.20
 Fix short-random predefined scenario property  

@@ -20,7 +20,7 @@ public class ShellSteps {
     @Then("SHELL execute command \"{}\" and check response=\"{}\"")
     public void executeAndCompare(String cmd, String expected) {
         logger.log("    Execute cmd:\n{}\n    And compare response with:\n{}", cmd, expected);
-        String actual = shellClient.command("bash", "-c", cmd).trim();
+        String actual = shellClient.execute("bash", "-c", cmd).trim();
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
 }
