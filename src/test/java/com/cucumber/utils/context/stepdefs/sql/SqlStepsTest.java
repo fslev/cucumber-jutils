@@ -72,45 +72,45 @@ public class SqlStepsTest {
     }
 
     @Test
-    public void testExecuteAndCompareWithObject() throws SQLException {
+    public void testExecuteAndMatchWithObject() throws SQLException {
         List<Map<String, Object>> expectedResult = new ArrayList<>();
         expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
-        sqlSteps.executeQueryAndCompare("does not matter", expectedResult);
+        sqlSteps.executeQueryAndMatch("does not matter", expectedResult);
         assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
     }
 
     @Test
-    public void testExecuteAndCompareWithJson() throws SQLException {
+    public void testExecuteAndMatchWithJson() throws SQLException {
         List<Map<String, Object>> expectedResult = new ArrayList<>();
         expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
-        sqlSteps.executeQueryAndCompareWithJson("does not matter", expectedResult);
+        sqlSteps.executeQueryAndMatchWithJson("does not matter", expectedResult);
         assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
     }
 
     @Test
-    public void testExecuteAndCompareWithTable() throws SQLException {
+    public void testExecuteAndMatchWithTable() throws SQLException {
         List<Map<String, Object>> expectedResult = new ArrayList<>();
         expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
-        sqlSteps.executeQueryAndCompareWithTable("does not matter", expectedResult);
+        sqlSteps.executeQueryAndMatchWithTable("does not matter", expectedResult);
         assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
     }
 
     @Test
-    public void testExecutePollAndCompare() throws SQLException {
+    public void testExecutePollAndMatch() throws SQLException {
         List<Map<String, Object>> expectedResult = new ArrayList<>();
         expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
-        sqlSteps.executeQueryAndPollAndCompare("does not matter", 10, expectedResult);
+        sqlSteps.executeQueryAndPollAndMatch("does not matter", 10, expectedResult);
         assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
     }

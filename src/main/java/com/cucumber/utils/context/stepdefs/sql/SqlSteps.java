@@ -45,18 +45,18 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL execute query \"{}\" and compare result with {}")
-    public void executeQueryAndCompareWithJson(String query, List<Map<String, Object>> expected) throws SQLException {
-        executeQueryAndCompare(query, expected);
+    @Then("SQL execute query \"{}\" and match result with {}")
+    public void executeQueryAndMatchWithJson(String query, List<Map<String, Object>> expected) throws SQLException {
+        executeQueryAndMatch(query, expected);
     }
 
-    @Then("SQL execute query \"{}\" and compare result with")
-    public void executeQueryAndCompareWithTable(String query, List<Map<String, Object>> expected) throws SQLException {
-        executeQueryAndCompare(query, expected);
+    @Then("SQL execute query \"{}\" and match result with")
+    public void executeQueryAndMatchWithTable(String query, List<Map<String, Object>> expected) throws SQLException {
+        executeQueryAndMatch(query, expected);
     }
 
-    public void executeQueryAndCompare(String query, Object expected) throws SQLException {
-        logger.log("Execute query '{}' and compare with: {}", query, expected);
+    public void executeQueryAndMatch(String query, Object expected) throws SQLException {
+        logger.log("Execute query '{}' and match with: {}", query, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -67,9 +67,9 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL execute query \"{}\" and poll for {int}s while comparing result with")
-    public void executeQueryAndPollAndCompare(String query, int pollDuration, List<Map<String, Object>> expected) throws SQLException {
-        logger.log("Execute query '{}', poll {}s while comparing with: {}", query, pollDuration, expected);
+    @Then("SQL execute query \"{}\" and poll for {int}s while matching result with")
+    public void executeQueryAndPollAndMatch(String query, int pollDuration, List<Map<String, Object>> expected) throws SQLException {
+        logger.log("Execute query '{}', poll {}s while matching with: {}", query, pollDuration, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
