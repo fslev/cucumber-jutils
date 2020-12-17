@@ -73,7 +73,7 @@ public class HttpCompareSteps {
         mock.setEntity(entity);
         actual.getHeaders().forEach(h -> mock.setHeader(new BasicHeader(h.getKey(), h.getValue())));
         final AtomicInteger a = new AtomicInteger();
-        scenarioProps.putAll(ObjectMatcher.pollAndMatchHttpResponse(message, expectedJson, () -> {
+        scenarioProps.putAll(ObjectMatcher.matchHttpResponse(message, expectedJson, () -> {
                     if (a.getAndIncrement() < 5) {
                         return new DefaultHttpResponseFactory().newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, 200, "mock"), new BasicHttpContext());
                     } else {

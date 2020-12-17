@@ -1,7 +1,9 @@
 # Changelog
 
-### 6.23-SNAPSHOT
+### 6.24-SNAPSHOT
 
+### 6.23
+Refactor polling mechanism  
 
 ### 6.22
 Refactor match steps  

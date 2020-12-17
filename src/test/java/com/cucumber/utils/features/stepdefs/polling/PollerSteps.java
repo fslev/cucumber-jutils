@@ -19,12 +19,12 @@ public class PollerSteps {
 
     @Then("poll until random generated number {int} is found")
     public void pollFor(int expected) {
-        ObjectMatcher.pollAndMatch(null, expected, this::generateRandom, 30, null, null);
+        ObjectMatcher.match(null, expected, this::generateRandom, 30, null, null);
     }
 
     @Then("poll {}s until 0=0")
     public void pollForZeroSeconds(int pollTimeoutInSeconds) {
-        ObjectMatcher.pollAndMatch(null, 0, () -> 0, pollTimeoutInSeconds, null, null);
+        ObjectMatcher.match(null, 0, () -> 0, pollTimeoutInSeconds, null, null);
     }
 
     public int generateRandom() {

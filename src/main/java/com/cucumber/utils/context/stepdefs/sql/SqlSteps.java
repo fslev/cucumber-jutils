@@ -68,12 +68,12 @@ public class SqlSteps {
     }
 
     @Then("SQL execute query \"{}\" and poll for {int}s while matching result with")
-    public void executeQueryAndPollAndMatch(String query, int pollDuration, List<Map<String, Object>> expected) throws SQLException {
-        logger.log("Execute query '{}', poll {}s while matching with: {}", query, pollDuration, expected);
+    public void executeQueryAndPollAndMatch(String query, int pollingDuration, List<Map<String, Object>> expected) throws SQLException {
+        logger.log("Execute query '{}', poll {}s while matching with: {}", query, pollingDuration, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            scenarioProps.putAll(ObjectMatcher.pollAndMatch(null, expected, () -> client.executeQueryAndGetRsAsList(), pollDuration,
+            scenarioProps.putAll(ObjectMatcher.match(null, expected, () -> client.executeQueryAndGetRsAsList(), pollingDuration,
                     null, null, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY));
         } finally {
             this.client.close();
