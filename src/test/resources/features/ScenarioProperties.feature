@@ -3,10 +3,10 @@ Feature: Test placeholder fill
   Scenario: Test scenario prop assigned to itself
     Given param a="test"
     And param a="#[a]"
-    Then COMPARE #[a] with "test"
+    Then Match #[a] with "test"
 
   Scenario Outline: Test scenario property from example table
-    * COMPARE <expected> with "<withProperties>"
+    * Match <expected> with "<withProperties>"
     Examples:
       | withProperties  | expected        |
       | val-with-#[now] | val-with-[0-9]+ |
@@ -78,11 +78,11 @@ Feature: Test placeholder fill
   if they reside in the same file, or inside the same argument
 
     Given param a="unique1-#[uid]-and-unique2-#[uid]"
-    When COMPARE unique1-~[val1]-and-unique2-~[val2] with "#[a]"
+    When Match unique1-~[val1]-and-unique2-~[val2] with "#[a]"
     # Two different values should be generated.
-    Then Negative COMPARE #[val1] with "#[val2]"
+    Then Negative match #[val1] with "#[val2]"
 
     Given load scenario props from file "placeholders/properties/jsonWithUids.json"
     # Same here, Two different values should be generated.
-    When COMPARE {"a":"~[val1]", "b":"~[val2]"} with "#[jsonWithUids]"
-    Then Negative COMPARE #[val1] with "#[val2]"
+    When Match {"a":"~[val1]", "b":"~[val2]"} with "#[jsonWithUids]"
+    Then Negative match #[val1] with "#[val2]"

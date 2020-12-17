@@ -2,11 +2,11 @@ Feature: Property File feature
 
   Scenario: Test property files are successfully loaded from dir inside scenario properties
     When load all scenario props from dir "props"
-    Then COMPARE 1 with "#[a]"
-    And COMPARE 2 with "#[b]"
-    And COMPARE 3 with "#[c]"
-    And COMPARE 4 with "#[d]"
-    And COMPARE 6 with "#[f]"
+    Then Match 1 with "#[a]"
+    And Match 2 with "#[b]"
+    And Match 3 with "#[c]"
+    And Match 4 with "#[d]"
+    And Match 6 with "#[f]"
 
   Scenario: Test property files are successfully loaded from each file inside scenario properties
     When load scenario props from file "props/dir1/a.xml"
@@ -17,13 +17,13 @@ Feature: Property File feature
     When load scenario props from file "props/dir1/p.properties"
     When load scenario props from file "props/dir1/y.yml"
 
-    Then COMPARE 1 with "#[a]"
-    And COMPARE 2 with "#[b]"
-    And COMPARE 3 with "#[c]"
-    And COMPARE 4 with "#[d]"
-    And COMPARE 6 with "#[f]"
-    And COMPARE lorem with "#[bar]"
-    And COMPARE foo test with "#[foo]"
+    Then Match 1 with "#[a]"
+    And Match 2 with "#[b]"
+    And Match 3 with "#[c]"
+    And Match 4 with "#[d]"
+    And Match 6 with "#[f]"
+    And Match lorem with "#[bar]"
+    And Match foo test with "#[foo]"
 
   Scenario: Test error when duplicated scenario property files are detected
     * Load duplicated scenario props from dir duplicated_file_props and expect exception

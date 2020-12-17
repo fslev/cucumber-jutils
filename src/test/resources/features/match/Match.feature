@@ -1,56 +1,56 @@
 Feature: Test comparator
 
-  Scenario: Compare with special characters
+  Scenario: Match with special characters
   This is/was a bug (https://github.com/cucumber/cucumber-jvm/issues/1881)
     Given param a="%"
     Given param b="%"
-    Then COMPARE #[a] with "#[b]"
+    Then Match #[a] with "#[b]"
 
-  Scenario: Compare characters with slashes against assign variable
+  Scenario: Match characters with slashes against assign variable
     Given param a="~[var]"
     Given param b="/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
-    Then COMPARE #[a] with "#[b]"
-    And COMPARE #[var] with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
+    Then Match #[a] with "#[b]"
+    And Match #[var] with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
 
-  Scenario: Compare with new lines
+  Scenario: Match with new lines
     Given param a="test\n"
     And param b=
     """
     test
 
     """
-    Then COMPARE #[a] with "#[b]"
+    Then Match #[a] with "#[b]"
     When param b=
     """
     test
     some other values
     """
-    Then Negative COMPARE #[a] with "#[b]"
-    And COMPARE #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
+    Then Negative match #[a] with "#[b]"
+    And Match #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
     When param a="test\n.*"
-    Then COMPARE #[a] with "#[b]"
+    Then Match #[a] with "#[b]"
 
-  Scenario: Compare simple values
+  Scenario: Match simple values
     Given param a="1"
     Given param a="1"
     And param b="1"
-    Then COMPARE #[a] with "#[b]"
-    And COMPARE 1 with "1"
+    Then Match #[a] with "#[b]"
+    And Match 1 with "1"
 
-  Scenario: Compare values with inner quotes
+  Scenario: Match values with inner quotes
     Given param expected="te"st"
     Given param actual=
     """
     te"st
     """
-    Then COMPARE #[expected] with "#[actual]"
+    Then Match #[expected] with "#[actual]"
 
-  Scenario: Compare simple values negative
+  Scenario: Match simple values negative
     Given param a="1"
     And param b="2"
-    Then Negative COMPARE #[a] with "#[b]"
+    Then Negative match #[a] with "#[b]"
 
-  Scenario: Compare jsons
+  Scenario: Match jsons
     Given param a="da"
     And param b="oho"
     Given param json1 =
@@ -69,9 +69,9 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
-    Then COMPARE #[json1] with "#[json2]"
-    And COMPARE #[car] with "BMW"
-    Then COMPARE #[json1] with
+    Then Match #[json1] with "#[json2]"
+    And Match #[car] with "BMW"
+    Then Match #[json1] with
     """
   {
 	"name": "John",
@@ -80,7 +80,7 @@ Feature: Test comparator
   }
     """
 
-  Scenario: Compare jsons with match conditions
+  Scenario: Match jsons with match conditions
     Given param json1 =
     """
   {
@@ -97,9 +97,9 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat","Other"]
   }
     """
-    Then COMPARE #[json1] with "#[json2]" using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
+    Then Match #[json1] with "#[json2]" using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
 
-  Scenario: Compare Jsons with escaped values
+  Scenario: Match Jsons with escaped values
     Given param json1 =
     """
   { "b": "~[val1]" }
@@ -113,11 +113,11 @@ Feature: Test comparator
     """
   { "b": "\\Q#[val1]\\E" }
     """
-    Then COMPARE #[json1] with "#[json2]"
-    And COMPARE #[expectedResultedJson] with "#[json2]"
+    Then Match #[json1] with "#[json2]"
+    And Match #[expectedResultedJson] with "#[json2]"
     And Compare JSON #[expectedResultedJson] with #[json2]
 
-  Scenario: Compare jsons negative
+  Scenario: Match jsons negative
     Given param json1 =
     """
   {
@@ -134,14 +134,14 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
-    Then Negative COMPARE #[json1] with "#[json2]"
+    Then Negative match #[json1] with "#[json2]"
 
-  Scenario: Compare big JSONs
+  Scenario: Match big JSONs
     When load all scenario props from dir "props/bigJsons"
-    Then COMPARE #[expectedLargeJson] with "#[actualLargeJson]"
-    Then Negative COMPARE #[expectedWrongLargeJson] with "#[actualLargeJson]"
+    Then Match #[expectedLargeJson] with "#[actualLargeJson]"
+    Then Negative match #[expectedWrongLargeJson] with "#[actualLargeJson]"
 
-  Scenario: Compare data tables
+  Scenario: Match data tables
     Given param a="replaced_value"
     And table expectedTable=
       | firstName | lastName |
@@ -149,21 +149,21 @@ Feature: Test comparator
       | sam       | .*       |
       | bruce     | ~[name]  |
 
-    Then COMPARE #[expectedTable] with table
+    Then Match #[expectedTable] with table
       | firstName      | lastName |
       | replaced_value | travolta |
       | sam            | carter   |
       | bruce          | willis   |
-    And COMPARE #[name] with "willis"
+    And Match #[name] with "willis"
 
-  Scenario: Compare data tables with empty string and null values against JSON
+  Scenario: Match data tables with empty string and null values against JSON
     Given param a="replaced_value"
     And table expectedTable=
       | firstName | lastName |
       | #[a]      | [_blank] |
       | sam       | .*       |
       |           | ~[name]  |
-    Then COMPARE #[expectedTable] with
+    Then Match #[expectedTable] with
     """
       [
         {"firstName": "replaced_value","lastName":""},
@@ -172,19 +172,19 @@ Feature: Test comparator
       ]
     """
 
-  Scenario: Compare empty null value data tables
+  Scenario: Match empty null value data tables
     Given table empty_table=
       |  |
-    Then COMPARE #[empty_table] with table
+    Then Match #[empty_table] with table
       |  |
 
-  Scenario: Compare empty data tables
+  Scenario: Match empty data tables
     Given table empty_table=
       | [_blank] |
-    Then COMPARE #[empty_table] with table
+    Then Match #[empty_table] with table
       | [_blank] |
 
-  Scenario: Compare lists
+  Scenario: Match lists
     Given param a="cherries"
     And param header="fruits"
     And table expectedTable1=
@@ -196,16 +196,16 @@ Feature: Test comparator
       | .*           |
       | strawberries |
 
-    Then COMPARE #[expectedTable1] with table
+    Then Match #[expectedTable1] with table
       | apples | strawberries | pineapples | cherries |
-    And COMPARE #[expectedTable2] with table
+    And Match #[expectedTable2] with table
       | #[header]    |
       | apples       |
       | strawberries |
       | pineapples   |
       | cherries     |
 
-  Scenario: Compare resource content containing placeholders
+  Scenario: Match resource content containing placeholders
     Given param status="200"
     And param contentType="application/json"
     And param accept="application/json"
@@ -218,7 +218,7 @@ Feature: Test comparator
     """
     # a nice un-intended feature: #[body] is defined on multiple lines
     And param expected from file path "placeholders/expected1.json"
-    Then COMPARE #[expected] with
+    Then Match #[expected] with
     """
     {
       "status": #[status],
@@ -231,13 +231,13 @@ Feature: Test comparator
       ]
     }
     """
-    And COMPARE #[expected] with content from path "placeholders/actual1.json"
+    And Match #[expected] with content from path "placeholders/actual1.json"
 
-  Scenario: Compare empty values
+  Scenario: Match empty values
     Given param a=""
-    Then COMPARE #[a] with ""
+    Then Match #[a] with ""
 
-  Scenario: Compare XMLs
+  Scenario: Match XMLs
     Given param expected=
       """
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -249,10 +249,10 @@ Feature: Test comparator
       """
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse>
       """
-    Then COMPARE #[expected] with "#[actual]"
-    And COMPARE #[var1] with "booking:4663740"
+    Then Match #[expected] with "#[actual]"
+    And Match #[var1] with "booking:4663740"
 
-  Scenario: Compare XMLs from HTTP response bodies
+  Scenario: Match XMLs from HTTP response bodies
     Given param expectedResponse=
       """
     {
@@ -261,12 +261,12 @@ Feature: Test comparator
     }
       """
     Then Create HTTP response wrapper with content <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse> and compare with #[expectedResponse]
-    And COMPARE #[var1] with "booking:4663740"
+    And Match #[var1] with "booking:4663740"
 
-  Scenario: Check unintentional regex chars at String compare
+  Scenario: Check unintentional regex chars at String match
   This test scenario is valid only if logger is set to debug LEVEL or bellow
     # This should not log any warning related to regular expressions
-    And Negative COMPARE abc with "[0-9]"
+    And Negative match abc with "[0-9]"
     # This should log regex related warning messages
-    And Negative COMPARE [0-9] with "[0-9]"
-    And COMPARE \Q[0-9]\E with "[0-9]"
+    And Negative match [0-9] with "[0-9]"
+    And Match \Q[0-9]\E with "[0-9]"

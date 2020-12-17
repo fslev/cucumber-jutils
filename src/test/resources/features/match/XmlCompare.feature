@@ -1,6 +1,6 @@
-Feature: Compare XMLs
+Feature: Match XMLs
 
-  Scenario: Compare XML with xmlChildListLength
+  Scenario: Match XML with xmlChildListLength
     Given param a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -36,10 +36,10 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then COMPARE #[a] with "#[b]" using matchConditions=[]
-    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_LENGTH", "DO_NOT_MATCH"]
+    Then Match #[a] with "#[b]" using matchConditions=[]
+    Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_LENGTH", "DO_NOT_MATCH"]
 
-  Scenario: Compare XML with xmlChildListSequence
+  Scenario: Match XML with xmlChildListSequence
     Given param a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -76,10 +76,10 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then COMPARE #[a] with "#[b]" using matchConditions=[]
-    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
+    Then Match #[a] with "#[b]" using matchConditions=[]
+    Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
 
-  Scenario: Compare XML with xmlElementNumAttributes
+  Scenario: Match XML with xmlElementNumAttributes
     Given param a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -116,10 +116,10 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then COMPARE #[a] with "#[b]" using matchConditions=[]
-    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES", "DO_NOT_MATCH"]
+    Then Match #[a] with "#[b]" using matchConditions=[]
+    Then Match #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES", "DO_NOT_MATCH"]
 
-  Scenario: Compare XML with extra expected attributes
+  Scenario: Match XML with extra expected attributes
     Given param a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -156,9 +156,9 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then COMPARE #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
+    Then Match #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
 
-  Scenario: Compare XML with assign symbols
+  Scenario: Match XML with assign symbols
     Given param a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -195,16 +195,16 @@ Feature: Compare XMLs
   </note>
 </messages>
     """
-    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES"]
-    And COMPARE #[contract] with "foo bar 1000"
-    And COMPARE #[from] with "Tove"
-    Then COMPARE #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
+    Then Match #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES"]
+    And Match #[contract] with "foo bar 1000"
+    And Match #[from] with "Tove"
+    Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
 
-  Scenario: Check unintentional regex chars at XML compare
+  Scenario: Check unintentional regex chars at XML match
   This test scenario is valid only if logger is set to debug LEVEL or bellow
     * load all scenario props from dir "xml/regex_chars"
       # This should not log any warning related to regular expressions
-    And Negative COMPARE <xml><a>foobar</a></xml> with "<xml><a>[0-9]</a></xml>"
+    And Negative match <xml><a>foobar</a></xml> with "<xml><a>[0-9]</a></xml>"
     # This should log regex related warning messages
-    And Negative COMPARE <xml><a>[0-9]</a></xml> with "<xml><a>[0-9]</a></xml>"
-    And Negative COMPARE #[test1] with "<xml><a>[0-9]</a></xml>"
+    And Negative match <xml><a>[0-9]</a></xml> with "<xml><a>[0-9]</a></xml>"
+    And Negative match #[test1] with "<xml><a>[0-9]</a></xml>"

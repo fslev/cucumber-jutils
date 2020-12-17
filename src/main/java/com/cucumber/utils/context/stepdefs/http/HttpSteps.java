@@ -22,8 +22,8 @@ public class HttpSteps {
     private ScenarioUtils scenarioUtils;
 
     @Given("HTTP Invoke REST API with url={}, method={}, queryParams={}, headers={}, entity={} and check response={}")
-    public void executeAndCompare(String url, Method method, Map<String, String> queryParams, Map<String, String> headers,
-                                  String entity, String expected) throws IOException {
+    public void executeAndMatch(String url, Method method, Map<String, String> queryParams, Map<String, String> headers,
+                                String entity, String expected) throws IOException {
         scenarioUtils.log("{} {}\nQuery params: {}\nHeaders: {}\nEntity: {}", method, url, queryParams, headers, entity);
         HttpClient.Builder builder = new HttpClient.Builder().address(url).method(method).queryParams(queryParams).headers(headers);
         if (entity != null) {

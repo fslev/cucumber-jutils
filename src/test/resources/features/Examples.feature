@@ -5,9 +5,9 @@ Feature: Test examples feature
 
     Given param p="<emptyValue>"
     And param x="<nullValue>"
-    Then COMPARE #[p] with ""
-    And COMPARE #[x] with "[_null]"
-    And COMPARE #[x] with NULL
+    Then Match #[p] with ""
+    And Match #[x] with "[_null]"
+    And Match #[x] with NULL
     Examples:
       | emptyValue | nullValue |
       |            | [_null]   |

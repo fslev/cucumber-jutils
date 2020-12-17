@@ -1,6 +1,6 @@
 Feature: Date feature
 
-  Scenario: Compare two time dates
+  Scenario: Match two time dates
     Then Check period from "2018-02-03 01:00:00" to "2019-02-03 01:00:00" is 1 YEARS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "2018-02-03 01:00:00" to "2019-02-02 12:01:10" is 364 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "2019-02-03 01:02:12" to "2019-02-03 23:59:10" is 22 HOURS using date time pattern yyyy-MM-dd HH:mm:ss
@@ -10,7 +10,7 @@ Feature: Date feature
     Then Check period from "2019-02-03 23:58:12" to "2019-02-03 23:59:10" is #[expected] SECONDS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "2019-02-03 01:02:12" to "2019-02-03 23:59:10" doesn't match 36 HOURS using date time pattern yyyy-MM-dd HH:mm:ss
 
-  Scenario: Compare two dates
+  Scenario: Match two dates
     Then Check period from "2019-01-03" to "2019-02-03" is 1 MONTHS using date pattern yyyy-MM-dd
     Then Check period from "2018-01-03" to "2019-02-03" is 1 YEARS using date pattern yyyy-MM-dd
     Then Check period from "2018-02-03" to "2019-02-03" is 365 DAYS using date pattern yyyy-MM-dd
