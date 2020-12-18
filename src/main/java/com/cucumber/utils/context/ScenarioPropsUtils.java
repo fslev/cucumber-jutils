@@ -94,7 +94,12 @@ public final class ScenarioPropsUtils {
     }
 
     private static Set<String> loadPropsFromPropertiesFile(String filePath, ScenarioProps scenarioProps) {
-        Properties p = ResourceUtils.readProps(filePath);
+        Properties p;
+        try {
+            p = ResourceUtils.readProps(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         p.forEach((k, v) -> scenarioProps.put(k.toString(), v.toString().trim()));
         LOG.debug("-> Loaded scenario properties from file {}", filePath);
         return p.stringPropertyNames();

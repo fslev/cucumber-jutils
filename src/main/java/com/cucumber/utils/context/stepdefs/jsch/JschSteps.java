@@ -2,6 +2,7 @@ package com.cucumber.utils.context.stepdefs.jsch;
 
 import com.cucumber.utils.context.props.ScenarioProps;
 import com.google.inject.Inject;
+import com.jcraft.jsch.JSchException;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
@@ -11,6 +12,7 @@ import io.jtest.utils.clients.jsch.JschClient;
 import io.jtest.utils.common.ResourceUtils;
 import io.jtest.utils.matcher.ObjectMatcher;
 
+import java.io.IOException;
 import java.util.Properties;
 
 @ScenarioScoped
@@ -22,7 +24,7 @@ public class JschSteps {
     private ScenarioProps scenarioProps;
 
     @Given("JSCH connection from properties file \"{}\"")
-    public void init(String relFilePath) {
+    public void init(String relFilePath) throws IOException, JSchException {
 
         Properties config = new Properties();
         config.put("StrictHostKeyChecking", "no");
@@ -39,7 +41,7 @@ public class JschSteps {
     }
 
     @Then("JSCH execute command \"{}\" and check response=\"{}\"")
-    public void executeCmd(String cmd, String expected) {
+    public void executeCmd(String cmd, String expected) throws IOException, JSchException {
         String actual = this.client.sendCommand(cmd).trim();
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }

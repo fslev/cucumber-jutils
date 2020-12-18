@@ -12,6 +12,7 @@ import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
 import org.apache.logging.log4j.message.ParameterizedMessage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class SqlSteps {
     private SqlClient client;
 
     @Given("SQL data source from file path \"{}\"")
-    public void setDataSource(String filePath) {
+    public void setDataSource(String filePath) throws IOException {
         Properties dataSource = ResourceUtils.readProps(filePath);
         this.client = new SqlClient(dataSource.getProperty("url"), dataSource.getProperty("username"),
                 dataSource.getProperty("password"), dataSource.getProperty("driver").trim());
@@ -73,7 +74,13 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            scenarioProps.putAll(ObjectMatcher.match(null, expected, () -> client.executeQueryAndGetRsAsList(), pollingDuration,
+            scenarioProps.putAll(ObjectMatcher.match(null, expected, () -> {
+                        try {
+                            return client.executeQueryAndGetRsAsList();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }, pollingDuration,
                     null, null, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY));
         } finally {
             this.client.close();

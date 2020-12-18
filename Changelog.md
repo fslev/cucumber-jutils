@@ -1,6 +1,10 @@
 # Changelog
 
-### 6.24-SNAPSHOT
+### 6.25-SNAPSHOT
+
+
+### 6.24
+Refactoring  
 
 ### 6.23
 Refactor polling mechanism  
