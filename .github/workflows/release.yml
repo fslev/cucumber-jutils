@@ -18,9 +18,9 @@ jobs:
           gpg-key-id: ${{ secrets.GPG_KEY_ID }}
           gpg-key: ${{ secrets.GPG_KEY }}
       - name: Run tests
-        run: mvn clean test -Ptestng
+        run: mvn clean test -B -Ptestng
       - name: Release to the Maven Central Repository
-        run: mvn -Pnexus-upload -DskipTests -B release:prepare release:perform
+        run: mvn -Pnexus-upload -B -DskipTests release:prepare release:perform
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
