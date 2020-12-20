@@ -15,15 +15,14 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       - name: Configure GPG Key
-        run: |
-          mkdir -p ~/.gnupg/
-          printf "$GPG_SIGNING_KEY" | base64 --decode > ~/.gnupg/private.key
-          gpg --import ~/.gnupg/private.key
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: Run tests
         run: mvn clean test -B -Ptestng -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
       - name: Release to the Maven Central Repository
         run: mvn -Pnexus-upload -B -DskipTests release:prepare release:perform -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
         env:
-          GPG_SIGNING_KEY: ${{ secrets.GPG_KEY }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_KEY }}
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
