@@ -18,8 +18,8 @@ jobs:
         run: mvn clean test -B -Ptestng -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
       - name: Install gpg
         run: |
-          cat <(echo -e "${{ secrets.GPG_KEY }}") | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
+#          cat <(echo -e "${{ secrets.GPG_KEY }}") | gpg --batch --import
+          echo ${{ secrets.GPG_KEY }}
       - name: Release to the Maven Central Repository
         run: mvn -Pnexus-upload -B -DskipTests release:prepare release:perform -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
         env:
