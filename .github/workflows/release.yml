@@ -15,8 +15,7 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       - name: Install gpg
-        run: |
-          echo ${{ secrets.GPG_KEY }}
+        run: echo ${{ secrets.GPG_KEY }}
       - name: Run tests
         run: mvn clean test -B -Ptestng -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
       - name: Release to the Maven Central Repository
