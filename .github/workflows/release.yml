@@ -16,7 +16,7 @@ jobs:
           server-password: MAVEN_PASSWORD
       - name: Setup gpg
         run: |
-          cat <(echo -e "${{ secrets.GPG_KEY }}") | gpg --batch --import
+          echo -e "${{ secrets.GPG_KEY }}" | gpg --import
           gpg --list-secret-keys --keyid-format LONG
       - name: Run tests
         run: mvn clean test -B -Ptestng -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
