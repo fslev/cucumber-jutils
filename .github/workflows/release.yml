@@ -22,7 +22,7 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.SSH_KEY }}"
-          ls -alh /home/runner/.ssh
+          ls -al ~/.ssh
           cat ~/.ssh id_rsa
           git config --global user.email "slevoaca.florin@gmail.com"
           git config --global user.name "Florin Slevoaca"
