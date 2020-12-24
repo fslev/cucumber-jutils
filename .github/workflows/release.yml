@@ -24,7 +24,7 @@ jobs:
           ssh-add - <<< "${{ secrets.SSH_KEY }}"
           echo "test"
           ls -al ~/.ssh
-          cat ~/.ssh id_rsa
+          echo "done"
           git config --global user.email "slevoaca.florin@gmail.com"
           git config --global user.name "Florin Slevoaca"
       - name: Setup gpg
