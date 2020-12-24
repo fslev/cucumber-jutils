@@ -22,16 +22,18 @@ jobs:
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.SSH_KEY }}"
+          ls -alh ~/.ssh
+          cat ~/.ssh id_rsa
           git config --global user.email "slevoaca.florin@gmail.com"
           git config --global user.name "Florin Slevoaca"
       - name: Setup gpg
         run: |
           echo -e "${{ secrets.GPG_KEY }}" | gpg --import
           gpg --list-secret-keys --keyid-format LONG
-      - name: Run tests
-        run: mvn clean test -B -Ptestng -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-      - name: Release to the Maven Central Repository
-        run: mvn -Pnexus-upload -B -DskipTests release:prepare release:perform -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+#      - name: Run tests
+#        run: mvn clean test -B -Ptestng -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+#      - name: Release to the Maven Central Repository
+#        run: mvn -Pnexus-upload -B -DskipTests release:prepare release:perform -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+#        env:
+#          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
