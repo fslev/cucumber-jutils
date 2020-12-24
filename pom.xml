@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-jutils</artifactId>
-    <version>6.27-SNAPSHOT</version>
+    <version>6.26-SNAPSHOT</version>
 
     <name>Cucumber JUtils</name>
     <description>A little helper for Cucumber</description>
