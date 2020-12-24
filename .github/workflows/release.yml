@@ -23,6 +23,7 @@ jobs:
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "${{ secrets.SSH_KEY }}"
           echo "test"
+          echo $GIT_SSH
           ls -al ~/.ssh
           echo "done"
           git config --global user.email "slevoaca.florin@gmail.com"
