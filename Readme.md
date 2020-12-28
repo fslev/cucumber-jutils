@@ -2,7 +2,7 @@
 
 ![Java CI with Maven](https://github.com/fslev/cucumber-utils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-utils/badge.svg?branch=master)](https://coveralls.io/github/fslev/cucumber-utils?branch=master)
-
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.fslev/cucumber-jutils.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.fslev%22%20AND%20a:%22cucumber-jutils%22)
 
 Cucumber Utils has been renamed to Cucumber JUtils
 
