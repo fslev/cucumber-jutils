@@ -91,7 +91,7 @@
                             <version>2.5.3</version>
                             <configuration>
                                 <releaseVersion>
-                                    ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.jre8
+                                    ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.jre8
                                 </releaseVersion>
                                 <developmentVersion>
                                     ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}-SNAPSHOT
