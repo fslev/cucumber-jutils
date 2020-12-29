@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-jutils</artifactId>
-    <version>6.28-SNAPSHOT</version>
+    <version>6.28</version>
 
     <name>Cucumber JUtils</name>
     <description>A little helper for Cucumber</description>
@@ -380,7 +380,7 @@
         <connection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</developerConnection>
         <url>https://github.com/fslev/cucumber-utils/tree/master</url>
-        <tag>cucumber-jutils-${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.jre8</tag>
+        <tag>cucumber-jutils-6.28</tag>
     </scm>
 
     <distributionManagement>
