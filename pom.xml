@@ -210,7 +210,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <source>11</source>
+                            <source>${java.release.version}</source>
                             <doclint>none</doclint>
                         </configuration>
                     </plugin>
