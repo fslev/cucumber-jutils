@@ -24,7 +24,10 @@
         <guice.version>4.2.3</guice.version>
         <surefire.version>2.22.2</surefire.version>
         <jtest.utils.version>1.15</jtest.utils.version>
-        <java.version>11</java.version>
+        <java.release.version>11</java.release.version>
+        <release.version>
+            ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}
+        </release.version>
     </properties>
 
     <dependencies>
@@ -79,7 +82,12 @@
         <profile>
             <id>java8</id>
             <properties>
-                <java.version>8</java.version>
+                <java.release.version>8</java.release.version>
+                <jtest.utils.version>${jtest.utils.version}.jre8</jtest.utils.version>
+                <release.version>
+                    ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}.jre8
+                </release.version>
+                <development.version>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}-SNAPSHOT</development.version>
             </properties>
         </profile>
         <profile>
@@ -210,6 +218,15 @@
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.3</version>
+                        <configuration>
+                            <releaseVersion>${release.version}</releaseVersion>
+                            <developmentVersion>${development.version}</developmentVersion>
+                        </configuration>
+                    </plugin>
+                    <plugin>
                         <artifactId>maven-deploy-plugin</artifactId>
                         <version>2.8.2</version>
                         <executions>
@@ -337,7 +354,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>${java.version}</release>
+                    <release>${java.release.version}</release>
                 </configuration>
             </plugin>
             <plugin>
