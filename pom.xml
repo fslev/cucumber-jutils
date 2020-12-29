@@ -380,7 +380,7 @@
         <connection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</developerConnection>
         <url>https://github.com/fslev/cucumber-utils/tree/master</url>
-        <tag>cucumber-jutils-6.30.jre8</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
