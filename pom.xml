@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.fslev</groupId>
@@ -22,8 +23,7 @@
         <cucumber.version>6.9.1</cucumber.version>
         <guice.version>4.2.3</guice.version>
         <surefire.version>2.22.2</surefire.version>
-        <jtest.utils.version>1.16</jtest.utils.version>
-        <java.release.version>11</java.release.version>
+        <jtest.utils.version>1.17</jtest.utils.version>
     </properties>
 
     <dependencies>
@@ -75,32 +75,6 @@
     </dependencies>
 
     <profiles>
-        <profile>
-            <id>java8</id>
-            <properties>
-                <java.release.version>8</java.release.version>
-                <jtest.utils.version>1.16.jre8</jtest.utils.version>
-            </properties>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-release-plugin</artifactId>
-                            <version>2.5.3</version>
-                            <configuration>
-                                <releaseVersion>
-                                    ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.jre8
-                                </releaseVersion>
-                                <developmentVersion>
-                                    ${parsedVersion.majorVersion}.${parsedVersion.minorVersion}-SNAPSHOT
-                                </developmentVersion>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
         <profile>
             <id>junit</id>
             <activation>
@@ -262,7 +236,7 @@
                     <plugin>
                         <groupId>net.masterthought</groupId>
                         <artifactId>maven-cucumber-reporting</artifactId>
-                        <version>5.3.0</version>
+                        <version>5.4.0</version>
                         <executions>
                             <execution>
                                 <id>execution</id>
@@ -356,22 +330,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>${java.release.version}</release>
+                    <release>8</release>
                     <testRelease>11</testRelease>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>parse-version</id>
-                        <goals>
-                            <goal>parse-version</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

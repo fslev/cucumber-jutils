@@ -28,12 +28,7 @@ jobs:
           echo -e "${{ secrets.GPG_KEY }}" | gpg --import
       - name: Run tests
         run: mvn clean test -B -Ptestng -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-      - name: Release Java 8 version to Maven Central Repository
-        run: mvn clean verify -DskipTests -Darguments=-DskipTests -Pjava8,nexus-upload -B release:prepare release:perform -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-      - name: Release Java 11 version to Maven Central Repository
+      - name: Release to Maven Central Repository
         run: mvn clean verify -DskipTests -Darguments=-DskipTests -Pnexus-upload -B release:prepare release:perform -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
