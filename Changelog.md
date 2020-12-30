@@ -1,8 +1,11 @@
 # Changelog
 
-### 6.31-SNAPSHOT
+### 6.35-SNAPSHOT
 
-### 6.30
+### 6.34
+Use Java 8 as base Java release version  
+
+### 6.24
 Refactoring  
 
 ### 6.23
