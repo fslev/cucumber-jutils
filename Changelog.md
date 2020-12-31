@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.35-SNAPSHOT
+### 6.36-SNAPSHOT
+
+### 6.35
+Upgrade dependencies    
 
 ### 6.34
 Use Java 8 as base Java release version  
