@@ -10,7 +10,7 @@ Cucumber Utils has been renamed to Cucumber JUtils
 A Java library meant to help you write organized and clean **Cucumber** tests.  
 It takes over the usual dependencies and features needed inside a Cucumber test framework, such as:  
 * Matching mechanisms: match XMLs, JSONs, and other types of objects  
-* State-sharing mechanism between _Cucumber steps_ running inside same scenario: scenario properties. 
+* State-sharing mechanism between _Cucumber steps_ running inside same scenario: _scenario properties_. 
 * Customized clients for accessing various resources, i.e _databases_, _HTTP services_, etc  
 * Predefined Cucumber steps for helping with certain repetitive tasks  
 * Utility classes           
