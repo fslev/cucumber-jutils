@@ -1,6 +1,10 @@
 # Changelog
 
+### 6.39-SNAPSHOT
+
 ### 6.38-SNAPSHOT
+Upgrade dependencies  
+Remove google-guice explicit dependency  
 
 ### 6.37
 Upgrade dependencies  
