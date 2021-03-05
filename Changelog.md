@@ -1,6 +1,6 @@
 # Changelog
 
-### 6.40-SNAPSHOT
+### 6.41-SNAPSHOT
 
 ### 6.39
 Predefined Date steps use ZonedDateTime instead of LocalDateTime      
