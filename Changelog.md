@@ -2,7 +2,7 @@
 
 ### 6.41-SNAPSHOT
 
-### 6.39
+### 6.40
 Predefined Date steps use ZonedDateTime instead of LocalDateTime      
 Upgrade dependencies    
 
