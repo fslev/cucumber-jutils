@@ -7,7 +7,8 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
@@ -36,10 +37,10 @@ public class DateTimeSteps {
     @Then("Check period from \"{}\" to \"{}\" is {} {} using date time pattern {}")
     public void compareDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Check date period from '{}' to '{}' is {}{} using date time pattern '{}'", date1, date2, value, chronoUnit, pattern);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
-        LocalDateTime localDate1 = LocalDateTime.parse(date1, dateTimeFormatter);
-        LocalDateTime localDate2 = LocalDateTime.parse(date2, dateTimeFormatter);
-        assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+        ZonedDateTime zonedDateTime1 = ZonedDateTime.parse(date1, dateTimeFormatter);
+        ZonedDateTime zonedDateTime2 = ZonedDateTime.parse(date2, dateTimeFormatter);
+        assertEquals(chronoUnit + " differ", value, chronoUnit.between(zonedDateTime1, zonedDateTime2));
     }
 
     @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date pattern {}")
@@ -68,13 +69,13 @@ public class DateTimeSteps {
 
     @Then("date param {}=\"now {} {} {}\" with format pattern={}")
     public void setCurrentDateFormattedParam(String param, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
-                scenarioProps.put(param, LocalDateTime.now().minus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioProps.put(param, ZonedDateTime.now().minus(value, chronoUnit).format(dateTimeFormatter));
                 break;
             case PLUS:
-                scenarioProps.put(param, LocalDateTime.now().plus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioProps.put(param, ZonedDateTime.now().plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
         logger.log("Set date param {}='{}'", param, scenarioProps.get(param));
@@ -82,13 +83,13 @@ public class DateTimeSteps {
 
     @Then("date param {}=\"from {} {} {} {}\" with format pattern={}")
     public void setDateFormattedParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
-                scenarioProps.put(param, LocalDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).format(dateTimeFormatter));
                 break;
             case PLUS:
-                scenarioProps.put(param, LocalDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
         logger.log("Set date param {}='{}'", param, scenarioProps.get(param));

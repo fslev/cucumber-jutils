@@ -9,6 +9,8 @@ Feature: Date feature
     Given param expected="58"
     Then Check period from "2019-02-03 23:58:12" to "2019-02-03 23:59:10" is #[expected] SECONDS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "2019-02-03 01:02:12" to "2019-02-03 23:59:10" doesn't match 36 HOURS using date time pattern yyyy-MM-dd HH:mm:ss
+    # Use zone
+    Then Check period from "2019-02-03 23:58:12+0200" to "2019-02-04 01:59:10+0300" is 1 HOURS using date time pattern yyyy-MM-dd HH:mm:ssZ
 
   Scenario: Match two dates
     Then Check period from "2019-01-03" to "2019-02-03" is 1 MONTHS using date pattern yyyy-MM-dd
@@ -17,7 +19,6 @@ Feature: Date feature
     Then Check period from "2020-02-03" to "2021-02-03" is 1 YEARS using date pattern yyyy-MM-dd
     Then Check period from "2020-02-03" to "2021-02-03" is 366 DAYS using date pattern yyyy-MM-dd
     Then Check period from "2020-02-03" to "2021-02-03" doesn't match 36 DAYS using date pattern yyyy-MM-dd
-
 
   Scenario: Format date times from current date
     Given date param currentTime="now PLUS 0 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
@@ -33,11 +34,11 @@ Feature: Date feature
 
   Scenario: Format dates from current date
     Given date param currentDate="now PLUS 0 YEARS" with format pattern=yyyy-MM-dd
-    And date param futureDateYeas="now PLUS 15 YEARS" with format pattern=yyyy-MM-dd
+    And date param futureDateYears="now PLUS 15 YEARS" with format pattern=yyyy-MM-dd
     And date param futureDateDays="now PLUS 1 DAYS" with format pattern=yyyy-MM-dd
     And date param pastDateDays="now MINUS 31 DAYS" with format pattern=yyyy-MM-dd
 
-    Then Check period from "#[currentDate]" to "#[futureDateYeas]" is 15 YEARS using date pattern yyyy-MM-dd
+    Then Check period from "#[currentDate]" to "#[futureDateYears]" is 15 YEARS using date pattern yyyy-MM-dd
     And Check period from "#[currentDate]" to "#[futureDateDays]" is 1 DAYS using date pattern yyyy-MM-dd
     And Check period from "#[currentDate]" to "#[pastDateDays]" is -31 DAYS using date pattern yyyy-MM-dd
     And Check period from "#[pastDateDays]" to "#[currentDate]" is 31 DAYS using date pattern yyyy-MM-dd

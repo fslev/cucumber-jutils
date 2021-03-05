@@ -1,8 +1,12 @@
 # Changelog
 
-### 6.39-SNAPSHOT
+### 6.40-SNAPSHOT
 
-### 6.38-SNAPSHOT
+### 6.39
+Predefined Date steps use ZonedDateTime instead of LocalDateTime      
+Upgrade dependencies    
+
+### 6.38
 Upgrade dependencies  
 Remove google-guice explicit dependency  
 
