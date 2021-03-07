@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.41-SNAPSHOT
+### 6.42-SNAPSHOT
+
+### 6.41
+Added feature for setting date in milliseconds param  
 
 ### 6.40
 Predefined Date steps use ZonedDateTime instead of LocalDateTime      

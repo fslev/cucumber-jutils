@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -67,21 +68,23 @@ public class DateTimeSteps {
         throw new AssertionError("Compared dates match");
     }
 
-    @Then("date param {}=\"now {} {} {}\" with format pattern={}")
-    public void setCurrentDateFormattedParam(String param, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
+    @Then("date param {}=\"from millis {} {} {} {}\" with format pattern={}")
+    public void setDateFormattedParam(String param, Long millis, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
-                scenarioProps.put(param, ZonedDateTime.now().minus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioProps.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+                        .minus(value, chronoUnit).format(dateTimeFormatter));
                 break;
             case PLUS:
-                scenarioProps.put(param, ZonedDateTime.now().plus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioProps.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+                        .plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
-        logger.log("Set date param {}='{}'", param, scenarioProps.get(param));
+        logger.log("Date param {}='{}'", param, scenarioProps.get(param));
     }
 
-    @Then("date param {}=\"from {} {} {} {}\" with format pattern={}")
+    @Then("date param {}=\"from date {} {} {} {}\" with format pattern={}")
     public void setDateFormattedParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
@@ -92,6 +95,20 @@ public class DateTimeSteps {
                 scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
-        logger.log("Set date param {}='{}'", param, scenarioProps.get(param));
+        logger.log("Date param {}='{}'", param, scenarioProps.get(param));
+    }
+
+    @Then("date millis param {}=\"from date {} {} {} {}\" with format pattern={}")
+    public void setDateInMillisParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
+        switch (operation) {
+            case MINUS:
+                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).toInstant().toEpochMilli());
+                break;
+            case PLUS:
+                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).toInstant().toEpochMilli());
+                break;
+        }
+        logger.log("Date millis param {}='{}'", param, scenarioProps.get(param));
     }
 }
