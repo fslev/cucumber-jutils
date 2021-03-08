@@ -63,7 +63,7 @@ Feature: Date feature
     Then Check period from "#[currentTime]" to "#[secondsBefore]" is -1 SECONDS using date time pattern yyyy-MM-dd HH:mm:ss
 
   Scenario: Set date in millis param
-    * date millis param ts="from date 2021-03-07 18:44:27.345+0000 PLUS 1 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSS
+    * date millis param ts="from date 2021-03-07 18:44:27.345+0000 PLUS 1 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
     * Match #[ts] with "1615146267345"
     * date millis param ts="from date 2021-03-07 18:44:27.345+0200 PLUS 0 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
     * Match #[ts] with "1615135467345"
