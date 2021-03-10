@@ -1,6 +1,10 @@
 # Changelog
 
-### 6.42-SNAPSHOT
+### 6.43-SNAPSHOT
+
+### 6.42
+Predefined wait step accepts double value  
+Update Cucumber  
 
 ### 6.41
 Added feature for setting date in milliseconds param  

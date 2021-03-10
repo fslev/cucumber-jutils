@@ -30,7 +30,7 @@ public class CommonSteps {
     }
 
     @Given("Wait {}s")
-    public void wait(int until) throws InterruptedException {
-        Thread.sleep(until * 1000);
+    public void wait(double ps) throws InterruptedException {
+        Thread.sleep((long) (ps * 1000));
     }
 }
