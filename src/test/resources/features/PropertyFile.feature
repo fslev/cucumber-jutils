@@ -12,7 +12,7 @@ Feature: Property File feature
     When load scenario props from file "props/dir1/a.xml"
     When load scenario props from file "props/dir1/b.json"
     When load scenario props from file "props/dir1/c.txt"
-    When load scenario props from file "props/dir1/d.property"
+    When load scenario props from file "props/dir1/d.txt"
     When load scenario props from file "props/f.json"
     When load scenario props from file "props/dir1/p.properties"
     When load scenario props from file "props/dir1/y.yml"

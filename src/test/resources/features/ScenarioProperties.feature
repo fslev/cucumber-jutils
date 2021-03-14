@@ -23,12 +23,12 @@ Feature: Test placeholder fill
     Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
 
   Scenario: Test placeholder fill with scenario property file
-    * load scenario props from file "placeholders/figure.property"
+    * load scenario props from file "placeholders/figure.text"
     And The string with scenario placeholders "This is a #[figure]"
     Then Check filled string equals "This is a circle"
 
   Scenario: Test scenario property loaded from file
-    * load file "placeholders/figure.property" to scenario property "var"
+    * load file "placeholders/figure.text" to scenario property "var"
     And The string with scenario placeholders "This is a #[var]"
     Then Check filled string equals "This is a circle"
 

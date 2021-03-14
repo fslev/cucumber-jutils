@@ -65,14 +65,12 @@ public class ScenarioProps {
         PROPERTIES(".properties"),
         YAML(".yaml"),
         YML(".yml"),
-        PROPERTY(".property"),
         JSON(".json"),
         XML(".xml"),
         TXT(".txt"),
         CSV(".csv"),
         HTML(".html"),
-        TEXT(".text"),
-        YANG(".yang");
+        TEXT(".text");
 
         private final String name;
 
@@ -86,11 +84,9 @@ public class ScenarioProps {
 
         public static String[] propertyFileExtensions() {
             return Arrays.stream(allExtensions())
-                    .filter(val -> val.equals(PROPERTY.value()) || val.equals(XML.value())
-                            || val.equals(JSON.value()) || val.equals(TXT.value())
-                            || val.equals(HTML.value()) || val.equals(TEXT.value())
-                            || val.equals(CSV.value()) || val.equals(YANG.value())
-                    )
+                    .filter(val -> val.equals(XML.value()) || val.equals(JSON.value())
+                            || val.equals(TXT.value()) || val.equals(HTML.value())
+                            || val.equals(TEXT.value()) || val.equals(CSV.value()))
                     .toArray(String[]::new);
         }
 
