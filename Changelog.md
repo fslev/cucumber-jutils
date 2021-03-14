@@ -1,7 +1,10 @@
 # Changelog
 
-### 6.43-SNAPSHOT
-Refactor file types for loading scenario properties     
+### 6.44-SNAPSHOT
+
+### 6.43
+Refactor file types for loading scenario properties    
+Bump up jtest-utils dependency version  
 
 ### 6.42
 Predefined wait step accepts double value  
