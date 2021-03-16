@@ -82,7 +82,7 @@ public class DateTimeSteps {
                         .plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
-        logger.log("Date param {}='{}'", param, scenarioProps.get(param));
+        logger.log("Date var {} = {}", param, scenarioProps.get(param));
     }
 
     @Then("date param {}=\"from date {} {} {} {}\" with format pattern={}")
@@ -97,7 +97,7 @@ public class DateTimeSteps {
                 scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
-        logger.log("Date param {}='{}'", param, scenarioProps.get(param));
+        logger.log("Date var {} = {}", param, scenarioProps.get(param));
     }
 
     @Then("date millis param {}=\"from date {} {} {} {}\" with format pattern={}")
@@ -112,6 +112,6 @@ public class DateTimeSteps {
                 scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).toInstant().toEpochMilli());
                 break;
         }
-        logger.log("Date millis param {}='{}'", param, scenarioProps.get(param));
+        logger.log("Date in millis var {} = {}", param, scenarioProps.get(param));
     }
 }

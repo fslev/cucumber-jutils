@@ -26,8 +26,8 @@ public class ParamSteps {
     @Given("var {}=\"{}\"")
     public void setParamString(String name, Object value) {
         scenarioProps.put(name, value);
-        scenarioUtils.log("param {} = {}", name, value);
-        LOG.debug("Param {} = {}", name, value);
+        scenarioUtils.log("var {} = {}", name, value);
+        LOG.debug("var {} = {}", name, value);
     }
 
     @Given("param {}=")
@@ -66,7 +66,7 @@ public class ParamSteps {
     @Given("table {}=")
     public void setCustomDataTable(String name, List<Map<String, Object>> value) {
         scenarioProps.put(name, value);
-        scenarioUtils.log("param {} = {}", name, value);
-        LOG.debug("Param {} = {}", name, value);
+        scenarioUtils.log("var {} = {}", name, value);
+        LOG.debug("var {} = {}", name, value);
     }
 }
