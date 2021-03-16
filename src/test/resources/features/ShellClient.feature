@@ -5,7 +5,7 @@ Feature: Test SHELL feature
     * SHELL execute command "ls -alh" and check response=".*"
     * SHELL execute command "echo foobar" and check response="foobar"
     * SHELL execute command "invalidcommand" and check response=".*command not found.*"
-    Given param multilineCmd=
+    Given var multilineCmd=
     """
     a='foo'
     b='bar'

@@ -1,7 +1,7 @@
 Feature: Match XMLs
 
   Scenario: Match XML with xmlChildListLength
-    Given param a=
+    Given var a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -18,7 +18,7 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    And param b=
+    And var b=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -40,7 +40,7 @@ Feature: Match XMLs
     Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_LENGTH", "DO_NOT_MATCH"]
 
   Scenario: Match XML with xmlChildListSequence
-    Given param a=
+    Given var a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -58,7 +58,7 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    And param b=
+    And var b=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -80,7 +80,7 @@ Feature: Match XMLs
     Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
 
   Scenario: Match XML with xmlElementNumAttributes
-    Given param a=
+    Given var a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -98,7 +98,7 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    And param b=
+    And var b=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -120,7 +120,7 @@ Feature: Match XMLs
     Then Match #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES", "DO_NOT_MATCH"]
 
   Scenario: Match XML with extra expected attributes
-    Given param a=
+    Given var a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -138,7 +138,7 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    And param b=
+    And var b=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -159,7 +159,7 @@ Feature: Match XMLs
     Then Match #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
 
   Scenario: Match XML with assign symbols
-    Given param a=
+    Given var a=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -177,7 +177,7 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    And param b=
+    And var b=
     """
 <?xml version="1.0" encoding="UTF-8"?>
 <messages>
@@ -202,7 +202,7 @@ Feature: Match XMLs
 
   Scenario: Check unintentional regex chars at XML match
   This test scenario is valid only if logger is set to debug LEVEL or bellow
-    * load all scenario props from dir "xml/regex_chars"
+    * load vars from dir "xml/regex_chars"
       # This should not log any warning related to regular expressions
     And Negative match <xml><a>foobar</a></xml> with "<xml><a>[0-9]</a></xml>"
     # This should log regex related warning messages

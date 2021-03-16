@@ -1,7 +1,7 @@
 Feature: Property File feature
 
   Scenario: Test property files are successfully loaded from dir inside scenario properties
-    When load all scenario props from dir "props"
+    When load vars from dir "props"
     Then Match 1 with "#[a]"
     And Match 2 with "#[b]"
     And Match 3 with "#[c]"
@@ -9,13 +9,13 @@ Feature: Property File feature
     And Match 6 with "#[f]"
 
   Scenario: Test property files are successfully loaded from each file inside scenario properties
-    When load scenario props from file "props/dir1/a.xml"
-    When load scenario props from file "props/dir1/b.json"
-    When load scenario props from file "props/dir1/c.txt"
-    When load scenario props from file "props/dir1/d.txt"
-    When load scenario props from file "props/f.json"
-    When load scenario props from file "props/dir1/p.properties"
-    When load scenario props from file "props/dir1/y.yml"
+    When load vars from file "props/dir1/a.xml"
+    When load vars from file "props/dir1/b.json"
+    When load vars from file "props/dir1/c.txt"
+    When load vars from file "props/dir1/d.txt"
+    When load vars from file "props/f.json"
+    When load vars from file "props/dir1/p.properties"
+    When load vars from file "props/dir1/y.yml"
 
     Then Match 1 with "#[a]"
     And Match 2 with "#[b]"

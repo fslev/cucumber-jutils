@@ -2,58 +2,58 @@ Feature: Test comparator
 
   Scenario: Match with special characters
   This is/was a bug (https://github.com/cucumber/cucumber-jvm/issues/1881)
-    Given param a="%"
-    Given param b="%"
+    Given var a="%"
+    Given var b="%"
     Then Match #[a] with "#[b]"
 
   Scenario: Match characters with slashes against assign variable
-    Given param a="~[var]"
-    Given param b="/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
+    Given var a="~[var]"
+    Given var b="/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
     Then Match #[a] with "#[b]"
     And Match #[var] with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
 
   Scenario: Match with new lines
-    Given param a="test\n"
-    And param b=
+    Given var a="test\n"
+    And var b=
     """
     test
 
     """
     Then Match #[a] with "#[b]"
-    When param b=
+    When var b=
     """
     test
     some other values
     """
     Then Negative match #[a] with "#[b]"
     And Match #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
-    When param a="test\n.*"
+    When var a="test\n.*"
     Then Match #[a] with "#[b]"
 
   Scenario: Match simple values
-    Given param a="1"
-    Given param a="1"
-    And param b="1"
+    Given var a="1"
+    Given var a="1"
+    And var b="1"
     Then Match #[a] with "#[b]"
     And Match 1 with "1"
 
   Scenario: Match values with inner quotes
-    Given param expected="te"st"
-    Given param actual=
+    Given var expected="te"st"
+    Given var actual=
     """
     te"st
     """
     Then Match #[expected] with "#[actual]"
 
   Scenario: Match simple values negative
-    Given param a="1"
-    And param b="2"
+    Given var a="1"
+    And var b="2"
     Then Negative match #[a] with "#[b]"
 
   Scenario: Match jsons
-    Given param a="da"
-    And param b="oho"
-    Given param json1 =
+    Given var a="da"
+    And var b="oho"
+    Given var json1 =
     """
   {
     "name": "J.*n",
@@ -61,7 +61,7 @@ Feature: Test comparator
     "cars": ["Ford", "~[car]", "Fiat"]
   }
     """
-    And param json2=
+    And var json2=
     """
   {
 	"name": "John",
@@ -81,7 +81,7 @@ Feature: Test comparator
     """
 
   Scenario: Match jsons with match conditions
-    Given param json1 =
+    Given var json1 =
     """
   {
     "name": "J.*n",
@@ -89,7 +89,7 @@ Feature: Test comparator
     "cars": ["Ford", "~[car]", "Fiat"]
   }
     """
-    And param json2=
+    And var json2=
     """
   {
 	"name": "John",
@@ -100,16 +100,16 @@ Feature: Test comparator
     Then Match #[json1] with "#[json2]" using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
 
   Scenario: Match Jsons with escaped values
-    Given param json1 =
+    Given var json1 =
     """
   { "b": "~[val1]" }
     """
-    And param json2=
+    And var json2=
     """
   { "a": "test",
     "b": "some val\\Q he \\n re\" for test" }
     """
-    And param expectedResultedJson=
+    And var expectedResultedJson=
     """
   { "b": "\\Q#[val1]\\E" }
     """
@@ -118,7 +118,7 @@ Feature: Test comparator
     And Compare JSON #[expectedResultedJson] with #[json2]
 
   Scenario: Match jsons negative
-    Given param json1 =
+    Given var json1 =
     """
   {
     "name": "J.*n",
@@ -126,7 +126,7 @@ Feature: Test comparator
     "cars": ["Ford", "lol", "Fiat"]
   }
     """
-    And param json2=
+    And var json2=
     """
   {
 	"name": "John",
@@ -137,12 +137,12 @@ Feature: Test comparator
     Then Negative match #[json1] with "#[json2]"
 
   Scenario: Match big JSONs
-    When load all scenario props from dir "props/bigJsons"
+    When load vars from dir "props/bigJsons"
     Then Match #[expectedLargeJson] with "#[actualLargeJson]"
     Then Negative match #[expectedWrongLargeJson] with "#[actualLargeJson]"
 
   Scenario: Match data tables
-    Given param a="replaced_value"
+    Given var a="replaced_value"
     And table expectedTable=
       | firstName | lastName |
       | #[a]      | travolta |
@@ -157,7 +157,7 @@ Feature: Test comparator
     And Match #[name] with "willis"
 
   Scenario: Match data tables with empty string and null values against JSON
-    Given param a="replaced_value"
+    Given var a="replaced_value"
     And table expectedTable=
       | firstName | lastName |
       | #[a]      | [_blank] |
@@ -185,8 +185,8 @@ Feature: Test comparator
       | [_blank] |
 
   Scenario: Match lists
-    Given param a="cherries"
-    And param header="fruits"
+    Given var a="cherries"
+    And var header="fruits"
     And table expectedTable1=
       | pineapples | #[a] | .* | strawberries |
     And table expectedTable2=
@@ -206,18 +206,18 @@ Feature: Test comparator
       | cherries     |
 
   Scenario: Match resource content containing placeholders
-    Given param status="200"
-    And param contentType="application/json"
-    And param accept="application/json"
-    And param orderType="KVM"
-    And param body=
+    Given var status="200"
+    And var contentType="application/json"
+    And var accept="application/json"
+    And var orderType="KVM"
+    And var body=
     """
     {
       "orderType": "#[orderType]"
     }
     """
     # a nice un-intended feature: #[body] is defined on multiple lines
-    And param expected from file path "placeholders/expected1.json"
+    And var expected from file path "placeholders/expected1.json"
     Then Match #[expected] with
     """
     {
@@ -234,18 +234,18 @@ Feature: Test comparator
     And Match #[expected] with content from path "placeholders/actual1.json"
 
   Scenario: Match empty values
-    Given param a=""
+    Given var a=""
     Then Match #[a] with ""
 
   Scenario: Match XMLs
-    Given param expected=
+    Given var expected=
       """
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <bookingResponse>
         <bookingId>dlc:~[var1]</bookingId>
     </bookingResponse>
       """
-    And param actual=
+    And var actual=
       """
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse>
       """
@@ -253,7 +253,7 @@ Feature: Test comparator
     And Match #[var1] with "booking:4663740"
 
   Scenario: Match XMLs from HTTP response bodies
-    Given param expectedResponse=
+    Given var expectedResponse=
       """
     {
       "status": 200,

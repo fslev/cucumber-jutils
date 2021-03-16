@@ -1,11 +1,11 @@
 Feature: Match HTTP Responses
 
   Scenario: Match HTTP responses with json body
-    Given param a=
+    Given var a=
     """
     {"status": 200, "body":{"1":"~[number]","true":false,"foo":"~[drink]","arr":[false,1,"s"]},"reason":"~[adjective] request", "headers":[{"a":1},{"b":true}]}
     """
-    And param b=
+    And var b=
     """
     {"status": 200, "body":{"foo":"bar","arr":[1,"s",false,4], "1":2,"true":false, "3":2},"reason":"Bad request", "headers":[{"a":1},{"b":true},{"c":"ok"}]}
     """
@@ -15,18 +15,18 @@ Feature: Match HTTP Responses
     And Match #[number] with "2"
     And Match #[drink] with "bar"
     And Match #[adjective] with "Bad"
-    And param a=
+    And var a=
     """
     {"status": 200, "body":{"foo":"bar","arr":[1,"s",4,false], "1":2,"true":false, "3":2},"reason":"Bad request", "headers":[{"a":1},{"b":true},{"c":"ok"}]}
     """
     Then Http Response Compare #[a] against #[b] with matchConditions=["JSON_STRICT_ORDER_ARRAY", "DO_NOT_MATCH_HTTP_RESPONSE_BY_BODY"] and message=[_null]
 
   Scenario: Negative Compare HTTP responses with json body
-    Given param a=
+    Given var a=
     """
     {"status": 200, "body":{"1":"~[number]","true":false,"foo":"~[drink]","arr":[false,1,"s"]},"reason":"~[adjective] request", "headers":[{"a":1},{"b":true}]}
     """
-    And param b=
+    And var b=
     """
     {"status": 200, "body":{"foo":"bar","arr":[1,"s",false,4], "1":2,"true":true, "3":2},"reason":"Bad request", "headers":[{"a":1},{"b":true},{"c":"ok"}]}
     """
@@ -34,11 +34,11 @@ Feature: Match HTTP Responses
     And Http Response Compare #[a] against #[b] with matchConditions=["DO_NOT_MATCH_HTTP_RESPONSE_BY_BODY"] and message=[_null]
 
   Scenario: Compare HTTP responses with xml body
-    Given param a=
+    Given var a=
     """
     {"status": 200, "body":"<chat><date>2020-~[month]-06</date><conv><from>~[from]</from><to  con=\"~[var1]\" id=\"101\">florin</to></conv></chat>","reason":"~[adjective] request", "headers":[{"b":true},{"a":1}]}
     """
-    And param b=
+    And var b=
     """
     {"status": 200, "body":"<chat><conv><to id=\"101\" con=\"test\">florin</to><from>Sonya</from></conv><date>2020-02-06</date></chat>","reason":"Bad request", "headers":[{"a":1},{"b":true}]}
     """

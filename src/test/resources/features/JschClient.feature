@@ -7,7 +7,7 @@ Feature: Test JSCH feature
     Then JSCH execute command "echo test" and check response="test"
     Then JSCH execute command "ls -alh" and check response=".*"
     Then JSCH execute command "invalidcommand" and check response=".*command not found.*"
-    Given param multilineCmd=
+    Given var multilineCmd=
     """
     a='foo'
     b='bar'
