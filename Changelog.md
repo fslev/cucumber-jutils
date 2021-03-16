@@ -4,6 +4,7 @@
 
 ### 6.46
 Refactoring  
+Update dependencies  
 
 ### 6.45
 Revert to single gherkin step definition      
