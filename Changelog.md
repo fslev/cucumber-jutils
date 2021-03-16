@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.45-SNAPSHOT
+Revert to single gherkin definition for steps  
 
 ### 6.44
 Multiple gherkin definitions for same step  
