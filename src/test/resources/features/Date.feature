@@ -45,11 +45,11 @@ Feature: Date feature
 
   Scenario: Format dates from custom date time
     Given date param currentTime="from date 2020-04-28 18:05:58 PLUS 0 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
-    And date param years="from date 2020-04-28 18:05:58 PLUS 1 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
+    And date var years="from date 2020-04-28 18:05:58 PLUS 1 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param months="from date 2020-04-28 18:05:58 PLUS 1 MONTHS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param days="from date 2020-04-28 18:05:58 PLUS 1 DAYS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param minutes="from date 2020-04-28 18:05:58 PLUS 1 MINUTES" with format pattern=yyyy-MM-dd HH:mm:ss
-    And date param seconds="from date #[currentTime] PLUS 2 SECONDS" with format pattern=yyyy-MM-dd HH:mm:ss
+    And date var seconds="from date #[currentTime] PLUS 2 SECONDS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date param secondsBefore="from date #[minutes] MINUS 61 SECONDS" with format pattern=yyyy-MM-dd HH:mm:ss
 
     Then Check period from "#[currentTime]" to "#[years]" is 1 YEARS using date time pattern yyyy-MM-dd HH:mm:ss
@@ -63,7 +63,7 @@ Feature: Date feature
     Then Check period from "#[currentTime]" to "#[secondsBefore]" is -1 SECONDS using date time pattern yyyy-MM-dd HH:mm:ss
 
   Scenario: Set date in millis param
-    * date millis param ts="from date 2021-03-07 18:44:27.345+0000 PLUS 1 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
+    * date millis var ts="from date 2021-03-07 18:44:27.345+0000 PLUS 1 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
     * Match #[ts] with "1615146267345"
     * date millis param ts="from date 2021-03-07 18:44:27.345+0200 PLUS 0 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
     * Match #[ts] with "1615135467345"

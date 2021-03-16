@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.44-SNAPSHOT
+Multiple gherkin definitions for same step  
 
 ### 6.43
 Refactor file types for loading scenario properties    

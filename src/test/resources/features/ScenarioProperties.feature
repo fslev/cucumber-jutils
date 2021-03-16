@@ -2,7 +2,7 @@ Feature: Test placeholder fill
 
   Scenario: Test scenario prop assigned to itself
     Given param a="test"
-    And param a="#[a]"
+    And var a="#[a]"
     Then Match #[a] with "test"
 
   Scenario Outline: Test scenario property from example table
@@ -17,7 +17,7 @@ Feature: Test placeholder fill
     Then Check filled string equals "Username is jtravolta and password is swordfish"
 
   Scenario: Test placeholder fill with scenario values
-    Given param animal="r\"a$b\\"b[it"
+    Given var animal="r\"a$b\\"b[it"
     And param location="forest"
     And The string with scenario placeholders "The #[animal] is running through the #[location]"
     Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
@@ -39,7 +39,7 @@ Feature: Test placeholder fill
     Then Check filled string equals "The bear is attacking jtravolta"
 
   Scenario: Test placeholder fill with scenario values from properties file
-    Given param lastName="Jones"
+    Given var lastName="Jones"
     Given load scenario props from file "placeholders/scenario.properties"
     Given param animal="bear"
     Given The string with scenario placeholders "The #[animal] is attacking #[name]"
@@ -48,9 +48,9 @@ Feature: Test placeholder fill
   Scenario: Test placeholder fill from properties file and scenario params regardless of declaration order
     Given load scenario props from file "placeholders/scenario1.properties"
     Given param lastName="Rey"
-    Given param enemyName="#[enemyFirstName] #[enemyLastName]"
+    Given var enemyName="#[enemyFirstName] #[enemyLastName]"
     Given param enemyFirstName="Ben"
-    Given param enemyLastName=
+    Given var enemyLastName=
   """
   #[a]#[b]
   """
@@ -60,7 +60,7 @@ Feature: Test placeholder fill
     Then Check filled string equals "Ben Solo is attacking Scavenger Rey"
 
   Scenario: Test placeholder fill with scenario values from yaml file
-    Given load scenario props from file "placeholders/scenario.yaml"
+    Given load vars from file "placeholders/scenario.yaml"
     Given param lastName="Jones"
     Given param animal="bear"
     Given The string with scenario placeholders "The #[animal] is attacking #[name]"
@@ -68,7 +68,7 @@ Feature: Test placeholder fill
 
 
   Scenario: Test placeholder fill with all scenario values recursively loaded from directory
-    Given load all scenario props from dir "placeholders/properties"
+    Given load vars from dir "placeholders/properties"
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]"
 

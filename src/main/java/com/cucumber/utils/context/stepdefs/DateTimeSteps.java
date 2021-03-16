@@ -69,6 +69,7 @@ public class DateTimeSteps {
     }
 
     @Then("date param {}=\"from millis {} {} {} {}\" with format pattern={}")
+    @Then("date var {}=\"from millis {} {} {} {}\" with format pattern={}")
     public void setDateFormattedParam(String param, Long millis, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
@@ -85,6 +86,7 @@ public class DateTimeSteps {
     }
 
     @Then("date param {}=\"from date {} {} {} {}\" with format pattern={}")
+    @Then("date var {}=\"from date {} {} {} {}\" with format pattern={}")
     public void setDateFormattedParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
@@ -99,6 +101,7 @@ public class DateTimeSteps {
     }
 
     @Then("date millis param {}=\"from date {} {} {} {}\" with format pattern={}")
+    @Then("date millis var {}=\"from date {} {} {} {}\" with format pattern={}")
     public void setDateInMillisParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
