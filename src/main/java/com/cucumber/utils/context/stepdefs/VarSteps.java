@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 @ScenarioScoped
-public class ParamSteps {
+public class VarSteps {
 
     private static final Logger LOG = LogManager.getLogger();
     @Inject
@@ -23,20 +23,20 @@ public class ParamSteps {
     private ScenarioUtils scenarioUtils;
 
     @Given("var {}=\"{}\"")
-    public void setParamString(String name, Object value) {
+    public void setVar(String name, Object value) {
         scenarioProps.put(name, value);
         scenarioUtils.log("var {} = {}", name, value);
         LOG.debug("var {} = {}", name, value);
     }
 
     @Given("var {}=")
-    public void setParamDocString(String name, StringBuilder value) {
-        setParamString(name, value.toString());
+    public void setVarFromDocString(String name, StringBuilder value) {
+        setVar(name, value.toString());
     }
 
     @Given("var {} from file path \"{}\"")
-    public void setParamFromFile(String name, String filePath) {
-        setParamString(name, ScenarioPropsUtils.parse(filePath, scenarioProps));
+    public void setVarFromFile(String name, String filePath) {
+        setVar(name, ScenarioPropsUtils.parse(filePath, scenarioProps));
     }
 
     @Given("load vars from file \"{}\"")

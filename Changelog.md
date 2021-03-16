@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.46-SNAPSHOT
+### 6.47-SNAPSHOT
+
+### 6.46
+Refactoring  
 
 ### 6.45
 Revert to single gherkin step definition      

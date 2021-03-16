@@ -27,7 +27,7 @@ public class DateTimeSteps {
     }
 
     @Then("Check period from \"{}\" to \"{}\" is {} {} using date pattern {}")
-    public void compareDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
+    public void matchDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Check date period from '{}' to '{}' is {}{} using date pattern '{}'", date1, date2, value, chronoUnit, pattern);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
@@ -36,7 +36,7 @@ public class DateTimeSteps {
     }
 
     @Then("Check period from \"{}\" to \"{}\" is {} {} using date time pattern {}")
-    public void compareDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
+    public void matchDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Check date period from '{}' to '{}' is {}{} using date time pattern '{}'", date1, date2, value, chronoUnit, pattern);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
         ZonedDateTime zonedDateTime1 = ZonedDateTime.parse(date1, dateTimeFormatter);
@@ -45,31 +45,31 @@ public class DateTimeSteps {
     }
 
     @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date pattern {}")
-    public void negativeCompareDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
+    public void negativeMatchDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Negative check date period from '{}' to '{}' is {}{} using date pattern '{}'", date1, date2, value, chronoUnit, pattern);
         try {
-            compareDates(date1, date2, value, chronoUnit, pattern);
+            matchDates(date1, date2, value, chronoUnit, pattern);
         } catch (AssertionError e) {
-            logger.log("Negative compare passes {}", e.getMessage());
+            logger.log("Negative match passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared dates match");
     }
 
     @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date time pattern {}")
-    public void negativeCompareDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
+    public void negativeMatchDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Negative check date period from '{}' to '{}' is {}{} using date time pattern '{}'", date1, date2, value, chronoUnit, pattern);
         try {
-            compareDateTimes(date1, date2, value, chronoUnit, pattern);
+            matchDateTimes(date1, date2, value, chronoUnit, pattern);
         } catch (AssertionError e) {
-            logger.log("Negative compare passes {}", e.getMessage());
+            logger.log("Negative match passes {}", e.getMessage());
             return;
         }
         throw new AssertionError("Compared dates match");
     }
 
     @Then("date var {}=\"from millis {} {} {} {}\" with format pattern={}")
-    public void setDateFormattedParam(String param, Long millis, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
+    public void setDateVar(String param, Long millis, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
@@ -85,7 +85,7 @@ public class DateTimeSteps {
     }
 
     @Then("date var {}=\"from date {} {} {} {}\" with format pattern={}")
-    public void setDateFormattedParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
+    public void setDateVar(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
