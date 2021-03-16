@@ -1,7 +1,10 @@
 # Changelog
 
-### 6.44-SNAPSHOT
+### 6.45-SNAPSHOT
+
+### 6.44
 Multiple gherkin definitions for same step  
+Upgrade cucumber  
 
 ### 6.43
 Refactor file types for loading scenario properties    
