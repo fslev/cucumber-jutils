@@ -3,7 +3,7 @@
 ### 6.46-SNAPSHOT
 
 ### 6.45
-Revert to single gherkin definition for steps    
+Revert to single gherkin step definition      
 
 ### 6.44
 Multiple gherkin definitions for same step  
