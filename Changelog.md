@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.47-SNAPSHOT
+### 6.48-SNAPSHOT
+
+### 6.47
+Update dependencies  
 
 ### 6.46
 Refactoring  
