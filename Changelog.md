@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.48-SNAPSHOT
+### 6.49-SNAPSHOT
+
+### 6.48
+Remove useless after hook  
 
 ### 6.47
 Update dependencies  
