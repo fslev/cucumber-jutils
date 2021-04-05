@@ -28,18 +28,21 @@ Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ### Minimum required dependencies
 Cucumber-JUtils uses the following dependencies which you must specify inside your pom.xml:  
 ```
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-guice</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-        </dependency>
+<dependency>
+   <groupId>io.cucumber</groupId>
+   <artifactId>cucumber-java</artifactId>
+   <version>${cucumber.version}</version>
+</dependency>
+<dependency>
+   <groupId>io.cucumber</groupId>
+   <artifactId>cucumber-guice</artifactId>
+   <version>${cucumber.version}</version>
+</dependency>
+<dependency>
+   <groupId>com.google.inject</groupId>
+   <artifactId>guice</artifactId>
+   <version>${cucumber.version}</version>
+</dependency>
 ```
 
 #### JTest-Utils

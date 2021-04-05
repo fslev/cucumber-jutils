@@ -6,18 +6,18 @@
 Cucumber-JUtils no longer includes Cucumber and Guice dependencies.  
 Use them explicitly inside your project: 
 ```
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-guice</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-        </dependency>
+<dependency>
+   <groupId>io.cucumber</groupId>
+   <artifactId>cucumber-java</artifactId>
+</dependency>
+<dependency>
+   <groupId>io.cucumber</groupId>
+   <artifactId>cucumber-guice</artifactId>
+</dependency>
+<dependency>
+   <groupId>com.google.inject</groupId>
+   <artifactId>guice</artifactId>
+</dependency>
 ```
 
 
