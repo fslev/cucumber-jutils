@@ -41,7 +41,7 @@ Cucumber-JUtils uses the following dependencies which you must specify inside yo
 <dependency>
    <groupId>com.google.inject</groupId>
    <artifactId>guice</artifactId>
-   <version>${cucumber.version}</version>
+   <version>${guice.version}</version>
 </dependency>
 ```
 
