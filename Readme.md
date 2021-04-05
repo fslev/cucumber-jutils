@@ -4,7 +4,6 @@
 ![Java CI with Maven](https://github.com/fslev/cucumber-utils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-utils/badge.svg?branch=master)](https://coveralls.io/github/fslev/cucumber-utils?branch=master)
 
-Cucumber Utils has been renamed to Cucumber JUtils
 
 # Summary
 A Java library meant to help you write organized and clean **Cucumber** tests.  
@@ -13,7 +12,7 @@ It takes over the usual dependencies and features needed inside a Cucumber test 
 * State-sharing mechanism between _Cucumber steps_ running inside same scenario: _scenario properties_. 
 * Customized clients for accessing various resources, i.e _databases_, _HTTP services_, etc  
 * Predefined Cucumber steps for helping with certain repetitive tasks  
-* Utility classes           
+* Useful utility classes           
 
 #### Maven Central
 ```
@@ -26,8 +25,25 @@ It takes over the usual dependencies and features needed inside a Cucumber test 
 Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ```  
 
-#### Included dependencies that are worth mentioning:
-[**jtest-utils**](https://github.com/fslev/jtest-utils)
+### Minimum required dependencies
+Cucumber-JUtils uses the following dependencies which you must specify inside your pom.xml:  
+```
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-guice</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+        </dependency>
+```
+
+#### JTest-Utils
+Cucumber-JUtils includes [**jtest-utils**](https://github.com/fslev/jtest-utils) dependency which contains many helpful features.  
 
 # Configuration
 In order to integrate **cucumber-jutils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:

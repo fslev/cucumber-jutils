@@ -1,6 +1,23 @@
 # Changelog
 
 ### 6.49-SNAPSHOT
+Exclude Cucumber and Guice dependencies from generated JAR.  
+The followings must be specified inside the target project: 
+```
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-guice</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+        </dependency>
+```
+
 
 ### 6.48
 Remove useless after hook  
