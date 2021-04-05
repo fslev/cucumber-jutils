@@ -12,7 +12,7 @@ It takes over the usual dependencies and features needed inside a Cucumber test 
 * Scenario scoped variables (defined and used both inside the Gherkin document and Step definitions)    
 * Customized clients for accessing various resources, i.e _databases_, _HTTP services_, etc  
 * Predefined Cucumber steps for helping with certain repetitive tasks  
-* Useful utility classes           
+* Some useful utility classes           
 
 #### Maven Central
 ```
