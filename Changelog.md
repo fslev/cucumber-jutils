@@ -3,8 +3,8 @@
 ### 6.50-SNAPSHOT
 
 ### 6.49
-Exclude Cucumber and Guice dependencies from generated JAR.  
-The followings must be specified inside the target project: 
+Cucumber-JUtils no longer includes Cucumber and Guice dependencies.  
+Use them explicitly inside your project: 
 ```
         <dependency>
             <groupId>io.cucumber</groupId>
