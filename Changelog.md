@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.50-SNAPSHOT
+### 6.51-SNAPSHOT
+
+### 6.50
+Update dependencies  
 
 ### 6.49
 Cucumber-JUtils no longer includes Cucumber and Guice dependencies.  
