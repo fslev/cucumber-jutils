@@ -23,4 +23,9 @@ public class ShellSteps {
         String actual = shellClient.execute("bash", "-c", cmd).trim();
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
+
+    @Then("SHELL execute command \"{}\" and check response is")
+    public void executeAndMatch(String cmd, StringBuilder expected) {
+        executeAndMatch(cmd, expected.toString());
+    }
 }
