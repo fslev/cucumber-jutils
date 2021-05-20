@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.55-SNAPSHOT
+### 6.56-SNAPSHOT
+
+### 6.55
+Update jtest-utils (XML matcher bug fix)  
 
 ### 6.54
 Update dependencies  
