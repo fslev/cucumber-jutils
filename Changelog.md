@@ -1,6 +1,10 @@
 # Changelog
 
-### 6.56-SNAPSHOT
+### 6.57-SNAPSHOT
+
+### 6.56
+Define extra Shell client step  
+Update jtest-utils  
 
 ### 6.55
 Update jtest-utils (XML matcher bug fix)  
