@@ -7,7 +7,7 @@ Feature: Test SHELL feature
     """
     .*
     """
-    * SHELL execute command "echo foobar" and check response="foobar"
+    * SHELL execute command "echo foobar" and check response="foobar\n"
     * SHELL execute command "invalidcommand" and check response=".*command not found.*"
     Given var multilineCmd=
     """
@@ -15,5 +15,5 @@ Feature: Test SHELL feature
     b='bar'
     echo "$a $b"
     """
-    Then SHELL execute command "#[multilineCmd]" and check response="foo bar"
+    Then SHELL execute command "#[multilineCmd]" and check response="foo bar\n"
 
