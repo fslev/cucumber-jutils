@@ -8,6 +8,7 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ro.skyah.util.MessageUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -25,13 +26,13 @@ public class VarSteps {
     @Given("var {}=\"{}\"")
     public void setVar(String name, Object value) {
         scenarioProps.put(name, value);
-        scenarioUtils.log("var {} = {}", name, value);
+        scenarioUtils.log("var {} = {}", name, value != null ? MessageUtil.cropXXL(value.toString()) : null);
         LOG.debug("var {} = {}", name, value);
     }
 
     @Given("var {}=")
     public void setVarFromDocString(String name, StringBuilder value) {
-        setVar(name, value.toString());
+        setVar(name, value);
     }
 
     @Given("var {} from file path \"{}\"")

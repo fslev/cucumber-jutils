@@ -8,6 +8,7 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
 import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
+import ro.skyah.util.MessageUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -25,13 +26,14 @@ public class MatchSteps {
 
     @Then("Match {} with \"{}\"")
     public void match(Object expected, Object actual) {
-        logger.log("    Match:\n{}\n    Against:\n{}", expected, actual);
+        logger.log("    Match:\n{}\n    Against:\n{}", expected, actual != null ? MessageUtil.cropXXL(actual.toString()) : null);
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
     @Then("Match {} with \"{}\" using matchConditions={}")
     public void match(Object expected, Object actual, Set<MatchCondition> matchConditions) {
-        logger.log("    Match:\n{}\n    Against:\n{}\n    with match conditions: {}", expected, actual, matchConditions);
+        logger.log("    Match:\n{}\n    Against:\n{}\n    with match conditions: {}", expected,
+                actual != null ? MessageUtil.cropXXL(actual.toString()) : null, matchConditions);
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual, matchConditions.toArray(new MatchCondition[0])));
     }
 
@@ -43,7 +45,7 @@ public class MatchSteps {
 
     @Then("Negative match {} with \"{}\"")
     public void matchNegativeWithString(Object expected, Object actual) {
-        logger.log("    Negative Match:\n{}\n    Against:\n{}", expected, actual);
+        logger.log("    Negative Match:\n{}\n    Against:\n{}", expected, actual != null ? MessageUtil.cropXXL(actual.toString()) : null);
         try {
             scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
         } catch (AssertionError e) {
@@ -60,7 +62,7 @@ public class MatchSteps {
 
     @Then("Match {} with")
     public void matchWithDocString(Object expected, StringBuilder actual) {
-        match(expected, actual.toString());
+        match(expected, actual);
     }
 
     @Then("Negative match {} with")

@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.57-SNAPSHOT
+### 6.58-SNAPSHOT
+
+### 6.57
+Crop very long messages  
 
 ### 6.56
 Define extra Shell client step  
