@@ -26,26 +26,26 @@ public class MatchSteps {
 
     @Then("Match {} with \"{}\"")
     public void match(Object expected, Object actual) {
-        logger.log("    Match:\n{}\n    Against:\n{}", expected, actual != null ? MessageUtil.cropXXL(actual.toString()) : null);
+        logger.log("    MATCH:\n\n{}\n\n    against:\n\n{}", expected, actual != null ? MessageUtil.cropXXL(actual.toString()) : null);
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
     @Then("Match {} with \"{}\" using matchConditions={}")
     public void match(Object expected, Object actual, Set<MatchCondition> matchConditions) {
-        logger.log("    Match:\n{}\n    Against:\n{}\n    with match conditions: {}", expected,
+        logger.log("    MATCH:\n\n{}\n\n    against:\n\n{}\n    with match conditions: {}", expected,
                 actual != null ? MessageUtil.cropXXL(actual.toString()) : null, matchConditions);
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual, matchConditions.toArray(new MatchCondition[0])));
     }
 
     @Then("Match {} with NULL")
     public void matchWithNull(Object expected) {
-        logger.log("    Match:\n{}\n    Against:\n{}", expected, null);
+        logger.log("    MATCH:\n\n{}\n\n    against:\n\n{}", expected, null);
         assertNull(expected);
     }
 
     @Then("Negative match {} with \"{}\"")
     public void matchNegativeWithString(Object expected, Object actual) {
-        logger.log("    Negative Match:\n{}\n    Against:\n{}", expected, actual != null ? MessageUtil.cropXXL(actual.toString()) : null);
+        logger.log("    Negative match:\n\n{}\n\n    against:\n\n{}", expected, actual != null ? MessageUtil.cropXXL(actual.toString()) : null);
         try {
             scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
         } catch (AssertionError e) {
@@ -72,7 +72,7 @@ public class MatchSteps {
 
     @Then("Match {} with table")
     public void matchWithDataTable(Object expected, List<Map<String, Object>> actual) {
-        logger.log("    Match:\n{}\n    Against:\n{}", expected, actual);
+        logger.log("    MATCH:\n\n{}\n\n    against:\n\n{}", expected, actual);
         scenarioProps.putAll(ObjectMatcher.match(null, expected, actual));
     }
 }
