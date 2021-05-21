@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.58-SNAPSHOT
+### 6.59-SNAPSHOT
+
+### 6.58
+Enhance Shell client step definitions    
 
 ### 6.57
 Crop very long messages  
