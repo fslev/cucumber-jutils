@@ -32,7 +32,7 @@ public class VarSteps {
 
     @Given("var {}=")
     public void setVarFromDocString(String name, StringBuilder value) {
-        setVar(name, value);
+        setVar(name, value.toString());
     }
 
     @Given("var {} from file path \"{}\"")

@@ -62,7 +62,7 @@ public class MatchSteps {
 
     @Then("Match {} with")
     public void matchWithDocString(Object expected, StringBuilder actual) {
-        match(expected, actual);
+        match(expected, actual.toString());
     }
 
     @Then("Negative match {} with")
