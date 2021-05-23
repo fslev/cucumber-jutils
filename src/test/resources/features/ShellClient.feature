@@ -3,7 +3,7 @@ Feature: Test SHELL feature
 
   Scenario: Run shell command and check output
     * SHELL execute command "ls -alh" and check response=".*"
-    * SHELL execute command "ls -alh" and check response is
+    * SHELL execute command "ls -alh" and check response=
     """
     .*
     """
