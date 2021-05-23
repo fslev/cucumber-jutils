@@ -1,7 +1,9 @@
 # Changelog
 
-### 6.60-SNAPSHOT
+### 6.61-SNAPSHOT
 
+### 6.60
+Update jtest-utils  
 
 ### 6.59
 Refactor Shell client step definitions  
