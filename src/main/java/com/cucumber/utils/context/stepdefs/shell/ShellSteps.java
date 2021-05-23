@@ -27,9 +27,14 @@ public class ShellSteps {
         executeAndMatch(cmd, null, expected, new HashSet<>());
     }
 
-    @Then("SHELL execute command \"{}\" and check response is")
+    @Then("SHELL execute command \"{}\" and check response=")
     public void executeAndMatch(String cmd, StringBuilder expected) {
         executeAndMatch(cmd, null, expected.toString(), new HashSet<>());
+    }
+
+    @Then("SHELL execute command \"{}\" and check {}s until response=")
+    public void executeAndMatch(String cmd, Integer pollingTimeoutSeconds, StringBuilder expected) {
+        executeAndMatch(cmd, pollingTimeoutSeconds, expected.toString(), new HashSet<>());
     }
 
     @Then("SHELL execute command \"{}\" and check {}s until response=\"{}\" using matchConditions={}")
@@ -49,10 +54,5 @@ public class ShellSteps {
         } finally {
             logger.log("\n------ ACTUAL OUTPUT ------\n{}", wrapper.get());
         }
-    }
-
-    @Then("SHELL execute command \"{}\" and check {}s until response is")
-    public void executeAndMatch(String cmd, Integer pollingTimeoutSeconds, StringBuilder expected) {
-        executeAndMatch(cmd, pollingTimeoutSeconds, expected.toString(), new HashSet<>());
     }
 }
