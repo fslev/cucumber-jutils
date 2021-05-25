@@ -26,7 +26,7 @@ public class VarSteps {
     @Given("var {}=\"{}\"")
     public void setVar(String name, Object value) {
         scenarioProps.put(name, value);
-        scenarioUtils.log("var {} = {}", name, value != null ? MessageUtil.cropXXL(value.toString()) : null);
+        scenarioUtils.log("var {} = {}", name, value != null ? MessageUtil.cropL(value.toString()) : null);
         LOG.debug("var {} = {}", name, value);
     }
 
