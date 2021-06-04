@@ -18,6 +18,10 @@ public class ScenarioUtils {
         scenario.log(ParameterizedMessage.format(msg, args));
     }
 
+    public void log(Object o) {
+        scenario.log(ParameterizedMessage.deepToString(o));
+    }
+
     public Scenario getScenario() {
         return scenario;
     }
