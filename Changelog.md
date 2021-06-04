@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.67-SNAPSHOT
+### 6.68-SNAPSHOT
+
+### 6.67
+Enhance scenarioUtils log method  
 
 ### 6.66
 Update jtest-utils  
