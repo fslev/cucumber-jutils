@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.68-SNAPSHOT
+Change match conditions parameter from List to array. This removes the double conversion from MatchSteps  
 
 ### 6.67
 Enhance scenarioUtils log method  

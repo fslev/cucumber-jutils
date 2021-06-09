@@ -12,7 +12,6 @@ import ro.skyah.util.MessageUtil;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import static org.junit.Assert.assertNull;
 
@@ -31,10 +30,10 @@ public class MatchSteps {
     }
 
     @Then("Match {} with \"{}\" using matchConditions={}")
-    public void match(Object expected, Object actual, Set<MatchCondition> matchConditions) {
+    public void match(Object expected, Object actual, MatchCondition[] matchConditions) {
         logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}\n    with match conditions: {}", expected,
                 actual != null ? MessageUtil.cropL(actual.toString()) : null, matchConditions);
-        scenarioProps.putAll(ObjectMatcher.match(null, expected, actual, matchConditions.toArray(new MatchCondition[0])));
+        scenarioProps.putAll(ObjectMatcher.match(null, expected, actual, matchConditions));
     }
 
     @Then("Match {} with NULL")
