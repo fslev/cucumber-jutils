@@ -6,6 +6,7 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.When;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @ScenarioScoped
 public class ParamTypeSteps {
@@ -17,4 +18,21 @@ public class ParamTypeSteps {
     public void checkThisIsString(Object val) {
         assertEquals(String.class, val.getClass());
     }
+
+    @When("Array of enums: {}")
+    public void arrayOfEnums(MyEnum[] myEnums) {
+        assertNotNull(myEnums);
+    }
+
+    @When("Array of strings: {}")
+    public void arrayOfStrings(String[] myStrings) {
+        assertNotNull(myStrings);
+    }
+
+    public enum MyEnum {
+        TEST,
+        OK
+    }
 }
+
+
