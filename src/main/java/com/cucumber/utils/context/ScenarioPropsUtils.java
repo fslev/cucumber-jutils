@@ -55,7 +55,7 @@ public final class ScenarioPropsUtils {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        LOG.info("Loaded from dir '{}', scenario properties with the following names:\n{}", dirPath, properties);
+        LOG.debug("Loaded from dir '{}', scenario properties with the following names:\n{}", dirPath, properties);
         return properties;
     }
 

@@ -1,6 +1,7 @@
 # Changelog
 
 ### 6.69-SNAPSHOT
+Decrease Logger level  
 
 ### 6.68
 Change match conditions parameter from List to array. This removes the double conversion from MatchSteps  
