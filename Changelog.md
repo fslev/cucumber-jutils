@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.69-SNAPSHOT
+### 6.70-SNAPSHOT
+
+
+### 6.69
 Decrease Logger level  
 
 ### 6.68
