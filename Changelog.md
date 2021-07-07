@@ -1,7 +1,9 @@
 # Changelog
 
-### 6.70-SNAPSHOT
+### 6.71-SNAPSHOT
 
+### 6.70
+Update dependencies  
 
 ### 6.69
 Decrease Logger level  
