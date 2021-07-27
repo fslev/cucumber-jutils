@@ -25,7 +25,7 @@ _It takes over the usual dependencies and features needed inside a Cucumber test
 Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ```  
 
-### Minimum required dependencies
+### Required dependencies
 Cucumber-JUtils uses the following dependencies which you must specify inside your pom.xml:  
 ```
 <dependency>
