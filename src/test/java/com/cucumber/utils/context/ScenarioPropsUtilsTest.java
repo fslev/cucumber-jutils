@@ -1,6 +1,7 @@
 package com.cucumber.utils.context;
 
 import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.exceptions.InvalidScenarioPropertyFileType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,5 +19,11 @@ public class ScenarioPropsUtilsTest {
     @Test
     public void testParserFromInvalidFile() {
         assertThrows(RuntimeException.class, () -> ScenarioPropsUtils.parse("idontexist.json", scenarioProps));
+    }
+
+    @Test
+    public void loadPropertyFileFromInvalidExtension() {
+        assertThrows(InvalidScenarioPropertyFileType.class, () -> ScenarioPropsUtils.loadFileAsScenarioProperty(
+                "props/invalid.extension", scenarioProps, "var1"));
     }
 }
