@@ -270,3 +270,6 @@ Feature: Test comparator
     # This should log regex related warning messages
     And Negative match [0-9] with "[0-9]"
     And Match \Q[0-9]\E with "[0-9]"
+
+  Scenario: Test negative match
+    * Test negative match
