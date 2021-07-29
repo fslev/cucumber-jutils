@@ -24,11 +24,14 @@ Feature: Date feature
     Given date var currentTime="from millis #[now] PLUS 0 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date var years="from millis #[now] PLUS 15 YEARS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date var days="from millis #[now] PLUS 15 DAYS" with format pattern=yyyy-MM-dd HH:mm:ss
+    And date var daysBefore="from millis #[now] MINUS 15 DAYS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date var months="from millis #[now] PLUS 15 MONTHS" with format pattern=yyyy-MM-dd HH:mm:ss
     And date var minutes="from millis #[now] PLUS 15 MINUTES" with format pattern=yyyy-MM-dd HH:mm:ss
 
     Then Check period from "#[currentTime]" to "#[years]" is 15 YEARS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[days]" is 15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "#[currentTime]" to "#[daysBefore]" is -15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
+    Then Check period from "#[daysBefore]" to "#[currentTime]" is 15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[months]" is 15 MONTHS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[minutes]" is 15 MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
 
@@ -67,3 +70,5 @@ Feature: Date feature
     * Match #[ts] with "1615146267345"
     * date millis var ts="from date 2021-03-07 18:44:27.345+0200 PLUS 0 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
     * Match #[ts] with "1615135467345"
+    * date millis var ts="from date 2021-03-07 18:44:27.345+0200 MINUS 1 HOURS" with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
+    * Match #[ts] with "1615131867345"
