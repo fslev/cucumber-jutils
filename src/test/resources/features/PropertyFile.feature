@@ -33,3 +33,9 @@ Feature: Property File feature
     * Load duplicated scenario props from dir duplicated_props/test2 and expect exception
     * Load duplicated scenario props from dir duplicated_props/test3 and expect exception
     * Load duplicated scenario props from dir duplicated_props/test4 and expect exception
+
+  Scenario: Load scenarioProperty from invalid file type
+    * Load scenario property from invalid file type=props/invalid.extension
+    # Load file from unknown location
+    * Load scenario property from unknown location=inexistent/test.json
+    * Load scenario properties from unknown location=inexistent

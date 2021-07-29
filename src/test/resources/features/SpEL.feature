@@ -27,7 +27,7 @@ Feature: Parse SpEL expressions
     Given var json=
      """
     {
-   "a": "0.[0-9]*",
+   "a": "[0-9].[0-9]*",
    "b": false,
    "c": "abcde"
     }
