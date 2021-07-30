@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.72-SNAPSHOT
+### 6.73-SNAPSHOT
+
+### 6.72
+Update dependencies  
 
 ### 6.71
 Update dependencies  
