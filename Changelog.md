@@ -1,6 +1,9 @@
 # Changelog
 
-### 6.74-SNAPSHOT
+### 6.75-SNAPSHOT
+
+### 6.74
+Update dependencies  
 
 ### 6.73
 Update dependencies (Optimized polling - jtest-utils)  
