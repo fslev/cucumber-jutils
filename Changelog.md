@@ -1,6 +1,10 @@
 # Changelog
 
-### 6.75-SNAPSHOT
+### 6.76-SNAPSHOT
+
+
+### 6.75
+Update dependencies  
 
 ### 6.74
 Update dependencies  
