@@ -1,7 +1,9 @@
 # Changelog
 
-### 6.76-SNAPSHOT
+### 6.77-SNAPSHOT
 
+### 6.76
+Support thread safety for ScenarioProps  
 
 ### 6.75
 Update dependencies  

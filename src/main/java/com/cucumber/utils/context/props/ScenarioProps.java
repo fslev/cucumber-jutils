@@ -4,13 +4,17 @@ import io.cucumber.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ScenarioScoped
 public class ScenarioProps {
 
     private static final Logger LOG = LogManager.getLogger();
-    private final Map<String, Object> props = new HashMap<>();
+    private final Map<String, Object> props = new ConcurrentHashMap<>();
 
     public String getAsString(String key) {
         Object val = get(key);
