@@ -3,7 +3,7 @@
     <Appenders>
         <Console name="CUtilsConsole" target="SYSTEM_OUT">
             <PatternLayout
-                    pattern="%d{HH:mm:ss} [%t] %highlight{%-5level %logger{36}} - %highlight{%msg}{DEBUG=white, INFO=white}%n"/>
+                    pattern="%d{HH:mm:ss} [%t] %highlight{%-5level %logger{36}} - %highlight{%msg}{DEBUG=x, INFO=x}%n"/>
         </Console>
     </Appenders>
     <Loggers>
