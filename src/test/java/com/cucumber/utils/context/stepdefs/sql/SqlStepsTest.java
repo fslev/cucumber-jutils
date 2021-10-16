@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.stepdefs.sql;
 
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import io.jtest.utils.clients.database.SqlClient;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class SqlStepsTest {
     @Mock
     private ScenarioUtils scenarioUtils;
     @Spy
-    private final ScenarioProps scenarioProps = new ScenarioProps();
+    private final ScenarioVars scenarioVars = new ScenarioVars();
 
     private final SqlSteps sqlSteps = new SqlSteps();
 
@@ -66,7 +66,7 @@ public class SqlStepsTest {
 
     @Before
     public void injectMocksIntoSqlSteps() {
-        Whitebox.setInternalState(sqlSteps, scenarioProps);
+        Whitebox.setInternalState(sqlSteps, scenarioVars);
         Whitebox.setInternalState(sqlSteps, scenarioUtils);
         Whitebox.setInternalState(sqlSteps, sqlClient);
     }
@@ -78,8 +78,8 @@ public class SqlStepsTest {
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
         sqlSteps.executeQueryAndMatch("does not matter", expectedResult);
-        assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
-        assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
+        assertEquals(scenarioVars.getAsString("address3"), "Liberty 2");
+        assertEquals(scenarioVars.getAsString("firstName2"), "Andrew");
     }
 
     @Test
@@ -89,8 +89,8 @@ public class SqlStepsTest {
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
         sqlSteps.executeQueryAndMatchWithJson("does not matter", expectedResult);
-        assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
-        assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
+        assertEquals(scenarioVars.getAsString("address3"), "Liberty 2");
+        assertEquals(scenarioVars.getAsString("firstName2"), "Andrew");
     }
 
     @Test
@@ -100,8 +100,8 @@ public class SqlStepsTest {
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
         sqlSteps.executeQueryAndMatchWithTable("does not matter", expectedResult);
-        assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
-        assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
+        assertEquals(scenarioVars.getAsString("address3"), "Liberty 2");
+        assertEquals(scenarioVars.getAsString("firstName2"), "Andrew");
     }
 
     @Test
@@ -111,7 +111,7 @@ public class SqlStepsTest {
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
         sqlSteps.executeQueryAndPollAndMatch("does not matter", 10, expectedResult);
-        assertEquals(scenarioProps.getAsString("address3"), "Liberty 2");
-        assertEquals(scenarioProps.getAsString("firstName2"), "Andrew");
+        assertEquals(scenarioVars.getAsString("address3"), "Liberty 2");
+        assertEquals(scenarioVars.getAsString("firstName2"), "Andrew");
     }
 }

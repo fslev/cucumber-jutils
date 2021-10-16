@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.props;
+package com.cucumber.utils.context.vars;
 
 import io.cucumber.guice.ScenarioScoped;
 import org.apache.logging.log4j.LogManager;
@@ -7,10 +7,10 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 
 @ScenarioScoped
-public class ScenarioProps {
+public class ScenarioVars {
 
     private static final Logger LOG = LogManager.getLogger();
-    private final Map<String, Object> props = new HashMap<>();
+    private final Map<String, Object> vars = new HashMap<>();
 
     public String getAsString(String key) {
         Object val = get(key);
@@ -19,7 +19,7 @@ public class ScenarioProps {
 
     public Object get(String key) {
         if (key == null) {
-            return props.get(null);
+            return vars.get(null);
         }
         String trimmedKey = key.trim();
         switch (trimmedKey.toLowerCase()) {
@@ -32,33 +32,33 @@ public class ScenarioProps {
             case "int-random":
                 return (int) (Math.random() * Integer.MAX_VALUE);
             default:
-                return props.get(trimmedKey) instanceof String ?
-                        ScenarioPropsParser.parse(props.get(trimmedKey).toString(), this) : props.get(trimmedKey);
+                return vars.get(trimmedKey) instanceof String ?
+                        ScenarioVarsParser.parse(vars.get(trimmedKey).toString(), this) : vars.get(trimmedKey);
         }
     }
 
     public void put(String key, Object val) {
         String trimmedKey = (key == null) ? null : key.trim();
-        if (props.get(trimmedKey) != null) {
-            LOG.warn("Scenario property \"{}\" will be overridden with {}", trimmedKey, val);
+        if (vars.get(trimmedKey) != null) {
+            LOG.warn("Scenario variable \"{}\" will be overridden with {}", trimmedKey, val);
         }
-        props.put(trimmedKey, val);
+        vars.put(trimmedKey, val);
     }
 
-    public void putAll(Map<String, Object> props) {
-        props.forEach(this::put);
+    public void putAll(Map<String, Object> vars) {
+        vars.forEach(this::put);
     }
 
     public Set<String> keySet() {
-        return props.keySet();
+        return vars.keySet();
     }
 
     public boolean containsKey(String key) {
-        return props.containsKey(key);
+        return vars.containsKey(key);
     }
 
     public int size() {
-        return props.size();
+        return vars.size();
     }
 
     public enum FileExtension {
@@ -82,7 +82,7 @@ public class ScenarioProps {
             return Arrays.stream(values()).map(FileExtension::value).toArray(String[]::new);
         }
 
-        public static String[] propertyFileExtensions() {
+        public static String[] varFileExtensions() {
             return Arrays.stream(allExtensions())
                     .filter(val -> val.equals(XML.value()) || val.equals(JSON.value())
                             || val.equals(TXT.value()) || val.equals(HTML.value())
@@ -97,6 +97,6 @@ public class ScenarioProps {
 
     @Override
     public String toString() {
-        return this.props.toString();
+        return this.vars.toString();
     }
 }

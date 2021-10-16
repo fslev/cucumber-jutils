@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.stepdefs.shell;
 
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ShellSteps {
 
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
     @Inject
     private ScenarioUtils logger;
     private final ShellClient shellClient = new ShellClient();
@@ -44,9 +44,9 @@ public class ShellSteps {
         try {
             if (pollingTimeoutSeconds == null || pollingTimeoutSeconds == 0) {
                 wrapper.set(shellClient.execute("bash", "-c", cmd));
-                scenarioProps.putAll(ObjectMatcher.match(null, expected, wrapper.get(), matchConditions.toArray(new MatchCondition[0])));
+                scenarioVars.putAll(ObjectMatcher.match(null, expected, wrapper.get(), matchConditions.toArray(new MatchCondition[0])));
             } else {
-                scenarioProps.putAll(ObjectMatcher.match(null, expected, () -> {
+                scenarioVars.putAll(ObjectMatcher.match(null, expected, () -> {
                     wrapper.set(shellClient.execute("bash", "-c", cmd));
                     return wrapper.get();
                 }, pollingTimeoutSeconds, null, null, matchConditions.toArray(new MatchCondition[0])));

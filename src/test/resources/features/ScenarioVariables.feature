@@ -1,11 +1,11 @@
 Feature: Test placeholder fill
 
-  Scenario: Test scenario prop assigned to itself
+  Scenario: Test scenario var assigned to itself
     Given var a="test"
     And var a="#[a]"
     Then Match #[a] with "test"
 
-  Scenario Outline: Test scenario property from example table
+  Scenario Outline: Test scenario variable from example table
     * Match <expected> with "<withProperties>"
     Examples:
       | withProperties  | expected        |
@@ -22,12 +22,12 @@ Feature: Test placeholder fill
     And The string with scenario placeholders "The #[animal] is running through the #[location]"
     Then Check filled string equals "The r\"a$b\\"b[it is running through the forest"
 
-  Scenario: Test placeholder fill with scenario property file
+  Scenario: Test placeholder fill with scenario variable file
     * load vars from file "placeholders/figure.text"
     And The string with scenario placeholders "This is a #[figure]"
     Then Check filled string equals "This is a circle"
 
-  Scenario: Test scenario property loaded from file
+  Scenario: Test scenario variable loaded from file
     * load file "placeholders/figure.text" to var "var"
     And The string with scenario placeholders "This is a #[var]"
     Then Check filled string equals "This is a circle"
@@ -73,8 +73,8 @@ Feature: Test placeholder fill
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]"
 
 
-  Scenario: Test dynamic scenario properties
-  There are cases where dynamic scenario properties (such as #[uid], #[now]) are generated with same value
+  Scenario: Test dynamic scenario variables
+  There are cases where dynamic scenario variables (such as #[uid], #[now]) are generated with same value
   if they reside in the same file, or inside the same argument
 
     Given var a="unique1-#[uid]-and-unique2-#[uid]"

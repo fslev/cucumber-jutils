@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.config;
 
-import com.cucumber.utils.context.props.ScenarioProps;
-import com.cucumber.utils.context.props.ScenarioPropsParser;
+import com.cucumber.utils.context.vars.ScenarioVars;
+import com.cucumber.utils.context.vars.ScenarioVarsParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
@@ -20,7 +20,7 @@ public class ParameterTypesConfig {
     private static final String NULL_STRING = "[_null]";
 
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static {
@@ -34,7 +34,7 @@ public class ParameterTypesConfig {
         if (fromValue == null || fromValue.equals(NULL_STRING)) {
             return null;
         }
-        Object parsedValue = ScenarioPropsParser.parse(fromValue.toString(), scenarioProps);
+        Object parsedValue = ScenarioVarsParser.parse(fromValue.toString(), scenarioVars);
         if (parsedValue == null || toValueType.equals(Object.class)) {
             return parsedValue;
         }
@@ -48,7 +48,7 @@ public class ParameterTypesConfig {
 
     @DocStringType
     public StringBuilder convertDocString(String docString) {
-        return new StringBuilder(ScenarioPropsParser.parse(docString, scenarioProps).toString());
+        return new StringBuilder(ScenarioVarsParser.parse(docString, scenarioVars).toString());
     }
 
     @DataTableType(replaceWithEmptyString = EMPTY_STRING)
@@ -56,8 +56,8 @@ public class ParameterTypesConfig {
         Map<String, Object> transformedMap = new HashMap<>();
         for (Map.Entry<String, String> e : tableEntry.entrySet()) {
             transformedMap.put(
-                    e.getKey() != null ? ScenarioPropsParser.parse(e.getKey(), scenarioProps).toString() : null,
-                    e.getValue() != null ? ScenarioPropsParser.parse(e.getValue(), scenarioProps) : null);
+                    e.getKey() != null ? ScenarioVarsParser.parse(e.getKey(), scenarioVars).toString() : null,
+                    e.getValue() != null ? ScenarioVarsParser.parse(e.getValue(), scenarioVars) : null);
         }
         return transformedMap;
     }

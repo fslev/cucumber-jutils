@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.stepdefs.sql;
 
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
@@ -22,7 +22,7 @@ import java.util.Properties;
 public class SqlSteps {
 
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
     @Inject
     private ScenarioUtils logger;
     private SqlClient client;
@@ -62,7 +62,7 @@ public class SqlSteps {
             this.client.connect();
             this.client.prepareStatement(query);
             List<Map<String, Object>> result = client.executeQueryAndGetRsAsList();
-            scenarioProps.putAll(ObjectMatcher.match(null, expected, result, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY));
+            scenarioVars.putAll(ObjectMatcher.match(null, expected, result, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY));
         } finally {
             this.client.close();
         }
@@ -74,7 +74,7 @@ public class SqlSteps {
         try {
             this.client.connect();
             this.client.prepareStatement(query);
-            scenarioProps.putAll(ObjectMatcher.match(null, expected, () -> {
+            scenarioVars.putAll(ObjectMatcher.match(null, expected, () -> {
                         try {
                             return client.executeQueryAndGetRsAsList();
                         } catch (SQLException e) {

@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.stepdefs.http;
 
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
@@ -17,7 +17,7 @@ import java.util.Map;
 public class HttpSteps {
 
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
     @Inject
     private ScenarioUtils scenarioUtils;
 
@@ -30,7 +30,7 @@ public class HttpSteps {
             builder.entity(entity);
         }
         try (CloseableHttpResponse response = builder.build().execute()) {
-            scenarioProps.putAll(ObjectMatcher.matchHttpResponse(null, expected, response));
+            scenarioVars.putAll(ObjectMatcher.matchHttpResponse(null, expected, response));
         }
     }
 }

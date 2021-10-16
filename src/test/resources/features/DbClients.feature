@@ -3,28 +3,28 @@ Feature: Test clients
 
   Scenario: Test MYSQL client select with empty result set in string format
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and compare result with []
+    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and match result with []
 
   Scenario: Test MYSQL client select with empty result set in data table format
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and compare result with
+    Then SQL execute query "select * from gift_wf_2012 where person_id=0 order by person_id asc limit 3" and match result with
       |  |
 
-  Scenario: Test MYSQL client select and compare with table
+  Scenario: Test MYSQL client select and match with table
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 3" and compare result with
+    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 3" and match result with
       | person_id | gift                                                 |
       | .*        | .*                                                   |
       | 21189037  | fun & joy for everybody!                             |
       | 21193939  | Leica M9-P Hermes Edition: http://vimeo.com/42108675 |
 
-  Scenario: Test MYSQL client select and compare with json
+  Scenario: Test MYSQL client select and match with json
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 1" and compare result with [{"person_id": "*", "gift": ".*"}]
+    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 1" and match result with [{"person_id": "*", "gift": ".*"}]
 
-  Scenario: Test MYSQL client select and compare with poll
+  Scenario: Test MYSQL client select and match with poll
     Given SQL data source from file path "config/database/mysql.properties"
-    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 2" and poll for 6s while comparing result with
+    Then SQL execute query "select * from gift_wf_2012 order by person_id asc limit 2" and poll for 6s while matching result with
       | person_id | gift |
       | .*        | .*   |
       | 16        | null |
@@ -53,7 +53,7 @@ Feature: Test clients
 
   Scenario: Test POSTGRESQL client
     Given SQL data source from file path "config/database/psql.properties"
-    Then SQL execute query "select * from external_domain order by id asc limit 2" and compare result with
+    Then SQL execute query "select * from external_domain order by id asc limit 2" and match result with
       | provisioning_id | version |
       | 3929585         | 261951  |
       | 3929581         | 262173  |
@@ -61,7 +61,7 @@ Feature: Test clients
   Scenario: Test SYBASE client
     * var expected="1549"
     Given SQL data source from file path "config/database/sybase.properties"
-    Then SQL execute query "select TOP 2 domainname, adminc from domain order by domain_id asc" and compare result with
+    Then SQL execute query "select TOP 2 domainname, adminc from domain order by domain_id asc" and match result with
       | domainname                | adminc      |
       | hypothekenfinanzierung.de | #[expected] |
       | asb-bw.de                 | 1568        |

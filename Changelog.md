@@ -1,6 +1,10 @@
 # Changelog
 
-### 6.77-SNAPSHOT
+### 7.1-SNAPSHOT
+
+### 7.0-SNAPSHOT
+ScenarioProps gets renamed to ScenarioVars  
+
 
 ### 6.76
 Update dependencies  

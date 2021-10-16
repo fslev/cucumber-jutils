@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.stepdefs;
 
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
@@ -20,7 +20,7 @@ public class DateTimeSteps {
     @Inject
     private ScenarioUtils logger;
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
 
     public enum Operation {
         PLUS, MINUS
@@ -73,15 +73,15 @@ public class DateTimeSteps {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
-                scenarioProps.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+                scenarioVars.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
                         .minus(value, chronoUnit).format(dateTimeFormatter));
                 break;
             case PLUS:
-                scenarioProps.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
+                scenarioVars.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
                         .plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
-        logger.log("Date var {} = {}", param, scenarioProps.get(param));
+        logger.log("Date var {} = {}", param, scenarioVars.get(param));
     }
 
     @Then("date var {}=\"from date {} {} {} {}\" with format pattern={}")
@@ -89,13 +89,13 @@ public class DateTimeSteps {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
-                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).format(dateTimeFormatter));
                 break;
             case PLUS:
-                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
+                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
                 break;
         }
-        logger.log("Date var {} = {}", param, scenarioProps.get(param));
+        logger.log("Date var {} = {}", param, scenarioVars.get(param));
     }
 
     @Then("date millis var {}=\"from date {} {} {} {}\" with format pattern={}")
@@ -103,12 +103,12 @@ public class DateTimeSteps {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
             case MINUS:
-                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).toInstant().toEpochMilli());
+                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).toInstant().toEpochMilli());
                 break;
             case PLUS:
-                scenarioProps.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).toInstant().toEpochMilli());
+                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).toInstant().toEpochMilli());
                 break;
         }
-        logger.log("Date in millis var {} = {}", param, scenarioProps.get(param));
+        logger.log("Date in millis var {} = {}", param, scenarioVars.get(param));
     }
 }

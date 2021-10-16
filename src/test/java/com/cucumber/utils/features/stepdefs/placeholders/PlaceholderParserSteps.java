@@ -1,6 +1,6 @@
 package com.cucumber.utils.features.stepdefs.placeholders;
 
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
@@ -14,7 +14,7 @@ public class PlaceholderParserSteps {
     private String str;
 
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
 
     @Given("The string with global placeholders \"{}\"")
     public void stringWithGlobalSymbols(String str) {

@@ -1,7 +1,7 @@
 package com.cucumber.utils.features.stepdefs.compare;
 
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
@@ -28,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HttpCompareSteps {
 
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
     @Inject
     private ScenarioUtils scenarioUtils;
 
@@ -51,7 +51,7 @@ public class HttpCompareSteps {
         }
         mock.setEntity(entity);
         actual.getHeaders().forEach(h -> mock.setHeader(new BasicHeader(h.getKey(), h.getValue())));
-        scenarioProps.putAll(ObjectMatcher.matchHttpResponse(message, expectedJson, mock, matchConditions.toArray(new MatchCondition[0])));
+        scenarioVars.putAll(ObjectMatcher.matchHttpResponse(message, expectedJson, mock, matchConditions.toArray(new MatchCondition[0])));
     }
 
     @Given("Poll Http Response and Compare {} against {} with matchConditions={} and message={}")
@@ -73,7 +73,7 @@ public class HttpCompareSteps {
         mock.setEntity(entity);
         actual.getHeaders().forEach(h -> mock.setHeader(new BasicHeader(h.getKey(), h.getValue())));
         final AtomicInteger a = new AtomicInteger();
-        scenarioProps.putAll(ObjectMatcher.matchHttpResponse(message, expectedJson, () -> {
+        scenarioVars.putAll(ObjectMatcher.matchHttpResponse(message, expectedJson, () -> {
                     if (a.getAndIncrement() < 5) {
                         return new DefaultHttpResponseFactory().newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, 200, "mock"), new BasicHttpContext());
                     } else {

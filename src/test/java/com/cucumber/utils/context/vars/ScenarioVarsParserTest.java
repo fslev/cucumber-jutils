@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.props;
+package com.cucumber.utils.context.vars;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,13 +9,13 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ScenarioPropsParserTest {
+public class ScenarioVarsParserTest {
 
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
 
     @Before
     public void init() {
-        this.scenarioProps = new ScenarioProps();
+        this.scenarioVars = new ScenarioVars();
     }
 
     @Test
@@ -24,8 +24,8 @@ public class ScenarioPropsParserTest {
         Map<String, Object> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
+        scenarioVars.putAll(values);
+        assertEquals("The chupacabra is running through the forest", ScenarioVarsParser.parse(a, scenarioVars));
     }
 
     @Test
@@ -34,8 +34,8 @@ public class ScenarioPropsParserTest {
         Map<String, Object> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
-        scenarioProps.putAll(values);
-        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
+        scenarioVars.putAll(values);
+        assertEquals("The #[animal] is running through the #[location]", ScenarioVarsParser.parse(a, scenarioVars));
     }
 
     @Test
@@ -44,8 +44,8 @@ public class ScenarioPropsParserTest {
         Map<String, Object> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
+        scenarioVars.putAll(values);
+        assertEquals("The chupacabra is running through the forest", ScenarioVarsParser.parse(a, scenarioVars));
     }
 
     @Test
@@ -54,8 +54,8 @@ public class ScenarioPropsParserTest {
         Map<String, Object> values = new HashMap<>();
         values.put("animals", "chupacabra");
         values.put("locations", "forest");
-        scenarioProps.putAll(values);
-        assertEquals("The #[animal] is running through the #[location]", ScenarioPropsParser.parse(a, scenarioProps));
+        scenarioVars.putAll(values);
+        assertEquals("The #[animal] is running through the #[location]", ScenarioVarsParser.parse(a, scenarioVars));
     }
 
     @Test
@@ -64,8 +64,8 @@ public class ScenarioPropsParserTest {
         Map<String, Object> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
-        scenarioProps.putAll(values);
-        assertEquals("The chupacabra is running through the forest", ScenarioPropsParser.parse(a, scenarioProps));
+        scenarioVars.putAll(values);
+        assertEquals("The chupacabra is running through the forest", ScenarioVarsParser.parse(a, scenarioVars));
     }
 
     @Test
@@ -122,42 +122,42 @@ public class ScenarioPropsParserTest {
                 + "        \"name\": \"De~[var4]sa\"\n" + "      }\n" + "    ],\n"
                 + "    \"greeting\": \"Hello, Tonya Schneider! You have 9 unread messages.\",\n"
                 + "    \"~[val1]\": \"banana\"\n" + "  }\n" + "]";
-        scenarioProps.putAll(values);
-        String result = ScenarioPropsParser.parse(actual, scenarioProps).toString();
+        scenarioVars.putAll(values);
+        String result = ScenarioVarsParser.parse(actual, scenarioVars).toString();
         assertEquals(result, expected, result);
     }
 
     @Test
     public void testSimpleSpel() {
         String s = "#{T(java.net.IDN).toASCII('testá.com')}";
-        assertEquals("xn--test-8na.com", ScenarioPropsParser.parse(s, scenarioProps));
+        assertEquals("xn--test-8na.com", ScenarioVarsParser.parse(s, scenarioVars));
         s = "Domain #{T(java.net.IDN).toASCII('testá.com')}-> idn";
-        assertEquals("Domain xn--test-8na.com-> idn", ScenarioPropsParser.parse(s, scenarioProps));
+        assertEquals("Domain xn--test-8na.com-> idn", ScenarioVarsParser.parse(s, scenarioVars));
     }
 
     @Test
     public void testInvalidSpel() {
         String s = "This is: #{T(java.net.I).toASCII('testá.com')}";
-        assertEquals("This is: #{T(java.net.I).toASCII('testá.com')}", ScenarioPropsParser.parse(s, scenarioProps));
+        assertEquals("This is: #{T(java.net.I).toASCII('testá.com')}", ScenarioVarsParser.parse(s, scenarioVars));
     }
 
     @Test
     public void testSpelGeneratesObject() {
         String s = "#{new Long(1000)}";
-        assertTrue(ScenarioPropsParser.parse(s, scenarioProps) instanceof Long);
+        assertTrue(ScenarioVarsParser.parse(s, scenarioVars) instanceof Long);
     }
 
     @Test
-    public void testSpelWithScenarioProps() {
-        scenarioProps.put("a", 1000);
-        scenarioProps.put("b", 1);
+    public void testSpelWithScenarioVars() {
+        scenarioVars.put("a", 1000);
+        scenarioVars.put("b", 1);
         String s = "#{#[a]+#[b]}";
-        assertEquals(1001, ScenarioPropsParser.parse(s, scenarioProps));
+        assertEquals(1001, ScenarioVarsParser.parse(s, scenarioVars));
     }
 
     @Test
     public void testEmptySpel() {
         String s = "#{}";
-        assertEquals("#{}", ScenarioPropsParser.parse(s, scenarioProps));
+        assertEquals("#{}", ScenarioVarsParser.parse(s, scenarioVars));
     }
 }

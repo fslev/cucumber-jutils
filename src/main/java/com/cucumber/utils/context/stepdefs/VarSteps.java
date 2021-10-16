@@ -1,8 +1,8 @@
 package com.cucumber.utils.context.stepdefs;
 
-import com.cucumber.utils.context.ScenarioPropsUtils;
 import com.cucumber.utils.context.ScenarioUtils;
-import com.cucumber.utils.context.props.ScenarioProps;
+import com.cucumber.utils.context.ScenarioVarsUtils;
+import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
@@ -19,13 +19,13 @@ public class VarSteps {
 
     private static final Logger LOG = LogManager.getLogger();
     @Inject
-    private ScenarioProps scenarioProps;
+    private ScenarioVars scenarioVars;
     @Inject
     private ScenarioUtils scenarioUtils;
 
     @Given("var {}=\"{}\"")
     public void setVar(String name, Object value) {
-        scenarioProps.put(name, value);
+        scenarioVars.put(name, value);
         scenarioUtils.log("var {} = {}", name, value != null ? MessageUtil.cropL(value.toString()) : null);
         LOG.debug("var {} = {}", name, value);
     }
@@ -37,30 +37,30 @@ public class VarSteps {
 
     @Given("var {} from file path \"{}\"")
     public void setVarFromFile(String name, String filePath) {
-        setVar(name, ScenarioPropsUtils.parse(filePath, scenarioProps));
+        setVar(name, ScenarioVarsUtils.parse(filePath, scenarioVars));
     }
 
     @Given("load vars from file \"{}\"")
-    public void loadScenarioPropertiesFromFile(String filePath) {
-        Set<String> propertyNames = ScenarioPropsUtils.loadPropsFromFile(filePath, scenarioProps);
-        scenarioUtils.log("Loaded scenario properties having names: {}", propertyNames);
+    public void loadScenarioVarsFromFile(String filePath) {
+        Set<String> propertyNames = ScenarioVarsUtils.loadScenarioVarsFromFile(filePath, scenarioVars);
+        scenarioUtils.log("Loaded scenario variables having names: {}", propertyNames);
     }
 
     @Given("load file \"{}\" to var \"{}\"")
-    public void loadScenarioPropertiesFromFile(String filePath, String propertyName) {
-        ScenarioPropsUtils.loadFileAsScenarioProperty(filePath, scenarioProps, propertyName);
-        scenarioUtils.log("Loaded scenario property with name: {}", propertyName);
+    public void loadScenarioVarsFromFile(String filePath, String propertyName) {
+        ScenarioVarsUtils.loadFileAsScenarioVariable(filePath, scenarioVars, propertyName);
+        scenarioUtils.log("Loaded scenario variable with name: {}", propertyName);
     }
 
     @Given("load vars from dir \"{}\"")
-    public void setScenarioPropertiesFromDir(String dirPath) {
-        Set<String> propertyNames = ScenarioPropsUtils.loadPropsFromDir(dirPath, scenarioProps);
-        scenarioUtils.log("Loaded scenario properties having names: {}", propertyNames);
+    public void loadScenarioVarsFromDir(String dirPath) {
+        Set<String> propertyNames = ScenarioVarsUtils.loadScenarioVarsFromDir(dirPath, scenarioVars);
+        scenarioUtils.log("Loaded scenario variables having names: {}", propertyNames);
     }
 
     @Given("table {}=")
     public void setCustomDataTable(String name, List<Map<String, Object>> value) {
-        scenarioProps.put(name, value);
+        scenarioVars.put(name, value);
         scenarioUtils.log("var {} = {}", name, value);
         LOG.debug("var {} = {}", name, value);
     }
