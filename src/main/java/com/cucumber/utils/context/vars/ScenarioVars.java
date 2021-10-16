@@ -12,17 +12,17 @@ public class ScenarioVars {
     private static final Logger LOG = LogManager.getLogger();
     private final Map<String, Object> vars = new HashMap<>();
 
-    public String getAsString(String key) {
-        Object val = get(key);
+    public String getAsString(String name) {
+        Object val = get(name);
         return val != null ? val.toString() : null;
     }
 
-    public Object get(String key) {
-        if (key == null) {
+    public Object get(String name) {
+        if (name == null) {
             return vars.get(null);
         }
-        String trimmedKey = key.trim();
-        switch (trimmedKey.toLowerCase()) {
+        String trimmedName = name.trim();
+        switch (trimmedName.toLowerCase()) {
             case "uid":
                 return UUID.randomUUID().toString();
             case "now":
@@ -32,29 +32,29 @@ public class ScenarioVars {
             case "int-random":
                 return (int) (Math.random() * Integer.MAX_VALUE);
             default:
-                return vars.get(trimmedKey) instanceof String ?
-                        ScenarioVarsParser.parse(vars.get(trimmedKey).toString(), this) : vars.get(trimmedKey);
+                return vars.get(trimmedName) instanceof String ?
+                        ScenarioVarsParser.parse(vars.get(trimmedName).toString(), this) : vars.get(trimmedName);
         }
     }
 
-    public void put(String key, Object val) {
-        String trimmedKey = (key == null) ? null : key.trim();
-        if (vars.get(trimmedKey) != null) {
-            LOG.warn("Scenario variable \"{}\" will be overridden with {}", trimmedKey, val);
+    public void put(String name, Object val) {
+        String trimmedName = (name == null) ? null : name.trim();
+        if (vars.get(trimmedName) != null) {
+            LOG.warn("Scenario variable \"{}\" will be overridden with {}", trimmedName, val);
         }
-        vars.put(trimmedKey, val);
+        vars.put(trimmedName, val);
     }
 
     public void putAll(Map<String, Object> vars) {
         vars.forEach(this::put);
     }
 
-    public Set<String> keySet() {
+    public Set<String> nameSet() {
         return vars.keySet();
     }
 
-    public boolean containsKey(String key) {
-        return vars.containsKey(key);
+    public boolean containsName(String name) {
+        return vars.containsKey(name);
     }
 
     public int size() {
