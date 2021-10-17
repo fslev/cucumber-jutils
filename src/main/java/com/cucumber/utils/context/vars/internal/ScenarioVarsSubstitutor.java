@@ -20,6 +20,6 @@ public class ScenarioVarsSubstitutor {
             return source;
         }
         return StringParser.replacePlaceholders(placeholderNames, source, PREFIX, SUFFIX, scenarioVars::get,
-                k -> scenarioVars.get(k) != null || scenarioVars.containsName(k));
+                k -> scenarioVars.get(k) != null || scenarioVars.containsVariable(k));
     }
 }

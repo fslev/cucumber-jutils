@@ -1,16 +1,23 @@
 package com.cucumber.utils.context.vars;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.guice.ScenarioScoped;
+import io.jtest.utils.common.JsonUtils;
+import io.jtest.utils.common.StringParser;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @ScenarioScoped
 public class ScenarioVars {
 
     private static final Logger LOG = LogManager.getLogger();
     private final Map<String, Object> vars = new HashMap<>();
+    private static final Pattern NAME_PATTERN = Pattern.compile("[a-zA-Z0-9_$\\-.@]+");
 
     public String getAsString(String name) {
         Object val = get(name);
@@ -32,14 +39,17 @@ public class ScenarioVars {
             case "int-random":
                 return (int) (Math.random() * Integer.MAX_VALUE);
             default:
-                return vars.get(trimmedName) instanceof String ?
-                        ScenarioVarsParser.parse(vars.get(trimmedName).toString(), this) : vars.get(trimmedName);
+                Object value = !isPathVariable(name) ? vars.get(trimmedName) : getPathVariableValue(name);
+                return value instanceof String ? ScenarioVarsParser.parse(value.toString(), this) : value;
         }
     }
 
     public void put(String name, Object val) {
         String trimmedName = (name == null) ? null : name.trim();
-        if (vars.get(trimmedName) != null) {
+        if (trimmedName == null || !NAME_PATTERN.matcher(trimmedName).matches()) {
+            throw new RuntimeException("Scenario variable not allowed having name: " + trimmedName);
+        }
+        if (vars.containsKey(trimmedName)) {
             LOG.warn("Scenario variable \"{}\" will be overridden with {}", trimmedName, val);
         }
         vars.put(trimmedName, val);
@@ -53,8 +63,8 @@ public class ScenarioVars {
         return vars.keySet();
     }
 
-    public boolean containsName(String name) {
-        return vars.containsKey(name);
+    public boolean containsVariable(String name) {
+        return vars.containsKey(name) || (isPathVariable(name) && getPathVariableValue(name) != null);
     }
 
     public int size() {
@@ -98,5 +108,71 @@ public class ScenarioVars {
     @Override
     public String toString() {
         return this.vars.toString();
+    }
+
+    private Object getPathVariableValue(String varName) {
+        Optional<String> rootPath = rootPath(varName);
+        if (rootPath.isPresent()) {
+            Object rootValue = vars.get(rootPath.get());
+            try {
+                JsonNode rootJsonValue = JsonUtils.toJson(rootValue);
+                String relativePath = varName.substring(rootPath.get().length());
+                JsonNode jsonValue = rootJsonValue.at(jsonPtrExpr(relativePath));
+                if (!jsonValue.isMissingNode()) {
+                    return rootValue instanceof String ? (jsonValue.isValueNode() ? jsonValue.asText() : jsonValue.toString()) : jsonValue;
+                }
+            } catch (IOException e) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private Optional<String> rootPath(String varName) {
+        List<String> paths = extractPaths(varName);
+        StringBuilder rootPath = new StringBuilder();
+        for (String path : paths) {
+            Optional<Pair<String, String>> indexPath = indexPath(path);
+            if (indexPath.isPresent()) {
+                rootPath.append(indexPath.get().getLeft());
+                return vars.containsKey(rootPath.toString()) ? Optional.of(rootPath.toString()) : Optional.empty();
+            }
+            rootPath.append(path);
+            if (vars.containsKey(rootPath.toString())) {
+                return Optional.of(rootPath.toString());
+            }
+        }
+        return Optional.empty();
+    }
+
+    private boolean isPathVariable(String varName) {
+        return (varName.contains(".") || (varName.contains("[") && varName.endsWith("]"))) && !vars.containsKey(varName);
+    }
+
+    private static List<String> extractPaths(String varName) {
+        return Arrays.asList(varName.split("\\."));
+    }
+
+    private static String jsonPtrExpr(String path) {
+        List<String> paths = extractPaths(path);
+        StringBuilder expr = new StringBuilder();
+        for (String p : paths) {
+            Optional<Pair<String, String>> indexPath = indexPath(p);
+            if (indexPath.isPresent()) {
+                expr.append("/").append(indexPath.get().getLeft())
+                        .append(!indexPath.get().getLeft().isEmpty() ? "/" : "").append(indexPath.get().getRight());
+            } else {
+                expr.append(p.isEmpty() && expr.toString().isEmpty() ? "" : "/").append(p);
+            }
+        }
+        return expr.toString();
+    }
+
+    private static Optional<Pair<String, String>> indexPath(String path) {
+        List<String> result = StringParser.captureValues(path, Pattern.compile("(.*?)\\[([0-9]+?)]$"));
+        if (result.size() == 2) {
+            return Optional.of(Pair.of(result.get(0), result.get(1)));
+        }
+        return Optional.empty();
     }
 }
