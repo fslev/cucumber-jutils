@@ -31,6 +31,8 @@ Feature: Path variables feature
     }
     """
     * Match #[x/a] with "1"
+    * Match \Q#[/x/a]\E with "#[/x/a]"
+    * Match \Q#[x/a/]\E with "#[x/a/]"
     * Match #[x/b] with "true"
     * Match #[x/c] with "null"
     * Match #[x/d] with "test"
