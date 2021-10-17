@@ -3,8 +3,9 @@
 ### 7.1-SNAPSHOT
 
 ### 7.0-SNAPSHOT
-ScenarioProps gets renamed to ScenarioVars  
-
+Support scenario variable paths  
+ScenarioProps is renamed to ScenarioVars  
+Scenario variable names are validated  
 
 ### 6.76
 Update dependencies  
