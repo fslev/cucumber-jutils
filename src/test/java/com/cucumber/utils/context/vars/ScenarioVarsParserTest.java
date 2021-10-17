@@ -19,6 +19,35 @@ public class ScenarioVarsParserTest {
     }
 
     @Test
+    public void testScenarioVarsDoesNotAcceptInvalidNames() {
+        try {
+            scenarioVars.put("a[d", 1);
+        } catch (RuntimeException e) {
+            assertTrue(e.getMessage().contains("not allowed"));
+        }
+        try {
+            scenarioVars.put("a#d", 1);
+        } catch (RuntimeException e) {
+            assertTrue(e.getMessage().contains("not allowed"));
+        }
+        try {
+            scenarioVars.put("a/d", 1);
+        } catch (RuntimeException e) {
+            assertTrue(e.getMessage().contains("not allowed"));
+        }
+        try {
+            scenarioVars.put("a,d", 1);
+        } catch (RuntimeException e) {
+            assertTrue(e.getMessage().contains("not allowed"));
+        }
+        try {
+            scenarioVars.put("a{d", 1);
+        } catch (RuntimeException e) {
+            assertTrue(e.getMessage().contains("not allowed"));
+        }
+    }
+
+    @Test
     public void testGlobalPlaceholderFillInSimpleText() {
         String a = "The #[animal] is running through the #[location]";
         Map<String, Object> values = new HashMap<>();

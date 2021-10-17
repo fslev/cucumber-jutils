@@ -61,9 +61,9 @@ public class ScenarioVarsSubstitutorTest {
 
     @Test
     public void testStandaloneScenarioVarsSubstitution() {
-        String s = "#[0p$ro-p1.pr_op2]";
+        String s = "#[0p$ro-p1.pr_op2@]";
         Map<String, Object> props = new HashMap<>();
-        props.put("0p$ro-p1.pr_op2", "replacement");
+        props.put("0p$ro-p1.pr_op2@", "replacement");
         scenarioVars.putAll(props);
         assertEquals("replacement", ScenarioVarsSubstitutor.replace(s, scenarioVars));
 
