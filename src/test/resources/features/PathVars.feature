@@ -23,7 +23,8 @@ Feature: Path variables feature
                 null,
                 "zoro"
               ],
-              "g3211/x":1022
+              "g3211/x":1022,
+              "g3212":""
             }
           }
         }
@@ -51,6 +52,8 @@ Feature: Path variables feature
     * Match #[x/g/g3/g32/g321/g3211/0/ab.ra] with "test"
     * Match #[x/g/g3/g32/g321/g3211/1] with "false"
     * Match #[x/g/g3/g32/g321/g3211~1x] with "1022"
+    * Match #[x/g/g3/g32/g321/g3212] with ""
+
 
   Scenario: Test path variables from matches
     *  var x=
