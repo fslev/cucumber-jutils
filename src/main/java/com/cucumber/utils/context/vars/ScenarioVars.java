@@ -127,7 +127,7 @@ public class ScenarioVars {
         return null;
     }
 
-    private boolean isPathVariable(String varName) {
+    private static boolean isPathVariable(String varName) {
         return varName.contains("/");
     }
 
