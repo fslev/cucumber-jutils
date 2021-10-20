@@ -19,6 +19,11 @@ public class ParamTypeSteps {
         assertEquals(String.class, val.getClass());
     }
 
+    @When("Check string {} equals string {string}")
+    public void checkStringEquals(String expected, String actual) {
+        assertEquals(expected, actual);
+    }
+
     @When("Array of enums: {}")
     public void arrayOfEnums(MyEnum[] myEnums) {
         assertNotNull(myEnums);

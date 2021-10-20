@@ -1,6 +1,6 @@
 Feature: Path variables feature
 
-  Scenario: Test path variables
+  Scenario: Test path variables from defined variables
     * var x=
     """json
     {
@@ -58,8 +58,15 @@ Feature: Path variables feature
   Scenario: Test path variables from matches
     *  var x=
     """
-    {"a":{"a1":1}}
+    {"a":{"a1":{"a11":1}}}
     """
-    * Match {"a":~[var1]} with "#[x]"
-    * Match #[var1] with "{"a1":1}"
-    * Match #[var1/a1] with "1"
+    * Match {"a1":~[var1]} with "#[x/a]"
+    * Match #[var1] with "{"a11":1}"
+    * Match #[var1/a11] with "1"
+
+  Scenario: Test path variables from dir loaded variables
+    * load vars from dir "props"
+    * Match #[actualLargeJson/body/events/0/payload/type] with "TEMPLATE_DONE"
+    * Match #[foo1/foo11] with "foo11 test"
+
+
