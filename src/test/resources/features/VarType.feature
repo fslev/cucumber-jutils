@@ -12,3 +12,4 @@ Feature: Variable type feature
   Scenario: Test quoted String conversion to String
     When var a=""test me""
     * Check string #[a] equals string "\"test me\""
+    * Check string "test me" equals string "\"test me\""
