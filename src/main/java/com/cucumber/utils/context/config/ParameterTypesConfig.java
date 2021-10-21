@@ -19,13 +19,11 @@ public class ParameterTypesConfig {
     private static final String EMPTY_STRING = "[_blank]";
     private static final String NULL_STRING = "[_null]";
 
+    private static final ObjectMapper MAPPER = new ObjectMapper()
+            .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+
     @Inject
     private ScenarioVars scenarioVars;
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-
-    static {
-        objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
-    }
 
     @DefaultParameterTransformer
     @DefaultDataTableEntryTransformer(headersToProperties = true, replaceWithEmptyString = EMPTY_STRING)
@@ -35,15 +33,16 @@ public class ParameterTypesConfig {
             return null;
         }
         Object parsedValue = ScenarioVarsParser.parse(fromValue.toString(), scenarioVars);
-        if (parsedValue == null || toValueType.equals(Object.class)) {
-            return parsedValue;
+        if (parsedValue != null && !toValueType.equals(Object.class) && !toValueType.equals(parsedValue.getClass())) {
+            if (parsedValue instanceof String) {
+                try {
+                    return MAPPER.readValue(parsedValue.toString(), MAPPER.constructType(toValueType));
+                } catch (IOException ignored) {
+                }
+            }
+            return MAPPER.convertValue(parsedValue, MAPPER.constructType(toValueType));
         }
-        try {
-            return objectMapper.readValue(parsedValue.toString(), objectMapper.constructType(toValueType));
-            // if json string cannot be converted to object then proceed to simple value conversion
-        } catch (IOException e) {
-            return objectMapper.convertValue(parsedValue, objectMapper.constructType(toValueType));
-        }
+        return parsedValue;
     }
 
     @DocStringType
