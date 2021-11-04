@@ -54,6 +54,15 @@ Feature: Path variables feature
     * Match #[x/g/g3/g32/g321/g3211~1x] with "1022"
     * Match #[x/g/g3/g32/g321/g3212] with ""
 
+    * var x=
+    """json
+    {"book":{
+        "details":{"title":"Moby Dick"}
+      }
+    }
+    """
+    * Match #[x/book/details/title] with "Moby Dick"
+
 
   Scenario: Test path variables from matches
     *  var x=

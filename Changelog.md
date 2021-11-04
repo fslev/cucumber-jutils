@@ -1,8 +1,12 @@
 # Changelog
 
-### 7.1-SNAPSHOT
+### 7.2-SNAPSHOT
 
-### 7.0-SNAPSHOT
+### 7.1
+Update dependencies  
+Added support for matching JSONs by json paths    
+
+### 7.0
 Support scenario variable paths  
 ScenarioProps is renamed to ScenarioVars  
 Scenario variable names are validated 

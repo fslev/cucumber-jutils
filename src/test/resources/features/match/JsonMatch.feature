@@ -84,3 +84,55 @@ Feature: Match JSONs
     Given var b="{"ignore":false, "path":"/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"}"
     Then Match #[a] with "#[b]"
     And Match \Q#[var]\E with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
+
+
+  Scenario: Match JSONs by json paths also
+    * var limit="10"
+    * var expected=
+    """json
+    {"#($..book[?(@.price <= $['expensive'])])":[{"author": "~[author1]"},{"author": "~[author2]"}]}
+    """
+    * var actual=
+    """json
+    {
+    "store": {
+        "book": [
+            {
+                "category": "reference",
+                "author": "Nigel Rees",
+                "title": "Sayings of the Century",
+                "price": 8.95
+            },
+            {
+                "category": "fiction",
+                "author": "Evelyn Waugh",
+                "title": "Sword of Honour",
+                "price": 12.99
+            },
+            {
+                "category": "fiction",
+                "author": "Herman Melville",
+                "title": "Moby Dick",
+                "isbn": "0-553-21311-3",
+                "price": 8.99
+            },
+            {
+                "category": "fiction",
+                "author": "J. R. R. Tolkien",
+                "title": "The Lord of the Rings",
+                "isbn": "0-395-19395-8",
+                "price": 22.99
+            }
+        ],
+        "bicycle": {
+            "color": "red",
+            "price": 19.95
+        }
+    },
+    "expensive": #[limit]
+}
+    """
+    * Match #[expected] with "#[actual]"
+    * Match Nigel Rees with "#[author1]"
+    * Match Herman Melville with "#[author2]"
+
