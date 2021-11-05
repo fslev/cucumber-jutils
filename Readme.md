@@ -46,7 +46,7 @@ Cucumber-JUtils requires the following dependencies which you must specify insid
 ```
 
 #### JTest-Utils
-Cucumber-JUtils includes [**jtest-utils**](https://github.com/fslev/jtest-utils) dependency which contains many helpful features.  
+Cucumber-JUtils is heavily based on [**jtest-utils**](https://github.com/fslev/jtest-utils) dependency which contains many helpful features.  
 
 # Configuration
 In order to integrate **cucumber-jutils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
