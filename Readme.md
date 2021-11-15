@@ -11,7 +11,7 @@ _It takes over the usual dependencies and features needed inside a Cucumber base
 * Matching mechanisms: match XMLs, JSONs, and other types of objects  
 * Scenario scoped variables (defined and used both inside the Gherkin document and Step definitions)    
 * Customized clients for accessing various resources, i.e _databases_, _HTTP services_, etc  
-* Predefined Cucumber steps for helping common tasks  
+* Predefined Cucumber steps for helping with common tasks  
 * Some useful utility classes           
 
 #### Maven Central
@@ -46,7 +46,7 @@ Cucumber-JUtils requires the following dependencies which you must specify insid
 ```
 
 #### JTest-Utils
-Cucumber-JUtils includes [**jtest-utils**](https://github.com/fslev/jtest-utils) dependency which contains many helpful features.  
+Cucumber-JUtils is heavily based on [**jtest-utils**](https://github.com/fslev/jtest-utils) dependency which contains many helpful features.  
 
 # Configuration
 In order to integrate **cucumber-jutils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
