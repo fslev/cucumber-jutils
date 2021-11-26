@@ -1,6 +1,11 @@
 # Changelog
 
-### 7.3-SNAPSHOT
+### 7.4-SNAPSHOT
+
+
+### 7.3
+Update dependencies  
+Use Junit Jupiter API  
 
 ### 7.2
 Update dependencies  

@@ -13,7 +13,7 @@ import ro.skyah.util.MessageUtil;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ScenarioScoped
 public class MatchSteps {

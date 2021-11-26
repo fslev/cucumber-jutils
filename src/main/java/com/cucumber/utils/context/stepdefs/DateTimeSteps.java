@@ -13,7 +13,8 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 @ScenarioScoped
 public class DateTimeSteps {
@@ -32,7 +33,7 @@ public class DateTimeSteps {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
         LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
-        assertEquals(chronoUnit + " differ", value, chronoUnit.between(localDate1, localDate2));
+        assertEquals(value, chronoUnit.between(localDate1, localDate2), chronoUnit + " differ");
     }
 
     @Then("Check period from \"{}\" to \"{}\" is {} {} using date time pattern {}")
@@ -41,7 +42,7 @@ public class DateTimeSteps {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
         ZonedDateTime zonedDateTime1 = ZonedDateTime.parse(date1, dateTimeFormatter);
         ZonedDateTime zonedDateTime2 = ZonedDateTime.parse(date2, dateTimeFormatter);
-        assertEquals(chronoUnit + " differ", value, chronoUnit.between(zonedDateTime1, zonedDateTime2));
+        assertEquals(value, chronoUnit.between(zonedDateTime1, zonedDateTime2), chronoUnit + " differ");
     }
 
     @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date pattern {}")
