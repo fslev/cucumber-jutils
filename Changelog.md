@@ -1,7 +1,10 @@
 # Changelog
 
-### 7.4-SNAPSHOT
+### 7.5-SNAPSHOT
 
+
+### 7.4
+Update dependencies  
 
 ### 7.3
 Update dependencies  
