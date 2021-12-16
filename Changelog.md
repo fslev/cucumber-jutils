@@ -1,6 +1,12 @@
 # Changelog
 
-### 7.5-SNAPSHOT
+### 7.6-SNAPSHOT
+
+
+### 7.5
+Upgrade jtest-utils dependency:
+  - Added option to replace Http client header
+  - Update log4j (vulnerability fix)  
 
 
 ### 7.4
