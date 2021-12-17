@@ -1,7 +1,11 @@
 # Changelog
 
-### 7.6-SNAPSHOT
+### 7.7-SNAPSHOT
 
+
+### 7.6
+Upgrade jtest-utils dependency:
+  - Use exact Big decimals at JsonNode conversion  
 
 ### 7.5
 Upgrade jtest-utils dependency:
