@@ -1,10 +1,13 @@
 # Changelog
 
-### 7.7-SNAPSHOT
+### 7.8-SNAPSHOT
 
+
+### 7.7
+Update jtest-utils dependency (Jackson update & Log4j major vulnerability fix: 2.17.0)  
 
 ### 7.6
-Upgrade jtest-utils dependency:
+Update jtest-utils dependency:
   - Use exact Big decimals at JsonNode conversion  
 
 ### 7.5
