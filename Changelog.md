@@ -1,7 +1,9 @@
 # Changelog
 
-### 7.8-SNAPSHOT
+### 7.9-SNAPSHOT
 
+### 7.8
+Update dependencies  
 
 ### 7.7
 Update jtest-utils dependency (Jackson update & Log4j major vulnerability fix: 2.17.0)  
