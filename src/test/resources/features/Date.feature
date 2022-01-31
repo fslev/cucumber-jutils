@@ -32,7 +32,7 @@ Feature: Date feature
     Then Check period from "#[currentTime]" to "#[days]" is 15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[daysBefore]" is -15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[daysBefore]" to "#[currentTime]" is 15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
-    Then Check period from "#[currentTime]" to "#[months]" is 15 MONTHS using date time pattern yyyy-MM-dd HH:mm:ss
+#    Then Check period from "#[currentTime]" to "#[months]" is 15 MONTHS using date time pattern yyyy-MM-dd HH:mm:ss
     Then Check period from "#[currentTime]" to "#[minutes]" is 15 MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
 
   Scenario: Format dates from current date
