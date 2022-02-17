@@ -20,7 +20,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <surefire.version>2.22.2</surefire.version>
-        <jtest.utils.version>1.58</jtest.utils.version>
+        <jtest.utils.version>1.59</jtest.utils.version>
         <cucumber.min.version>6.10.0</cucumber.min.version>
         <guice.min.version>4.2.1</guice.min.version>
     </properties>
@@ -224,7 +224,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.11</version>
+                        <version>1.6.8</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
