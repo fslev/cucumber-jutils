@@ -1,6 +1,9 @@
 # Changelog
 
-### 7.11-SNAPSHOT
+### 7.12-SNAPSHOT
+
+### 7.11
+Update dependencies  
 
 ### 7.10
 Update dependencies  
