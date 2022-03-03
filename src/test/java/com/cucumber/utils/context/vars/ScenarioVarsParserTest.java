@@ -189,4 +189,27 @@ public class ScenarioVarsParserTest {
         String s = "#{}";
         assertEquals("#{}", ScenarioVarsParser.parse(s, scenarioVars));
     }
+
+    @Test
+    public void testValidSpelExpWithEmbeddedInvalidSpelExp() {
+        String s = "#{'a#{bc'+'def'}";
+        assertEquals("a#{bcdef", ScenarioVarsParser.parse(s, scenarioVars));
+        s = "#{'a#{b}c'+'def'}";
+        assertEquals("#{'a#{b}c'+'def'}", ScenarioVarsParser.parse(s, scenarioVars));
+    }
+
+    @Test
+    public void testSpelWithEscapedBraces() {
+        String s = "#{'a\\}bc'+'d\\}ef'}";
+        assertEquals("a}bcd}ef", ScenarioVarsParser.parse(s, scenarioVars));
+        s = "#{'a\\#{bc'+'d\\}ef'}";
+        assertEquals("a#{bcd}ef", ScenarioVarsParser.parse(s, scenarioVars));
+    }
+
+    @Test
+    public void testSpelWithScenarioVarsHavingBraces() {
+        scenarioVars.put("myJson", "{\"a\":1}");
+        String s = "#{T(io.jtest.utils.common.JsonUtils).toJson('#[myJson]').get('a').asInt()}";
+        assertEquals(1, ScenarioVarsParser.parse(s, scenarioVars));
+    }
 }

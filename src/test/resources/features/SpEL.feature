@@ -6,6 +6,18 @@ Feature: Parse SpEL expressions
     Given var a="This is a random number: #{T(Math).random()}"
     Then Match This is a random number: 0.[0-9]* with "#[a]"
 
+  Scenario: Check SpEL parsing of values with braces
+    * var var1="test}1"
+    * var var2=
+    """
+    {"a":1}
+    """
+    * Match #{inva}lid} with "#{inva}lid}"
+    * Match \Qva}lid\E with "#{'va\}lid'}"
+    * Match \Qva\}lid\E with "#{'va\\}lid'}"
+    * Match test}1 with "#{'#[var1]'}"
+    * Match 1 with "#{T(io.jtest.utils.common.JsonUtils).toJson('#[var2]').get('a').asInt()}"
+
   Scenario: Process and Match multiple String embedded SpELs
     * var car="Alfa Romeo Disco Volante"
     And var spel="This is expression: #{T(java.lang.String).format('%d-%d', 1, 3)} and this is another expression: #{'#[car]'.toLowerCase()} car"

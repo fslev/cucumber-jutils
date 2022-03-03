@@ -15,11 +15,14 @@ public class ScenarioVarsSubstitutor {
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
     public static Object replace(String source, ScenarioVars scenarioVars) {
-        List<String> variableNames = StringParser.captureValues(source, captureGroupPattern);
-        if (variableNames.isEmpty()) {
-            return source;
+        if (source != null && source.contains(PREFIX) && source.contains(SUFFIX)) {
+            List<String> variableNames = StringParser.captureValues(source, captureGroupPattern);
+            if (variableNames.isEmpty()) {
+                return source;
+            }
+            return StringParser.replacePlaceholders(variableNames, source, PREFIX, SUFFIX, scenarioVars::get,
+                    k -> scenarioVars.get(k) != null || scenarioVars.containsVariable(k));
         }
-        return StringParser.replacePlaceholders(variableNames, source, PREFIX, SUFFIX, scenarioVars::get,
-                k -> scenarioVars.get(k) != null || scenarioVars.containsVariable(k));
+        return source;
     }
 }
