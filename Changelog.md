@@ -1,6 +1,9 @@
 # Changelog
 
-### 7.14-SNAPSHOT
+### 7.15-SNAPSHOT
+
+### 7.14
+Update dependencies  
 
 ### 7.13
 Update dependencies. SpEL parser refactoring  
