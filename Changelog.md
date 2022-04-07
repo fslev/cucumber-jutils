@@ -1,6 +1,9 @@
 # Changelog
 
-### 7.15-SNAPSHOT
+### 7.16-SNAPSHOT
+
+### 7.15
+Update dependencies (jtest-utils). Optimized shell client     
 
 ### 7.14
 Update dependencies  
