@@ -7,11 +7,9 @@ import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
 import io.jtest.utils.clients.shell.ShellClient;
 import io.jtest.utils.matcher.ObjectMatcher;
-import io.jtest.utils.matcher.condition.MatchCondition;
 
 import java.time.Duration;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 @ScenarioScoped
@@ -25,34 +23,34 @@ public class ShellSteps {
     private ScenarioUtils scenarioUtils;
 
     @Then("[shell-util] Execute {} and check response={}")
-    public void executeAndMatch(String cmd, String expected) {
-        executeAndMatch(cmd, null, expected, new HashSet<>());
+    public void executeAndMatch(String[] commands, String expected) {
+        executeAndMatch(commands, null, expected);
     }
 
     @Then("[shell-util] Execute {} and check response is")
-    public void executeAndMatch(String cmd, StringBuilder expected) {
-        executeAndMatch(cmd, null, expected.toString(), new HashSet<>());
+    public void executeAndMatch(String[] commands, StringBuilder expected) {
+        executeAndMatch(commands, null, expected.toString());
     }
 
     @Then("[shell-util] Execute {} and check {}s until response is")
-    public void executeAndMatch(String cmd, Integer pollingTimeoutSeconds, StringBuilder expected) {
-        executeAndMatch(cmd, pollingTimeoutSeconds, expected.toString(), new HashSet<>());
+    public void executeAndMatch(String[] commands, Integer pollingTimeoutSeconds, StringBuilder expected) {
+        executeAndMatch(commands, pollingTimeoutSeconds, expected.toString());
     }
 
-    @Then("[shell-util] Execute {} and check {}s until response={} using matchConditions={}")
-    public void executeAndMatch(String cmd, Integer pollingTimeoutSeconds, String expected, Set<MatchCondition> matchConditions) {
-        scenarioUtils.log("[CMD: ------------------\n{}\n\n---------------------- EXPECTED ----------------------\n{}\n",
-                cmd, expected);
+    @Then("[shell-util] Execute {} and check {}s until response={}")
+    public void executeAndMatch(String[] commands, Integer pollingTimeoutSeconds, String expected) {
+        scenarioUtils.log("CMD: -------------------------------------------------\n{}\n\n" +
+                "---------------------- EXPECTED ----------------------\n{}\n", Arrays.asList(commands), expected);
         AtomicReference<String> output = new AtomicReference<>();
         try {
             if (pollingTimeoutSeconds == null) {
-                output.set(shellClient.execute(cmd));
-                scenarioVars.putAll(ObjectMatcher.match(null, expected, output.get(), matchConditions.toArray(new MatchCondition[0])));
+                output.set(shellClient.execute(commands));
+                scenarioVars.putAll(ObjectMatcher.match(null, expected, output.get()));
             } else {
                 scenarioVars.putAll(ObjectMatcher.match(null, expected, () -> {
-                    output.set(shellClient.execute(cmd));
+                    output.set(shellClient.execute(commands));
                     return output.get();
-                }, Duration.ofSeconds(pollingTimeoutSeconds), null, null, matchConditions.toArray(new MatchCondition[0])));
+                }, Duration.ofSeconds(pollingTimeoutSeconds), null, null));
             }
         } finally {
             scenarioUtils.log("\n----------------------- ACTUAL -----------------------\n{}", output.get());

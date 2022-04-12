@@ -1,6 +1,9 @@
 # Changelog
 
-### 8.1-SNAPSHOT
+### 8.2-SNAPSHOT
+
+### 8.1
+Refactor shell utility steps  
 
 ### 8.0
 Updated dependencies  
