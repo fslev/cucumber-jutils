@@ -5,5 +5,6 @@ Feature: Common steps feature
     * #>> Start of section
     * #<<
 
-  Scenario: Test wait step
-    * Wait 0.162345s
+  Scenario: Test wait steps
+    * [util] Wait 0.147s
+    * [util] Wait 0.01m

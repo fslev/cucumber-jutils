@@ -2,11 +2,11 @@ Feature: Property File feature
 
   Scenario: Test property files are successfully loaded from dir inside scenario variables
     When load vars from dir "props"
-    Then Match 1 with "#[a]"
-    And Match 2 with "#[b]"
-    And Match 3 with "#[c]"
-    And Match 4 with "#[d]"
-    And Match 6 with "#[f]"
+    Then [util] Match 1 with #[a]
+    And [util] Match 2 with #[b]
+    And [util] Match 3 with #[c]
+    And [util] Match 4 with #[d]
+    And [util] Match 6 with #[f]
 
   Scenario: Test property files are successfully loaded from each file inside scenario variables
     When load vars from file "props/dir1/a.xml"
@@ -17,13 +17,13 @@ Feature: Property File feature
     When load vars from file "props/dir1/p.properties"
     When load vars from file "props/dir1/y.yml"
 
-    Then Match 1 with "#[a]"
-    And Match 2 with "#[b]"
-    And Match 3 with "#[c]"
-    And Match 4 with "#[d]"
-    And Match 6 with "#[f]"
-    And Match lorem with "#[bar]"
-    And Match foo test with "#[foo]"
+    Then [util] Match 1 with #[a]
+    And [util] Match 2 with #[b]
+    And [util] Match 3 with #[c]
+    And [util] Match 4 with #[d]
+    And [util] Match 6 with #[f]
+    And [util] Match lorem with #[bar]
+    And [util] Match foo test with #[foo]
 
   Scenario: Test error when duplicated scenario variable files are detected
     * Load duplicated scenario vars from dir duplicated_file_props and expect exception

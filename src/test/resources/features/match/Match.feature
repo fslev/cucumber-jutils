@@ -4,13 +4,13 @@ Feature: Test comparator
   This is/was a bug (https://github.com/cucumber/cucumber-jvm/issues/1881)
     Given var a="%"
     Given var b="%"
-    Then Match #[a] with "#[b]"
+    Then [util] Match #[a] with #[b]
 
   Scenario: Match characters with slashes against assign variable
     Given var a="~[var]"
     Given var b="/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
-    Then Match #[a] with "#[b]"
-    And Match #[var] with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
+    Then [util] Match #[a] with #[b]
+    And [util] Match #[var] with /tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml
 
   Scenario: Match with new lines
     Given var a="test\n"
@@ -19,23 +19,23 @@ Feature: Test comparator
     test
 
     """
-    Then Match #[a] with "#[b]"
+    Then [util] Match #[a] with #[b]
     When var b=
     """
     test
     some other values
     """
-    Then Negative match #[a] with "#[b]"
-    And Match #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
+    Then [util] Negative match #[a] with #[b]
+    And [util] Match #[a] against #[b] using matchConditions=["DO_NOT_MATCH"]
     When var a="test\n.*"
-    Then Match #[a] with "#[b]"
+    Then [util] Match #[a] with #[b]
 
   Scenario: Match simple values
     Given var a="1"
     Given var a="1"
     And var b="1"
-    Then Match #[a] with "#[b]"
-    And Match 1 with "1"
+    Then [util] Match #[a] with #[b]
+    And [util] Match 1 with 1
 
   Scenario: Match values with inner quotes
     Given var expected="te"st"
@@ -43,12 +43,12 @@ Feature: Test comparator
     """
     te"st
     """
-    Then Match #[expected] with "#[actual]"
+    Then [util] Match #[expected] with #[actual]
 
   Scenario: Match simple values negative
     Given var a="1"
     And var b="2"
-    Then Negative match #[a] with "#[b]"
+    Then [util] Negative match #[a] with #[b]
 
   Scenario: Match jsons
     Given var a="da"
@@ -69,9 +69,9 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
-    Then Match #[json1] with "#[json2]"
-    And Match #[car] with "BMW"
-    Then Match #[json1] with
+    Then [util] Match #[json1] with #[json2]
+    And [util] Match #[car] with BMW
+    Then [util] Match #[json1] against
     """
   {
 	"name": "John",
@@ -97,7 +97,7 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat","Other"]
   }
     """
-    Then Match #[json1] with "#[json2]" using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
+    Then [util] Match #[json1] against #[json2] using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
 
   Scenario: Match Jsons with escaped values
     Given var json1 =
@@ -113,8 +113,8 @@ Feature: Test comparator
     """
   { "b": "\\Q#[val1]\\E" }
     """
-    Then Match #[json1] with "#[json2]"
-    And Match #[expectedResultedJson] with "#[json2]"
+    Then [util] Match #[json1] with #[json2]
+    And [util] Match #[expectedResultedJson] with #[json2]
     And Compare JSON #[expectedResultedJson] with #[json2]
 
   Scenario: Match jsons negative
@@ -134,36 +134,36 @@ Feature: Test comparator
 	"cars": ["BMW","Ford","Fiat"]
   }
     """
-    Then Negative match #[json1] with "#[json2]"
+    Then [util] Negative match #[json1] with #[json2]
 
   Scenario: Match big JSONs
     When load vars from dir "props/bigJsons"
-    Then Match #[expectedLargeJson] with "#[actualLargeJson]"
-    Then Negative match #[expectedWrongLargeJson] with "#[actualLargeJson]"
+    Then [util] Match #[expectedLargeJson] with #[actualLargeJson]
+    Then [util] Negative match #[expectedWrongLargeJson] with #[actualLargeJson]
 
   Scenario: Match data tables
     Given var a="replaced_value"
-    And table expectedTable=
+    And var expectedTable from table
       | firstName | lastName |
       | #[a]      | travolta |
       | sam       | .*       |
       | bruce     | ~[name]  |
 
-    Then Match #[expectedTable] with table
+    Then [util] Match #[expectedTable] against table
       | firstName      | lastName |
       | replaced_value | travolta |
       | sam            | carter   |
       | bruce          | willis   |
-    And Match #[name] with "willis"
+    And [util] Match #[name] with willis
 
   Scenario: Match data tables with empty string and null values against JSON
     Given var a="replaced_value"
-    And table expectedTable=
+    And var expectedTable from table
       | firstName | lastName |
       | #[a]      | [_blank] |
       | sam       | .*       |
       |           | ~[name]  |
-    Then Match #[expectedTable] with
+    Then [util] Match #[expectedTable] against
     """
       [
         {"firstName": "replaced_value","lastName":""},
@@ -173,32 +173,32 @@ Feature: Test comparator
     """
 
   Scenario: Match empty null value data tables
-    Given table empty_table=
+    Given var empty_table from table
       |  |
-    Then Match #[empty_table] with table
+    Then [util] Match #[empty_table] against table
       |  |
 
   Scenario: Match empty data tables
-    Given table empty_table=
+    Given var empty_table from table
       | [_blank] |
-    Then Match #[empty_table] with table
+    Then [util] Match #[empty_table] against table
       | [_blank] |
 
   Scenario: Match lists
     Given var a="cherries"
     And var header="fruits"
-    And table expectedTable1=
+    And var expectedTable1 from table
       | pineapples | #[a] | .* | strawberries |
-    And table expectedTable2=
+    And var expectedTable2 from table
       | fruits       |
       | pineapples   |
       | cherries     |
       | .*           |
       | strawberries |
 
-    Then Match #[expectedTable1] with table
+    Then [util] Match #[expectedTable1] against table
       | apples | strawberries | pineapples | cherries |
-    And Match #[expectedTable2] with table
+    And [util] Match #[expectedTable2] against table
       | #[header]    |
       | apples       |
       | strawberries |
@@ -217,8 +217,8 @@ Feature: Test comparator
     }
     """
     # a nice un-intended feature: #[body] is defined on multiple lines
-    And var expected from file path "placeholders/expected1.json"
-    Then Match #[expected] with
+    And var expected from file "placeholders/expected1.json"
+    Then [util] Match #[expected] against
     """
     {
       "status": #[status],
@@ -231,11 +231,12 @@ Feature: Test comparator
       ]
     }
     """
-    And Match #[expected] with content from path "placeholders/actual1.json"
+    And [util] Match #[expected] against file "placeholders/actual1.json"
 
   Scenario: Match empty values
     Given var a=""
-    Then Match #[a] with ""
+    Given var b=""
+    Then [util] Match #[a] with #[b]
 
   Scenario: Match XMLs
     Given var expected=
@@ -249,8 +250,8 @@ Feature: Test comparator
       """
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse>
       """
-    Then Match #[expected] with "#[actual]"
-    And Match #[var1] with "booking:4663740"
+    Then [util] Match #[expected] with #[actual]
+    And [util] Match #[var1] with booking:4663740
 
   Scenario: Match XMLs from HTTP response bodies
     Given var expectedResponse=
@@ -261,15 +262,15 @@ Feature: Test comparator
     }
       """
     Then Create HTTP response wrapper with content <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse> and compare with #[expectedResponse]
-    And Match #[var1] with "booking:4663740"
+    And [util] Match #[var1] with booking:4663740
 
   Scenario: Check unintentional regex chars at String match
   This test scenario is valid only if logger is set to debug LEVEL or bellow
     # This should not log any warning related to regular expressions
-    And Negative match abc with "[0-9]"
+    And [util] Negative match abc with [0-9]
     # This should log regex related warning messages
-    And Negative match [0-9] with "[0-9]"
-    And Match \Q[0-9]\E with "[0-9]"
+    And [util] Negative match [0-9] with [0-9]
+    And [util] Match \Q[0-9]\E with [0-9]
 
   Scenario: Test negative match
     * Test negative match

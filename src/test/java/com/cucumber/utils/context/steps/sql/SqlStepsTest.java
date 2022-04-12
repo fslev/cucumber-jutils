@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs.sql;
+package com.cucumber.utils.context.steps.sql;
 
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.vars.ScenarioVars;
@@ -110,7 +110,7 @@ public class SqlStepsTest {
         expectedResult.add(Map.of("first_name", "David", "last_name", "Jones", "address", "Hamilton 16"));
         expectedResult.add(Map.of("first_name", "~[firstName2]", "last_name", ".*", "address", "Liberty 1"));
         expectedResult.add(Map.of("first_name", "Lara", "last_name", "Croft", "address", "~[address3]"));
-        sqlSteps.executeQueryAndPollAndMatch("does not matter", 10, expectedResult);
+        sqlSteps.executeQueryAndMatch("does not matter", 10, expectedResult);
         assertEquals(scenarioVars.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioVars.getAsString("firstName2"), "Andrew");
     }

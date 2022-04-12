@@ -1,6 +1,9 @@
 # Changelog
 
-### 7.16-SNAPSHOT
+### 8.0-SNAPSHOT
+Updated dependencies  
+Changed Gherkin syntax for utility steps  
+Add minutes support for Wait utility step    
 
 ### 7.15
 Update dependencies (jtest-utils). Optimized shell client     

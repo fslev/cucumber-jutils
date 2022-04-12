@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
-import io.jtest.utils.clients.http.wrappers.HttpResponseWrapper;
+import io.jtest.utils.clients.http.PlainHttpResponse;
 import io.jtest.utils.common.XmlUtils;
 import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
@@ -21,6 +21,7 @@ import org.apache.http.message.BasicStatusLine;
 import org.apache.http.protocol.BasicHttpContext;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -33,7 +34,7 @@ public class HttpCompareSteps {
     private ScenarioUtils scenarioUtils;
 
     @Given("Http Response Compare {} against {} with matchConditions={} and message={}")
-    public void compareHttpResponse(String expectedJson, HttpResponseWrapper actual, Set<MatchCondition> matchConditions, String message) throws UnsupportedEncodingException {
+    public void compareHttpResponse(String expectedJson, PlainHttpResponse actual, Set<MatchCondition> matchConditions, String message) throws UnsupportedEncodingException {
         scenarioUtils.log("Compare\n{}\nwith\n{}", expectedJson, actual);
         HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, Integer.parseInt(actual.getStatus()), actual.getReasonPhrase()),
@@ -55,7 +56,7 @@ public class HttpCompareSteps {
     }
 
     @Given("Poll Http Response and Compare {} against {} with matchConditions={} and message={}")
-    public void pollAndCompareHttpResponse(String expectedJson, HttpResponseWrapper actual, Set<MatchCondition> matchConditions, String message) throws UnsupportedEncodingException {
+    public void pollAndCompareHttpResponse(String expectedJson, PlainHttpResponse actual, Set<MatchCondition> matchConditions, String message) throws UnsupportedEncodingException {
         scenarioUtils.log("Poll and Compare\n{}\nwith\n{}", expectedJson, actual);
         final HttpResponse mock = new DefaultHttpResponseFactory()
                 .newHttpResponse(new BasicStatusLine(HttpVersion.HTTP_1_1, Integer.parseInt(actual.getStatus()), actual.getReasonPhrase()),
@@ -79,7 +80,7 @@ public class HttpCompareSteps {
                     } else {
                         return mock;
                     }
-                }, 5, 100L, 1.5,
+                }, Duration.ofSeconds(5), 100L, 1.5,
                 matchConditions.toArray(new MatchCondition[0])));
     }
 }

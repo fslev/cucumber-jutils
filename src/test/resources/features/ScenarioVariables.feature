@@ -3,10 +3,10 @@ Feature: Test placeholder fill
   Scenario: Test scenario var assigned to itself
     Given var a="test"
     And var a="#[a]"
-    Then Match #[a] with "test"
+    Then [util] Match #[a] with test
 
   Scenario Outline: Test scenario variable from example table
-    * Match <expected> with "<withProperties>"
+    * [util] Match <expected> with <withProperties>
     Examples:
       | withProperties  | expected        |
       | val-with-#[now] | val-with-[0-9]+ |
@@ -28,7 +28,7 @@ Feature: Test placeholder fill
     Then Check filled string equals "This is a circle"
 
   Scenario: Test scenario variable loaded from file
-    * load file "placeholders/figure.text" to var "var"
+    * var var from file "placeholders/figure.text"
     And The string with scenario placeholders "This is a #[var]"
     Then Check filled string equals "This is a circle"
 
@@ -78,11 +78,11 @@ Feature: Test placeholder fill
   if they reside in the same file, or inside the same argument
 
     Given var a="unique1-#[uid]-and-unique2-#[uid]"
-    When Match unique1-~[val1]-and-unique2-~[val2] with "#[a]"
+    When [util] Match unique1-~[val1]-and-unique2-~[val2] with #[a]
     # Two different values should be generated.
-    Then Negative match #[val1] with "#[val2]"
+    Then [util] Negative match #[val1] with #[val2]
 
     Given load vars from file "placeholders/properties/jsonWithUids.json"
     # Same here, Two different values should be generated.
-    When Match {"a":"~[val1]", "b":"~[val2]"} with "#[jsonWithUids]"
-    Then Negative match #[val1] with "#[val2]"
+    When [util] Match {"a":"~[val1]", "b":"~[val2]"} with #[jsonWithUids]
+    Then [util] Negative match #[val1] with #[val2]

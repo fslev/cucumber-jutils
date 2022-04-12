@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs.http;
+package com.cucumber.utils.context.steps.http;
 
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.vars.ScenarioVars;

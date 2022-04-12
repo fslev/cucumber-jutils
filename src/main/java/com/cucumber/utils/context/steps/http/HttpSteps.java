@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs.http;
+package com.cucumber.utils.context.steps.http;
 
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.vars.ScenarioVars;
@@ -21,7 +21,7 @@ public class HttpSteps {
     @Inject
     private ScenarioUtils scenarioUtils;
 
-    @Given("HTTP Invoke REST API with url={}, method={}, queryParams={}, headers={}, entity={} and check response={}")
+    @Given("[http-util] Make request with url={}, method={}, queryParams={}, headers={}, entity={} and check response={}")
     public void executeAndMatch(String url, Method method, Map<String, String> queryParams, Map<String, String> headers,
                                 String entity, String expected) throws IOException {
         scenarioUtils.log("{} {}\nQuery params: {}\nHeaders: {}\nEntity: {}", method, url, queryParams, headers, entity);

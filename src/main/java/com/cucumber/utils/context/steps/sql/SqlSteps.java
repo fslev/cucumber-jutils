@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs.sql;
+package com.cucumber.utils.context.steps.sql;
 
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.vars.ScenarioVars;
@@ -14,6 +14,7 @@ import org.apache.logging.log4j.message.ParameterizedMessage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -27,31 +28,19 @@ public class SqlSteps {
     private ScenarioUtils logger;
     private SqlClient client;
 
-    @Given("SQL data source from file path \"{}\"")
+    @Given("[sql-util] Load data source from file path \"{}\"")
     public void setDataSource(String filePath) throws IOException {
         Properties dataSource = ResourceUtils.readProps(filePath);
         this.client = new SqlClient(dataSource.getProperty("url"), dataSource.getProperty("username"),
                 dataSource.getProperty("password"), dataSource.getProperty("driver").trim());
     }
 
-    @Then("SQL execute query \"{}\"")
-    public void executeQuery(String query) throws SQLException {
-        logger.log("Execute query '{}'", query);
-        try {
-            this.client.connect();
-            this.client.prepareStatement(query);
-            this.client.executeQuery();
-        } finally {
-            this.client.close();
-        }
-    }
-
-    @Then("SQL execute query \"{}\" and match result with {}")
+    @Then("[sql-util] Execute query {} and check result={}")
     public void executeQueryAndMatchWithJson(String query, List<Map<String, Object>> expected) throws SQLException {
         executeQueryAndMatch(query, expected);
     }
 
-    @Then("SQL execute query \"{}\" and match result with")
+    @Then("[sql-util] Execute query {} and check result is")
     public void executeQueryAndMatchWithTable(String query, List<Map<String, Object>> expected) throws SQLException {
         executeQueryAndMatch(query, expected);
     }
@@ -68,9 +57,9 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL execute query \"{}\" and poll for {int}s while matching result with")
-    public void executeQueryAndPollAndMatch(String query, int pollingDuration, List<Map<String, Object>> expected) throws SQLException {
-        logger.log("Execute query '{}', poll {}s while matching with: {}", query, pollingDuration, expected);
+    @Then("[sql-util] Execute query {} and check {}s until result is")
+    public void executeQueryAndMatch(String query, Integer pollingTimeoutSeconds, List<Map<String, Object>> expected) throws SQLException {
+        logger.log("Execute query '{}' and check for {} until result = {}", query, pollingTimeoutSeconds, expected);
         try {
             this.client.connect();
             this.client.prepareStatement(query);
@@ -80,14 +69,14 @@ public class SqlSteps {
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
-                    }, pollingDuration,
+                    }, Duration.ofSeconds(pollingTimeoutSeconds),
                     null, null, MatchCondition.JSON_NON_EXTENSIBLE_OBJECT, MatchCondition.JSON_NON_EXTENSIBLE_ARRAY));
         } finally {
             this.client.close();
         }
     }
 
-    @Then("SQL execute update \"{}\"")
+    @Then("[sql-util] Execute update {}")
     public void executeUpdate(String sql) throws SQLException {
         logger.log("Execute update '{}'", sql);
         try {
@@ -99,7 +88,7 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL INSERT into table \"{}\" the following data")
+    @Then("[sql-util] INSERT into table {} the following data")
     public void insertDataInsideTable(String table, List<Map<String, Object>> data) throws SQLException {
         logger.log("Insert into table '{}', data: {}", table, data);
         try {
@@ -124,7 +113,7 @@ public class SqlSteps {
         }
     }
 
-    @Then("SQL UPDATE table \"{}\" WHERE \"{}\" with the following data")
+    @Then("[sql-util] UPDATE table {} WHERE {} with the following data")
     public void updateDataFromTable(String table, String cond, List<Map<String, Object>> data) throws SQLException {
         logger.log("Update table '{}', with condition '{}', the following data: {}", table, cond, data);
         try {

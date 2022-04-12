@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs;
+package com.cucumber.utils.context.steps;
 
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.vars.ScenarioVars;
@@ -27,7 +27,7 @@ public class DateTimeSteps {
         PLUS, MINUS
     }
 
-    @Then("Check period from \"{}\" to \"{}\" is {} {} using date pattern {}")
+    @Then("[time-util] Check period from {} to {} is {} {} using date pattern {}")
     public void matchDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Check date period from '{}' to '{}' is {}{} using date pattern '{}'", date1, date2, value, chronoUnit, pattern);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
@@ -36,7 +36,7 @@ public class DateTimeSteps {
         assertEquals(value, chronoUnit.between(localDate1, localDate2), chronoUnit + " differ");
     }
 
-    @Then("Check period from \"{}\" to \"{}\" is {} {} using date time pattern {}")
+    @Then("[time-util] Check period from {} to {} is {} {} using date time pattern {}")
     public void matchDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Check date period from '{}' to '{}' is {}{} using date time pattern '{}'", date1, date2, value, chronoUnit, pattern);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
@@ -45,7 +45,7 @@ public class DateTimeSteps {
         assertEquals(value, chronoUnit.between(zonedDateTime1, zonedDateTime2), chronoUnit + " differ");
     }
 
-    @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date pattern {}")
+    @Then("[time-util] Check period from {} to {} doesn't match {} {} using date pattern {}")
     public void negativeMatchDates(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Negative check date period from '{}' to '{}' is {}{} using date pattern '{}'", date1, date2, value, chronoUnit, pattern);
         try {
@@ -57,7 +57,7 @@ public class DateTimeSteps {
         throw new AssertionError("Compared dates match");
     }
 
-    @Then("Check period from \"{}\" to \"{}\" doesn't match {} {} using date time pattern {}")
+    @Then("[time-util] Check period from {} to {} doesn't match {} {} using date time pattern {}")
     public void negativeMatchDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Negative check date period from '{}' to '{}' is {}{} using date time pattern '{}'", date1, date2, value, chronoUnit, pattern);
         try {
@@ -69,7 +69,7 @@ public class DateTimeSteps {
         throw new AssertionError("Compared dates match");
     }
 
-    @Then("date var {}=\"from millis {} {} {} {}\" with format pattern={}")
+    @Then("[time-util] date var {}=from millis {} {} {} {} with format pattern={}")
     public void setDateVar(String param, Long millis, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
@@ -85,7 +85,7 @@ public class DateTimeSteps {
         logger.log("Date var {} = {}", param, scenarioVars.get(param));
     }
 
-    @Then("date var {}=\"from date {} {} {} {}\" with format pattern={}")
+    @Then("[time-util] date var {}=from date {} {} {} {} with format pattern={}")
     public void setDateVar(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {
@@ -99,7 +99,7 @@ public class DateTimeSteps {
         logger.log("Date var {} = {}", param, scenarioVars.get(param));
     }
 
-    @Then("date millis var {}=\"from date {} {} {} {}\" with format pattern={}")
+    @Then("[time-util] date millis var {}=from date {} {} {} {} with format pattern={}")
     public void setDateInMillisParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
         switch (operation) {

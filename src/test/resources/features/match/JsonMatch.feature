@@ -9,12 +9,12 @@ Feature: Match JSONs
     """
     {"a": 1,"b": 2}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT", "DO_NOT_MATCH"]
     Given var a=
     """
     {"b": 2,"a": 1}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT"]
 
   Scenario: Match JSONs with jsonNonExtensibleArray
     Given var a=
@@ -25,12 +25,12 @@ Feature: Match JSONs
     """
     {"a": [1,2,3,4]}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
     Given var a=
     """
     {"a": [1,2,4,3]}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT"]
 
   Scenario: Match JSONs with jsonArrayStrictOrder
     Given var a=
@@ -41,12 +41,12 @@ Feature: Match JSONs
     """
     {"a": [2,1,3]}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_STRICT_ORDER_ARRAY", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_STRICT_ORDER_ARRAY", "DO_NOT_MATCH"]
     Given var a=
     """
     {"a": [2,1,3]}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_STRICT_ORDER_ARRAY"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_STRICT_ORDER_ARRAY"]
 
 
   Scenario: Match JSONs with jsonNonExtensibleObject, jsonNonExtensibleArray and jsonArrayStrictOrder
@@ -58,32 +58,32 @@ Feature: Match JSONs
     """
     {"b":false, "a": [2,1,3,4]}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT","JSON_NON_EXTENSIBLE_ARRAY","JSON_STRICT_ORDER_ARRAY", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT","JSON_NON_EXTENSIBLE_ARRAY","JSON_STRICT_ORDER_ARRAY", "DO_NOT_MATCH"]
     Given var a=
     """
     {"a": [2,1,3], "b":false}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY","JSON_STRICT_ORDER_ARRAY", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY","JSON_STRICT_ORDER_ARRAY", "DO_NOT_MATCH"]
     Given var a=
     """
     {"a": [2,1,3,4], "b":false}
     """
-    Then Match #[a] with "#[b]" using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT","JSON_STRICT_ORDER_ARRAY"]
+    Then [util] Match #[a] against #[b] using matchConditions=["JSON_NON_EXTENSIBLE_OBJECT","JSON_STRICT_ORDER_ARRAY"]
 
   Scenario: Check unintentional regex chars at Json match
   This test scenario is valid only if logger is set to debug LEVEL or bellow
     # This should not log any warning related to regular expressions
-    And Negative match {"a":"foobar"} with "{"a":"[0-9]"}"
-    And Negative match {"a":"foobar"} with "{"[0-9]":"foobar"}"
+    And [util] Negative match {"a":"foobar"} with {"a":"[0-9]"}
+    And [util] Negative match {"a":"foobar"} with {"[0-9]":"foobar"}
     # This should log regex related warning messages
-    And Negative match {"a":"[0-9]"} with "{"a":"[0-9]"}"
-    And Negative match {"[0-9]":"foobar"} with "{"[0-9]":"foobar"}"
+    And [util] Negative match {"a":"[0-9]"} with {"a":"[0-9]"}
+    And [util] Negative match {"[0-9]":"foobar"} with {"[0-9]":"foobar"}
 
   Scenario: Match JSON with slashes against assign variable
     Given var a="{"path":"~[var]"}"
     Given var b="{"ignore":false, "path":"/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"}"
-    Then Match #[a] with "#[b]"
-    And Match \Q#[var]\E with "/tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml"
+    Then [util] Match #[a] with #[b]
+    And [util] Match \Q#[var]\E with /tmp/n-config.export._21389211_2020-10-14T09:44:40.110821_4b501ca4-c75d-4c29-8607-c176483c8e6f.xml
 
 
   Scenario: Match JSONs by json paths also
@@ -132,7 +132,7 @@ Feature: Match JSONs
     "expensive": #[limit]
 }
     """
-    * Match #[expected] with "#[actual]"
-    * Match Nigel Rees with "#[author1]"
-    * Match Herman Melville with "#[author2]"
+    * [util] Match #[expected] with #[actual]
+    * [util] Match Nigel Rees with #[author1]
+    * [util] Match Herman Melville with #[author2]
 

@@ -1,6 +1,6 @@
 package com.cucumber.utils.features.stepdefs.match;
 
-import com.cucumber.utils.context.stepdefs.MatchSteps;
+import com.cucumber.utils.context.steps.MatchSteps;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;

@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs;
+package com.cucumber.utils.context.steps;
 
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.ScenarioVarsUtils;
@@ -35,7 +35,7 @@ public class VarSteps {
         setVar(name, value.toString());
     }
 
-    @Given("var {} from file path \"{}\"")
+    @Given("var {} from file \"{}\"")
     public void setVarFromFile(String name, String filePath) {
         setVar(name, ScenarioVarsUtils.parse(filePath, scenarioVars));
     }
@@ -46,20 +46,14 @@ public class VarSteps {
         scenarioUtils.log("Loaded scenario variables having names: {}", propertyNames);
     }
 
-    @Given("load file \"{}\" to var \"{}\"")
-    public void loadScenarioVarsFromFile(String filePath, String propertyName) {
-        ScenarioVarsUtils.loadFileAsScenarioVariable(filePath, scenarioVars, propertyName);
-        scenarioUtils.log("Loaded scenario variable with name: {}", propertyName);
-    }
-
     @Given("load vars from dir \"{}\"")
     public void loadScenarioVarsFromDir(String dirPath) {
         Set<String> propertyNames = ScenarioVarsUtils.loadScenarioVarsFromDir(dirPath, scenarioVars);
         scenarioUtils.log("Loaded scenario variables having names: {}", propertyNames);
     }
 
-    @Given("table {}=")
-    public void setCustomDataTable(String name, List<Map<String, Object>> value) {
+    @Given("var {} from table")
+    public void loadVarFromTable(String name, List<Map<String, Object>> value) {
         scenarioVars.put(name, value);
         scenarioUtils.log("var {} = {}", name, value);
         LOG.debug("var {} = {}", name, value);

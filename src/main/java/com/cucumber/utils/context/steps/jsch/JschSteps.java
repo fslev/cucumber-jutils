@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs.jsch;
+package com.cucumber.utils.context.steps.jsch;
 
 import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
@@ -23,7 +23,7 @@ public class JschSteps {
     @Inject
     private ScenarioVars scenarioVars;
 
-    @Given("JSCH connection from properties file \"{}\"")
+    @Given("[jsch-util] Load config from properties file \"{}\"")
     public void init(String relFilePath) throws IOException, JSchException {
 
         Properties config = new Properties();
@@ -40,14 +40,14 @@ public class JschSteps {
         this.client.connect();
     }
 
-    @Then("JSCH execute command \"{}\" and check response=\"{}\"")
+    @Then("[jsch-util] Execute {} and check response={}")
     public void executeCmd(String cmd, String expected) throws IOException, JSchException {
         String actual = this.client.sendCommand(cmd).trim();
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
     @After("@jsch_cleanup")
-    @And("JSCH disconnect")
+    @And("[jsch-util] Disconnect")
     public void disconnect() {
         if (this.client != null) {
             this.client.disconnect();

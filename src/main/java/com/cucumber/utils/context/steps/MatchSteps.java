@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs;
+package com.cucumber.utils.context.steps;
 
 import com.cucumber.utils.context.ScenarioUtils;
 import com.cucumber.utils.context.ScenarioVarsUtils;
@@ -23,26 +23,42 @@ public class MatchSteps {
     @Inject
     private ScenarioUtils logger;
 
-    @Then("Match {} with \"{}\"")
+    @Then("[util] Match {} with {}")
     public void match(Object expected, Object actual) {
         logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
-    @Then("Match {} with \"{}\" using matchConditions={}")
+    @Then("[util] Match {} against")
+    public void matchWithDocString(Object expected, StringBuilder actual) {
+        match(expected, actual.toString());
+    }
+
+    @Then("[util] Match {} against {} using matchConditions={}")
     public void match(Object expected, Object actual, MatchCondition[] matchConditions) {
         logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}\n    with match conditions: {}", expected,
                 actual != null ? MessageUtil.cropL(actual.toString()) : null, matchConditions);
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual, matchConditions));
     }
 
-    @Then("Match {} with NULL")
+    @Then("[util] Match {} against file \"{}\"")
+    public void matchWithContentFromFilepath(Object expected, String filePath) {
+        match(expected, ScenarioVarsUtils.parse(filePath, scenarioVars));
+    }
+
+    @Then("[util] Match {} against table")
+    public void matchWithDataTable(Object expected, List<Map<String, Object>> actual) {
+        logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}", expected, actual);
+        scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
+    }
+
+    @Then("[util] Match {} against NULL")
     public void matchWithNull(Object expected) {
         logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}", expected, null);
         assertNull(expected);
     }
 
-    @Then("Negative match {} with \"{}\"")
+    @Then("[util] Negative match {} with {}")
     public void matchNegativeWithString(Object expected, Object actual) {
         logger.log("Negative match:\n\n{}\n\nagainst:\n\n{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
         try {
@@ -54,24 +70,8 @@ public class MatchSteps {
         throw new AssertionError("Objects match");
     }
 
-    @Then("Match {} with content from path \"{}\"")
-    public void matchWithContentFromFilepath(Object expected, String filePath) {
-        match(expected, ScenarioVarsUtils.parse(filePath, scenarioVars));
-    }
-
-    @Then("Match {} with")
-    public void matchWithDocString(Object expected, StringBuilder actual) {
-        match(expected, actual.toString());
-    }
-
-    @Then("Negative match {} with")
+    @Then("[util] Negative match {} against")
     public void matchNegativeWithDocString(Object expected, StringBuilder actual) {
         matchNegativeWithString(expected, actual.toString());
-    }
-
-    @Then("Match {} with table")
-    public void matchWithDataTable(Object expected, List<Map<String, Object>> actual) {
-        logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}", expected, actual);
-        scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
     }
 }

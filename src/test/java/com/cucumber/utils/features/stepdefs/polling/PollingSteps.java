@@ -5,8 +5,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.jtest.utils.matcher.ObjectMatcher;
 
+import java.time.Duration;
+
 @ScenarioScoped
-public class PollerSteps {
+public class PollingSteps {
 
     private int min;
     private int max;
@@ -19,12 +21,12 @@ public class PollerSteps {
 
     @Then("poll until random generated number {int} is found")
     public void pollFor(int expected) {
-        ObjectMatcher.match(null, expected, this::generateRandom, 30, null, null);
+        ObjectMatcher.match(null, expected, this::generateRandom, Duration.ofSeconds(30), null, null);
     }
 
-    @Then("poll {}s until 0=0")
-    public void pollForZeroSeconds(int pollTimeoutInSeconds) {
-        ObjectMatcher.match(null, 0, () -> 0, pollTimeoutInSeconds, null, null);
+    @Then("poll {} until 0=0")
+    public void pollForZeroSeconds(Duration pollingDuration) {
+        ObjectMatcher.match(null, 0, () -> 0, pollingDuration, null, null);
     }
 
     public int generateRandom() {

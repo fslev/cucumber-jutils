@@ -12,9 +12,9 @@ Feature: Match HTTP Responses
     Then Http Response Compare #[a] against #[b] with matchConditions=[] and message=[_null]
     And Poll Http Response and Compare #[a] against #[b] with matchConditions=[] and message=[_null]
     Then Http Response Compare #[a] against #[b] with matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH_HTTP_RESPONSE_BY_BODY"] and message=[_null]
-    And Match #[number] with "2"
-    And Match #[drink] with "bar"
-    And Match #[adjective] with "Bad"
+    And [util] Match #[number] with 2
+    And [util] Match #[drink] with bar
+    And [util] Match #[adjective] with Bad
     And var a=
     """
     {"status": 200, "body":{"foo":"bar","arr":[1,"s",4,false], "1":2,"true":false, "3":2},"reason":"Bad request", "headers":[{"a":1},{"b":true},{"c":"ok"}]}
@@ -44,8 +44,8 @@ Feature: Match HTTP Responses
     """
     And Http Response Compare #[a] against #[b] with matchConditions=["JSON_STRICT_ORDER_ARRAY","JSON_NON_EXTENSIBLE_OBJECT","JSON_NON_EXTENSIBLE_ARRAY", "XML_CHILD_NODELIST_LENGTH", "XML_ELEMENT_NUM_ATTRIBUTES"] and message=[_null]
     And Http Response Compare #[a] against #[b] with matchConditions=["DO_NOT_MATCH_HTTP_RESPONSE_BY_BODY", "XML_CHILD_NODELIST_SEQUENCE"] and message=[_null]
-    And Match #[month] with "02"
-    And Match #[var1] with "test"
-    And Match #[from] with "Sonya"
-    And Match #[adjective] with "Bad"
+    And [util] Match #[month] with 02
+    And [util] Match #[var1] with test
+    And [util] Match #[from] with Sonya
+    And [util] Match #[adjective] with Bad
 

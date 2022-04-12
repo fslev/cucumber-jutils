@@ -5,9 +5,10 @@ Feature: Test examples feature
 
     Given var p="<emptyValue>"
     And var x="<nullValue>"
-    Then Match #[p] with ""
-    And Match #[x] with "[_null]"
-    And Match #[x] with NULL
+    * var empty=""
+    Then [util] Match #[p] with #[empty]
+    And [util] Match #[x] with [_null]
+    And [util] Match #[x] against NULL
     Examples:
       | emptyValue | nullValue |
       |            | [_null]   |

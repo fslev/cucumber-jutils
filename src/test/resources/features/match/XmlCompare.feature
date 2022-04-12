@@ -36,8 +36,8 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    Then Match #[a] with "#[b]" using matchConditions=[]
-    Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_LENGTH", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=[]
+    Then [util] Match #[a] against #[b] using matchConditions=["XML_CHILD_NODELIST_LENGTH", "DO_NOT_MATCH"]
 
   Scenario: Match XML with xmlChildListSequence
     Given var a=
@@ -76,8 +76,8 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    Then Match #[a] with "#[b]" using matchConditions=[]
-    Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=[]
+    Then [util] Match #[a] against #[b] using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
 
   Scenario: Match XML with xmlElementNumAttributes
     Given var a=
@@ -116,8 +116,8 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    Then Match #[a] with "#[b]" using matchConditions=[]
-    Then Match #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=[]
+    Then [util] Match #[a] against #[b] using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES", "DO_NOT_MATCH"]
 
   Scenario: Match XML with extra expected attributes
     Given var a=
@@ -156,7 +156,7 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    Then Match #[a] with "#[b]" using matchConditions=["DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=["DO_NOT_MATCH"]
 
   Scenario: Match XML with assign symbols
     Given var a=
@@ -195,16 +195,16 @@ Feature: Match XMLs
   </note>
 </messages>
     """
-    Then Match #[a] with "#[b]" using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES"]
-    And Match #[contract] with "foo bar 1000"
-    And Match #[from] with "Tove"
-    Then Match #[a] with "#[b]" using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
+    Then [util] Match #[a] against #[b] using matchConditions=["XML_ELEMENT_NUM_ATTRIBUTES"]
+    And [util] Match #[contract] with foo bar 1000
+    And [util] Match #[from] with Tove
+    Then [util] Match #[a] against #[b] using matchConditions=["XML_CHILD_NODELIST_SEQUENCE", "DO_NOT_MATCH"]
 
   Scenario: Check unintentional regex chars at XML match
   This test scenario is valid only if logger is set to debug LEVEL or bellow
     * load vars from dir "xml/regex_chars"
       # This should not log any warning related to regular expressions
-    And Negative match <xml><a>foobar</a></xml> with "<xml><a>[0-9]</a></xml>"
+    And [util] Negative match <xml><a>foobar</a></xml> with <xml><a>[0-9]</a></xml>
     # This should log regex related warning messages
-    And Negative match <xml><a>[0-9]</a></xml> with "<xml><a>[0-9]</a></xml>"
-    And Negative match #[test1] with "<xml><a>[0-9]</a></xml>"
+    And [util] Negative match <xml><a>[0-9]</a></xml> with <xml><a>[0-9]</a></xml>
+    And [util] Negative match #[test1] with <xml><a>[0-9]</a></xml>

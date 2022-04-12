@@ -1,4 +1,4 @@
-package com.cucumber.utils.context.stepdefs;
+package com.cucumber.utils.context.steps;
 
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
@@ -29,8 +29,13 @@ public class CommonSteps {
     public void endCollapsible() {
     }
 
-    @Given("Wait {}s")
-    public void wait(double ps) throws InterruptedException {
+    @Given("[util] Wait {}s")
+    public void waitS(double ps) throws InterruptedException {
         Thread.sleep((long) (ps * 1000));
+    }
+
+    @Given("[util] Wait {}m")
+    public void waitM(double pm) throws InterruptedException {
+        Thread.sleep((long) (pm * 60 * 1000));
     }
 }
