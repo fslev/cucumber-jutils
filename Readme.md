@@ -1,9 +1,8 @@
-# Cucumber JUtils <sup>[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://vshymanskyy.github.io/StandWithUkraine)
-</sup>
+# Cucumber JUtils <sup>[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://vshymanskyy.github.io/StandWithUkraine)</sup>
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.fslev/cucumber-jutils.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.fslev%22%20AND%20a:%22cucumber-jutils%22)
-![Java CI with Maven](https://github.com/fslev/cucumber-utils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-utils/badge.svg?branch=master)](https://coveralls.io/github/fslev/cucumber-utils?branch=master)
+![Java CI with Maven](https://github.com/fslev/cucumber-utils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-utils/badge.svg?branch=main)](https://coveralls.io/github/fslev/cucumber-utils?branch=main)
 
 
 # Summary
