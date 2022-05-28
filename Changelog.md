@@ -4,7 +4,7 @@
 
 
 ### 8.2
-Update dependencies  
+Update dependencies (jtest-utils)  
 
 ### 8.1
 Refactor shell utility steps  
