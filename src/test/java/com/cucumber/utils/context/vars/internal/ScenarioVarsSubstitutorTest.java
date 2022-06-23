@@ -94,10 +94,16 @@ public class ScenarioVarsSubstitutorTest {
         s = "#[short-random]";
         assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars) instanceof Integer);
         assertTrue(-1 < (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
-        assertTrue(Short.MAX_VALUE * 2 > (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
+        assertTrue(Short.MAX_VALUE > (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
 
         s = "random val: #[short-random]";
         assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars).toString().matches("random val: ([0-9]{1}|[0-9]{2}|[0-9]{3}|[0-9]{4}|[0-9]{5})"));
+
+        s = "#[int-random]";
+        assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars) instanceof Integer);
+        assertTrue(-1 < (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
+        assertTrue(Integer.MAX_VALUE > (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
+
 
         s = "#[now]";
         assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars) instanceof Long);
