@@ -6,8 +6,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ScenarioVarsParserTest {
 
@@ -45,6 +44,7 @@ public class ScenarioVarsParserTest {
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("not allowed"));
         }
+        fail("Scenario vars does not meet all restriction requirements");
     }
 
     @Test
