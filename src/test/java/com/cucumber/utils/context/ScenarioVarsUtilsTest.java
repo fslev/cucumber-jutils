@@ -18,8 +18,9 @@ public class ScenarioVarsUtilsTest {
     @Test
     public void testParserFromInvalidFile() {
         assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.parse("idontexist.json", scenarioVars));
-        assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromFile("idontexist.json", scenarioVars));
-        assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromDir("idontexist.json", scenarioVars));
+        assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromFile("idontexist.properties", scenarioVars));
+        assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromFile("idontexist.yaml", scenarioVars));
+        assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromDir("idontexist", scenarioVars));
     }
 
     @Test
