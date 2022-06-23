@@ -21,30 +21,34 @@ public class ScenarioVarsParserTest {
     public void testScenarioVarsDoesNotAcceptInvalidNames() {
         try {
             scenarioVars.put("a[d", 1);
+            fail("Scenario vars does not meet restriction requirements");
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("not allowed"));
         }
         try {
             scenarioVars.put("a#d", 1);
+            fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("not allowed"));
         }
         try {
             scenarioVars.put("a/d", 1);
+            fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("not allowed"));
         }
         try {
             scenarioVars.put("a,d", 1);
+            fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("not allowed"));
         }
         try {
             scenarioVars.put("a{d", 1);
+            fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
             assertTrue(e.getMessage().contains("not allowed"));
         }
-        fail("Scenario vars does not meet all restriction requirements");
     }
 
     @Test
