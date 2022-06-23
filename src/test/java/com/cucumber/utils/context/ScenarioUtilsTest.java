@@ -35,6 +35,8 @@ public class ScenarioUtilsTest {
 
     @Test
     public void testLogging() {
+        assertNotNull(scenarioUtils.getScenario());
+
         scenarioUtils.log(null);
         verify(scenario, atLeastOnce()).log(stringArgCaptor.capture());
         assertNull(stringArgCaptor.getValue());
