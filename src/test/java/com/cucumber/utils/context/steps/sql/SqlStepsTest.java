@@ -52,6 +52,7 @@ public class SqlStepsTest {
         doNothing().when(sqlClient).close();
         when(connection.prepareStatement(anyString())).thenReturn(pst);
         when(pst.executeQuery()).thenReturn(rs);
+        when(pst.executeUpdate()).thenReturn(1);
         when(rs.getMetaData()).thenReturn(rsMetaData);
 
         when(rsMetaData.getColumnCount()).thenReturn(3);
@@ -113,5 +114,20 @@ public class SqlStepsTest {
         sqlSteps.executeQueryAndMatch("does not matter", 10, expectedResult);
         assertEquals(scenarioVars.getAsString("address3"), "Liberty 2");
         assertEquals(scenarioVars.getAsString("firstName2"), "Andrew");
+    }
+
+    @Test
+    public void testExecuteUpdate() throws SQLException {
+        sqlSteps.executeUpdate("does not matter");
+    }
+
+    @Test
+    public void testInsertIntoTable() throws SQLException {
+        sqlSteps.insertDataInsideTable("test", List.of(Map.of("1", 2)));
+    }
+
+    @Test
+    public void testUpdateDataFromTable() throws SQLException {
+        sqlSteps.updateDataFromTable("test", "does not matter", List.of(Map.of("1", 2)));
     }
 }
