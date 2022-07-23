@@ -1,8 +1,8 @@
 # Cucumber JUtils <sup>[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://vshymanskyy.github.io/StandWithUkraine)</sup>
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.fslev/cucumber-jutils.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.fslev%22%20AND%20a:%22cucumber-jutils%22)
-![Java CI with Maven](https://github.com/fslev/cucumber-utils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=main)
-[![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-utils/badge.svg?branch=main)](https://coveralls.io/github/fslev/cucumber-utils?branch=main)
+![Java CI with Maven](https://github.com/fslev/cucumber-jutils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-jutils/badge.svg?branch=main)](https://coveralls.io/github/fslev/cucumber-jutils?branch=main)
 
 
 # Summary
@@ -54,8 +54,8 @@ In order to integrate **cucumber-jutils** within your test project you must conf
 com.cucumber.utils
 ```  
 # Documentation
-Feature related documentation can be found [here](https://github.com/fslev/cucumber-utils/wiki)
+Feature related documentation can be found [here](https://github.com/fslev/cucumber-jutils/wiki)
 
 # Tutorial
-Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-utils-tutorial) for a better picture on how this library should be used.  
+Follow the [Cucumber Utils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.  
 
