@@ -21,25 +21,27 @@ Feature: Date feature
     Then [time-util] Check period from 2020-02-03 to 2021-02-03 doesn't match 36 DAYS using date pattern yyyy-MM-dd
 
   Scenario: Format date times from current date
-    Given [time-util] date var currentTime=from millis #[now] PLUS 0 YEARS with format pattern=yyyy-MM-dd HH:mm:ss
-    And [time-util] date var years=from millis #[now] PLUS 15 YEARS with format pattern=yyyy-MM-dd HH:mm:ss
-    And [time-util] date var days=from millis #[now] PLUS 15 DAYS with format pattern=yyyy-MM-dd HH:mm:ss
-    And [time-util] date var daysBefore=from millis #[now] MINUS 15 DAYS with format pattern=yyyy-MM-dd HH:mm:ss
-    And [time-util] date var months=from millis #[now] PLUS 15 MONTHS with format pattern=yyyy-MM-dd HH:mm:ss
-    And [time-util] date var minutes=from millis #[now] PLUS 15 MINUTES with format pattern=yyyy-MM-dd HH:mm:ss
+    * var currentMillis="#[now]"
+    And [time-util] date var years=from millis #[currentMillis] PLUS 15 YEARS with format pattern=yyyy-MM-dd HH:mm:ss
+    And [time-util] date var days=from millis #[currentMillis] PLUS 15 DAYS with format pattern=yyyy-MM-dd HH:mm:ss
+    And [time-util] date var daysBefore=from millis #[currentMillis] MINUS 15 DAYS with format pattern=yyyy-MM-dd HH:mm:ss
+    And [time-util] date var months=from millis #[currentMillis] PLUS 15 MONTHS with format pattern=yyyy-MM-dd HH:mm:ss
+    And [time-util] date var minutes=from millis #[currentMillis] PLUS 15 MINUTES with format pattern=yyyy-MM-dd HH:mm:ss
+    Given [time-util] date var currentTime=from millis #[currentMillis] PLUS 0 YEARS with format pattern=yyyy-MM-dd HH:mm:ss
 
     Then [time-util] Check period from #[currentTime] to #[years] is 15 YEARS using date time pattern yyyy-MM-dd HH:mm:ss
     Then [time-util] Check period from #[currentTime] to #[days] is 15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then [time-util] Check period from #[currentTime] to #[daysBefore] is -15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
     Then [time-util] Check period from #[daysBefore] to #[currentTime] is 15 DAYS using date time pattern yyyy-MM-dd HH:mm:ss
-#    Then Check period from "#[currentTime]" to "#[months]" is 15 MONTHS using date time pattern yyyy-MM-dd HH:mm:ss
+    Then [time-util] Check period from #[currentTime] to #[months] is 15 MONTHS using date time pattern yyyy-MM-dd HH:mm:ss
     Then [time-util] Check period from #[currentTime] to #[minutes] is 15 MINUTES using date time pattern yyyy-MM-dd HH:mm:ss
 
   Scenario: Format dates from current date
-    Given [time-util] date var currentDate=from millis #[now] PLUS 0 YEARS with format pattern=yyyy-MM-dd
-    And [time-util] date var futureDateYears=from millis #[now] PLUS 15 YEARS with format pattern=yyyy-MM-dd
-    And [time-util] date var futureDateDays=from millis #[now] PLUS 1 DAYS with format pattern=yyyy-MM-dd
-    And [time-util] date var pastDateDays=from millis #[now] MINUS 31 DAYS with format pattern=yyyy-MM-dd
+    * var currentMillis="#[now]"
+    Given [time-util] date var currentDate=from millis #[currentMillis] PLUS 0 YEARS with format pattern=yyyy-MM-dd
+    And [time-util] date var futureDateYears=from millis #[currentMillis] PLUS 15 YEARS with format pattern=yyyy-MM-dd
+    And [time-util] date var futureDateDays=from millis #[currentMillis] PLUS 1 DAYS with format pattern=yyyy-MM-dd
+    And [time-util] date var pastDateDays=from millis #[currentMillis] MINUS 31 DAYS with format pattern=yyyy-MM-dd
 
     Then [time-util] Check period from #[currentDate] to #[futureDateYears] is 15 YEARS using date pattern yyyy-MM-dd
     And [time-util] Check period from #[currentDate] to #[futureDateDays] is 1 DAYS using date pattern yyyy-MM-dd
