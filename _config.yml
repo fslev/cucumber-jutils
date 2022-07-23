@@ -1,8 +1,8 @@
 theme: jekyll-theme-minimal
 plugins:
   - jekyll-seo-tag
-title: Cucumber Utils
-description: A Java library which helps you rapidly develop a test framework and write organized and clean Cucumber tests
+title: Cucumber JUtils
+description: An extension of Cucumber for Java with a set of commonly used utilities
 author: Florin Slevoaca
-url: https://fslev.github.io/cucumber-utils
+url: https://fslev.github.io/cucumber-jutils
 permalink: pretty
