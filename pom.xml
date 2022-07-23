@@ -8,7 +8,7 @@
 
     <name>Cucumber JUtils</name>
     <description>A little helper for Cucumber Java</description>
-    <url>https://github.com/fslev/cucumber-utils</url>
+    <url>https://github.com/fslev/cucumber-jutils</url>
     <developers>
         <developer>
             <name>Florin Slevoaca</name>
@@ -345,9 +345,9 @@
     </build>
 
     <scm>
-        <connection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-utils.git</developerConnection>
-        <url>https://github.com/fslev/cucumber-utils/tree/master</url>
+        <connection>scm:git:ssh://git@github.com/fslev/cucumber-jutils.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-jutils.git</developerConnection>
+        <url>https://github.com/fslev/cucumber-jutils/tree/master</url>
         <tag>HEAD</tag>
     </scm>
 
