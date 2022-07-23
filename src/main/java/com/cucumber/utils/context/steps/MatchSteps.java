@@ -6,9 +6,9 @@ import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Then;
+import io.json.compare.util.MessageUtil;
 import io.jtest.utils.matcher.ObjectMatcher;
 import io.jtest.utils.matcher.condition.MatchCondition;
-import ro.skyah.util.MessageUtil;
 
 import java.util.List;
 import java.util.Map;

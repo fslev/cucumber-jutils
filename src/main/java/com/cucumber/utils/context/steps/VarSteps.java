@@ -6,9 +6,9 @@ import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
+import io.json.compare.util.MessageUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ro.skyah.util.MessageUtil;
 
 import java.util.List;
 import java.util.Map;
