@@ -1,7 +1,9 @@
 # Changelog
 
-### 8.5-SNAPSHOT
+### 8.6-SNAPSHOT
 
+### 8.5
+Update dependencies (jtest-utils)  
 
 ### 8.4
 Update dependencies (jtest-utils)  
