@@ -1,6 +1,10 @@
 # Changelog
 
-### 8.6-SNAPSHOT
+### 8.7-SNAPSHOT
+
+### 8.6
+Update dependencies (jtest-utils)  
+Moved JsonUtils class form jtest-utils to json-compare library  
 
 ### 8.5
 Update dependencies (jtest-utils)  

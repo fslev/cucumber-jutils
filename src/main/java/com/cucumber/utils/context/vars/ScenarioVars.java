@@ -2,7 +2,7 @@ package com.cucumber.utils.context.vars;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.guice.ScenarioScoped;
-import io.jtest.utils.common.JsonUtils;
+import io.json.compare.util.JsonUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
