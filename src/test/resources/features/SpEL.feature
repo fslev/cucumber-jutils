@@ -16,7 +16,7 @@ Feature: Parse SpEL expressions
     * [util] Match \Qva}lid\E with #{'va\}lid'}
     * [util] Match \Qva\}lid\E with #{'va\\}lid'}
     * [util] Match test}1 with #{'#[var1]'}
-    * [util] Match 1 with #{T(io.jtest.utils.common.JsonUtils).toJson('#[var2]').get('a').asInt()}
+    * [util] Match 1 with #{T(io.json.compare.util.JsonUtils).toJson('#[var2]').get('a').asInt()}
 
   Scenario: Process and Match multiple String embedded SpELs
     * var car="Alfa Romeo Disco Volante"

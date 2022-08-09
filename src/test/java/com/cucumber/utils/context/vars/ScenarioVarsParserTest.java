@@ -213,7 +213,7 @@ public class ScenarioVarsParserTest {
     @Test
     public void testSpelWithScenarioVarsHavingBraces() {
         scenarioVars.put("myJson", "{\"a\":1}");
-        String s = "#{T(io.jtest.utils.common.JsonUtils).toJson('#[myJson]').get('a').asInt()}";
+        String s = "#{T(io.json.compare.util.JsonUtils).toJson('#[myJson]').get('a').asInt()}";
         assertEquals(1, ScenarioVarsParser.parse(s, scenarioVars));
     }
 }
