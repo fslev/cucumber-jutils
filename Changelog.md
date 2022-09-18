@@ -1,6 +1,10 @@
 # Changelog
 
-### 8.8-SNAPSHOT
+### 8.9-SNAPSHOT
+
+### 8.8
+Enable assertion error diff support  
+  - Update dependencies (jtest-utils)  
 
 ### 8.7
 Update dependencies (jtest-utils)  
