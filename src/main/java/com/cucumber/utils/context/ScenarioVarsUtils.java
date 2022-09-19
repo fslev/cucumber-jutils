@@ -109,6 +109,9 @@ public final class ScenarioVarsUtils {
         Map<String, Object> map;
         try {
             map = ResourceUtils.readYaml(filePath);
+            if (map == null) {
+                throw new RuntimeException("Incorrect data inside Yaml file: " + filePath);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

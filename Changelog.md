@@ -1,6 +1,7 @@
 # Changelog
 
 ### 8.9-SNAPSHOT
+Bug fix - parsing scenario variables from empty yaml file throws a RuntimeException  
 
 ### 8.8
 Enable assertion error diff support  
