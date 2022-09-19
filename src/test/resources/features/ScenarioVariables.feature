@@ -66,12 +66,10 @@ Feature: Test placeholder fill
     Given The string with scenario placeholders "The #[animal] is attacking #[name]"
     Then Check filled string equals "The bear is attacking David Jones"
 
-
   Scenario: Test placeholder fill with all scenario values recursively loaded from directory
     Given load vars from dir "placeholders/properties"
     Given The string with scenario placeholders "Soda=#[soda], food=#[food], whisky=#[whisky], burger=#[burger], cheese=#[cheese] and ignore=#[ignore]"
     Then Check filled string equals "Soda=Coca-Cola, food=burger, whisky=Johnny Walker, burger=Cheeseburger, cheese=Mozzarela and ignore=#[ignore]"
-
 
   Scenario: Test dynamic scenario variables
   There are cases where dynamic scenario variables (such as #[uid], #[now]) are generated with same value
