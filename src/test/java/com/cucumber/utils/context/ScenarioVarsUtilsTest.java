@@ -34,6 +34,12 @@ public class ScenarioVarsUtilsTest {
     }
 
     @Test
+    public void testLoadScenarioVarsFromDirWithEmptyYamlFile() {
+        assertTrue(assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromDir("props1/dir1", scenarioVars))
+                .getMessage().contains("Incorrect data inside Yaml file: props1/dir1/empty.yml"));
+    }
+
+    @Test
     public void loadPropertyFileFromInvalidExtension() {
         assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadFileAsScenarioVariable(
                 "props/invalid.extension", scenarioVars, "var1"));
