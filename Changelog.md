@@ -1,7 +1,9 @@
 # Changelog
 
-### 8.9-SNAPSHOT
-Bug fix - parsing scenario variables from empty yaml file throws a RuntimeException  
+### 8.10-SNAPSHOT
+
+### 8.9 (2022-10-04)
+- Update to new major version of json-compare (differences support)  
 
 ### 8.8
 Enable assertion error diff support  
