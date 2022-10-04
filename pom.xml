@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-jutils</artifactId>
-    <version>8.9-SNAPSHOT</version>
+    <version>8.9</version>
 
     <name>Cucumber JUtils</name>
     <description>A little helper for Cucumber Java</description>
@@ -348,7 +348,7 @@
         <connection>scm:git:ssh://git@github.com/fslev/cucumber-jutils.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-jutils.git</developerConnection>
         <url>https://github.com/fslev/cucumber-jutils/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>cucumber-jutils-8.9</tag>
     </scm>
 
     <distributionManagement>
