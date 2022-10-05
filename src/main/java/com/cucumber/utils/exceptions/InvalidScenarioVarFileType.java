@@ -6,7 +6,7 @@ import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.allExte
 
 public class InvalidScenarioVarFileType extends RuntimeException {
     public InvalidScenarioVarFileType() {
-        super("\nFile type not supported for reading scenario variables." +
-                "\nMust have one of the extensions: " + Arrays.toString(allExtensions()));
+        super(System.lineSeparator() + "File type not supported for reading scenario variables." +
+                System.lineSeparator() + "Must have one of the extensions: " + Arrays.toString(allExtensions()));
     }
 }

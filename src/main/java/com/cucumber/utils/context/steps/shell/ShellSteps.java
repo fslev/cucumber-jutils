@@ -39,8 +39,10 @@ public class ShellSteps {
 
     @Then("[shell-util] Execute {} and check {}s until response={}")
     public void executeAndMatch(String[] commands, Integer pollingTimeoutSeconds, String expected) {
-        scenarioUtils.log("CMD: -------------------------------------------------\n{}\n\n" +
-                "---------------------- EXPECTED ----------------------\n{}\n", Arrays.asList(commands), expected);
+        scenarioUtils.log("CMD: -------------------------------------------------" + System.lineSeparator() + "{}" +
+                System.lineSeparator() + System.lineSeparator() +
+                "---------------------- EXPECTED ----------------------" +
+                System.lineSeparator() + "{}" + System.lineSeparator(), Arrays.asList(commands), expected);
         AtomicReference<String> output = new AtomicReference<>();
         try {
             if (pollingTimeoutSeconds == null) {
@@ -53,7 +55,8 @@ public class ShellSteps {
                 }, Duration.ofSeconds(pollingTimeoutSeconds), null, null));
             }
         } finally {
-            scenarioUtils.log("\n----------------------- ACTUAL -----------------------\n{}", output.get());
+            scenarioUtils.log(System.lineSeparator() + "----------------------- ACTUAL -----------------------" +
+                    System.lineSeparator() + "{}", output.get());
         }
     }
 }

@@ -24,7 +24,8 @@ public class HttpSteps {
     @Given("[http-util] Make request with url={}, method={}, queryParams={}, headers={}, entity={} and check response={}")
     public void executeAndMatch(String url, Method method, Map<String, String> queryParams, Map<String, String> headers,
                                 String entity, String expected) throws IOException {
-        scenarioUtils.log("{} {}\nQuery params: {}\nHeaders: {}\nEntity: {}", method, url, queryParams, headers, entity);
+        scenarioUtils.log("{} {}" + System.lineSeparator() + "Query params: {}" + System.lineSeparator() +
+                "Headers: {}" + System.lineSeparator() + "Entity: {}", method, url, queryParams, headers, entity);
         HttpClient.Builder builder = new HttpClient.Builder().address(url).method(method).queryParams(queryParams).headers(headers);
         if (entity != null) {
             builder.entity(entity);

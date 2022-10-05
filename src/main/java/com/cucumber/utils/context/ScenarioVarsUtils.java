@@ -45,8 +45,9 @@ public final class ScenarioVarsUtils {
             filePaths.forEach(filePath -> {
                 try {
                     if (!vars.addAll(loadScenarioVarsFromFile(filePath, scenarioVars))) {
-                        throw new RuntimeException("\nAmbiguous loading of scenario variables from dir '" + dirPath
-                                + "'\nFile '" + filePath + "' contains a variable or is named after a variable that was already set while traversing directory");
+                        throw new RuntimeException(System.lineSeparator() + "Ambiguous loading of scenario variables from dir '" + dirPath
+                                + "'" + System.lineSeparator() + "File '" + filePath + "' contains a variable or is named " +
+                                "after a variable that was already set while traversing directory");
                     }
                 } catch (InvalidScenarioVarFileType e) {
                     LOG.warn(e.getMessage());
@@ -55,7 +56,7 @@ public final class ScenarioVarsUtils {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        LOG.debug("Loaded from dir '{}', scenario variables with the following names:\n{}", dirPath, vars);
+        LOG.debug("Loaded from dir '{}', scenario variables with the following names:" + System.lineSeparator() + "{}", dirPath, vars);
         return vars;
     }
 

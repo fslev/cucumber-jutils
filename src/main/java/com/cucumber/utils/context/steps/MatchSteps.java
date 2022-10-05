@@ -25,7 +25,9 @@ public class MatchSteps {
 
     @Then("[util] Match {} with {}")
     public void match(Object expected, Object actual) {
-        logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
+        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() +
+                System.lineSeparator() + "against:" + System.lineSeparator() + System.lineSeparator() +
+                "{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
@@ -36,7 +38,9 @@ public class MatchSteps {
 
     @Then("[util] Match {} against {} using matchConditions={}")
     public void match(Object expected, Object actual, MatchCondition[] matchConditions) {
-        logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}\n    with match conditions: {}", expected,
+        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() + System.lineSeparator() +
+                        "against:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() +
+                        "    with match conditions: {}", expected,
                 actual != null ? MessageUtil.cropL(actual.toString()) : null, matchConditions);
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual, matchConditions));
     }
@@ -48,19 +52,23 @@ public class MatchSteps {
 
     @Then("[util] Match {} against table")
     public void matchWithDataTable(Object expected, List<Map<String, Object>> actual) {
-        logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}", expected, actual);
+        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() + System.lineSeparator() +
+                "against:" + System.lineSeparator() + System.lineSeparator() + "{}", expected, actual);
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
     @Then("[util] Match {} against NULL")
     public void matchWithNull(Object expected) {
-        logger.log("MATCH:\n\n{}\n\nagainst:\n\n{}", expected, null);
+        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() + System.lineSeparator() +
+                "against:" + System.lineSeparator() + System.lineSeparator() + "{}", expected, null);
         assertNull(expected);
     }
 
     @Then("[util] Negative match {} with {}")
     public void matchNegativeWithString(Object expected, Object actual) {
-        logger.log("Negative match:\n\n{}\n\nagainst:\n\n{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
+        logger.log("Negative match:" + System.lineSeparator() + System.lineSeparator() + "{}" +
+                System.lineSeparator() + System.lineSeparator() + "against:" + System.lineSeparator() + System.lineSeparator() +
+                "{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
         try {
             scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
         } catch (AssertionError e) {
