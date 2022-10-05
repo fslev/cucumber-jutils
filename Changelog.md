@@ -1,6 +1,9 @@
 # Changelog
 
-### 8.10-SNAPSHOT
+### 8.11-SNAPSHOT
+
+### 8.10 (2022-10-05)
+- Update dependencies
 
 ### 8.9 (2022-10-04)
 - Update to new major version of json-compare (differences support)  
