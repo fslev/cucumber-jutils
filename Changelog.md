@@ -5,15 +5,18 @@
   - Remove unnecessary logger 
   
 ### 8.10 (2022-10-05)
-- Update dependencies
-- Replace \n new lines with System.lineSeparator()
+- #### Changed
+  - Update dependencies
+  - Replace \n new lines with System.lineSeparator()
 
 ### 8.9 (2022-10-04)
-- Update to new major version of json-compare (differences support)  
+- #### Changed
+  - Update to new major version of json-compare (differences support)  
 
 ### 8.8
-Enable assertion error diff support  
-  - Update dependencies (jtest-utils)  
+- #### Changed
+  - Enable assertion error diff support  
+    Update dependencies (jtest-utils)  
 
 ### 8.7
 Update dependencies (jtest-utils)  
