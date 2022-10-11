@@ -1,7 +1,9 @@
 # Changelog
 
 ### 8.11-SNAPSHOT
-
+- #### Removed
+  - Remove unnecessary logger 
+  
 ### 8.10 (2022-10-05)
 - Update dependencies
 - Replace \n new lines with System.lineSeparator()

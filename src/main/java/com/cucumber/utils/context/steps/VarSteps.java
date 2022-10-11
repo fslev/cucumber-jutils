@@ -7,8 +7,6 @@ import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.cucumber.java.en.Given;
 import io.json.compare.util.MessageUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +15,6 @@ import java.util.Set;
 @ScenarioScoped
 public class VarSteps {
 
-    private static final Logger LOG = LogManager.getLogger();
     @Inject
     private ScenarioVars scenarioVars;
     @Inject
@@ -27,7 +24,6 @@ public class VarSteps {
     public void setVar(String name, Object value) {
         scenarioVars.put(name, value);
         scenarioUtils.log("var {} = {}", name, value != null ? MessageUtil.cropL(value.toString()) : null);
-        LOG.debug("var {} = {}", name, value);
     }
 
     @Given("var {}=")
@@ -56,6 +52,5 @@ public class VarSteps {
     public void loadVarFromTable(String name, List<Map<String, Object>> value) {
         scenarioVars.put(name, value);
         scenarioUtils.log("var {} = {}", name, value);
-        LOG.debug("var {} = {}", name, value);
     }
 }
