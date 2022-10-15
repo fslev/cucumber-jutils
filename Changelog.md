@@ -1,8 +1,11 @@
 # Changelog
 
-### 8.11-SNAPSHOT
+### 9.0-SNAPSHOT
 - #### Removed
-  - Remove unnecessary logger 
+  - Unnecessary logs were removed
+  - Apache HttpClient support was removed. Test frameworks should decide which HTTP clients should use  
+- #### Changed
+  - Dependencies update  
   
 ### 8.10 (2022-10-05)
 - #### Changed

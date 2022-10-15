@@ -253,17 +253,6 @@ Feature: Test comparator
     Then [util] Match #[expected] with #[actual]
     And [util] Match #[var1] with booking:4663740
 
-  Scenario: Match XMLs from HTTP response bodies
-    Given var expectedResponse=
-      """
-    {
-      "status": 200,
-      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><bookingResponse><bookingId>dlc:~[var1]</bookingId></bookingResponse>"
-    }
-      """
-    Then Create HTTP response wrapper with content <?xml version="1.0" encoding="UTF-8" standalone="yes"?><bookingResponse><bookingId>dlc:booking:4663740</bookingId></bookingResponse> and compare with #[expectedResponse]
-    And [util] Match #[var1] with booking:4663740
-
   Scenario: Check unintentional regex chars at String match
   This test scenario is valid only if logger is set to debug LEVEL or bellow
     # This should not log any warning related to regular expressions
