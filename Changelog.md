@@ -1,6 +1,8 @@
 # Changelog
 
-### 9.0-SNAPSHOT
+### 9.1-SNAPSHOT
+
+### 9.0 (2022-10-16)
 - #### Removed
   - Unnecessary logs were removed
   - HTTP, SQL, JSCH and Shell client support was removed. Test frameworks should decide which clients should use  
