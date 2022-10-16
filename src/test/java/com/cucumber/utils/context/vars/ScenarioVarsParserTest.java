@@ -3,6 +3,7 @@ package com.cucumber.utils.context.vars;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +58,10 @@ public class ScenarioVarsParserTest {
         Map<String, Object> values = new HashMap<>();
         values.put("animal", "chupacabra");
         values.put("location", "forest");
+
         scenarioVars.putAll(values);
+        assertEquals(2, scenarioVars.size());
+        assertTrue(scenarioVars.nameSet().containsAll(Arrays.asList("animal", "location")));
         assertEquals("The chupacabra is running through the forest", ScenarioVarsParser.parse(a, scenarioVars));
     }
 

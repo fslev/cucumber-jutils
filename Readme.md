@@ -10,7 +10,6 @@ A Java library meant to help you write organized and clean **Cucumber** tests.
 _It takes over the usual dependencies and features needed inside a Cucumber based test framework, such as:_  
 * Matching mechanisms: match XMLs, JSONs, and other types of objects  
 * Scenario scoped variables (defined and used both inside the Gherkin document and Step definitions)    
-* Customized clients for accessing various resources, i.e _databases_, _HTTP services_, etc  
 * Predefined Cucumber steps for helping with common tasks  
 * Some useful utility classes           
 

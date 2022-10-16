@@ -1,8 +1,11 @@
 # Changelog
 
-### 8.11-SNAPSHOT
+### 9.0-SNAPSHOT
 - #### Removed
-  - Remove unnecessary logger 
+  - Unnecessary logs were removed
+  - HTTP, SQL, JSCH and Shell client support was removed. Test frameworks should decide which clients should use  
+- #### Changed
+  - Dependencies update  
   
 ### 8.10 (2022-10-05)
 - #### Changed

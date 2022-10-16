@@ -115,9 +115,29 @@ public class ScenarioVarsSubstitutorTest {
     }
 
     @Test
-    public void testSubstitutionWithEmptyScenarioVars() {
+    public void testSubstitutionWithEmptyValueScenarioVar() {
         String s = "#[p]";
         scenarioVars.put("p", "");
         assertEquals("", ScenarioVarsSubstitutor.replace(s, scenarioVars));
+    }
+
+    @Test
+    public void testSubstitutionWithEmptyScenarioVars() {
+        String s = "#[p]";
+        assertEquals("#[p]", ScenarioVarsSubstitutor.replace(s, scenarioVars));
+    }
+
+    @Test
+    public void testSubstitutionOfStringWithNoPlaceholders() {
+        String s = "lorem";
+        scenarioVars.put("p", "");
+        assertEquals("lorem", ScenarioVarsSubstitutor.replace(s, scenarioVars));
+    }
+
+    @Test
+    public void testSubstitutionOfStringWithInvalidPlaceholders() {
+        String s = "]invalid#[";
+        scenarioVars.put("p", "");
+        assertEquals("]invalid#[", ScenarioVarsSubstitutor.replace(s, scenarioVars));
     }
 }
