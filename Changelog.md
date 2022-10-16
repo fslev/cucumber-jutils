@@ -3,7 +3,7 @@
 ### 9.0-SNAPSHOT
 - #### Removed
   - Unnecessary logs were removed
-  - Apache HttpClient support was removed. Test frameworks should decide which HTTP clients should use  
+  - HTTP, SQL, JSCH and Shell client support was removed. Test frameworks should decide which clients should use  
 - #### Changed
   - Dependencies update  
   
