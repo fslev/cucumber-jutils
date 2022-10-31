@@ -1,24 +1,28 @@
 # Changelog
 
-### 9.1-SNAPSHOT
+## 9.2-SNAPSHOT
 
-### 9.0 (2022-10-16)
+## 9.1 (2022-10-31)
+- #### Changed
+  - Updated dependencies _(json-compare enhancements)_
+
+## 9.0 (2022-10-16)
 - #### Removed
   - Unnecessary logs were removed
   - HTTP, SQL, JSCH and Shell client support was removed. Test frameworks should decide which clients should use  
 - #### Changed
   - Dependencies update  
-  
-### 8.10 (2022-10-05)
+
+## 8.10 (2022-10-05)
 - #### Changed
   - Update dependencies
   - Replace \n new lines with System.lineSeparator()
 
-### 8.9 (2022-10-04)
+## 8.9 (2022-10-04)
 - #### Changed
   - Update to new major version of json-compare (differences support)  
 
-### 8.8
+## 8.8
 - #### Changed
   - Enable assertion error diff support  
     Update dependencies (jtest-utils)  
