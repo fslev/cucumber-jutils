@@ -10,10 +10,10 @@ An extension to [Cucumber for Java](https://github.com/cucumber/cucumber-jvm) ba
 
 
 _It takes over the usual features needed inside a Cucumber based test framework, such as:_  
-* Scenario scoped variables (defined and used both inside the Gherkin document and Step definitions)
-* Matching mechanisms: match XMLs, JSONs, texts and HTTP responses  
-* Predefined Cucumber steps for helping with common tasks  
-* Some useful utility classes           
+* [Scenario scoped variables](#scenario-vars) (defined and used both inside the Gherkin document and Step definitions)
+* [Matching mechanisms](#matching): match XMLs, JSONs, texts and HTTP responses  
+* [Predefined Cucumber steps](#predefined-steps) for helping with common tasks  
+* [Utility classes](#utility-classes)           
 
 #### Maven Central
 ```
