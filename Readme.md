@@ -9,9 +9,9 @@
 An extension to [Cucumber for Java](https://github.com/cucumber/cucumber-jvm) based on [Cucumber Guice](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-guice), with scenario variables support, assertion support and some pre-defined utility steps.  
 
 
-_It takes over the usual dependencies and features needed inside a Cucumber based test framework, such as:_  
-* Matching mechanisms: match XMLs, JSONs, and other types of objects  
-* Scenario scoped variables (defined and used both inside the Gherkin document and Step definitions)    
+_It takes over the usual features needed inside a Cucumber based test framework, such as:_  
+* Scenario scoped variables (defined and used both inside the Gherkin document and Step definitions)
+* Matching mechanisms: match XMLs, JSONs, texts and HTTP responses  
 * Predefined Cucumber steps for helping with common tasks  
 * Some useful utility classes           
 
