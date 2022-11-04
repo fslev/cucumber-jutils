@@ -28,7 +28,7 @@ Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ```  
 
 ### Required dependencies
-[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) requires the following dependencies which you must specify inside your pom.xml:  
+[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) requires the following dependencies which you must specify inside your project:  
 ```
 <dependency>
    <groupId>io.cucumber</groupId>
