@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-jutils</artifactId>
-    <version>9.2-SNAPSHOT</version>
+    <version>9.3-SNAPSHOT</version>
 
     <name>Cucumber JUtils</name>
     <description>A little helper for Cucumber Java</description>
@@ -20,7 +20,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <surefire.version>2.22.2</surefire.version>
-        <jtest.utils.version>3.1</jtest.utils.version>
+        <jtest.utils.version>3.2</jtest.utils.version>
         <cucumber.min.version>6.10.0</cucumber.min.version>
         <guice.min.version>4.2.1</guice.min.version>
     </properties>
@@ -242,7 +242,7 @@
                     <plugin>
                         <groupId>net.masterthought</groupId>
                         <artifactId>maven-cucumber-reporting</artifactId>
-                        <version>5.7.1</version>
+                        <version>5.7.4</version>
                         <executions>
                             <execution>
                                 <id>execution</id>
