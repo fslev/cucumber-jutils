@@ -1,6 +1,12 @@
 # Changelog
 
-## 9.2-SNAPSHOT
+## 9.3-SNAPSHOT
+
+## 9.2 (2022-11-11)
+- #### Changed
+  - Updated dependencies
+    - _(json-compare & jtest-utils enhancements)_
+    - Jackson dependencies update  
 
 ## 9.1 (2022-10-31)
 - #### Changed
