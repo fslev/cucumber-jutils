@@ -12,7 +12,7 @@ public class ScenarioVarsSubstitutor {
     public static final String SUFFIX = "]";
 
     private static final Pattern captureGroupPattern = Pattern.compile(Pattern.quote(PREFIX) + "(.*?)" + Pattern.quote(SUFFIX),
-            Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
+            Pattern.DOTALL | Pattern.MULTILINE);
 
     public static Object replace(String source, ScenarioVars scenarioVars) {
         if (source != null && source.contains(PREFIX) && source.contains(SUFFIX)) {

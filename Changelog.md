@@ -1,6 +1,12 @@
 # Changelog
 
-## 9.3-SNAPSHOT
+## 9.4-SNAPSHOT
+
+## 9.3 (2022-11-14)
+- #### Changed
+  - Update jtest-utils to next major version release:
+    - Object matching is case-sensitive  
+  - Scenario variables parser is case-sensitive  
 
 ## 9.2 (2022-11-11)
 - #### Changed

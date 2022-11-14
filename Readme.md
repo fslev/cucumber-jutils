@@ -6,12 +6,15 @@
 
 
 # Summary
-A Java library meant to help you write organized and clean **Cucumber** tests.  
-_It takes over the usual dependencies and features needed inside a Cucumber based test framework, such as:_  
-* Matching mechanisms: match XMLs, JSONs, and other types of objects  
-* Scenario scoped variables (defined and used both inside the Gherkin document and Step definitions)    
-* Predefined Cucumber steps for helping with common tasks  
-* Some useful utility classes           
+An extension to [Cucumber for Java](https://github.com/cucumber/cucumber-jvm) based on [Cucumber Guice](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-guice), with scenario variables support, assertion support and some pre-defined utility steps.  
+
+
+_It augments your Cucumber based test framework with some powerful features, such as:_  
+* [Scenario scoped variables](#scenario-vars) (available from both Gherkin and Java)
+* [Assertion support](#assertion-support)  
+* [SpEL support](#spel-support)
+* [Predefined Cucumber steps](#predefined-steps)   
+* [Utility classes](#utility-classes)           
 
 #### Maven Central
 ```
@@ -25,7 +28,7 @@ Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 ```  
 
 ### Required dependencies
-Cucumber-JUtils requires the following dependencies which you must specify inside your pom.xml:  
+[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) requires the following dependencies which you must specify inside your project:  
 ```
 <dependency>
    <groupId>io.cucumber</groupId>
