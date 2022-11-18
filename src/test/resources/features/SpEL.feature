@@ -13,8 +13,8 @@ Feature: Parse SpEL expressions
     {"a":1}
     """
     * [util] Match #{inva}lid} with #{inva}lid}
-    * [util] Match \Qva}lid\E with #{'va\}lid'}
-    * [util] Match \Qva\}lid\E with #{'va\\}lid'}
+    * [util] Match \Qva\}lid\E with #{'va\}lid'}
+    * [util] Match \Qva\\}lid\E with #{'va\\}lid'}
     * [util] Match test}1 with #{'#[var1]'}
     * [util] Match 1 with #{T(io.json.compare.util.JsonUtils).toJson('#[var2]').get('a').asInt()}
 

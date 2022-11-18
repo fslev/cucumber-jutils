@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.fslev</groupId>
@@ -20,7 +21,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <surefire.version>2.22.2</surefire.version>
-        <jtest.utils.version>4.0</jtest.utils.version>
+        <jtest.utils.version>4.1</jtest.utils.version>
         <cucumber.min.version>6.10.0</cucumber.min.version>
         <guice.min.version>4.2.1</guice.min.version>
     </properties>
@@ -337,7 +338,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.10.1</version>
                 <configuration>
-                    <release>8</release>
+                    <release>11</release>
                     <testRelease>11</testRelease>
                 </configuration>
             </plugin>

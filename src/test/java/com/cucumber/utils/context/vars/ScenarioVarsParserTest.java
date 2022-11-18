@@ -176,6 +176,12 @@ public class ScenarioVarsParserTest {
     public void testInvalidSpel() {
         String s = "This is: #{T(java.net.I).toASCII('testá.com')}";
         assertEquals("This is: #{T(java.net.I).toASCII('testá.com')}", ScenarioVarsParser.parse(s, scenarioVars));
+
+        String s1 = "This is: \\#{T(java.net.I).toASCII('testá.com')}";
+        assertEquals("This is: \\#{T(java.net.I).toASCII('testá.com')}", ScenarioVarsParser.parse(s1, scenarioVars));
+
+        String s2 = "This is: #{1+2} and this is #{'#{'}1+2";
+        assertEquals("This is: 3 and this is #{1+2", ScenarioVarsParser.parse(s2, scenarioVars));
     }
 
     @Test
@@ -202,16 +208,16 @@ public class ScenarioVarsParserTest {
     public void testValidSpelExpWithEmbeddedInvalidSpelExp() {
         String s = "#{'a#{bc'+'def'}";
         assertEquals("a#{bcdef", ScenarioVarsParser.parse(s, scenarioVars));
-        s = "#{'a#{b}c'+'def'}";
-        assertEquals("#{'a#{b}c'+'def'}", ScenarioVarsParser.parse(s, scenarioVars));
+        String s1 = "#{'a#{b}c'+'def'";
+        assertEquals("#{'a#{b}c'+'def'", ScenarioVarsParser.parse(s1, scenarioVars));
     }
 
     @Test
     public void testSpelWithEscapedBraces() {
         String s = "#{'a\\}bc'+'d\\}ef'}";
-        assertEquals("a}bcd}ef", ScenarioVarsParser.parse(s, scenarioVars));
+        assertEquals("a\\}bcd\\}ef", ScenarioVarsParser.parse(s, scenarioVars));
         s = "#{'a\\#{bc'+'d\\}ef'}";
-        assertEquals("a#{bcd}ef", ScenarioVarsParser.parse(s, scenarioVars));
+        assertEquals("a\\#{bcd\\}ef", ScenarioVarsParser.parse(s, scenarioVars));
     }
 
     @Test
