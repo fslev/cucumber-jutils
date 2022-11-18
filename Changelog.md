@@ -1,6 +1,11 @@
 # Changelog
 
-## 9.4-SNAPSHOT
+## 9.5-SNAPSHOT
+
+## 9.4 (2022-11-18)
+- #### Changed
+  - Simplify ScenarioVarsParser. SpEL expressions are now parsed using Spring SpelExpressionParser  
+  - Update dependencies  
 
 ## 9.3 (2022-11-14)
 - #### Changed
