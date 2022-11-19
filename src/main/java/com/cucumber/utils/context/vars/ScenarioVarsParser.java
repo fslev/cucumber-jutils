@@ -1,7 +1,7 @@
 package com.cucumber.utils.context.vars;
 
 import com.cucumber.utils.context.vars.internal.ScenarioVarsSubstitutor;
-import io.jtest.utils.common.SpELParser;
+import com.cucumber.utils.context.vars.internal.SpELParser;
 
 public class ScenarioVarsParser {
 

@@ -1,6 +1,11 @@
 # Changelog
 
-## 9.5-SNAPSHOT
+## 9.6-SNAPSHOT
+
+## 9.5 (2022-11-19)
+- #### Changed
+  - Update jtest-utils to next major version (SpEL parser was removed)  
+    - Moved SpEL parser logic here  
 
 ## 9.4 (2022-11-18)
 - #### Changed

@@ -5,6 +5,15 @@
   "timezone": "Europe/Bucharest",
   "packageRules": [
     {
+      "matchPackageNames": [
+        "org.springframework:spring-expression"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ]
+    },
+    {
       "matchUpdateTypes": [
         "major",
         "minor",
