@@ -5,7 +5,7 @@
 ## 9.5 (2022-11-19)
 - #### Changed
   - Update [jtest-utils](https://github.com/fslev/jtest-utils) to next major version (SpEL parser was removed)  
-    - Moved SpEL logic here  
+    - Moved [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) logic here  
 
 ## 9.4 (2022-11-18)
 - #### Changed
