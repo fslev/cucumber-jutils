@@ -117,10 +117,19 @@ Example:
 >Directory: placeholders/properties/drinks
 >>File: whisky.txt
 >>>Johnny Walker
+
+>>File: drink.yaml
+>>> beer: Bergenbier  
+>>> beers:
+>>> - Ursus  
+>>> - Heineken   
+
 ```gherkin
-Scenario: Test scenario variables set from files
+Scenario: Test scenario variables set from directory
   * load vars from dir "placeholders/properties/drinks"
   * [util] Match Johnny Walker with #[whisky]
+  * [util] Match Bergenbier with #[beer]
+  * [util] Match ["Ursus", "Heineken"] with #[beers]
 ```
 
 

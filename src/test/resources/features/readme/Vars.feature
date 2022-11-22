@@ -6,9 +6,11 @@ Feature: Variables readme
     * [util] Match some rabbit with some #[animal]
     * [util] Match forest with #[location]
 
-  Scenario: Test scenario variables set from files
+  Scenario: Test scenario variables set from directory
     * load vars from dir "placeholders/properties/drinks"
     * [util] Match Johnny Walker with #[whisky]
+    * [util] Match Bergenbier with #[beer]
+    * [util] Match ["Ursus", "Heineken"] with #[beers]
 
   Scenario: Test scenario variable set from file
     * var animal from file "features/readme/vars/madagascar.crt"
