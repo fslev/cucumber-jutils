@@ -55,6 +55,33 @@ In order to integrate **cucumber-jutils** within your test project you must conf
 ```
 com.cucumber.utils
 ```  
+
+# <a name="scenario-vars"></a> Scenario scoped variables
+Scenario variables can be set and read inside Gherkin syntax, java code and resource files.  
+These variables are scenario scoped. Meaning, they live as long as the scenario is running and they cannot be accessed from other scenario.  
+
+
+## Gherkin
+A scenario variable can be set using the `* var {}="{}"` predefined step.  
+And is read using `#[` and `]` delimiters.  
+_Important note:_ If you want to use scenario variables inside your step arguments, your step definition has to use [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme).  
+```Gherkin
+Scenario: Test scenario variables
+  * var animal="rabbit"
+  * var location="forest"
+  * [util] Match some rabbit with some #[animal]
+  * [util] Match forest with #[location]
+```
+As you can see, the matching step, uses anonymous parameter types:  
+```javascript
+@Then("[util] Match {} with {}")
+public void match(Object expected, Object actual) {
+```
+
+
+
+### 
+
 # Documentation
 Feature related documentation can be found [here](https://github.com/fslev/cucumber-jutils/wiki)
 
