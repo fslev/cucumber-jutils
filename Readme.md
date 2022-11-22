@@ -81,6 +81,19 @@ As you can see bellow, the matching step is defined with anonymous parameter typ
 @Then("[util] Match {} with {}")
 public void match(Object expected, Object actual) {
 ```
+### `* var <varName> from file "<path/to/file>"`
+Define a variable with a specific name and file content as value  
+Example:
+> File path: features/readme/vars/madagascar.crt
+> > File content:
+> > > macac
+
+Example:  
+```gherkin
+Scenario: Test scenario variable set from file
+  * var animal from file "features/readme/vars/madagascar.crt"
+  * [util] Match macac with #[animal]
+```
 
 ### `* load vars from dir "<path/to/directory>"`
 It reads recursively the entire directory tree structure and each file becomes a scenario variable:  
