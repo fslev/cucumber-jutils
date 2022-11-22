@@ -120,9 +120,9 @@ Example:
 
 >>File: drink.yaml
 >>> beer: Bergenbier  
->>> beers:
->>> - Ursus  
->>> - Heineken   
+>>> beers:  
+>>> ``-`` Ursus  
+>>> ``-`` Heineken   
 
 ```gherkin
 Scenario: Test scenario variables set from directory
