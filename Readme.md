@@ -89,13 +89,10 @@ _file content -> variable value_
 Supported file types: `.txt`,`.text`,`.json`,`.xml`,`.html`,`.csv`
 
 Example:  
-```
-Directory path: placeholders/properties/drinks
-File: whisky.txt
-
-File content: 
-Johnny Walker
-```
+>Directory path: placeholders/properties/drinks
+>>File: whisky.txt
+>>>File content: 
+>>>>Johnny Walker
 ```gherkin
 Scenario: Test scenario variables set from files
   * load vars from dir "placeholders/properties/drinks"
