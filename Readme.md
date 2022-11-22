@@ -85,8 +85,7 @@ public void match(Object expected, Object actual) {
 Defines variable from file content.  
 Example:
 > File path: features/readme/vars/madagascar.crt
-> > File content:
-> > > macac
+> > macac
 
 ```gherkin
 Scenario: Test scenario variable set from file
@@ -117,8 +116,7 @@ Supported file types: `.txt`,`.text`,`.json`,`.xml`,`.html`,`.csv`
 Example:  
 >Directory path: placeholders/properties/drinks
 >>File: whisky.txt
->>>File content: 
->>>>Johnny Walker
+>>>Johnny Walker
 ```gherkin
 Scenario: Test scenario variables set from files
   * load vars from dir "placeholders/properties/drinks"
