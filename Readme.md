@@ -82,7 +82,7 @@ As you can see bellow, the matching step is defined with anonymous parameter typ
 public void match(Object expected, Object actual) {
 ```
 ### `* var <varName> from file "<path/to/file>"`
-Define a variable with a specific name and file content as value  
+Define variable from file content  
 Example:
 > File path: features/readme/vars/madagascar.crt
 > > File content:
