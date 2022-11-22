@@ -109,8 +109,8 @@ Scenario: Test scenario variables set from properties file
 
 ### `* load vars from dir "<path/to/directory>"`
 It reads recursively the entire directory tree structure and each file becomes a scenario variable:  
-_file name, without extension -> variable name_  
-_file content -> variable value_  
+_file name, without extension -> `variable name`_  
+_file content -> `variable value`_  
 Supported file types: `.txt`, `.text`, `.json`, `.xml`, `.html`, `.csv`  
 Properties inside files: `.properties`, `.yaml`, `.yml` are also parsed as scenario variables.  
 Example:  
