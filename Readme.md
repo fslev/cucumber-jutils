@@ -63,7 +63,7 @@ These variables are scenario scoped. Meaning, they live as long as the scenario 
 
 ## 1.1 Gherkin
 Scenario variables are read using `#[` and `]` delimiters.  
-_Important note:_ If you want to use scenario variables inside your step arguments, your step definition has to use [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme).  
+__Important note:__ If you want to use scenario variables inside your step arguments, your step definition has to use [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme).  
 
 These variables can be set using different pre-defined steps:  
 
@@ -112,7 +112,7 @@ It reads recursively the entire directory tree structure and each file becomes a
 _file name, without extension -> variable name_  
 _file content -> variable value_  
 Supported file types: `.txt`,`.text`,`.json`,`.xml`,`.html`,`.csv`
-
+Properties inside files: `.properties`, `.yaml`, `.yml` are also parsed as scenario variables.  
 Example:  
 >Directory: placeholders/properties/drinks
 >>File: whisky.txt
