@@ -88,7 +88,7 @@ _file name, without extension -> variable name_
 _file content -> variable value_  
 Supported file types: `.txt`,`.text`,`.json`,`.xml`,`.html`,`.csv`
 
-Example:
+Example:  
 Directory: 
 ```
 Path: placeholders/properties/drinks
