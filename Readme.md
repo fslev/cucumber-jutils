@@ -89,9 +89,8 @@ _file content -> variable value_
 Supported file types: `.txt`,`.text`,`.json`,`.xml`,`.html`,`.csv`
 
 Example:  
-Directory: 
 ```
-Path: placeholders/properties/drinks
+Directory path: placeholders/properties/drinks
 File: whisky.txt
 
 File content: 
