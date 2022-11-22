@@ -84,7 +84,7 @@ public void match(Object expected, Object actual) {
 ### `* var <varName> from file "<path/to/file>"`
 Defines variable from file content.  
 Example:
-> File path: features/readme/vars/madagascar.crt
+> File: features/readme/vars/madagascar.crt
 > > macac
 
 ```gherkin
@@ -114,7 +114,7 @@ _file content -> variable value_
 Supported file types: `.txt`,`.text`,`.json`,`.xml`,`.html`,`.csv`
 
 Example:  
->Directory path: placeholders/properties/drinks
+>Directory: placeholders/properties/drinks
 >>File: whisky.txt
 >>>Johnny Walker
 ```gherkin
