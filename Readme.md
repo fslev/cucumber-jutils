@@ -72,7 +72,7 @@ Scenario: Test scenario variables
   * [util] Match some rabbit with some #[animal]
   * [util] Match forest with #[location]
 ```
-As you can see, the matching step, uses anonymous parameter types:  
+As you can see bellow, the matching step is defined with anonymous parameter types:  
 ```javascript
 @Then("[util] Match {} with {}")
 public void match(Object expected, Object actual) {
