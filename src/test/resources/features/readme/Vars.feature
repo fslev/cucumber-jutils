@@ -6,6 +6,13 @@ Feature: Variables readme
     * [util] Match some rabbit with some #[animal]
     * [util] Match forest with #[location]
 
+  Scenario: Test scenario variable set from doc string
+    * var animal=
+    """
+    rabbit
+    """
+    * [util] Match some rabbit with some #[animal]
+
   Scenario: Test scenario variables set from directory
     * load vars from dir "placeholders/properties/drinks"
     * [util] Match Johnny Walker with #[whisky]
@@ -20,3 +27,10 @@ Feature: Variables readme
     * load vars from file "features/readme/vars/config.properties"
     * [util] Match lioness with #[animal]
     * [util] Match Africa with #[location]
+
+  Scenario: Test scenario variable set from table
+    * var animals from table
+      | feline  | marsupial       |
+      | lioness | kangaroo        |
+      | cougar  | tasmanian devil |
+    * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]

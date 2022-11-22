@@ -81,6 +81,18 @@ As you can see bellow, the matching step is defined with anonymous parameter typ
 @Then("[util] Match {} with {}")
 public void match(Object expected, Object actual) {
 ```
+
+### `* var <varName>=<docString>`
+Example:
+```gherkin
+Scenario: Test scenario variable set from doc string
+  * var animal=
+    """
+    rabbit
+    """
+  * [util] Match some rabbit with some #[animal]
+```
+
 ### `* var <varName> from file "<path/to/file>"`
 Defines variable from file content.  
 Example:
@@ -135,7 +147,16 @@ Scenario: Test scenario variables set from directory
 ```
 
 
-### 
+### `* var <varName> from table`
+Example:
+```gherkin
+Scenario: Test scenario variable set from table
+  * var animals from table
+    | feline  | marsupial       |
+    | lioness | kangaroo        |
+    | cougar  | tasmanian devil |
+  * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]
+```
 
 # Documentation
 Feature related documentation can be found [here](https://github.com/fslev/cucumber-jutils/wiki)
