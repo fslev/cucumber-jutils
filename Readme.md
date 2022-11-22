@@ -67,7 +67,7 @@ _Important note:_ If you want to use scenario variables inside your step argumen
 
 These variables can be set using different pre-defined steps:  
 
-### `* var {}="{}"`
+### `* var <name>="<value>"`
 Example:
 ```Gherkin
 Scenario: Test scenario variables
@@ -82,7 +82,7 @@ As you can see bellow, the matching step is defined with anonymous parameter typ
 public void match(Object expected, Object actual) {
 ```
 
-### `* load vars from dir "{}"`
+### `* load vars from dir "<path/to/directory>"`
 
 
 ### 
