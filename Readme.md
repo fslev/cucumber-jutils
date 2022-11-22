@@ -62,8 +62,8 @@ These variables are scenario scoped. Meaning, they live as long as the scenario 
 
 
 ## Gherkin
-A scenario variable can be set using the `* var {}="{}"` predefined step.  
-And is read using `#[` and `]` delimiters.  
+Scenario variables can be set using the `* var {}="{}"` predefined step.  
+And are read using `#[` and `]` delimiters.  
 _Important note:_ If you want to use scenario variables inside your step arguments, your step definition has to use [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme).  
 ```Gherkin
 Scenario: Test scenario variables
