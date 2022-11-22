@@ -88,7 +88,6 @@ Example:
 > > File content:
 > > > macac
 
-Example:  
 ```gherkin
 Scenario: Test scenario variable set from file
   * var animal from file "features/readme/vars/madagascar.crt"
