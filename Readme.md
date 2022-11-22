@@ -94,6 +94,20 @@ Scenario: Test scenario variable set from file
   * [util] Match macac with #[animal]
 ```
 
+### `* load vars from file "path/to/file"`
+Loads the properties from a file as scenario variables: `.properties`, `.yaml`, `.yml`.  
+Example:
+> File: features/readme/vars/config.properties
+> > animal = lioness  
+> > location = Africa
+
+```gherkin
+Scenario: Test scenario variables set from properties file
+  * load vars from file "features/readme/vars/config.properties"
+  * [util] Match lioness with #[animal]
+  * [util] Match Africa with #[location]
+```
+
 ### `* load vars from dir "<path/to/directory>"`
 It reads recursively the entire directory tree structure and each file becomes a scenario variable:  
 _file name, without extension -> variable name_  

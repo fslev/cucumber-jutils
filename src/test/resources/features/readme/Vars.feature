@@ -13,3 +13,8 @@ Feature: Variables readme
   Scenario: Test scenario variable set from file
     * var animal from file "features/readme/vars/madagascar.crt"
     * [util] Match macac with #[animal]
+
+  Scenario: Test scenario variables set from properties file
+    * load vars from file "features/readme/vars/config.properties"
+    * [util] Match lioness with #[animal]
+    * [util] Match Africa with #[location]
