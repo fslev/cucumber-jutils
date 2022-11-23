@@ -253,7 +253,7 @@ public void parseFileForScenarioVars() {
 
 # <a name="spel-support"></a> 3. SpEL support
 You may use [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions inside Gherkin or resource files, delimited by `#{` and `}`:
-### Gherkin
+### 3.1 Gherkin
 ```Gherkin
 Feature: SpEL
 
@@ -263,7 +263,7 @@ Feature: SpEL
     * [util] Match true with #[isOddNumber]
 ```
 
-### Resource
+### 3.2 Resource
 [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions used inside files:  
 > File path: features/readme/scene/some_text_with_spel.txt
 >> "Is #[number] odd: #{ #[number] % 2 !=0 }" 
