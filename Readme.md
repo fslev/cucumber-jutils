@@ -322,8 +322,8 @@ Scenario: Parse files for SpEL
 @Inject
 private ScenarioUtils scenarioUtils;
 
-@Given("var {}=\"{}\"")
-public void setVar(String name, Object value) {
+@Given("write {}=\"{}\"")
+public void writeSomething(String name, Object value) {
     scenarioUtils.log("var {} = {}", name, value);
     scenarioUtils.log("Scenario: {}", scenarioUtils.getScenario().getName());
 }
