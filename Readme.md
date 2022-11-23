@@ -279,3 +279,8 @@ public void parseFileForSpEL() {
     assertEquals("\"Is 5 odd: true\"", ScenarioVarsUtils.parse("features/readme/scene/some_text_with_spel.txt", scenarioVars));
 }
 ```
+```gherkin
+Scenario: Parse files for SpEL
+  * var number="5"
+  * Parse file for SpEL
+```
