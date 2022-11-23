@@ -157,6 +157,43 @@ Scenario: Test scenario variable set from table
   * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]
 ```
 
+## 1.2 Java
+Scenario variables can also be set and used directly inside Java code, by injecting the ScenarioVars class.  
+Variables defined inside Gherkin files can be used from Java code and vice versa.  
+
+### ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
+Set and read variables inside a step and use them from another step
+```javascript
+public class ScenarioVarsReadmeSteps {
+
+    @Inject
+    private ScenarioVars scenarioVars;
+
+    @Given("Some random step which sets some variables")
+    public void setVariables() {
+        scenarioVars.put("animal", "Cheetah");
+        Map<String, Object> vars = new HashMap<>();
+        vars.put("figure", "triangle");
+        vars.put("number", 10);
+        scenarioVars.putAll(vars);
+    }
+}
+```
+```javascript
+public class ScenarioVarsAnotherReadmeSteps {
+
+    @Inject
+    private ScenarioVars scenarioVars;
+
+    @Given("Some random step which reads the variables")
+    public void readVariables() {
+        assertEquals("Cheetah", scenarioVars.getAsString("animal"));
+        assertEquals("triangle", scenarioVars.getAsString("figure"));
+        assertEquals(10, scenarioVars.get("number"));
+    }
+}
+```
+
 # Documentation
 Feature related documentation can be found [here](https://github.com/fslev/cucumber-jutils/wiki)
 
