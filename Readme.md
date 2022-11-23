@@ -250,6 +250,7 @@ public void parseFileForScenarioVars() {
 # <a name="assertion-support"></a> 2. Assertion support
 [Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) that has some powerful assertions in terms of Objects matching.   
 
+
 # <a name="spel-support"></a> 3. SpEL support
 You may use [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions inside Gherkin or resource files, delimited by `#{` and `}`:
 ### Gherkin
@@ -261,6 +262,7 @@ Feature: SpEL
     * var isOddNumber="#{ #[number] % 2 != 0 }"
     * [util] Match true with #[isOddNumber]
 ```
+
 ### Resource
 SpEL expressions used inside files:  
 > File path: features/readme/scene/some_text_with_spel.txt
