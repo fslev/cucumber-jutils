@@ -160,7 +160,7 @@ Scenario: Test scenario variable set from table
 Scenario variables can also be set and used directly inside Java code, by injecting the `ScenarioVars.class`.  
 Variables defined inside Gherkin files can be used from Java code and vice versa.  
 
-### ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
+### 1.2.1 ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
 __Set variables inside a step and use them from another step__
 ```javascript
 public class ScenarioVarsReadmeSteps {
@@ -210,7 +210,7 @@ public void readVariablesSetViaGherkin() {
 }
 ```
 
-### ScenarioVarsUtils `.loadScenarioVarsFromFile()` and `.loadScenarioVarsFromDir()`
+### 1.2.2 ScenarioVarsUtils `.loadScenarioVarsFromFile()` and `.loadScenarioVarsFromDir()`
 Similar to the Gherkin steps, scenario variables can also be set from files:  
 
 ```javascript
