@@ -10,7 +10,7 @@ An extension to [Cucumber for Java](https://github.com/cucumber/cucumber-jvm) ba
 
 
 It augments your Cucumber based test framework with some powerful features, such as:
-* [Scenario scoped variables](#scenario-vars) (available from both Gherkin and Java)
+* [Scenario scoped variables](#scenario-vars)
 * [Assertion support](#assertion-support)  
 * [SpEL support](#spel-support)
 * [Predefined Cucumber steps](#predefined-steps)   
