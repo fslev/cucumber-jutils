@@ -272,4 +272,4 @@ Scenario: Use SpEL inside files
   * var number="5"
   * [util] Match "Is 5 odd: true" with #[content]
 ```
-__Note:__ `ScenarioVarsUtils.parse()` not only parses for scenario variables but SpEL expressions also.  
+__Note:__ `ScenarioVarsUtils.parse()` not only parses for scenario variables, but for SpEL expressions also.  
