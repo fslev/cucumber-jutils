@@ -253,7 +253,10 @@ public void parseFileForScenarioVars() {
 # <a name="spel-support"></a> 3. SpEL support
 You may use [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions inside Gherkin or resource files, delimited by `#{` and `}`:
 ```Gherkin
-Scenario: Process standalone SpEL
-  Given var myJson="#{new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("a",1).put("b",2)}"
-  Then [util] Match {"b":2, "a":1} with #[myJson]
+Feature: SpEL
+
+  Scenario: Use SpEL inside Gherkin
+    * var number="5"
+    * var isOddNumber="#{ #[number] % 2 != 0 }"
+    * [util] Match true with #[isOddNumber]
 ```
