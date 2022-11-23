@@ -193,7 +193,7 @@ public class ScenarioVarsAnotherReadmeSteps {
     }
 }
 ```
-Set and use variables from both Gherkin and Java:
+__Set and use variables from both Gherkin and Java:__
 ```Gherkin
 Scenario: Use scenario variables from Java and Gherkin
   * Some random step which sets some variables
