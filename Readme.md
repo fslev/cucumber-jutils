@@ -320,7 +320,7 @@ Scenario: Parse files for SpEL
 - `ScenarioUtils` for fast access to the underlying Cucumber `Scenario.class` and for logging:
 ```javascript
 @Inject
-private ScenarioUtils logger;
+private ScenarioUtils scenarioUtils;
 
 @Given("var {}=\"{}\"")
 public void setVar(String name, Object value) {
