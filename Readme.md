@@ -291,3 +291,11 @@ Scenario: Parse files for SpEL
   * var number="5"
   * Parse file for SpEL
 ```
+
+# <a name="predefined-steps"></a> 4. Predefined steps
+
+### 4.1 Matching
+```Gherkin
+  # throws and AssertionError 
+  * [util] Match true with false
+```
