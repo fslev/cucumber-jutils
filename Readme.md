@@ -232,7 +232,12 @@ You may parse resource files for scenario variables.
 ### ScenarioVarsUtils `.parse()`
 > File path: features/readme/scene/some_text.txt
 >> The #[animal] lives in #[location]
-
+```gherkin
+Scenario: Parse files for scenario variables
+  * var animal="wolf"
+  * var location="forest"
+  * Parse file for scenario variables
+```
 ```javascript
 @Inject
 private ScenarioVars scenarioVars;
