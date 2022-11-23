@@ -317,4 +317,13 @@ Scenario: Parse files for SpEL
 
 # <a name="utility-classes"></a> 5. Utility classes
 - `ScenarioVarsUtils` for setting and parsing text for scenario variables
-- `ScenarioUtils` for logging and access to the Cucumber Scenario class
+- `ScenarioUtils` for fast access to the underlying Cucumber `Scenario.class` and for logging
+```javascript
+@Inject
+private ScenarioUtils logger;
+
+@Given("var {}=\"{}\"")
+public void setVar(String name, Object value) {
+    scenarioUtils.log("var {} = {}", name, value);
+}
+```
