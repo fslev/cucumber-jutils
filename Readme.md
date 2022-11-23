@@ -47,9 +47,6 @@ Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
 </dependency>
 ```
 
-#### JTest-Utils
-Cucumber-JUtils is also based on [**jtest-utils**](https://github.com/fslev/jtest-utils) dependency which contains many helpful features.  
-
 # Configuration
 In order to integrate **cucumber-jutils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
 ```
@@ -247,6 +244,10 @@ public void parseFileForScenarioVars() {
     assertEquals("The wolf lives in forest", ScenarioVarsUtils.parse("features/readme/scene/some_text.txt", scenarioVars));
 }
 ```
+
+# <a name="assertion-support"></a> 2. Assertion support
+[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) which has some powerful features for matching Objects.   
+
 
 # Tutorial
 Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.  
