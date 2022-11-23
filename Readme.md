@@ -9,7 +9,7 @@
 An extension to [Cucumber for Java](https://github.com/cucumber/cucumber-jvm) based on [Cucumber Guice](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-guice), with scenario variables support, assertion support and some pre-defined utility steps.  
 
 
-_It augments your Cucumber based test framework with some powerful features, such as:_  
+It augments your Cucumber based test framework with some powerful features, such as:
 * [Scenario scoped variables](#scenario-vars) (available from both Gherkin and Java)
 * [Assertion support](#assertion-support)  
 * [SpEL support](#spel-support)
