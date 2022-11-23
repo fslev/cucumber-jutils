@@ -104,7 +104,7 @@ Scenario: Test scenario variable set from file
 ```
 
 ### `* load vars from file "path/to/file"`
-Loads the properties from a file as scenario variables: `.properties`, `.yaml`, `.yml`.  
+Loads the properties from a file, as scenario variables: `.properties`, `.yaml`, `.yml`.  
 Example:
 > File: features/readme/vars/config.properties
 > > animal = lioness  
