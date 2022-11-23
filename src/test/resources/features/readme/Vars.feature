@@ -43,3 +43,8 @@ Feature: Variables readme
 
   Scenario: Set scenario variables from file with Java
     * Read scenario variables from file
+
+  Scenario: Parse files for scenario variables
+    * var animal="wolf"
+    * var location="forest"
+    * Parse file for scenario variables

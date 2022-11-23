@@ -29,6 +29,14 @@ public class ScenarioVarsReadmeSteps {
     @Given("Read scenario variables from file")
     public void setVariablesFromFile() {
         ScenarioVarsUtils.loadScenarioVarsFromFile("features/readme/vars/config.properties", scenarioVars);
+        ScenarioVarsUtils.loadScenarioVarsFromDir("placeholders/properties/drinks", scenarioVars);
+
         assertEquals("Africa", scenarioVars.get("location"));
+        assertEquals("Johnny Walker", scenarioVars.get("whisky"));
+    }
+
+    @Given("Parse file for scenario variables")
+    public void parseFileForScenarioVars() {
+        assertEquals("The wolf lives in forest", ScenarioVarsUtils.parse("features/readme/scene/some_text.txt", scenarioVars));
     }
 }

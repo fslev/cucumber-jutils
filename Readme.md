@@ -208,12 +208,29 @@ public void readVariablesSetViaGherkin() {
 }
 ```
 
-### ScenarioVars `.loadScenarioVarsFromFile()`
+### ScenarioVarsUtils `.loadScenarioVarsFromFile()` and `.loadScenarioVarsFromDir()`
+Similar to the Gherkin steps, scenario variables can also be set from files:  
+
 ```javascript
 @Given("Read scenario variables from file")
 public void setVariablesFromFile() {
     ScenarioVarsUtils.loadScenarioVarsFromFile("features/readme/vars/config.properties", scenarioVars);
+    ScenarioVarsUtils.loadScenarioVarsFromDir("placeholders/properties/drinks", scenarioVars);
     assertEquals("Africa", scenarioVars.get("location"));
+    assertEquals("Johnny Walker", scenarioVars.get("whisky"));
+}
+```
+
+## 1.3 Resources 
+You may parse resource files for scenario variables.
+### ScenarioVarsUtils `.parse()`
+> File path: features/readme/scene/some_text.txt
+>> The #[animal] lives in #[location]
+
+```javascript
+@Given("Parse file for scenario variables")
+public void parseFileForScenarioVars() {
+    assertEquals("The wolf lives in forest", ScenarioVarsUtils.parse("features/readme/scene/some_text.txt", scenarioVars));
 }
 ```
 
