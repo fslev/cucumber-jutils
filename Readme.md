@@ -202,6 +202,9 @@ Scenario: Use scenario variables from Java and Gherkin
   * Some random step which reads variables set inside Gherkin
 ```
 ```javascript
+@Inject
+private ScenarioVars scenarioVars;
+
 @Given("Some random step which reads variables set inside Gherkin")
 public void readVariablesSetViaGherkin() {
     assertEquals("Mars", scenarioVars.getAsString("planet"));
@@ -212,6 +215,9 @@ public void readVariablesSetViaGherkin() {
 Similar to the Gherkin steps, scenario variables can also be set from files:  
 
 ```javascript
+@Inject
+private ScenarioVars scenarioVars;
+
 @Given("Read scenario variables from file")
 public void setVariablesFromFile() {
     ScenarioVarsUtils.loadScenarioVarsFromFile("features/readme/vars/config.properties", scenarioVars);
@@ -228,6 +234,9 @@ You may parse resource files for scenario variables.
 >> The #[animal] lives in #[location]
 
 ```javascript
+@Inject
+private ScenarioVars scenarioVars;
+    
 @Given("Parse file for scenario variables")
 public void parseFileForScenarioVars() {
     assertEquals("The wolf lives in forest", ScenarioVarsUtils.parse("features/readme/scene/some_text.txt", scenarioVars));
