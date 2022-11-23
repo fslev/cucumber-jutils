@@ -325,5 +325,6 @@ private ScenarioUtils scenarioUtils;
 @Given("var {}=\"{}\"")
 public void setVar(String name, Object value) {
     scenarioUtils.log("var {} = {}", name, value);
+    scenarioUtils.log("Scenario: {}", scenarioUtils.getScenario().getName());
 }
 ```
