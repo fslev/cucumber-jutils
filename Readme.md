@@ -228,7 +228,7 @@ public void setVariablesFromFile() {
 ```
 
 ## 1.3 Resources 
-You may parse resource files for scenario variables.
+You may parse resource files for scenario variables, delimited by `#[` and `]`.
 ### ScenarioVarsUtils `.parse()`
 > File path: features/readme/scene/some_text.txt
 >> The #[animal] lives in #[location]
