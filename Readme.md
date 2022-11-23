@@ -94,8 +94,7 @@ Scenario: Test scenario variable set from doc string
 ```
 
 ### `* var <varName> from file "<path/to/file>"`
-Defines variable from file content.  
-Example:
+Defines a variable with value from file content:    
 > File: features/readme/vars/madagascar.crt
 > > macac
 
