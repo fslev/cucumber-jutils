@@ -292,14 +292,14 @@ Scenario: Parse files for SpEL
   * Parse file for SpEL
 ```
 
-# <a name="predefined-steps"></a> 4. Predefined steps
+# <a name="predefined-steps"></a> 4. Predefined common steps
 
 ### 4.1 Matching
 ```Gherkin
   # throws and AssertionError 
   * [util] Match true with false
 ```
-### 4.2 Date time common steps
+### 4.2 Date time
 ```Gherkin
   * [time-util] Check period from 2019-02-03 23:58:12+0200 to 2019-02-04 01:59:10+0300 is 1 HOURS using date time pattern yyyy-MM-dd HH:mm:ssZ
 ```
