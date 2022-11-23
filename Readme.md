@@ -58,7 +58,7 @@ com.cucumber.utils
 
 # <a name="scenario-vars"></a> 1. Scenario scoped variables
 Scenario variables can be set and read inside Gherkin syntax, Java code and resource files.  
-These variables are scenario scoped. Meaning, they live as long as the scenario is running and they cannot be accessed from other scenario.  
+These variables are scenario scoped. Meaning, they live as long as the scenario is running and they cannot be accessed from another scenario.  
 
 
 ## 1.1 Gherkin
