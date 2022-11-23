@@ -157,7 +157,7 @@ Scenario: Test scenario variable set from table
 ```
 
 ## 1.2 Java
-Scenario variables can also be set and used directly inside Java code, by injecting the ScenarioVars class.  
+Scenario variables can also be set and used directly inside Java code, by injecting the `ScenarioVars.class`.  
 Variables defined inside Gherkin files can be used from Java code and vice versa.  
 
 ### ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
