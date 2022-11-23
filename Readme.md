@@ -315,6 +315,6 @@ Scenario: Parse files for SpEL
   * [util] Wait 2.5m
 ```
 
-# <a name="utilities"></a> 5. Utility classes
+# <a name="utility-classes"></a> 5. Utility classes
 ### 5.1 `ScenarioVarsUtils` for setting and parsing text for scenario variables
 ### 5.2 `ScenarioUtils` for logging and access to the Cucumber Scenario class
