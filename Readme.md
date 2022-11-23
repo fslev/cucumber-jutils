@@ -317,6 +317,7 @@ Scenario: Parse files for SpEL
 
 # <a name="utility-classes"></a> 5. Utility classes
 - `ScenarioVarsUtils` for setting and parsing scenario variables
+- `ScenarioVarsParser` for parsing a String for scenario variables and SpEL expressions
 - `ScenarioUtils` for fast access to the underlying Cucumber `Scenario.class` and for writing:
 ```javascript
 @Inject
@@ -328,7 +329,6 @@ public void writeSomething(String name, Object value) {
     scenarioUtils.log("Scenario: {}", scenarioUtils.getScenario().getName());
 }
 ```
-- `ScenarioVarsParser` for parsing a String for scenario variables and SpEL expressions
 
 # Tutorial
 Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.
