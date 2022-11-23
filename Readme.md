@@ -316,7 +316,8 @@ Scenario: Parse files for SpEL
 ```
 
 # <a name="utility-classes"></a> 5. Utility classes
-- `ScenarioVarsUtils` - it sets scenario variables and parses files and directories for both scenario variables and SpEL expressions
+- `ScenarioVarsUtils` - it sets scenario variables and parses files and directories  
+   for both scenario variables and SpEL expressions
 - `ScenarioVarsParser` - it parses a String for scenario variables and SpEL expressions
 - `ScenarioUtils` - fast access to the underlying Cucumber `Scenario.class` and used for writing:
 ```javascript
