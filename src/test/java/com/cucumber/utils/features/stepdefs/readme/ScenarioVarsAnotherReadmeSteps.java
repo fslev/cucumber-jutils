@@ -19,4 +19,9 @@ public class ScenarioVarsAnotherReadmeSteps {
         assertEquals("triangle", scenarioVars.getAsString("figure"));
         assertEquals(10, scenarioVars.get("number"));
     }
+
+    @Given("Some random step which reads variables set inside Gherkin")
+    public void readVariablesSetViaGherkin() {
+        assertEquals("Mars", scenarioVars.getAsString("planet"));
+    }
 }

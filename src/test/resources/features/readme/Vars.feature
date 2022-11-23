@@ -35,6 +35,8 @@ Feature: Variables readme
       | cougar  | tasmanian devil |
     * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]
 
-  Scenario: Test scenario variable set from Java step definitions
+  Scenario: Use scenario variables from Java and Gherkin
     * Some random step which sets some variables
-    * Some random step which reads the variables
+    * [util] Match Cheetah with #[animal]
+    * var planet="Mars"
+    * Some random step which reads variables set inside Gherkin
