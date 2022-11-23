@@ -83,7 +83,7 @@ public void match(Object expected, Object actual) {
 ```
 
 ### `* var <varName>=<docString>`
-Variables are set from doc string:  
+Defines a variable with value from doc string:  
 ```gherkin
 Scenario: Test scenario variable set from doc string
   * var animal=
