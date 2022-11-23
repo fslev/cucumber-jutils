@@ -39,4 +39,9 @@ public class ScenarioVarsReadmeSteps {
     public void parseFileForScenarioVars() {
         assertEquals("The wolf lives in forest", ScenarioVarsUtils.parse("features/readme/scene/some_text.txt", scenarioVars));
     }
+
+    @Given("Parse file for SpEL")
+    public void parseFileForSpEL() {
+        assertEquals("\"Is 5 odd: true\"", ScenarioVarsUtils.parse("features/readme/scene/some_text_with_spel.txt", scenarioVars));
+    }
 }

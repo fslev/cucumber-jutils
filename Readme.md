@@ -272,4 +272,10 @@ Scenario: Use SpEL inside files
   * var number="5"
   * [util] Match "Is 5 odd: true" with #[content]
 ```
-__Note:__ `ScenarioVarsUtils.parse()` not only parses for scenario variables, but for SpEL expressions also.  
+__Note:__ `ScenarioVarsUtils.parse()` not only parses for scenario variables, but for SpEL expressions also:
+```javascript
+@Given("Parse file for SpEL")
+public void parseFileForSpEL() {
+    assertEquals("\"Is 5 odd: true\"", ScenarioVarsUtils.parse("features/readme/scene/some_text_with_spel.txt", scenarioVars));
+}
+```

@@ -9,3 +9,8 @@ Feature: SpEL
     * var content from file "features/readme/scene/some_text_with_spel.txt"
     * var number="5"
     * [util] Match "Is 5 odd: true" with #[content]
+
+
+  Scenario: Parse files for SpEL
+    * var number="5"
+    * Parse file for SpEL
