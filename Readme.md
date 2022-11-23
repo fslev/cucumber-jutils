@@ -83,7 +83,7 @@ public void match(Object expected, Object actual) {
 ```
 
 ### `* var <varName>=<docString>`
-Defines a variable with value from doc string:  
+Defines a variable with value from [doc string](https://cucumber.io/docs/gherkin/reference/):  
 ```gherkin
 Scenario: Test scenario variable set from doc string
   * var animal=
@@ -148,7 +148,7 @@ Scenario: Test scenario variables set from directory
 
 
 ### `* var <varName> from table`
-Example:
+Defines a variable with value from [data table](https://github.com/cucumber/cucumber-jvm/tree/main/datatable):
 ```gherkin
 Scenario: Test scenario variable set from table
   * var animals from table
