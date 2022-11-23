@@ -328,6 +328,7 @@ public void writeSomething(String name, Object value) {
     scenarioUtils.log("Scenario: {}", scenarioUtils.getScenario().getName());
 }
 ```
+- `ScenarioVarsParser` for parsing a String for scenario variables and SpEL expressions
 
 # Tutorial
 Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.
