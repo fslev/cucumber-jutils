@@ -251,7 +251,7 @@ public void parseFileForScenarioVars() {
 [Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) that has some powerful assertions in terms of Objects matching.   
 
 # <a name="spel-support"></a> 3. SpEL support
-You may use [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions inside Gherkin or resource files:
+You may use [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions inside Gherkin or resource files, delimited by `#{` and `}`:
 ```Gherkin
 Scenario: Process standalone SpEL
   Given var myJson="#{new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("a",1).put("b",2)}"
