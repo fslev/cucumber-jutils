@@ -264,7 +264,7 @@ Feature: SpEL
 ```
 
 ### Resource
-SpEL expressions used inside files:  
+[SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions used inside files:  
 > File path: features/readme/scene/some_text_with_spel.txt
 >> "Is #[number] odd: #{ #[number] % 2 !=0 }" 
 
