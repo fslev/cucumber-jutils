@@ -162,7 +162,7 @@ Scenario variables can also be set and used directly inside Java code, by inject
 Variables defined inside Gherkin files can be used from Java code and vice versa.  
 
 ### ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
-Set variables inside a step and use them from another step
+__Set variables inside a step and use them from another step__
 ```javascript
 public class ScenarioVarsReadmeSteps {
 
