@@ -302,4 +302,15 @@ Scenario: Parse files for SpEL
 ### 4.2 Date time
 ```Gherkin
   * [time-util] Check period from 2019-02-03 23:58:12+0200 to 2019-02-04 01:59:10+0300 is 1 HOURS using date time pattern yyyy-MM-dd HH:mm:ssZ
+
+  * var currentMillis="#[now]"
+  * [time-util] date var currentDate=from millis #[currentMillis] PLUS 0 YEARS with format pattern=yyyy-MM-dd
+  * [time-util] date var futureDateYears=from millis #[currentMillis] PLUS 15 YEARS with format pattern=yyyy-MM-dd
+  * [time-util] Check period from #[currentDate] to #[futureDateYears] is 15 YEARS using date pattern yyyy-MM-dd
+```
+
+### 4.3 Sleep
+```gherkin
+  * [util] Wait 10.471s
+  * [util] Wait 2.5m
 ```
