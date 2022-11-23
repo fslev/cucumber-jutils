@@ -248,4 +248,4 @@ public void parseFileForScenarioVars() {
 ```
 
 # <a name="assertion-support"></a> 2. Assertion support
-[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) which has some powerful assertions in terms of Objects matching.   
+[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) that has some powerful assertions in terms of Objects matching.   
