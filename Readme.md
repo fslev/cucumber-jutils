@@ -208,6 +208,15 @@ public void readVariablesSetViaGherkin() {
 }
 ```
 
+### ScenarioVars `.loadScenarioVarsFromFile()`
+```javascript
+@Given("Read scenario variables from file")
+public void setVariablesFromFile() {
+    ScenarioVarsUtils.loadScenarioVarsFromFile("features/readme/vars/config.properties", scenarioVars);
+    assertEquals("Africa", scenarioVars.get("location"));
+}
+```
+
 # Documentation
 Feature related documentation can be found [here](https://github.com/fslev/cucumber-jutils/wiki)
 

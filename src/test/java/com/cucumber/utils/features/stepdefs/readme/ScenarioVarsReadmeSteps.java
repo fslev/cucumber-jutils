@@ -1,5 +1,6 @@
 package com.cucumber.utils.features.stepdefs.readme;
 
+import com.cucumber.utils.context.ScenarioVarsUtils;
 import com.cucumber.utils.context.vars.ScenarioVars;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
@@ -7,6 +8,8 @@ import io.cucumber.java.en.Given;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ScenarioScoped
 public class ScenarioVarsReadmeSteps {
@@ -21,5 +24,11 @@ public class ScenarioVarsReadmeSteps {
         vars.put("figure", "triangle");
         vars.put("number", 10);
         scenarioVars.putAll(vars);
+    }
+
+    @Given("Read scenario variables from file")
+    public void setVariablesFromFile() {
+        ScenarioVarsUtils.loadScenarioVarsFromFile("features/readme/vars/config.properties", scenarioVars);
+        assertEquals("Africa", scenarioVars.get("location"));
     }
 }

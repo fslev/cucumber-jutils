@@ -40,3 +40,6 @@ Feature: Variables readme
     * [util] Match Cheetah with #[animal]
     * var planet="Mars"
     * Some random step which reads variables set inside Gherkin
+
+  Scenario: Set scenario variables from file with Java
+    * Read scenario variables from file
