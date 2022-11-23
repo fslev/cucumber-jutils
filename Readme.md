@@ -248,9 +248,6 @@ public void parseFileForScenarioVars() {
 }
 ```
 
-# Documentation
-Feature related documentation can be found [here](https://github.com/fslev/cucumber-jutils/wiki)
-
 # Tutorial
 Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.  
 
