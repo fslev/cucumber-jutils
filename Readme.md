@@ -52,6 +52,8 @@ In order to integrate **cucumber-jutils** within your test project you must conf
 ```
 com.cucumber.utils
 ```  
+# Tutorial
+Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.
 
 # <a name="scenario-vars"></a> 1. Scenario scoped variables
 Scenario variables can be set and read inside __Gherkin__ syntax, __Java__ code and __resource__ files.  
@@ -247,8 +249,3 @@ public void parseFileForScenarioVars() {
 
 # <a name="assertion-support"></a> 2. Assertion support
 [Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) which has some powerful assertions in terms of Objects matching.   
-
-
-# Tutorial
-Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.  
-
