@@ -1,6 +1,10 @@
 # Changelog
 
-## 9.7-SNAPSHOT
+## 9.8-SNAPSHOT
+
+## 9.7 (2022-11-27)
+- #### Changed
+  - Update dependencies (JTest-Utils 5.2)
 
 ## 9.6 (2022-11-24)
 - #### Changed
