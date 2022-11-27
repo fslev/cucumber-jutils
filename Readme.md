@@ -247,6 +247,8 @@ public void parseFileForScenarioVars() {
 }
 ```
 
+Play with the [Readme examples](https://github.com/fslev/cucumber-jutils/tree/main/src/test/resources/features/readme) for getting a better insight on how scenario variables work.  
+
 # <a name="assertion-support"></a> 2. Assertion support
 [Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) that has some powerful assertions in terms of Objects matching.   
 
@@ -291,6 +293,8 @@ Scenario: Parse files for SpEL
   * var number="5"
   * Parse file for SpEL
 ```
+Play with the [Readme examples](https://github.com/fslev/cucumber-jutils/tree/main/src/test/resources/features/readme) for getting a better insight on how SpEL expressions are used.  
+
 
 # <a name="predefined-steps"></a> 4. Predefined common steps
 
