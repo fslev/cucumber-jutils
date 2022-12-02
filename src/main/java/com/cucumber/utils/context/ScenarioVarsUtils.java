@@ -10,7 +10,12 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nullable;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.*;
 

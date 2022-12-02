@@ -6,7 +6,11 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
-import io.cucumber.java.*;
+import io.cucumber.java.DataTableType;
+import io.cucumber.java.DefaultDataTableCellTransformer;
+import io.cucumber.java.DefaultDataTableEntryTransformer;
+import io.cucumber.java.DefaultParameterTransformer;
+import io.cucumber.java.DocStringType;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
