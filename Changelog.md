@@ -1,8 +1,11 @@
 # Changelog
 
-## 9.8-SNAPSHOT
+## 9.9-SNAPSHOT
+
+## 9.8 (2022-12-22)
 - #### Changed
-  - Refactoring - optimized imports  
+  - Refactoring - optimized imports
+  - Update dependencies (JTest-Utils 5.4) 
   
 ## 9.7 (2022-11-27)
 - #### Changed
