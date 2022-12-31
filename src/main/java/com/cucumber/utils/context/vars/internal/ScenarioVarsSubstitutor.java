@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 
 public class ScenarioVarsSubstitutor {
 
+    private ScenarioVarsSubstitutor() {
+
+    }
+
     public static final String PREFIX = "#[";
     public static final String SUFFIX = "]";
 

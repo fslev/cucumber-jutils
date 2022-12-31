@@ -7,6 +7,11 @@ import org.springframework.expression.ParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 public class SpELParser {
+
+    private SpELParser() {
+
+    }
+
     private static final Logger LOG = LogManager.getLogger();
     private static final SpelExpressionParser SPEL_EXPRESSION_PARSER = new SpelExpressionParser();
 

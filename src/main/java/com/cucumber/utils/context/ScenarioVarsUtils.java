@@ -21,6 +21,10 @@ import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.*;
 
 public final class ScenarioVarsUtils {
 
+    private ScenarioVarsUtils() {
+
+    }
+
     private static final Logger LOG = LogManager.getLogger();
 
     /**
@@ -61,7 +65,7 @@ public final class ScenarioVarsUtils {
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        LOG.debug("Loaded from dir '{}', scenario variables with the following names:" + System.lineSeparator() + "{}", dirPath, vars);
+        LOG.debug("Loaded from dir '{}', scenario variables with the following names:{}{}", dirPath, System.lineSeparator(), vars);
         return vars;
     }
 
