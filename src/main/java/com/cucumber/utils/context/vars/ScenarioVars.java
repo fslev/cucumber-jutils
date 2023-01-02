@@ -52,7 +52,7 @@ public class ScenarioVars {
     public void put(String name, Object val) {
         String trimmedName = (name == null) ? null : name.trim();
         if (trimmedName == null || !NAME_PATTERN.matcher(trimmedName).matches()) {
-            throw new RuntimeException("Scenario variable not allowed having name: " + trimmedName);
+            throw new RuntimeException("Invalid variable name: " + trimmedName + ". Allowed pattern: " + NAME_PATTERN);
         }
         if (vars.containsKey(trimmedName)) {
             LOG.warn("Scenario variable \"{}\" will be overridden with {}", trimmedName, val);

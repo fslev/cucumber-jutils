@@ -24,31 +24,31 @@ public class ScenarioVarsParserTest {
             scenarioVars.put("a[d", 1);
             fail("Scenario vars does not meet restriction requirements");
         } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("not allowed"));
+            assertTrue(e.getMessage().contains("Invalid variable name"));
         }
         try {
             scenarioVars.put("a#d", 1);
             fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("not allowed"));
+            assertTrue(e.getMessage().contains("Invalid variable name"));
         }
         try {
             scenarioVars.put("a/d", 1);
             fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("not allowed"));
+            assertTrue(e.getMessage().contains("Invalid variable name"));
         }
         try {
             scenarioVars.put("a,d", 1);
             fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("not allowed"));
+            assertTrue(e.getMessage().contains("Invalid variable name"));
         }
         try {
             scenarioVars.put("a{d", 1);
             fail("Scenario vars does not meet all restriction requirements");
         } catch (RuntimeException e) {
-            assertTrue(e.getMessage().contains("not allowed"));
+            assertTrue(e.getMessage().contains("Invalid variable name"));
         }
     }
 
