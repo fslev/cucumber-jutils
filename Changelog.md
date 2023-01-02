@@ -1,6 +1,8 @@
 # Changelog
 
 ## 9.10-SNAPSHOT
+- #### Changed
+  - Code refactoring
 
 ## 9.9 (2022-12-31)
 - #### Changed
