@@ -13,7 +13,7 @@ It augments your Cucumber based test framework with some powerful features, such
 * [Scenario scoped variables](#scenario-vars)
 * [Assertion support](#assertion-support)  
 * [SpEL support](#spel-support)
-* [Predefined Cucumber steps](#predefined-steps)   
+* [Predefined common steps](#predefined-steps)   
 * [Utility classes](#utility-classes)           
 
 #### Maven Central
