@@ -44,7 +44,7 @@ public class ScenarioVars {
             case "int-random":
                 return new Random().nextInt(Integer.MAX_VALUE);
             default:
-                Object value = !isPathVariable(name) ? vars.get(trimmedName) : getPathVariableValue(name);
+                Object value = !isJsonPointerExpression(name) ? vars.get(trimmedName) : getJsonPointerValue(name);
                 return value instanceof String ? ScenarioVarsParser.parse(value.toString(), this) : value;
         }
     }
@@ -69,7 +69,7 @@ public class ScenarioVars {
     }
 
     public boolean containsVariable(String name) {
-        return vars.containsKey(name) || (isPathVariable(name) && getPathVariableValue(name) != null);
+        return vars.containsKey(name) || (isJsonPointerExpression(name) && getJsonPointerValue(name) != null);
     }
 
     public int size() {
@@ -115,8 +115,8 @@ public class ScenarioVars {
         return this.vars.toString();
     }
 
-    private Object getPathVariableValue(String varName) {
-        List<String> paths = extractPaths(varName);
+    private Object getJsonPointerValue(String varName) {
+        List<String> paths = extractJsonPointerPaths(varName);
         String rootPath = paths.get(0);
         if (vars.containsKey(rootPath)) {
             Object rootValue = vars.get(rootPath);
@@ -134,11 +134,11 @@ public class ScenarioVars {
         return null;
     }
 
-    private static boolean isPathVariable(String varName) {
+    private static boolean isJsonPointerExpression(String varName) {
         return varName.contains(String.valueOf(JsonPointer.SEPARATOR));
     }
 
-    private static List<String> extractPaths(String varName) {
+    private static List<String> extractJsonPointerPaths(String varName) {
         return Arrays.asList(varName.split(String.valueOf(JsonPointer.SEPARATOR), 2));
     }
 }
