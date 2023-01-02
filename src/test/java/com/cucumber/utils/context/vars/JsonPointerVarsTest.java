@@ -11,7 +11,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class PathVarsTest {
+public class JsonPointerVarsTest {
 
     @Test
     public void testStringPathVar() {
