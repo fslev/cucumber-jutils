@@ -1,5 +1,6 @@
 package com.cucumber.utils.context.vars;
 
+import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.cucumber.guice.ScenarioScoped;
 import io.json.compare.util.JsonUtils;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -38,9 +40,9 @@ public class ScenarioVars {
             case "now":
                 return System.currentTimeMillis();
             case "short-random":
-                return (int) (Math.random() * Short.MAX_VALUE);
+                return new Random().nextInt(Short.MAX_VALUE);
             case "int-random":
-                return (int) (Math.random() * Integer.MAX_VALUE);
+                return new Random().nextInt(Integer.MAX_VALUE);
             default:
                 Object value = !isPathVariable(name) ? vars.get(trimmedName) : getPathVariableValue(name);
                 return value instanceof String ? ScenarioVarsParser.parse(value.toString(), this) : value;
@@ -120,7 +122,7 @@ public class ScenarioVars {
             Object rootValue = vars.get(rootPath);
             try {
                 JsonNode rootJsonValue = JsonUtils.toJson(rootValue);
-                String relativePath = "/" + paths.get(1);
+                String relativePath = JsonPointer.SEPARATOR + paths.get(1);
                 JsonNode jsonValue = rootJsonValue.at(relativePath);
                 if (!jsonValue.isMissingNode()) {
                     return rootValue instanceof String ? (jsonValue.isValueNode() ? jsonValue.asText() : jsonValue.toString()) : jsonValue;
@@ -133,10 +135,10 @@ public class ScenarioVars {
     }
 
     private static boolean isPathVariable(String varName) {
-        return varName.contains("/");
+        return varName.contains(String.valueOf(JsonPointer.SEPARATOR));
     }
 
     private static List<String> extractPaths(String varName) {
-        return Arrays.asList(varName.split("/", 2));
+        return Arrays.asList(varName.split(String.valueOf(JsonPointer.SEPARATOR), 2));
     }
 }
