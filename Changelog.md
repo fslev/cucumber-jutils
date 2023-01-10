@@ -1,8 +1,11 @@
 # Changelog
 
-## 9.10-SNAPSHOT
+## 9.11-SNAPSHOT
+
+## 9.10 (2023-01-10)
 - #### Changed
   - Code refactoring
+  - Update dependencies (jtest-utils 5.6)
 
 ## 9.9 (2022-12-31)
 - #### Changed
