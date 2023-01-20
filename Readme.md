@@ -66,7 +66,7 @@ __Important note:__ If you want to use scenario variables inside your step argum
 
 Variables can be set using different pre-defined steps:  
 
-### `* var <name>="<value>"`
+#### `* var <name>="<value>"`
 Example:
 ```Gherkin
 Scenario: Test scenario variables
