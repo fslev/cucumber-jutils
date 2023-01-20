@@ -81,7 +81,7 @@ As you can see bellow, the matching step is defined with anonymous parameter typ
 public void match(Object expected, Object actual) {
 ```
 
-### `* var <varName>=<docString>`
+#### `* var <varName>=<docString>`
 Defines a variable with value from [doc string](https://cucumber.io/docs/gherkin/reference/):  
 ```gherkin
 Scenario: Test scenario variable set from doc string
@@ -92,7 +92,7 @@ Scenario: Test scenario variable set from doc string
   * [util] Match some rabbit with some #[animal]
 ```
 
-### `* var <varName> from file "<path/to/file>"`
+#### `* var <varName> from file "<path/to/file>"`
 Defines a variable with value from file content:    
 > File: features/readme/vars/madagascar.crt
 > > macac
@@ -103,7 +103,7 @@ Scenario: Test scenario variable set from file
   * [util] Match macac with #[animal]
 ```
 
-### `* load vars from file "path/to/file"`
+#### `* load vars from file "path/to/file"`
 Loads the properties from a file, as scenario variables: `.properties`, `.yaml`, `.yml`.  
 Example:
 > File: features/readme/vars/config.properties
@@ -117,7 +117,7 @@ Scenario: Test scenario variables set from properties file
   * [util] Match Africa with #[location]
 ```
 
-### `* load vars from dir "<path/to/directory>"`
+#### `* load vars from dir "<path/to/directory>"`
 It reads recursively the entire directory tree structure and each file becomes a scenario variable:  
 _file name, without extension -> `variable name`_  
 _file content -> `variable value`_  
@@ -145,7 +145,7 @@ Scenario: Test scenario variables set from directory
 ```
 
 
-### `* var <varName> from table`
+#### `* var <varName> from table`
 Defines a variable with value from [data table](https://github.com/cucumber/cucumber-jvm/tree/main/datatable):
 ```gherkin
 Scenario: Test scenario variable set from table
@@ -160,7 +160,7 @@ Scenario: Test scenario variable set from table
 Scenario variables can also be set and used directly inside Java code, by injecting the `ScenarioVars.class`.  
 Variables defined inside Gherkin files can be used from Java code and vice versa.  
 
-### 1.2.1 ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
+#### 1.2.1 ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
 __Set variables inside a step and use them from another step__
 ```javascript
 public class ScenarioVarsReadmeSteps {
@@ -210,7 +210,7 @@ public void readVariablesSetViaGherkin() {
 }
 ```
 
-### 1.2.2 ScenarioVarsUtils `.loadScenarioVarsFromFile()` and `.loadScenarioVarsFromDir()`
+#### 1.2.2 ScenarioVarsUtils `.loadScenarioVarsFromFile()` and `.loadScenarioVarsFromDir()`
 Similar to the Gherkin steps, scenario variables can also be set from files:  
 
 ```javascript
