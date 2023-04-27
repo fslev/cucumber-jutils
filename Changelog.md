@@ -1,10 +1,14 @@
 # Changelog
 
-## 9.12-SNAPSHOT
+## 9.13-SNAPSHOT
+
+## 9.12 (2023-04-27)
+- #### Changed
+  - Use Integer.MAX_VALUE for ObjectMapper max depth, number and String limits  
 
 ## 9.11 (2023-04-26)
 - #### Changed
-  -  Update dependencies (jtest-utils 5.7, spring-expressions:5.3.27)
+  - Update dependencies (jtest-utils 5.7, spring-expressions:5.3.27)
 
 ## 9.10 (2023-01-10)
 - #### Changed

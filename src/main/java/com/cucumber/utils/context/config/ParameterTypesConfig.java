@@ -2,6 +2,7 @@ package com.cucumber.utils.context.config;
 
 import com.cucumber.utils.context.vars.ScenarioVars;
 import com.cucumber.utils.context.vars.ScenarioVarsParser;
+import com.fasterxml.jackson.core.StreamReadConstraints;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
@@ -25,6 +26,11 @@ public class ParameterTypesConfig {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
             .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, DeserializationFeature.FAIL_ON_TRAILING_TOKENS);
+
+    static {
+        MAPPER.getFactory().setStreamReadConstraints(StreamReadConstraints.builder()
+                .maxNestingDepth(Integer.MAX_VALUE).maxNumberLength(Integer.MAX_VALUE).maxStringLength(Integer.MAX_VALUE).build());
+    }
 
     @Inject
     private ScenarioVars scenarioVars;
