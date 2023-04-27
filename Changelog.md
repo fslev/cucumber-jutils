@@ -3,6 +3,7 @@
 ## 9.12-SNAPSHOT
 
 ## 9.11 (2023-04-26)
+- #### Changed
   -  Update dependencies (jtest-utils 5.7, spring-expressions:5.3.27)
 
 ## 9.10 (2023-01-10)
