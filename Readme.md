@@ -248,7 +248,7 @@ public void parseFileForScenarioVars() {
 ```
 
 ## 1.4 Path variables
-For JSON type variables you may access certain values directly by using Jackson paths `/`:
+For JSON type variables you may access certain values by using Jackson paths `/`:
 ```gherkin
 * var x=
   """json
