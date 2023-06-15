@@ -226,6 +226,20 @@ public void setVariablesFromFile() {
 }
 ```
 
+## Path variables
+For JSON type variables you may access certain values directly by using Jackson paths `/`:
+```gherkin
+* var x=
+  """json
+    {"book":{
+        "details":{"title":"Moby Dick"}
+      }
+    }
+  """
+* [util] Match #[x/book/details/title] with Moby Dick
+
+```
+
 ## 1.3 Resources 
 You may parse resource files for scenario variables, delimited by `#[` and `]`.
 ### `ScenarioVarsUtils.parse()`
