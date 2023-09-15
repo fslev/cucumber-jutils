@@ -1,6 +1,10 @@
 # Changelog
 
-## 9.14-SNAPSHOT
+## 9.15-SNAPSHOT
+
+## 9.14 (2023-09-15)
+- #### Changed
+  - Update dependencies (jtest-utils 5.10, spring-expression)
 
 ## 9.13 (2023-06-06)
 - #### Changed
