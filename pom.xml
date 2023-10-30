@@ -248,7 +248,7 @@
                     <plugin>
                         <groupId>net.masterthought</groupId>
                         <artifactId>maven-cucumber-reporting</artifactId>
-                        <version>5.7.6</version>
+                        <version>5.7.7</version>
                         <executions>
                             <execution>
                                 <id>execution</id>
