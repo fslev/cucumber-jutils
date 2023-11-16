@@ -1,6 +1,10 @@
 # Changelog
 
-## 9.16-SNAPSHOT
+## 9.17-SNAPSHOT
+
+## 9.16 (2023-11-16)
+- #### Removed
+  - Update dependencies (jtest-utils 5.12 --> removed progress bar from polling)
 
 ## 9.15 (2023-11-15)
 - #### Changed
