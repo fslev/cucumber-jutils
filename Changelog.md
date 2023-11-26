@@ -1,8 +1,8 @@
 # Changelog
 
-## 9.17-SNAPSHOT
+## 9.18-SNAPSHOT
 
-## 9.16 (2023-11-26)
+## 9.17 (2023-11-26)
 - #### Changed
   - Update dependencies (jtest-utils 5.13 --> Jackson update)
 
