@@ -2,6 +2,10 @@
 
 ## 9.17-SNAPSHOT
 
+## 9.16 (2023-11-26)
+- #### Changed
+  - Update dependencies (jtest-utils 5.13 --> Jackson update)
+
 ## 9.16 (2023-11-16)
 - #### Removed
   - Update dependencies (jtest-utils 5.12 --> removed progress bar from polling)
