@@ -1,6 +1,10 @@
 # Changelog
 
-## 9.18-SNAPSHOT
+## 9.19-SNAPSHOT
+
+## 9.18 (2023-12-05)
+- #### Changed
+  - Update dependencies (jtest-utils 5.14 --> deprecated Polling support)
 
 ## 9.17 (2023-11-26)
 - #### Changed
