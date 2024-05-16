@@ -23,7 +23,7 @@
         <jtest.utils.version>5.16</jtest.utils.version>
         <cucumber.min.version>6.10.0</cucumber.min.version>
         <guice.min.version>4.2.1</guice.min.version>
-        <spring-expression-version>5.3.34</spring-expression-version>
+        <spring-expression-version>5.3.35</spring-expression-version>
     </properties>
 
     <dependencies>
