@@ -2,7 +2,7 @@
 
 ## 9.23-SNAPSHOT
 
-## 9.22-SNAPSHOT (2024-09-20)
+## 9.22 (2024-09-20)
 - #### Changed
   - Updated dependencies
   
