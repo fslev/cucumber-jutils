@@ -1,7 +1,11 @@
 # Changelog
 
-## 9.22-SNAPSHOT
+## 9.23-SNAPSHOT
 
+## 9.22-SNAPSHOT (2024-09-20)
+- #### Changed
+  - Updated dependencies
+  
 ## 9.21 (2024-05-22)
 - #### Changed
   - Updated dependencies
