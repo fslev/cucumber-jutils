@@ -1,6 +1,10 @@
 # Changelog
 
-## 9.24-SNAPSHOT
+## 9.25-SNAPSHOT
+
+## 9.24 (2024-09-26)
+- #### Changed
+  - Updated jtest-utils dependency
 
 ## 9.23 (2024-09-26)
 - #### Changed
