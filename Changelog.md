@@ -1,6 +1,10 @@
 # Changelog
 
-## 9.25-SNAPSHOT
+## 9.26-SNAPSHOT
+
+## 9.25 (2025-03-25)
+- #### Changed
+  - Updated jtest-utils dependency
 
 ## 9.24 (2024-09-26)
 - #### Changed
