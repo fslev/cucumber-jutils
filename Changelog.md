@@ -1,6 +1,9 @@
 # Changelog
 
-## 9.27-SNAPSHOT
+## 9.27 (2025-03-28)
+- #### Changed
+  - Updated `jtest-utils` dependency to the next major version.
+    - Changed the way JSON diffs are displayed.  
 
 ## 9.26 (2025-03-26)
 - #### Changed
