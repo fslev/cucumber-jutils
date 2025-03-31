@@ -1,7 +1,7 @@
 # Cucumber JUtils <sup>[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://vshymanskyy.github.io/StandWithUkraine)</sup>
 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.fslev/cucumber-jutils.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.fslev%22%20AND%20a:%22cucumber-jutils%22)
-![Java CI with Maven](https://github.com/fslev/cucumber-jutils/workflows/Java%20CI%20with%20Maven/badge.svg?branch=main)
+![Java CI with Maven](https://github.com/fslev/cucumber-jutils/actions/workflows/maven.yml/badge.svg?branch=main)
 [![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-jutils/badge.svg?branch=main)](https://coveralls.io/github/fslev/cucumber-jutils?branch=main)
 
 
