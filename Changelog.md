@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.28 (2025-08-01)
+- #### Changed
+  - Updated dependencies  
+
 ## 9.27 (2025-03-28)
 - #### Changed
   - Updated `jtest-utils` dependency to the next major version.
