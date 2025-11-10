@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.28 (2025-11-10)
+- #### Changed
+  - Updated dependencies
+
 ## 9.28 (2025-08-01)
 - #### Changed
   - Updated dependencies  
