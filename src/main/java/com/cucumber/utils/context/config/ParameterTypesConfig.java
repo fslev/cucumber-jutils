@@ -4,6 +4,7 @@ import com.cucumber.utils.context.vars.ScenarioVars;
 import com.cucumber.utils.context.vars.ScenarioVarsParser;
 import com.fasterxml.jackson.core.StreamReadConstraints;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
@@ -46,14 +47,15 @@ public class ParameterTypesConfig {
         if (parsedValue == null || toValueType.equals(Object.class) || toValueType.equals(parsedValue.getClass())) {
             return parsedValue;
         }
+        JavaType javaType = MAPPER.constructType(toValueType);
         if (parsedValue instanceof String s) {
             try {
-                return MAPPER.readValue(s, MAPPER.constructType(toValueType));
+                return MAPPER.readValue(s, javaType);
             } catch (IOException ignored) {
                 // Not valid JSON — fall through to reflective conversion below.
             }
         }
-        return MAPPER.convertValue(parsedValue, MAPPER.constructType(toValueType));
+        return MAPPER.convertValue(parsedValue, javaType);
     }
 
     @DocStringType
