@@ -46,13 +46,7 @@ The library declares Cucumber, Cucumber-Guice, and Guice as `provided`, so your 
 </dependency>
 ```
 
-## 3. Requirements
-
-- Java 17+
-- Cucumber-JVM 6.10.0+
-- Guice 4.2.1+
-
-## 4. Configure Cucumber glue
+### 2.1 Configure Cucumber glue
 
 Add `com.cucumber.utils` to your Cucumber glue path so that the predefined steps and parameter-type transformer are picked up:
 
@@ -61,13 +55,19 @@ Add `com.cucumber.utils` to your Cucumber glue path so that the predefined steps
         glue = {"com.cucumber.utils", "your.own.steps"})
 ```
 
-## 5. Usage
+## 3. Requirements
 
-### 5.1 Scenario variables
+- Java 17+
+- Cucumber-JVM 6.10.0+
+- Guice 4.2.1+
+
+## 4. Usage
+
+### 4.1 Scenario variables
 
 Scenario-scoped key/value store. Set from Gherkin or Java; read with `#[name]` in any step argument, doc string, or data-table cell. Lifetime is one scenario.
 
-#### 5.1.1 In Gherkin
+#### 4.1.1 In Gherkin
 
 `#[name]` reads a variable. Steps that accept variable substitution must use Cucumber [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme) (`{}`).
 
@@ -79,7 +79,7 @@ Scenario: Set and read scenario variables
   * [util] Match forest with #[location]
 ```
 
-#### 5.1.2 From a doc string
+#### 4.1.2 From a doc string
 
 ```gherkin
 Scenario: Variable from doc string
@@ -90,7 +90,7 @@ Scenario: Variable from doc string
   * [util] Match some rabbit with some #[animal]
 ```
 
-#### 5.1.3 From a file
+#### 4.1.3 From a file
 
 ```gherkin
 Scenario: Variable from file
@@ -98,7 +98,7 @@ Scenario: Variable from file
   * [util] Match macac with #[animal]
 ```
 
-#### 5.1.4 From a data table
+#### 4.1.4 From a data table
 
 ```gherkin
 Scenario: Variable from data table
@@ -109,7 +109,7 @@ Scenario: Variable from data table
   * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]
 ```
 
-#### 5.1.5 In Java
+#### 4.1.5 In Java
 
 Inject `ScenarioVars`. Variables set in Java are visible from Gherkin and vice versa:
 
@@ -145,7 +145,7 @@ public class ScenarioVarsAnotherReadmeSteps {
 }
 ```
 
-#### 5.1.6 Loading from a properties or YAML file
+#### 4.1.6 Loading from a properties or YAML file
 
 `load vars from file` parses `.properties`, `.yaml`, and `.yml` and stores each entry as a scenario variable.
 
@@ -156,7 +156,7 @@ Scenario: Load variables from properties file
   * [util] Match Africa with #[location]
 ```
 
-#### 5.1.7 Loading from a directory
+#### 4.1.7 Loading from a directory
 
 `load vars from dir` walks a directory recursively. Each `.properties`/`.yaml`/`.yml` is flattened into one variable per key; each `.txt`/`.json`/`.xml`/`.csv`/`.html`/`.text` becomes a single variable named after the file (without extension).
 
@@ -181,7 +181,7 @@ Scenario: Load variables from directory tree
 
 `whisky.txt` becomes `#[whisky]` (filename without extension); `drink.yaml` is flattened so that `beer` and `beers` become top-level scenario variables.
 
-#### 5.1.8 Loading from Java with `ScenarioVarsUtils`
+#### 4.1.8 Loading from Java with `ScenarioVarsUtils`
 
 ```java
 @Inject
@@ -196,7 +196,7 @@ public void setVariablesFromFile() {
 }
 ```
 
-#### 5.1.9 Parse a resource file from Java
+#### 4.1.9 Parse a resource file from Java
 
 `ScenarioVarsUtils.parse` reads a file and returns it with both `#[var]` placeholders and `#{spel}` expressions resolved. The variables it resolves are whatever has been put into `ScenarioVars` earlier in the scenario — set from Gherkin, from another step, or loaded from a file. Use this when you want the substituted *string content* (rather than registering each entry as its own variable, like `loadScenarioVarsFromFile`).
 
@@ -225,7 +225,7 @@ public void parseFileForScenarioVars() {
 }
 ```
 
-#### 5.1.10 Dynamic built-in variables
+#### 4.1.10 Dynamic built-in variables
 
 `ScenarioVars.get(name)` recognises four reserved keys that compute a value at read time:
 
@@ -241,7 +241,7 @@ public void parseFileForScenarioVars() {
 * var ts="#[now]"
 ```
 
-#### 5.1.11 JSON Pointer access
+#### 4.1.11 JSON Pointer access
 
 For variables holding JSON, address inner values with `/` paths (Jackson [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) style):
 
@@ -263,11 +263,11 @@ assertTrue(vars.get("var1/a2") instanceof ObjectNode);
 assertEquals(new IntNode(2), vars.get("var1/a2/a21/1"));
 ```
 
-### 5.2 SpEL
+### 4.2 SpEL
 
 `#{ … }` evaluates [Spring Expression Language](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions). The pipeline is two-pass: `#[var]` substitution runs first, then `#{spel}` evaluation runs over the result. SpEL is therefore free to reference scenario variables.
 
-#### 5.2.1 Inside Gherkin
+#### 4.2.1 Inside Gherkin
 
 ```gherkin
 Scenario: SpEL inside Gherkin
@@ -276,7 +276,7 @@ Scenario: SpEL inside Gherkin
   * [util] Match true with #[isOddNumber]
 ```
 
-#### 5.2.2 Inside resource files
+#### 4.2.2 Inside resource files
 
 If a file contains both placeholders and SpEL, `ScenarioVarsUtils.parse` (used internally by `var content from file`) resolves both:
 
@@ -292,11 +292,11 @@ Scenario: SpEL inside files
   * [util] Match "Is 5 odd: true" with #[content]
 ```
 
-### 5.3 Predefined steps
+### 4.3 Predefined steps
 
 Steps shipped with the library — assertion, date/time arithmetic, and sleep — accessible to any feature once the `com.cucumber.utils` glue is configured.
 
-#### 5.3.1 Assertion
+#### 4.3.1 Assertion
 
 ```gherkin
 # Equality (compares JSON, XML, regex, primitives — all via JTest-Utils ObjectMatcher)
@@ -316,7 +316,7 @@ Steps shipped with the library — assertion, date/time arithmetic, and sleep �
 * [util] Negative match a with b
 ```
 
-#### 5.3.2 Date / time
+#### 4.3.2 Date / time
 
 ```gherkin
 Scenario: Date arithmetic and period checks
@@ -336,14 +336,14 @@ Negative variants (`doesn't match`) and `MINUS` are supported:
 * [time-util] date var pastDate=from millis #[currentMillis] MINUS 31 DAYS with format pattern=yyyy-MM-dd
 ```
 
-#### 5.3.3 Sleep
+#### 4.3.3 Sleep
 
 ```gherkin
 * [util] Wait 10.471s
 * [util] Wait 2.5m
 ```
 
-### 5.4 Parameter-type integration (transparent)
+### 4.4 Parameter-type integration (transparent)
 
 `com.cucumber.utils.context.config.ParameterTypesConfig` registers a default Cucumber parameter transformer that runs every step argument, doc string, and data table cell through `ScenarioVarsParser` — first `#[var]` substitution, then `#{spel}` evaluation. After substitution, if the parameter type is not `Object`, the value is JSON-deserialized via Jackson, falling back to reflective conversion when it isn't valid JSON.
 
@@ -354,7 +354,7 @@ Two reserved literals are recognised in step args:
 | `[_null]`   | `null`                   |
 | `[_blank]`  | `""` (empty string)      |
 
-## 6. Utility classes
+## 5. Utility classes
 
 | Class                                                         | What you call                                                                                              |
 |---------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
@@ -374,10 +374,10 @@ public void writeSomething(String name, Object value) {
 }
 ```
 
-## 7. Tutorial
+## 6. Tutorial
 
 The [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) walks through a full project setup.
 
-## 8. License
+## 7. License
 
 [Apache License 2.0](LICENSE)
