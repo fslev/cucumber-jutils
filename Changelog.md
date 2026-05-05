@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## 10.0 (2026-05-05)
 - #### Changed
   - **Breaking:** Java baseline bumped from 11 to 17.
