@@ -13,8 +13,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 @ScenarioScoped
 public class DateTimeSteps {
@@ -33,16 +31,16 @@ public class DateTimeSteps {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
         LocalDate localDate1 = LocalDate.parse(date1, dateTimeFormatter);
         LocalDate localDate2 = LocalDate.parse(date2, dateTimeFormatter);
-        assertEquals(value, chronoUnit.between(localDate1, localDate2), chronoUnit + " differ");
+        assertChronoUnitsBetween(value, chronoUnit.between(localDate1, localDate2), chronoUnit);
     }
 
     @Then("[time-util] Check period from {} to {} is {} {} using date time pattern {}")
     public void matchDateTimes(String date1, String date2, long value, ChronoUnit chronoUnit, String pattern) {
         logger.log("Check date period from '{}' to '{}' is {}{} using date time pattern '{}'", date1, date2, value, chronoUnit, pattern);
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+        DateTimeFormatter dateTimeFormatter = zonedFormatter(pattern);
         ZonedDateTime zonedDateTime1 = ZonedDateTime.parse(date1, dateTimeFormatter);
         ZonedDateTime zonedDateTime2 = ZonedDateTime.parse(date2, dateTimeFormatter);
-        assertEquals(value, chronoUnit.between(zonedDateTime1, zonedDateTime2), chronoUnit + " differ");
+        assertChronoUnitsBetween(value, chronoUnit.between(zonedDateTime1, zonedDateTime2), chronoUnit);
     }
 
     @Then("[time-util] Check period from {} to {} doesn't match {} {} using date pattern {}")
@@ -71,45 +69,42 @@ public class DateTimeSteps {
 
     @Then("[time-util] date var {}=from millis {} {} {} {} with format pattern={}")
     public void setDateVar(String param, Long millis, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
-        switch (operation) {
-            case MINUS:
-                scenarioVars.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
-                        .minus(value, chronoUnit).format(dateTimeFormatter));
-                break;
-            case PLUS:
-                scenarioVars.put(param, ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault())
-                        .plus(value, chronoUnit).format(dateTimeFormatter));
-                break;
-        }
+        DateTimeFormatter formatter = zonedFormatter(formatPattern);
+        ZonedDateTime base = ZonedDateTime.ofInstant(Instant.ofEpochMilli(millis), ZoneId.systemDefault());
+        scenarioVars.put(param, applyOperation(base, operation, value, chronoUnit).format(formatter));
         logger.log("Date var {} = {}", param, scenarioVars.get(param));
     }
 
     @Then("[time-util] date var {}=from date {} {} {} {} with format pattern={}")
     public void setDateVar(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
-        switch (operation) {
-            case MINUS:
-                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).format(dateTimeFormatter));
-                break;
-            case PLUS:
-                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).format(dateTimeFormatter));
-                break;
-        }
+        DateTimeFormatter formatter = zonedFormatter(formatPattern);
+        ZonedDateTime base = ZonedDateTime.parse(date, formatter);
+        scenarioVars.put(param, applyOperation(base, operation, value, chronoUnit).format(formatter));
         logger.log("Date var {} = {}", param, scenarioVars.get(param));
     }
 
     @Then("[time-util] date millis var {}=from date {} {} {} {} with format pattern={}")
     public void setDateInMillisParam(String param, String date, Operation operation, int value, ChronoUnit chronoUnit, String formatPattern) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(formatPattern).withZone(ZoneId.systemDefault());
-        switch (operation) {
-            case MINUS:
-                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).minus(value, chronoUnit).toInstant().toEpochMilli());
-                break;
-            case PLUS:
-                scenarioVars.put(param, ZonedDateTime.parse(date, dateTimeFormatter).plus(value, chronoUnit).toInstant().toEpochMilli());
-                break;
-        }
+        DateTimeFormatter formatter = zonedFormatter(formatPattern);
+        ZonedDateTime base = ZonedDateTime.parse(date, formatter);
+        scenarioVars.put(param, applyOperation(base, operation, value, chronoUnit).toInstant().toEpochMilli());
         logger.log("Date in millis var {} = {}", param, scenarioVars.get(param));
+    }
+
+    private static DateTimeFormatter zonedFormatter(String pattern) {
+        return DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
+    }
+
+    private static void assertChronoUnitsBetween(long expected, long actual, ChronoUnit chronoUnit) {
+        if (expected != actual) {
+            throw new AssertionError(chronoUnit + " differ ==> expected: <" + expected + "> but was: <" + actual + ">");
+        }
+    }
+
+    private static ZonedDateTime applyOperation(ZonedDateTime base, Operation operation, int value, ChronoUnit chronoUnit) {
+        return switch (operation) {
+            case PLUS -> base.plus(value, chronoUnit);
+            case MINUS -> base.minus(value, chronoUnit);
+        };
     }
 }

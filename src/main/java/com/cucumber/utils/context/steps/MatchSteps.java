@@ -13,10 +13,36 @@ import io.jtest.utils.matcher.condition.MatchCondition;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 @ScenarioScoped
 public class MatchSteps {
+
+    private static final String MATCH_LOG = """
+            MATCH:
+
+            {}
+
+            against:
+
+            {}""";
+
+    private static final String MATCH_WITH_CONDITIONS_LOG = """
+            MATCH:
+
+            {}
+
+            against:
+
+            {}
+                with match conditions: {}""";
+
+    private static final String NEGATIVE_MATCH_LOG = """
+            Negative match:
+
+            {}
+
+            against:
+
+            {}""";
 
     @Inject
     private ScenarioVars scenarioVars;
@@ -25,9 +51,7 @@ public class MatchSteps {
 
     @Then("[util] Match {} with {}")
     public void match(Object expected, Object actual) {
-        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() +
-                System.lineSeparator() + "against:" + System.lineSeparator() + System.lineSeparator() +
-                "{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
+        logger.log(MATCH_LOG, expected, cropped(actual));
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
@@ -38,10 +62,7 @@ public class MatchSteps {
 
     @Then("[util] Match {} against {} using matchConditions={}")
     public void match(Object expected, Object actual, MatchCondition[] matchConditions) {
-        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() + System.lineSeparator() +
-                        "against:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() +
-                        "    with match conditions: {}", expected,
-                actual != null ? MessageUtil.cropL(actual.toString()) : null, matchConditions);
+        logger.log(MATCH_WITH_CONDITIONS_LOG, expected, cropped(actual), matchConditions);
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual, matchConditions));
     }
 
@@ -52,23 +73,21 @@ public class MatchSteps {
 
     @Then("[util] Match {} against table")
     public void matchWithDataTable(Object expected, List<Map<String, Object>> actual) {
-        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() + System.lineSeparator() +
-                "against:" + System.lineSeparator() + System.lineSeparator() + "{}", expected, actual);
+        logger.log(MATCH_LOG, expected, actual);
         scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
     }
 
     @Then("[util] Match {} against NULL")
     public void matchWithNull(Object expected) {
-        logger.log("MATCH:" + System.lineSeparator() + System.lineSeparator() + "{}" + System.lineSeparator() + System.lineSeparator() +
-                "against:" + System.lineSeparator() + System.lineSeparator() + "{}", expected, null);
-        assertNull(expected);
+        logger.log(MATCH_LOG, expected, null);
+        if (expected != null) {
+            throw new AssertionError("Expected null but was: " + expected);
+        }
     }
 
     @Then("[util] Negative match {} with {}")
     public void matchNegativeWithString(Object expected, Object actual) {
-        logger.log("Negative match:" + System.lineSeparator() + System.lineSeparator() + "{}" +
-                System.lineSeparator() + System.lineSeparator() + "against:" + System.lineSeparator() + System.lineSeparator() +
-                "{}", expected, actual != null ? MessageUtil.cropL(actual.toString()) : null);
+        logger.log(NEGATIVE_MATCH_LOG, expected, cropped(actual));
         try {
             scenarioVars.putAll(ObjectMatcher.match(null, expected, actual));
         } catch (AssertionError e) {
@@ -81,5 +100,9 @@ public class MatchSteps {
     @Then("[util] Negative match {} against")
     public void matchNegativeWithDocString(Object expected, StringBuilder actual) {
         matchNegativeWithString(expected, actual.toString());
+    }
+
+    private static String cropped(Object value) {
+        return value != null ? MessageUtil.cropL(value.toString()) : null;
     }
 }

@@ -1,25 +1,25 @@
 package com.cucumber.utils.context;
 
 import io.cucumber.java.Scenario;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.powermock.reflect.Whitebox;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
-@RunWith(PowerMockRunner.class)
-@PowerMockIgnore({"javax.management.*", "com.sun.org.apache.xerces.*", "javax.xml.*", "org.xml.*", "org.w3c.dom.*", "com.sun.org.apache.xalan.*"})
-public class ScenarioUtilsTest {
+@ExtendWith(MockitoExtension.class)
+class ScenarioUtilsTest {
 
     @Mock
     private Scenario scenario;
@@ -28,13 +28,13 @@ public class ScenarioUtilsTest {
 
     private final ScenarioUtils scenarioUtils = new ScenarioUtils();
 
-    @Before
-    public void mockScenario() {
-        Whitebox.setInternalState(scenarioUtils, scenario);
+    @BeforeEach
+    void mockScenario() {
+        scenarioUtils.init(scenario);
     }
 
     @Test
-    public void testLogging() {
+    void testLogging() {
         assertNotNull(scenarioUtils.getScenario());
 
         scenarioUtils.log(null);

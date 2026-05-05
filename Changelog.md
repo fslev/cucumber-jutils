@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.0 (2026-05-05)
+- #### Changed
+  - **Breaking:** Java baseline bumped from 11 to 17.
+  - Internal refactors and modernization (switch expressions, text blocks, `EnumSet`, pattern-matching `instanceof`, `ThreadLocalRandom`, `UncheckedIOException`).
+  - Tests standardized on JUnit Jupiter 6.0.3; `surefire-junit47` provider override removed.
+  - JUnit Jupiter API removed from production-code compile classpath — `MatchSteps.matchWithNull` and `DateTimeSteps` period assertions now throw `AssertionError` directly.
+  - PowerMock replaced with Mockito 5.23 + `mockito-junit-jupiter` (PowerMock 2.0.9 was incompatible with Java 17).
+  - README rewritten as a single-page reference; examples lifted from passing tests/feature files.
+
 ## 9.28 (2025-11-10)
 - #### Changed
   - Updated dependencies

@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-jutils</artifactId>
-    <version>9.30-SNAPSHOT</version>
+    <version>10.0-SNAPSHOT</version>
 
     <name>Cucumber JUtils</name>
     <description>A little helper for Cucumber Java</description>
@@ -20,6 +20,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <surefire.version>3.5.5</surefire.version>
+        <junit.version>6.0.3</junit.version>
+        <mockito.version>5.23.0</mockito.version>
         <jtest.utils.version>6.2</jtest.utils.version>
         <cucumber.min.version>6.10.0</cucumber.min.version>
         <guice.min.version>4.2.1</guice.min.version>
@@ -71,15 +73,39 @@
             <version>[${cucumber.min.version},)</version>
         </dependency>
         <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <version>2.0.9</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
-            <version>2.0.9</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -96,13 +122,6 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>${surefire.version}</version>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.apache.maven.surefire</groupId>
-                                <artifactId>surefire-junit47</artifactId>
-                                <version>${surefire.version}</version>
-                            </dependency>
-                        </dependencies>
                         <executions>
                             <execution>
                                 <phase>test</phase>
@@ -112,9 +131,6 @@
                             <!--suppress UnresolvedMavenProperty -->
                             <argLine>${surefireArgLine}</argLine>
                             <testFailureIgnore>false</testFailureIgnore>
-                            <parallel>methods</parallel>
-                            <threadCount>12</threadCount>
-                            <perCoreThreadCount>true</perCoreThreadCount>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -196,7 +212,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <source>11</source>
+                            <source>17</source>
                             <doclint>none</doclint>
                         </configuration>
                     </plugin>
@@ -329,8 +345,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.15.0</version>
                 <configuration>
-                    <release>11</release>
-                    <testRelease>11</testRelease>
+                    <release>17</release>
+                    <testRelease>17</testRelease>
                 </configuration>
             </plugin>
         </plugins>

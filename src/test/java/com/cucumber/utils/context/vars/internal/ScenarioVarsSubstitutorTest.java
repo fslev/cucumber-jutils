@@ -1,26 +1,29 @@
 package com.cucumber.utils.context.vars.internal;
 
 import com.cucumber.utils.context.vars.ScenarioVars;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ScenarioVarsSubstitutorTest {
+class ScenarioVarsSubstitutorTest {
 
     private ScenarioVars scenarioVars;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void init() {
         scenarioVars = new ScenarioVars();
     }
 
     @Test
-    public void testScenarioVarsSubstitution() {
+    void testScenarioVarsSubstitution() {
         String s = "abc#[prop1]#[prop2]def";
         Map<String, Object> props = new HashMap<>();
         props.put("prop1", 1);
@@ -60,7 +63,7 @@ public class ScenarioVarsSubstitutorTest {
     }
 
     @Test
-    public void testStandaloneScenarioVarsSubstitution() {
+    void testStandaloneScenarioVarsSubstitution() {
         String s = "#[0p$ro-p1.pr_op2@]";
         Map<String, Object> props = new HashMap<>();
         props.put("0p$ro-p1.pr_op2@", "replacement");
@@ -84,7 +87,7 @@ public class ScenarioVarsSubstitutorTest {
     }
 
     @Test
-    public void testStandaloneScenarioVarsSubstitutionWithDynamicValues() {
+    void testStandaloneScenarioVarsSubstitutionWithDynamicValues() {
         String s = "#[uid]";
         assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars).toString().matches("[a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8}"));
 
@@ -92,7 +95,7 @@ public class ScenarioVarsSubstitutorTest {
         assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars).toString().matches("this is [a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8}"));
 
         s = "#[short-random]";
-        assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars) instanceof Integer);
+        assertInstanceOf(Integer.class, ScenarioVarsSubstitutor.replace(s, scenarioVars));
         assertTrue(-1 < (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
         assertTrue(Short.MAX_VALUE > (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
 
@@ -100,13 +103,13 @@ public class ScenarioVarsSubstitutorTest {
         assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars).toString().matches("random val: ([0-9]{1}|[0-9]{2}|[0-9]{3}|[0-9]{4}|[0-9]{5})"));
 
         s = "#[int-random]";
-        assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars) instanceof Integer);
+        assertInstanceOf(Integer.class, ScenarioVarsSubstitutor.replace(s, scenarioVars));
         assertTrue(-1 < (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
         assertTrue(Integer.MAX_VALUE > (int) ScenarioVarsSubstitutor.replace(s, scenarioVars));
 
 
         s = "#[now]";
-        assertTrue(ScenarioVarsSubstitutor.replace(s, scenarioVars) instanceof Long);
+        assertInstanceOf(Long.class, ScenarioVarsSubstitutor.replace(s, scenarioVars));
         assertTrue(System.currentTimeMillis() <= (long) ScenarioVarsSubstitutor.replace(s, scenarioVars));
         assertTrue(System.currentTimeMillis() + 10000 > (long) ScenarioVarsSubstitutor.replace(s, scenarioVars));
 
@@ -115,27 +118,27 @@ public class ScenarioVarsSubstitutorTest {
     }
 
     @Test
-    public void testSubstitutionWithEmptyValueScenarioVar() {
+    void testSubstitutionWithEmptyValueScenarioVar() {
         String s = "#[p]";
         scenarioVars.put("p", "");
         assertEquals("", ScenarioVarsSubstitutor.replace(s, scenarioVars));
     }
 
     @Test
-    public void testSubstitutionWithEmptyScenarioVars() {
+    void testSubstitutionWithEmptyScenarioVars() {
         String s = "#[p]";
         assertEquals("#[p]", ScenarioVarsSubstitutor.replace(s, scenarioVars));
     }
 
     @Test
-    public void testSubstitutionOfStringWithNoPlaceholders() {
+    void testSubstitutionOfStringWithNoPlaceholders() {
         String s = "lorem";
         scenarioVars.put("p", "");
         assertEquals("lorem", ScenarioVarsSubstitutor.replace(s, scenarioVars));
     }
 
     @Test
-    public void testSubstitutionOfStringWithInvalidPlaceholders() {
+    void testSubstitutionOfStringWithInvalidPlaceholders() {
         String s = "]invalid#[";
         scenarioVars.put("p", "");
         assertEquals("]invalid#[", ScenarioVarsSubstitutor.replace(s, scenarioVars));

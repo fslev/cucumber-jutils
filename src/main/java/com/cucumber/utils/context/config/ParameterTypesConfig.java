@@ -43,16 +43,17 @@ public class ParameterTypesConfig {
             return null;
         }
         Object parsedValue = ScenarioVarsParser.parse(fromValue.toString(), scenarioVars);
-        if (parsedValue != null && !toValueType.equals(Object.class) && !toValueType.equals(parsedValue.getClass())) {
-            if (parsedValue instanceof String) {
-                try {
-                    return MAPPER.readValue(parsedValue.toString(), MAPPER.constructType(toValueType));
-                } catch (IOException ignored) {
-                }
-            }
-            return MAPPER.convertValue(parsedValue, MAPPER.constructType(toValueType));
+        if (parsedValue == null || toValueType.equals(Object.class) || toValueType.equals(parsedValue.getClass())) {
+            return parsedValue;
         }
-        return parsedValue;
+        if (parsedValue instanceof String s) {
+            try {
+                return MAPPER.readValue(s, MAPPER.constructType(toValueType));
+            } catch (IOException ignored) {
+                // Not valid JSON — fall through to reflective conversion below.
+            }
+        }
+        return MAPPER.convertValue(parsedValue, MAPPER.constructType(toValueType));
     }
 
     @DocStringType

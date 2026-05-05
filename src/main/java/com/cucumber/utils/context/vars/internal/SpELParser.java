@@ -9,7 +9,6 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 public class SpELParser {
 
     private SpELParser() {
-
     }
 
     private static final Logger LOG = LogManager.getLogger();
@@ -22,7 +21,7 @@ public class SpELParser {
                 Expression exp = SPEL_EXPRESSION_PARSER.parseExpression(source, ParserContext.TEMPLATE_EXPRESSION);
                 return exp.getValue(Object.class);
             } catch (Exception e) {
-                LOG.warn("Found invalid SpEL expressions:\n{}", e.getMessage());
+                LOG.warn("Found invalid SpEL expressions:{}{}", System.lineSeparator(), e.getMessage());
             }
         }
         return source;

@@ -8,21 +8,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 
 @ScenarioScoped
 public class ScenarioVars {
 
     private static final Logger LOG = LogManager.getLogger();
-    private final Map<String, Object> vars = new HashMap<>();
     private static final Pattern NAME_PATTERN = Pattern.compile("[a-zA-Z0-9_$\\-.@]+");
+
+    private final Map<String, Object> vars = new HashMap<>();
 
     public String getAsString(String name) {
         Object val = get(name);
@@ -34,19 +34,13 @@ public class ScenarioVars {
             return vars.get(null);
         }
         String trimmedName = name.trim();
-        switch (trimmedName.toLowerCase()) {
-            case "uid":
-                return UUID.randomUUID().toString();
-            case "now":
-                return System.currentTimeMillis();
-            case "short-random":
-                return new Random().nextInt(Short.MAX_VALUE);
-            case "int-random":
-                return new Random().nextInt(Integer.MAX_VALUE);
-            default:
-                Object value = !isJsonPointerExpression(name) ? vars.get(trimmedName) : getJsonPointerValue(name);
-                return value instanceof String ? ScenarioVarsParser.parse(value.toString(), this) : value;
-        }
+        return switch (trimmedName.toLowerCase()) {
+            case "uid" -> UUID.randomUUID().toString();
+            case "now" -> System.currentTimeMillis();
+            case "short-random" -> ThreadLocalRandom.current().nextInt(Short.MAX_VALUE);
+            case "int-random" -> ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+            default -> resolve(name, trimmedName);
+        };
     }
 
     public void put(String name, Object val) {
@@ -87,6 +81,10 @@ public class ScenarioVars {
         HTML(".html"),
         TEXT(".text");
 
+        private static final Set<FileExtension> VAR_TYPES = EnumSet.of(JSON, XML, TXT, CSV, HTML, TEXT);
+        private static final String[] ALL = toValueArray(EnumSet.allOf(FileExtension.class));
+        private static final String[] VAR_ONLY = toValueArray(VAR_TYPES);
+
         private final String name;
 
         FileExtension(String name) {
@@ -94,19 +92,19 @@ public class ScenarioVars {
         }
 
         public static String[] allExtensions() {
-            return Arrays.stream(values()).map(FileExtension::value).toArray(String[]::new);
+            return ALL.clone();
         }
 
         public static String[] varFileExtensions() {
-            return Arrays.stream(allExtensions())
-                    .filter(val -> val.equals(XML.value()) || val.equals(JSON.value())
-                            || val.equals(TXT.value()) || val.equals(HTML.value())
-                            || val.equals(TEXT.value()) || val.equals(CSV.value()))
-                    .toArray(String[]::new);
+            return VAR_ONLY.clone();
         }
 
         public String value() {
             return name;
+        }
+
+        private static String[] toValueArray(Set<FileExtension> set) {
+            return set.stream().map(FileExtension::value).toArray(String[]::new);
         }
     }
 
@@ -115,30 +113,33 @@ public class ScenarioVars {
         return this.vars.toString();
     }
 
+    private Object resolve(String name, String trimmedName) {
+        Object value = isJsonPointerExpression(name) ? getJsonPointerValue(name) : vars.get(trimmedName);
+        return value instanceof String s ? ScenarioVarsParser.parse(s, this) : value;
+    }
+
     private Object getJsonPointerValue(String varName) {
-        List<String> paths = extractJsonPointerPaths(varName);
-        String rootPath = paths.get(0);
-        if (vars.containsKey(rootPath)) {
-            Object rootValue = vars.get(rootPath);
-            try {
-                JsonNode rootJsonValue = JsonUtils.toJson(rootValue);
-                String relativePath = JsonPointer.SEPARATOR + paths.get(1);
-                JsonNode jsonValue = rootJsonValue.at(relativePath);
-                if (!jsonValue.isMissingNode()) {
-                    return rootValue instanceof String ? (jsonValue.isValueNode() ? jsonValue.asText() : jsonValue.toString()) : jsonValue;
-                }
-            } catch (IOException e) {
+        String[] paths = varName.split(String.valueOf(JsonPointer.SEPARATOR), 2);
+        String rootPath = paths[0];
+        if (!vars.containsKey(rootPath)) {
+            return null;
+        }
+        Object rootValue = vars.get(rootPath);
+        try {
+            JsonNode rootJsonValue = JsonUtils.toJson(rootValue);
+            JsonNode jsonValue = rootJsonValue.at(JsonPointer.SEPARATOR + paths[1]);
+            if (jsonValue.isMissingNode()) {
                 return null;
             }
+            return rootValue instanceof String
+                    ? (jsonValue.isValueNode() ? jsonValue.asText() : jsonValue.toString())
+                    : jsonValue;
+        } catch (IOException e) {
+            return null;
         }
-        return null;
     }
 
     private static boolean isJsonPointerExpression(String varName) {
         return varName.contains(String.valueOf(JsonPointer.SEPARATOR));
-    }
-
-    private static List<String> extractJsonPointerPaths(String varName) {
-        return Arrays.asList(varName.split(String.valueOf(JsonPointer.SEPARATOR), 2));
     }
 }

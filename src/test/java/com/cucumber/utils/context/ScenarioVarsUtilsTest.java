@@ -1,24 +1,24 @@
 package com.cucumber.utils.context;
 
 import com.cucumber.utils.context.vars.ScenarioVars;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ScenarioVarsUtilsTest {
+class ScenarioVarsUtilsTest {
 
     private ScenarioVars scenarioVars;
 
-    @Before
-    public void init() {
+    @BeforeEach
+    void init() {
         this.scenarioVars = new ScenarioVars();
     }
 
     @Test
-    public void testParserFromInvalidFile() {
+    void testParserFromInvalidFile() {
         assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.parse("idontexist.json", scenarioVars));
         assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromFile("idontexist.properties", scenarioVars));
         assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromFile("idontexist.yaml", scenarioVars));
@@ -26,7 +26,7 @@ public class ScenarioVarsUtilsTest {
     }
 
     @Test
-    public void testLoadScenarioVarsYamlFile() {
+    void testLoadScenarioVarsYamlFile() {
         ScenarioVarsUtils.loadScenarioVarsFromFile("placeholders/scenario.yaml", scenarioVars);
         assertEquals("David #[lastName]", scenarioVars.get("name"));
         assertTrue(assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromFile("placeholders/empty.yaml", scenarioVars))
@@ -34,13 +34,13 @@ public class ScenarioVarsUtilsTest {
     }
 
     @Test
-    public void testLoadScenarioVarsFromDirWithEmptyYamlFile() {
+    void testLoadScenarioVarsFromDirWithEmptyYamlFile() {
         assertTrue(assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadScenarioVarsFromDir("props1/dir1", scenarioVars))
                 .getMessage().contains("Incorrect data inside Yaml file: props1/dir1/empty.yml"));
     }
 
     @Test
-    public void loadPropertyFileFromInvalidExtension() {
+    void loadPropertyFileFromInvalidExtension() {
         assertThrows(RuntimeException.class, () -> ScenarioVarsUtils.loadFileAsScenarioVariable(
                 "props/invalid.extension", scenarioVars, "var1"));
     }

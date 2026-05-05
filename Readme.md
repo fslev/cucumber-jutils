@@ -4,87 +4,81 @@
 ![Java CI with Maven](https://github.com/fslev/cucumber-jutils/actions/workflows/maven.yml/badge.svg?branch=main)
 [![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-jutils/badge.svg?branch=main)](https://coveralls.io/github/fslev/cucumber-jutils?branch=main)
 
+A Cucumber-JVM extension built on [Cucumber-Guice](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-guice). It adds scenario-scoped variables, SpEL templating, fluent assertion steps, and Cucumber parameter-type integration that resolves placeholders inside step args, doc strings, and data tables.
 
-# Summary
-An extension to [Cucumber for Java](https://github.com/cucumber/cucumber-jvm) based on [Cucumber Guice](https://github.com/cucumber/cucumber-jvm/tree/main/cucumber-guice), with scenario variables support, assertion support and some pre-defined utility steps.  
+## Features
 
+- **Scenario-scoped variables** — set/read from Gherkin, Java, or files; share between steps within one scenario
+- **File-based loading** — `.properties` / `.yaml` / `.json` / `.xml` / `.txt` / `.csv` / `.html` / `.text`
+- **JSON Pointer access** — `#[var/path/to/value]` reaches into JSON-typed variables
+- **SpEL templating** — `#{ … }` evaluates Spring Expression Language inside Gherkin and resource files
+- **Predefined steps** — `[util] Match …`, `[time-util] Check period …`, `[util] Wait …s`
+- **Transparent placeholder resolution** — `#[var]` and `#{spel}` are auto-resolved in step args, doc strings, and data tables
+- **Built-in object matching** — assertion steps delegate to [JTest-Utils](https://github.com/fslev/jtest-utils) `ObjectMatcher`
 
-It augments your Cucumber based test framework with some powerful features, such as:
-* [Scenario scoped variables](#scenario-vars)
-* [Assertion support](#assertion-support)  
-* [SpEL support](#spel-support)
-* [Predefined common steps](#predefined-steps)   
-* [Utility classes](#utility-classes)           
+## Install
 
-#### Maven Central
-```
+```xml
 <dependency>
-  <groupId>io.github.fslev</groupId>
-  <artifactId>cucumber-jutils</artifactId>
-  <version>${latest.version}</version>
-</dependency>
-
-Gradle: compile("io.github.fslev:cucumber-jutils:${latest.version}")
-```  
-
-### Required dependencies
-[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) requires the following dependencies inside your project:  
-```
-<dependency>
-   <groupId>io.cucumber</groupId>
-   <artifactId>cucumber-java</artifactId>
-   <version>${cucumber.version}</version>
-</dependency>
-<dependency>
-   <groupId>io.cucumber</groupId>
-   <artifactId>cucumber-guice</artifactId>
-   <version>${cucumber.version}</version>
-</dependency>
-<dependency>
-   <groupId>com.google.inject</groupId>
-   <artifactId>guice</artifactId>
-   <version>${guice.version}</version>
+    <groupId>io.github.fslev</groupId>
+    <artifactId>cucumber-jutils</artifactId>
+    <version>${latest.version}</version>
 </dependency>
 ```
 
-# Configuration
-In order to integrate **cucumber-jutils** within your test project you must configure the following **glue** package inside your IDE Cucumber plugin or / and inside the code:
+The library declares Cucumber, Cucumber-Guice, and Guice as `provided`, so your project must pull them in:
+
+```xml
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-java</artifactId>
+    <version>${cucumber.version}</version>
+</dependency>
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>cucumber-guice</artifactId>
+    <version>${cucumber.version}</version>
+</dependency>
+<dependency>
+    <groupId>com.google.inject</groupId>
+    <artifactId>guice</artifactId>
+    <version>${guice.version}</version>
+</dependency>
 ```
-com.cucumber.utils
-```  
-# Tutorial
-Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.
 
-# <a name="scenario-vars"></a> 1. Scenario scoped variables
-Scenario variables can be set and read inside __Gherkin__ syntax, __Java__ code and __resource__ files.  
-These variables are scenario scoped. Meaning, they live as long as the scenario is running and they cannot be accessed from another scenario.  
+## Requirements
 
+- Java 17+
+- Cucumber-JVM 6.10.0+
+- Guice 4.2.1+
 
-## 1.1 Gherkin
-Scenario variables are read using `#[` and `]` delimiters.  
-__Important note:__ If you want to use scenario variables inside your step arguments, your step definition has to use [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme).  
+## Configure Cucumber glue
 
-Variables can be set using different pre-defined steps:  
+Add `com.cucumber.utils` to your Cucumber glue path so that the predefined steps and parameter-type transformer are picked up:
 
-#### `* var <name>="<value>"`
-Example:
-```Gherkin
-Scenario: Test scenario variables
+```java
+@CucumberOptions(features = "src/test/resources/features",
+        glue = {"com.cucumber.utils", "your.own.steps"})
+```
+
+## Usage
+
+### Scenario variables in Gherkin
+
+`#[name]` reads a variable. Steps that accept variable substitution must use Cucumber [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme) (`{}`).
+
+```gherkin
+Scenario: Set and read scenario variables
   * var animal="rabbit"
   * var location="forest"
   * [util] Match some rabbit with some #[animal]
   * [util] Match forest with #[location]
 ```
-As you can see bellow, the matching step is defined with anonymous parameter types:  
-```javascript
-@Then("[util] Match {} with {}")
-public void match(Object expected, Object actual) {
-```
 
-#### `* var <varName>=<docString>`
-Defines a variable with value from [doc string](https://cucumber.io/docs/gherkin/reference/):  
+### Set variable from a doc string
+
 ```gherkin
-Scenario: Test scenario variable set from doc string
+Scenario: Variable from doc string
   * var animal=
     """
     rabbit
@@ -92,63 +86,18 @@ Scenario: Test scenario variable set from doc string
   * [util] Match some rabbit with some #[animal]
 ```
 
-#### `* var <varName> from file "<path/to/file>"`
-Defines a variable with value from file content:    
-> File: features/readme/vars/madagascar.crt
-> > macac
+### Set variable from a file
 
 ```gherkin
-Scenario: Test scenario variable set from file
+Scenario: Variable from file
   * var animal from file "features/readme/vars/madagascar.crt"
   * [util] Match macac with #[animal]
 ```
 
-#### `* load vars from file "path/to/file"`
-Loads the properties from a file, as scenario variables: `.properties`, `.yaml`, `.yml`.  
-Example:
-> File: features/readme/vars/config.properties
-> > animal = lioness  
-> > location = Africa
+### Set variable from a data table
 
 ```gherkin
-Scenario: Test scenario variables set from properties file
-  * load vars from file "features/readme/vars/config.properties"
-  * [util] Match lioness with #[animal]
-  * [util] Match Africa with #[location]
-```
-
-#### `* load vars from dir "<path/to/directory>"`
-It reads recursively the entire directory tree structure and each file becomes a scenario variable:  
-_file name, without extension -> `variable name`_  
-_file content -> `variable value`_  
-
-Supported file types: `.txt`, `.text`, `.json`, `.xml`, `.html`, `.csv`  
-Properties inside files: `.properties`, `.yaml`, `.yml` are also parsed as scenario variables.  
-
-Example:  
->Directory: placeholders/properties/drinks
->>File: whisky.txt
->>>Johnny Walker
-
->>File: drink.yaml
->>> beer: Bergenbier  
->>> beers:  
->>> ``-`` Ursus  
->>> ``-`` Heineken   
-
-```gherkin
-Scenario: Test scenario variables set from directory
-  * load vars from dir "placeholders/properties/drinks"
-  * [util] Match Johnny Walker with #[whisky]
-  * [util] Match Bergenbier with #[beer]
-  * [util] Match ["Ursus", "Heineken"] with #[beers]
-```
-
-
-#### `* var <varName> from table`
-Defines a variable with value from [data table](https://github.com/cucumber/cucumber-jvm/tree/main/datatable):
-```gherkin
-Scenario: Test scenario variable set from table
+Scenario: Variable from data table
   * var animals from table
     | feline  | marsupial       |
     | lioness | kangaroo        |
@@ -156,13 +105,48 @@ Scenario: Test scenario variable set from table
   * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]
 ```
 
-## 1.2 Java
-Scenario variables can also be set and used directly inside Java code, by injecting the `ScenarioVars.class`.  
-Variables defined inside Gherkin files can be used from Java code and vice versa.  
+### Load variables from a properties or YAML file
 
-#### 1.2.1 ScenarioVars `.put()`, `.putAll()`, `.get()` and `.getAsString()`
-__Set variables inside a step and use them from another step__
-```javascript
+`load vars from file` parses `.properties`, `.yaml`, and `.yml` and stores each entry as a scenario variable.
+
+```gherkin
+Scenario: Load variables from properties file
+  * load vars from file "features/readme/vars/config.properties"
+  * [util] Match lioness with #[animal]
+  * [util] Match Africa with #[location]
+```
+
+### Load variables from a directory
+
+`load vars from dir` walks a directory recursively. Each `.properties`/`.yaml`/`.yml` is flattened into one variable per key; each `.txt`/`.json`/`.xml`/`.csv`/`.html`/`.text` becomes a single variable named after the file (without extension).
+
+Given the directory:
+
+```
+placeholders/properties/drinks/
+├── drink.yaml          # beer: Bergenbier
+│                       # beers:
+│                       #   - Ursus
+│                       #   - Heineken
+└── whisky.txt          # Johnny Walker
+```
+
+```gherkin
+Scenario: Load variables from directory tree
+  * load vars from dir "placeholders/properties/drinks"
+  * [util] Match Johnny Walker with #[whisky]
+  * [util] Match Bergenbier with #[beer]
+  * [util] Match ["Ursus", "Heineken"] with #[beers]
+```
+
+`whisky.txt` becomes `#[whisky]` (filename without extension); `drink.yaml` is flattened so that `beer` and `beers` become top-level scenario variables.
+
+### Scenario variables in Java
+
+Inject `ScenarioVars`. Variables set in Java are visible from Gherkin and vice versa:
+
+```java
+@ScenarioScoped
 public class ScenarioVarsReadmeSteps {
 
     @Inject
@@ -177,8 +161,8 @@ public class ScenarioVarsReadmeSteps {
         scenarioVars.putAll(vars);
     }
 }
-```
-```javascript
+
+@ScenarioScoped
 public class ScenarioVarsAnotherReadmeSteps {
 
     @Inject
@@ -192,28 +176,10 @@ public class ScenarioVarsAnotherReadmeSteps {
     }
 }
 ```
-__Set and use variables from both Gherkin and Java:__
-```Gherkin
-Scenario: Use scenario variables from Java and Gherkin
-  * Some random step which sets some variables
-  * [util] Match Cheetah with #[animal]
-  * var planet="Mars"
-  * Some random step which reads variables set inside Gherkin
-```
-```javascript
-@Inject
-private ScenarioVars scenarioVars;
 
-@Given("Some random step which reads variables set inside Gherkin")
-public void readVariablesSetViaGherkin() {
-    assertEquals("Mars", scenarioVars.getAsString("planet"));
-}
-```
+### Load variables from files with `ScenarioVarsUtils`
 
-#### 1.2.2 ScenarioVarsUtils `.loadScenarioVarsFromFile()` and `.loadScenarioVarsFromDir()`
-Similar to the Gherkin steps, scenario variables can also be set from files:  
-
-```javascript
+```java
 @Inject
 private ScenarioVars scenarioVars;
 
@@ -226,118 +192,166 @@ public void setVariablesFromFile() {
 }
 ```
 
-## 1.3 Resources 
-You may parse resource files for scenario variables, delimited by `#[` and `]`.
-### `ScenarioVarsUtils.parse()`
-> File path: features/readme/scene/some_text.txt
->> The #[animal] lives in #[location]
+### Parse a resource file for variables and SpEL
+
+`ScenarioVarsUtils.parse` reads a file and substitutes both `#[var]` and `#{spel}`. The variables it resolves are whatever has been put into `ScenarioVars` earlier in the scenario — set from Gherkin, from another step, or loaded from a file.
+
+> File: `features/readme/scene/some_text.txt`
+> ```
+> The #[animal] lives in #[location]
+> ```
+
 ```gherkin
 Scenario: Parse files for scenario variables
   * var animal="wolf"
   * var location="forest"
   * Parse file for scenario variables
 ```
-```javascript
+
+```java
 @Inject
 private ScenarioVars scenarioVars;
-    
+
 @Given("Parse file for scenario variables")
 public void parseFileForScenarioVars() {
-    assertEquals("The wolf lives in forest", ScenarioVarsUtils.parse("features/readme/scene/some_text.txt", scenarioVars));
+    // animal="wolf" and location="forest" were set in the Gherkin steps above,
+    // so #[animal] resolves to "wolf" and #[location] resolves to "forest".
+    assertEquals("The wolf lives in forest",
+            ScenarioVarsUtils.parse("features/readme/scene/some_text.txt", scenarioVars));
 }
 ```
 
-## 1.4 Path variables
-For JSON type variables you may access certain values by using Jackson paths `/`:
-```gherkin
-* var x=
-  """json
-    {"book":{
-        "details":{"title":"Moby Dick"}
-      }
-    }
-  """
-* [util] Match #[x/book/details/title] with Moby Dick
-```
+### JSON Pointer access into JSON-typed variables
 
-Play with the [Readme examples](https://github.com/fslev/cucumber-jutils/tree/main/src/test/resources/features/readme) for getting a better insight on how scenario variables work.  
-
-# <a name="assertion-support"></a> 2. Assertion support
-[Cucumber-JUtils](https://github.com/fslev/cucumber-jutils) already ships with [**JTest-Utils**](https://github.com/fslev/jtest-utils) that has some powerful assertions in terms of Objects matching.   
-
-
-# <a name="spel-support"></a> 3. SpEL support
-You may use [SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions inside Gherkin or resource files, delimited by `#{` and `}`:
-### 3.1 Gherkin
-```Gherkin
-Feature: SpEL
-
-  Scenario: Use SpEL inside Gherkin
-    * var number="5"
-    * var isOddNumber="#{ #[number] % 2 != 0 }"
-    * [util] Match true with #[isOddNumber]
-```
-
-### 3.2 Resource
-[SpEL](https://docs.spring.io/spring-framework/docs/5.3.x/reference/html/core.html#expressions) expressions used inside files:  
-> File path: features/readme/scene/some_text_with_spel.txt
->> "Is #[number] odd: #{ #[number] % 2 !=0 }" 
-
+For variables holding JSON, address inner values with `/` paths (Jackson [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) style):
 
 ```gherkin
-Scenario: Use SpEL inside files
+Scenario: Path variables
+  * var x=
+    """json
+    {"book":{"details":{"title":"Moby Dick"}}}
+    """
+  * [util] Match #[x/book/details/title] with Moby Dick
+```
+
+Works for both `String`-typed JSON values and `Map`/`List` values:
+
+```java
+ScenarioVars vars = new ScenarioVars();
+vars.put("var1", Map.of("a1", true, "a2", Map.of("a21", List.of("value1", 2, true))));
+assertTrue(vars.get("var1/a2") instanceof ObjectNode);
+assertEquals(new IntNode(2), vars.get("var1/a2/a21/1"));
+```
+
+### Dynamic built-in variables
+
+`ScenarioVars.get(name)` recognises four reserved keys that compute a value at read time:
+
+| Name           | Returns                                                   |
+|----------------|-----------------------------------------------------------|
+| `uid`          | `String` — random UUID                                    |
+| `now`          | `Long` — `System.currentTimeMillis()`                     |
+| `short-random` | `Integer` — `0..Short.MAX_VALUE`                          |
+| `int-random`   | `Integer` — `0..Integer.MAX_VALUE`                        |
+
+```gherkin
+* var requestId="#[uid]"
+* var ts="#[now]"
+```
+
+### SpEL expressions
+
+`#{ … }` evaluates [Spring Expression Language](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions). Variables are substituted first, then SpEL is evaluated:
+
+```gherkin
+Scenario: SpEL inside Gherkin
+  * var number="5"
+  * var isOddNumber="#{ #[number] % 2 != 0 }"
+  * [util] Match true with #[isOddNumber]
+```
+
+SpEL works inside files too. If a file contains both placeholders and SpEL, `ScenarioVarsUtils.parse` resolves both:
+
+> File: `features/readme/scene/some_text_with_spel.txt`
+> ```
+> "Is #[number] odd: #{ #[number] % 2 != 0 }"
+> ```
+
+```gherkin
+Scenario: SpEL inside files
   * var content from file "features/readme/scene/some_text_with_spel.txt"
   * var number="5"
   * [util] Match "Is 5 odd: true" with #[content]
 ```
 
-__Note:__ `ScenarioVarsUtils.parse()` not only parses for scenario variables, but also for SpEL expressions:  
-```javascript
-@Inject
-private ScenarioVars scenarioVars;
-    
-@Given("Parse file for SpEL")
-public void parseFileForSpEL() {
-    assertEquals("\"Is 5 odd: true\"", ScenarioVarsUtils.parse("features/readme/scene/some_text_with_spel.txt", scenarioVars));
-}
-```
+### Predefined assertion steps
+
 ```gherkin
-Scenario: Parse files for SpEL
-  * var number="5"
-  * Parse file for SpEL
+# Equality (compares JSON, XML, regex, primitives — all via JTest-Utils ObjectMatcher)
+* [util] Match true with true
+* [util] Match {"a":1} with {"a":1, "b":2} using matchConditions=JSON_NON_EXTENSIBLE_OBJECT
+* [util] Match expected against
+  """
+  some doc-string content
+  """
+* [util] Match expected against file "path/to/file.json"
+* [util] Match expected against table
+  | k1 | k2 |
+  | v1 | v2 |
+* [util] Match someValue against NULL
+
+# Inverse — assertion fails if the values match
+* [util] Negative match a with b
 ```
-Play with the [Readme examples](https://github.com/fslev/cucumber-jutils/tree/main/src/test/resources/features/readme) for getting a better insight on how SpEL expressions are used.  
 
+### Predefined date / time steps
 
-# <a name="predefined-steps"></a> 4. Predefined common steps
-
-### 4.1 Matching
-```Gherkin
-  # throws and AssertionError 
-  * [util] Match true with false
-```
-### 4.2 Date time
-```Gherkin
-  * [time-util] Check period from 2019-02-03 23:58:12+0200 to 2019-02-04 01:59:10+0300 is 1 HOURS using date time pattern yyyy-MM-dd HH:mm:ssZ
-
+```gherkin
+Scenario: Date arithmetic and period checks
   * var currentMillis="#[now]"
   * [time-util] date var currentDate=from millis #[currentMillis] PLUS 0 YEARS with format pattern=yyyy-MM-dd
-  * [time-util] date var futureDateYears=from millis #[currentMillis] PLUS 15 YEARS with format pattern=yyyy-MM-dd
-  * [time-util] Check period from #[currentDate] to #[futureDateYears] is 15 YEARS using date pattern yyyy-MM-dd
+  * [time-util] date var futureDate=from millis #[currentMillis] PLUS 15 YEARS with format pattern=yyyy-MM-dd
+  * [time-util] Check period from #[currentDate] to #[futureDate] is 15 YEARS using date pattern yyyy-MM-dd
+  * [time-util] Check period from 2019-02-03 23:58:12+0200 to 2019-02-04 01:59:10+0300 is 1 HOURS using date time pattern yyyy-MM-dd HH:mm:ssZ
+  * [time-util] date millis var ts=from date 2021-03-07 18:44:27.345+0000 PLUS 1 HOURS with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
+  * [util] Match #[ts] with 1615146267345
 ```
 
-### 4.3 Sleep
+Negative variants (`doesn't match`) and `MINUS` are supported:
+
 ```gherkin
-  * [util] Wait 10.471s
-  * [util] Wait 2.5m
+* [time-util] Check period from 2020-02-03 to 2021-02-03 doesn't match 36 DAYS using date pattern yyyy-MM-dd
+* [time-util] date var pastDate=from millis #[currentMillis] MINUS 31 DAYS with format pattern=yyyy-MM-dd
 ```
 
-# <a name="utility-classes"></a> 5. Utility classes
-- `ScenarioVars` - it stores all scenario variables. Access it via injection: `com.google.inject.Inject`
-- `ScenarioVarsUtils` - it sets scenario variables and parses files for both scenario variables and SpEL expressions
-- `ScenarioVarsParser` - it parses a String for scenario variables and SpEL expressions
-- `ScenarioUtils` - fast access to the underlying Cucumber `Scenario.class` and used for writing:
-```javascript
+### Sleep
+
+```gherkin
+* [util] Wait 10.471s
+* [util] Wait 2.5m
+```
+
+### Parameter-type integration (transparent)
+
+`com.cucumber.utils.context.config.ParameterTypesConfig` registers a default Cucumber parameter transformer that runs every step argument, doc string, and data table cell through `ScenarioVarsParser` — first `#[var]` substitution, then `#{spel}` evaluation. After substitution, if the parameter type is not `Object`, the value is JSON-deserialized via Jackson, falling back to reflective conversion when it isn't valid JSON.
+
+Two reserved literals are recognised in step args:
+
+| Literal     | Becomes                  |
+|-------------|--------------------------|
+| `[_null]`   | `null`                   |
+| `[_blank]`  | `""` (empty string)      |
+
+## Utility classes
+
+| Class                                                         | What you call                                                                                              |
+|---------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| `ScenarioVars`                                                | `get`, `getAsString`, `put`, `putAll`, `nameSet`, `containsVariable`, `size`                               |
+| `ScenarioVarsUtils`                                           | `parse(filePath, vars)`, `loadScenarioVarsFromFile`, `loadScenarioVarsFromDir`, `loadFileAsScenarioVariable` |
+| `ScenarioVarsParser`                                          | `parse(source, vars)` — runs substitution + SpEL on a string                                              |
+| `ScenarioUtils`                                               | `log(msg, args...)`, `getScenario()` — write to the active Cucumber scenario report                       |
+
+```java
 @Inject
 private ScenarioUtils scenarioUtils;
 
@@ -348,8 +362,10 @@ public void writeSomething(String name, Object value) {
 }
 ```
 
-# Tutorial
-Follow the [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) for a better picture on how this library should be used.
+## Tutorial
 
-# Website
-https://fslev.github.io/cucumber-jutils/
+The [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) walks through a full project setup.
+
+## License
+
+[Apache License 2.0](LICENSE)

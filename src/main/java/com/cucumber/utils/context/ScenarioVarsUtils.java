@@ -9,41 +9,39 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.*;
+import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.PROPERTIES;
+import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.YAML;
+import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.YML;
+import static com.cucumber.utils.context.vars.ScenarioVars.FileExtension.varFileExtensions;
 
 public final class ScenarioVarsUtils {
 
     private ScenarioVarsUtils() {
-
     }
 
     private static final Logger LOG = LogManager.getLogger();
 
     /**
-     * Reads file content, parses it by any scenario variables found (...#[scenarioVariable]...) and returns it
-     *
-     * @param filePath
-     * @param scenarioVars
-     * @return
+     * Reads file content and substitutes any scenario variables ({@code #[var]}) and SpEL expressions ({@code #{...}}) inside it.
      */
     public static String parse(String filePath, ScenarioVars scenarioVars) {
         try {
             return ScenarioVarsParser.parse(ResourceUtils.read(filePath), scenarioVars).toString();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
     }
 
     /**
-     * Loads scenario variables from all supported file patterns: .properties, .yaml, ...
+     * Recursively scans a directory and loads each supported file as one or more scenario variables.
      *
      * @return names of loaded variables
      */
@@ -54,42 +52,48 @@ public final class ScenarioVarsUtils {
             filePaths.forEach(filePath -> {
                 try {
                     if (!vars.addAll(loadScenarioVarsFromFile(filePath, scenarioVars))) {
-                        throw new RuntimeException(System.lineSeparator() + "Ambiguous loading of scenario variables from dir '" + dirPath
-                                + "'" + System.lineSeparator() + "File '" + filePath + "' contains a variable or is named " +
-                                "after a variable that was already set while traversing directory");
+                        throw new RuntimeException(("""
+
+                                Ambiguous loading of scenario variables from dir '%s'
+                                File '%s' contains a variable or is named after a variable that was already set while traversing directory""")
+                                .formatted(dirPath, filePath));
                     }
                 } catch (InvalidScenarioVarFileType e) {
                     LOG.warn(e.getMessage());
                 }
             });
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-        LOG.debug("Loaded from dir '{}', scenario variables with the following names:{}{}", dirPath, System.lineSeparator(), vars);
+        LOG.debug("Loaded from dir '{}', scenario variables with the following names:\n{}", dirPath, vars);
         return vars;
     }
 
     /**
-     * @param filePath
+     * Loads scenario variables from a single file. Properties and YAML files are flattened into one variable per
+     * key; other supported text files become a single variable named after the file.
+     *
      * @return names of loaded variables
      */
     public static Set<String> loadScenarioVarsFromFile(String filePath, ScenarioVars scenarioVars) {
         if (filePath.endsWith(PROPERTIES.value())) {
             return loadVarsFromPropertiesFile(filePath, scenarioVars);
-        } else if (filePath.endsWith(YAML.value()) || filePath.endsWith(YML.value())) {
-            return loadVarsFromYamlFile(filePath, scenarioVars);
-        } else if (Arrays.stream(varFileExtensions()).anyMatch(filePath::endsWith)) {
-            return new HashSet<>(Collections.singletonList(loadFileAsScenarioVariable(filePath, scenarioVars, null)));
-        } else {
-            throw new InvalidScenarioVarFileType();
         }
+        if (filePath.endsWith(YAML.value()) || filePath.endsWith(YML.value())) {
+            return loadVarsFromYamlFile(filePath, scenarioVars);
+        }
+        if (Arrays.stream(varFileExtensions()).anyMatch(filePath::endsWith)) {
+            return Set.of(loadFileAsScenarioVariable(filePath, scenarioVars, null));
+        }
+        throw new InvalidScenarioVarFileType();
     }
 
     public static String loadFileAsScenarioVariable(String filePath, ScenarioVars scenarioVars, @Nullable String varName) {
         try {
             String fileName = ResourceUtils.getFileName(filePath);
-            if (Arrays.stream(varFileExtensions())
-                    .noneMatch(fileName::endsWith)) {
+            if (Arrays.stream(varFileExtensions()).noneMatch(fileName::endsWith)) {
                 throw new RuntimeException("Invalid file extension: " + filePath +
                         " .Must use one of the following: \"" + Arrays.toString(varFileExtensions()));
             }
@@ -98,7 +102,9 @@ public final class ScenarioVarsUtils {
             scenarioVars.put(key, value);
             LOG.debug("-> Loaded file '{}' into a scenario variable", filePath);
             return key;
-        } catch (Exception e) {
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
@@ -108,7 +114,7 @@ public final class ScenarioVarsUtils {
         try {
             p = ResourceUtils.readProps(filePath);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
         }
         p.forEach((k, v) -> scenarioVars.put(k.toString(), v.toString().trim()));
         LOG.debug("-> Loaded scenario variables from file {}", filePath);
@@ -119,11 +125,11 @@ public final class ScenarioVarsUtils {
         Map<String, Object> map;
         try {
             map = ResourceUtils.readYaml(filePath);
-            if (map == null) {
-                throw new RuntimeException("Incorrect data inside Yaml file: " + filePath);
-            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UncheckedIOException(e);
+        }
+        if (map == null) {
+            throw new RuntimeException("Incorrect data inside Yaml file: " + filePath);
         }
         map.forEach(scenarioVars::put);
         LOG.debug("-> Loaded scenario variables from file '{}'", filePath);

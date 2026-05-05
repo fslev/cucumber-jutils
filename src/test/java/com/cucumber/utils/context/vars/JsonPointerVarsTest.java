@@ -4,19 +4,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.IntNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class JsonPointerVarsTest {
+class JsonPointerVarsTest {
 
     @Test
-    public void testStringPathVar() {
+    void testStringPathVar() {
         ScenarioVars scenarioVars = new ScenarioVars();
-        scenarioVars.put("var1", "{\"a1\":\"value1\",\"a2\":{\"a21\":[1,2,3]}}");
+        scenarioVars.put("var1", """
+                {"a1":"value1","a2":{"a21":[1,2,3]}}""");
         assertNull(scenarioVars.get("var1/a1/a2"));
         assertTrue(scenarioVars.get("var1/a2/a21") instanceof String);
         assertEquals("[1,2,3]", scenarioVars.get("var1/a2/a21"));
@@ -24,7 +27,7 @@ public class JsonPointerVarsTest {
     }
 
     @Test
-    public void testObjectPathVar() {
+    void testObjectPathVar() {
         ScenarioVars scenarioVars = new ScenarioVars();
         scenarioVars.put("var1", Map.of("a1", true, "a2", Map.of("a21", List.of("value1", 2, true))));
         assertNull(scenarioVars.get("var1/a1/a2"));
