@@ -63,7 +63,11 @@ Add `com.cucumber.utils` to your Cucumber glue path so that the predefined steps
 
 ## 5. Usage
 
-### 5.1 Scenario variables in Gherkin
+### 5.1 Scenario variables
+
+Scenario-scoped key/value store. Set from Gherkin or Java; read with `#[name]` in any step argument, doc string, or data-table cell. Lifetime is one scenario.
+
+#### 5.1.1 In Gherkin
 
 `#[name]` reads a variable. Steps that accept variable substitution must use Cucumber [anonymous parameter types](https://github.com/cucumber/cucumber-expressions#readme) (`{}`).
 
@@ -75,7 +79,7 @@ Scenario: Set and read scenario variables
   * [util] Match forest with #[location]
 ```
 
-### 5.2 Set variable from a doc string
+#### 5.1.2 From a doc string
 
 ```gherkin
 Scenario: Variable from doc string
@@ -86,7 +90,7 @@ Scenario: Variable from doc string
   * [util] Match some rabbit with some #[animal]
 ```
 
-### 5.3 Set variable from a file
+#### 5.1.3 From a file
 
 ```gherkin
 Scenario: Variable from file
@@ -94,7 +98,7 @@ Scenario: Variable from file
   * [util] Match macac with #[animal]
 ```
 
-### 5.4 Set variable from a data table
+#### 5.1.4 From a data table
 
 ```gherkin
 Scenario: Variable from data table
@@ -105,43 +109,7 @@ Scenario: Variable from data table
   * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]
 ```
 
-### 5.5 Load variables from a properties or YAML file
-
-`load vars from file` parses `.properties`, `.yaml`, and `.yml` and stores each entry as a scenario variable.
-
-```gherkin
-Scenario: Load variables from properties file
-  * load vars from file "features/readme/vars/config.properties"
-  * [util] Match lioness with #[animal]
-  * [util] Match Africa with #[location]
-```
-
-### 5.6 Load variables from a directory
-
-`load vars from dir` walks a directory recursively. Each `.properties`/`.yaml`/`.yml` is flattened into one variable per key; each `.txt`/`.json`/`.xml`/`.csv`/`.html`/`.text` becomes a single variable named after the file (without extension).
-
-Given the directory:
-
-```
-placeholders/properties/drinks/
-├── drink.yaml          # beer: Bergenbier
-│                       # beers:
-│                       #   - Ursus
-│                       #   - Heineken
-└── whisky.txt          # Johnny Walker
-```
-
-```gherkin
-Scenario: Load variables from directory tree
-  * load vars from dir "placeholders/properties/drinks"
-  * [util] Match Johnny Walker with #[whisky]
-  * [util] Match Bergenbier with #[beer]
-  * [util] Match ["Ursus", "Heineken"] with #[beers]
-```
-
-`whisky.txt` becomes `#[whisky]` (filename without extension); `drink.yaml` is flattened so that `beer` and `beers` become top-level scenario variables.
-
-### 5.7 Scenario variables in Java
+#### 5.1.5 In Java
 
 Inject `ScenarioVars`. Variables set in Java are visible from Gherkin and vice versa:
 
@@ -177,7 +145,43 @@ public class ScenarioVarsAnotherReadmeSteps {
 }
 ```
 
-### 5.8 Load variables from files with `ScenarioVarsUtils`
+#### 5.1.6 Loading from a properties or YAML file
+
+`load vars from file` parses `.properties`, `.yaml`, and `.yml` and stores each entry as a scenario variable.
+
+```gherkin
+Scenario: Load variables from properties file
+  * load vars from file "features/readme/vars/config.properties"
+  * [util] Match lioness with #[animal]
+  * [util] Match Africa with #[location]
+```
+
+#### 5.1.7 Loading from a directory
+
+`load vars from dir` walks a directory recursively. Each `.properties`/`.yaml`/`.yml` is flattened into one variable per key; each `.txt`/`.json`/`.xml`/`.csv`/`.html`/`.text` becomes a single variable named after the file (without extension).
+
+Given the directory:
+
+```
+placeholders/properties/drinks/
+├── drink.yaml          # beer: Bergenbier
+│                       # beers:
+│                       #   - Ursus
+│                       #   - Heineken
+└── whisky.txt          # Johnny Walker
+```
+
+```gherkin
+Scenario: Load variables from directory tree
+  * load vars from dir "placeholders/properties/drinks"
+  * [util] Match Johnny Walker with #[whisky]
+  * [util] Match Bergenbier with #[beer]
+  * [util] Match ["Ursus", "Heineken"] with #[beers]
+```
+
+`whisky.txt` becomes `#[whisky]` (filename without extension); `drink.yaml` is flattened so that `beer` and `beers` become top-level scenario variables.
+
+#### 5.1.8 Loading from Java with `ScenarioVarsUtils`
 
 ```java
 @Inject
@@ -192,9 +196,9 @@ public void setVariablesFromFile() {
 }
 ```
 
-### 5.9 Parse a resource file for variables and SpEL
+#### 5.1.9 Parse a resource file from Java
 
-`ScenarioVarsUtils.parse` reads a file and substitutes both `#[var]` and `#{spel}`. The variables it resolves are whatever has been put into `ScenarioVars` earlier in the scenario — set from Gherkin, from another step, or loaded from a file.
+`ScenarioVarsUtils.parse` reads a file and returns it with both `#[var]` placeholders and `#{spel}` expressions resolved. The variables it resolves are whatever has been put into `ScenarioVars` earlier in the scenario — set from Gherkin, from another step, or loaded from a file. Use this when you want the substituted *string content* (rather than registering each entry as its own variable, like `loadScenarioVarsFromFile`).
 
 > File: `features/readme/scene/some_text.txt`
 > ```
@@ -221,7 +225,23 @@ public void parseFileForScenarioVars() {
 }
 ```
 
-### 5.10 JSON Pointer access into JSON-typed variables
+#### 5.1.10 Dynamic built-in variables
+
+`ScenarioVars.get(name)` recognises four reserved keys that compute a value at read time:
+
+| Name           | Returns                                                   |
+|----------------|-----------------------------------------------------------|
+| `uid`          | `String` — random UUID                                    |
+| `now`          | `Long` — `System.currentTimeMillis()`                     |
+| `short-random` | `Integer` — `0..Short.MAX_VALUE`                          |
+| `int-random`   | `Integer` — `0..Integer.MAX_VALUE`                        |
+
+```gherkin
+* var requestId="#[uid]"
+* var ts="#[now]"
+```
+
+#### 5.1.11 JSON Pointer access
 
 For variables holding JSON, address inner values with `/` paths (Jackson [JSON Pointer](https://datatracker.ietf.org/doc/html/rfc6901) style):
 
@@ -243,25 +263,11 @@ assertTrue(vars.get("var1/a2") instanceof ObjectNode);
 assertEquals(new IntNode(2), vars.get("var1/a2/a21/1"));
 ```
 
-### 5.11 Dynamic built-in variables
+### 5.2 SpEL
 
-`ScenarioVars.get(name)` recognises four reserved keys that compute a value at read time:
+`#{ … }` evaluates [Spring Expression Language](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions). The pipeline is two-pass: `#[var]` substitution runs first, then `#{spel}` evaluation runs over the result. SpEL is therefore free to reference scenario variables.
 
-| Name           | Returns                                                   |
-|----------------|-----------------------------------------------------------|
-| `uid`          | `String` — random UUID                                    |
-| `now`          | `Long` — `System.currentTimeMillis()`                     |
-| `short-random` | `Integer` — `0..Short.MAX_VALUE`                          |
-| `int-random`   | `Integer` — `0..Integer.MAX_VALUE`                        |
-
-```gherkin
-* var requestId="#[uid]"
-* var ts="#[now]"
-```
-
-### 5.12 SpEL expressions
-
-`#{ … }` evaluates [Spring Expression Language](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions). Variables are substituted first, then SpEL is evaluated:
+#### 5.2.1 Inside Gherkin
 
 ```gherkin
 Scenario: SpEL inside Gherkin
@@ -270,7 +276,9 @@ Scenario: SpEL inside Gherkin
   * [util] Match true with #[isOddNumber]
 ```
 
-SpEL works inside files too. If a file contains both placeholders and SpEL, `ScenarioVarsUtils.parse` resolves both:
+#### 5.2.2 Inside resource files
+
+If a file contains both placeholders and SpEL, `ScenarioVarsUtils.parse` (used internally by `var content from file`) resolves both:
 
 > File: `features/readme/scene/some_text_with_spel.txt`
 > ```
@@ -284,7 +292,11 @@ Scenario: SpEL inside files
   * [util] Match "Is 5 odd: true" with #[content]
 ```
 
-### 5.13 Predefined assertion steps
+### 5.3 Predefined steps
+
+Steps shipped with the library — assertion, date/time arithmetic, and sleep — accessible to any feature once the `com.cucumber.utils` glue is configured.
+
+#### 5.3.1 Assertion
 
 ```gherkin
 # Equality (compares JSON, XML, regex, primitives — all via JTest-Utils ObjectMatcher)
@@ -304,7 +316,7 @@ Scenario: SpEL inside files
 * [util] Negative match a with b
 ```
 
-### 5.14 Predefined date / time steps
+#### 5.3.2 Date / time
 
 ```gherkin
 Scenario: Date arithmetic and period checks
@@ -324,14 +336,14 @@ Negative variants (`doesn't match`) and `MINUS` are supported:
 * [time-util] date var pastDate=from millis #[currentMillis] MINUS 31 DAYS with format pattern=yyyy-MM-dd
 ```
 
-### 5.15 Sleep
+#### 5.3.3 Sleep
 
 ```gherkin
 * [util] Wait 10.471s
 * [util] Wait 2.5m
 ```
 
-### 5.16 Parameter-type integration (transparent)
+### 5.4 Parameter-type integration (transparent)
 
 `com.cucumber.utils.context.config.ParameterTypesConfig` registers a default Cucumber parameter transformer that runs every step argument, doc string, and data table cell through `ScenarioVarsParser` — first `#[var]` substitution, then `#{spel}` evaluation. After substitution, if the parameter type is not `Object`, the value is JSON-deserialized via Jackson, falling back to reflective conversion when it isn't valid JSON.
 
