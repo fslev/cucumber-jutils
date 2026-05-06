@@ -109,9 +109,46 @@ Scenario: Variable from data table
   * [util] Match [{"feline":"lioness", "marsupial":"kangaroo"}, {"feline":"cougar", "marsupial":"tasmanian devil"}] with #[animals]
 ```
 
-#### 4.1.5 In Java
+#### 4.1.5 Loading from a properties or YAML file
 
-Inject `ScenarioVars`. Variables set in Java are visible from Gherkin and vice versa:
+`load vars from file` parses `.properties`, `.yaml`, and `.yml` and stores each entry as a scenario variable.
+
+```gherkin
+Scenario: Load variables from properties file
+  * load vars from file "features/readme/vars/config.properties"
+  * [util] Match lioness with #[animal]
+  * [util] Match Africa with #[location]
+```
+
+#### 4.1.6 Loading from a directory
+
+`load vars from dir` walks a directory recursively. Each `.properties`/`.yaml`/`.yml` is flattened into one variable per key; each `.txt`/`.json`/`.xml`/`.csv`/`.html`/`.text` becomes a single variable named after the file (without extension).
+
+Given the directory:
+
+```
+placeholders/properties/drinks/
+├── drink.yaml          # beer: Bergenbier
+│                       # beers:
+│                       #   - Ursus
+│                       #   - Heineken
+└── whisky.txt          # Johnny Walker
+```
+
+```gherkin
+Scenario: Load variables from directory tree
+  * load vars from dir "placeholders/properties/drinks"
+  * [util] Match Johnny Walker with #[whisky]
+  * [util] Match Bergenbier with #[beer]
+  * [util] Match ["Ursus", "Heineken"] with #[beers]
+```
+
+`whisky.txt` becomes `#[whisky]` (filename without extension); `drink.yaml` is flattened so that `beer` and `beers` become top-level scenario variables.
+
+
+#### 4.1.7 In Java
+
+Inject `ScenarioVars`. Variables set in Java are also visible from Gherkin and vice versa:
 
 ```java
 @ScenarioScoped
@@ -145,41 +182,6 @@ public class ScenarioVarsAnotherReadmeSteps {
 }
 ```
 
-#### 4.1.6 Loading from a properties or YAML file
-
-`load vars from file` parses `.properties`, `.yaml`, and `.yml` and stores each entry as a scenario variable.
-
-```gherkin
-Scenario: Load variables from properties file
-  * load vars from file "features/readme/vars/config.properties"
-  * [util] Match lioness with #[animal]
-  * [util] Match Africa with #[location]
-```
-
-#### 4.1.7 Loading from a directory
-
-`load vars from dir` walks a directory recursively. Each `.properties`/`.yaml`/`.yml` is flattened into one variable per key; each `.txt`/`.json`/`.xml`/`.csv`/`.html`/`.text` becomes a single variable named after the file (without extension).
-
-Given the directory:
-
-```
-placeholders/properties/drinks/
-├── drink.yaml          # beer: Bergenbier
-│                       # beers:
-│                       #   - Ursus
-│                       #   - Heineken
-└── whisky.txt          # Johnny Walker
-```
-
-```gherkin
-Scenario: Load variables from directory tree
-  * load vars from dir "placeholders/properties/drinks"
-  * [util] Match Johnny Walker with #[whisky]
-  * [util] Match Bergenbier with #[beer]
-  * [util] Match ["Ursus", "Heineken"] with #[beers]
-```
-
-`whisky.txt` becomes `#[whisky]` (filename without extension); `drink.yaml` is flattened so that `beer` and `beers` become top-level scenario variables.
 
 #### 4.1.8 Loading from Java with `ScenarioVarsUtils`
 
