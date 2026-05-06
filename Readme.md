@@ -92,11 +92,20 @@ Scenario: Variable from doc string
 
 #### 4.1.3 From a file
 
+`var <name> from file "<path>"` reads the file content and stores it verbatim as the variable value. Given:
+
+> File: `features/readme/vars/madagascar.crt`
+> ```
+> macac
+> ```
+
 ```gherkin
 Scenario: Variable from file
   * var animal from file "features/readme/vars/madagascar.crt"
   * [util] Match macac with #[animal]
 ```
+
+`#[animal]` resolves to `macac` — the entire file content becomes the variable's value.
 
 #### 4.1.4 From a data table
 
