@@ -209,7 +209,7 @@ public void setVariablesFromFile() {
 
 #### 4.1.9 Parse a resource file from Java
 
-`ScenarioVarsUtils.parse` reads a file and returns it with both `#[var]` placeholders and `#{spel}` expressions resolved. The variables it resolves are whatever has been put into `ScenarioVars` earlier in the scenario — set from Gherkin, from another step, or loaded from a file. Use this when you want the substituted *string content* (rather than registering each entry as its own variable, like `loadScenarioVarsFromFile`).
+`ScenarioVarsUtils.parse(path, scenarioVars)` reads a file and returns its content as one string, with every `#[var]` placeholder and `#{spel}` expression resolved against the variables already in `ScenarioVars`.  
 
 > File: `features/readme/scene/some_text.txt`
 > ```
