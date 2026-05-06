@@ -276,7 +276,7 @@ assertEquals(new IntNode(2), vars.get("var1/a2/a21/1"));
 
 ### 4.2 SpEL
 
-`#{ … }` evaluates [Spring Expression Language](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions). The pipeline is two-pass: `#[var]` substitution runs first, then `#{spel}` evaluation runs over the result. SpEL is therefore free to reference scenario variables.
+`#{ … }` evaluates [Spring Expression Language](https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#expressions). The pipeline is two-pass: Any `#[var]` substitution runs first, then `#{spel}` evaluation runs over the result. SpEL is therefore free to reference also scenario variables.
 
 #### 4.2.1 Inside Gherkin
 
