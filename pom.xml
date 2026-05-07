@@ -22,7 +22,7 @@
         <surefire.version>3.5.5</surefire.version>
         <junit.version>6.0.3</junit.version>
         <mockito.version>5.23.0</mockito.version>
-        <jtest.utils.version>6.2</jtest.utils.version>
+        <jtest.utils.version>7.0</jtest.utils.version>
         <cucumber.min.version>6.10.0</cucumber.min.version>
         <guice.min.version>4.2.1</guice.min.version>
         <spring-expression-version>7.0.7</spring-expression-version>
