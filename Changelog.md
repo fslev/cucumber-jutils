@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.1 (2026-06-15)
+- #### Changed
+  - Updated jtest-utils dependency
 
 ## 10.0 (2026-05-05)
 - #### Changed
