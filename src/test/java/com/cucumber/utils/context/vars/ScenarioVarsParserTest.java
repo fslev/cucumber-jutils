@@ -1,5 +1,11 @@
 package com.cucumber.utils.context.vars;
 
+import com.cucumber.utils.context.ScenarioUtils;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import io.cucumber.guice.CucumberModules;
+import io.cucumber.guice.ScenarioScope;
+import io.cucumber.java.Scenario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class ScenarioVarsParserTest {
 
@@ -252,5 +260,22 @@ class ScenarioVarsParserTest {
         scenarioVars.put("myJson", "{\"a\":1}");
         String s = "#{T(io.json.compare.util.JsonUtils).toJson('#[myJson]').get('a').asInt()}";
         assertEquals(1, ScenarioVarsParser.parse(s, scenarioVars));
+    }
+
+    @Test
+    void testSpelResultIsLoggedToTheRunningScenario() {
+        Injector injector = Guice.createInjector(CucumberModules.createScenarioModule());
+        ScenarioScope scope = injector.getInstance(ScenarioScope.class);
+        scope.enterScope();
+        try {
+            Scenario scenario = mock(Scenario.class);
+            injector.getInstance(ScenarioUtils.class).init(scenario);
+            ScenarioVars vars = injector.getInstance(ScenarioVars.class);
+            vars.put("a", 1);
+            assertEquals(3, ScenarioVarsParser.parse("#{#[a]+2}", vars));
+            verify(scenario).log("SpEL #{1+2} -> 3");
+        } finally {
+            scope.exitScope();
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.cucumber.utils.context.vars;
 
+import com.cucumber.utils.context.ScenarioUtils;
 import com.fasterxml.jackson.core.JsonPointer;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Inject;
 import io.cucumber.guice.ScenarioScoped;
 import io.json.compare.util.JsonUtils;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +25,9 @@ public class ScenarioVars {
     private static final Pattern NAME_PATTERN = Pattern.compile("[a-zA-Z0-9_$\\-.@]+");
 
     private final Map<String, Object> vars = new HashMap<>();
+
+    @Inject
+    private ScenarioUtils scenarioUtils;
 
     public String getAsString(String name) {
         Object val = get(name);
@@ -68,6 +73,11 @@ public class ScenarioVars {
 
     public int size() {
         return vars.size();
+    }
+
+    // Injected inside a Cucumber scenario; null when ScenarioVars is created directly
+    ScenarioUtils scenarioUtils() {
+        return scenarioUtils;
     }
 
     public enum FileExtension {

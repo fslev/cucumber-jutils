@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.3 (2026-09-23)
+- #### Changed
+  - Inside a scenario, each evaluated SpEL expression is logged to the scenario log (Cucumber report) instead of Log4j INFO; long results are cropped.
+
 ## 10.2 (2026-09-23)
 - #### Changed
   - Each evaluated SpEL expression is logged at INFO (`SpEL #{expr} -> result`); an invalid one is logged at WARN with the reason and the value left unparsed.

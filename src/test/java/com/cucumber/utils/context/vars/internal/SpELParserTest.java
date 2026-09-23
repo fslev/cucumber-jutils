@@ -1,5 +1,7 @@
 package com.cucumber.utils.context.vars.internal;
 
+import com.cucumber.utils.context.ScenarioUtils;
+import io.cucumber.java.Scenario;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -9,6 +11,8 @@ import org.apache.logging.log4j.core.config.Property;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 public class SpELParserTest {
 
@@ -181,6 +188,34 @@ public class SpELParserTest {
     }
 
     @Test
+    public void logsToScenarioWhenRunningInsideOne() {
+        Scenario scenario = mock(Scenario.class);
+        assertEquals("two plus three is 5 and two plus two is 4",
+                SpELParser.parseQuietly("two plus three is #{2+3} and two plus two is #{2+2}", scenarioUtilsOf(scenario)));
+        InOrder inOrder = inOrder(scenario);
+        inOrder.verify(scenario).log("SpEL #{2+3} -> 5");
+        inOrder.verify(scenario).log("SpEL #{2+2} -> 4");
+        assertEquals(List.of(), logged(Level.INFO));
+    }
+
+    @Test
+    public void cropsLargeResultInScenarioLog() {
+        Scenario scenario = mock(Scenario.class);
+        SpELParser.parseQuietly("#{'a'.repeat(70000)}", scenarioUtilsOf(scenario));
+        ArgumentCaptor<String> message = ArgumentCaptor.forClass(String.class);
+        verify(scenario).log(message.capture());
+        assertTrue(message.getValue().startsWith("SpEL #{'a'.repeat(70000)} -> aaa"), message.getValue());
+        assertTrue(message.getValue().contains("<...cropped content...>"));
+        assertTrue(message.getValue().length() < 70000);
+    }
+
+    @Test
+    public void logsToLog4jWhenScenarioIsNotInitialized() {
+        assertEquals(3, SpELParser.parseQuietly("#{1+2}", new ScenarioUtils()));
+        assertEquals(List.of("SpEL #{1+2} -> 3"), logged(Level.INFO));
+    }
+
+    @Test
     public void logsNothingForTextWithoutExpressions() {
         SpELParser.parseQuietly("T(invalid.net.IDN).toASCII('testá.com')");
         assertEquals(List.of(), logged(Level.INFO));
@@ -193,6 +228,12 @@ public class SpELParserTest {
 
     public static int nextCount() {
         return COUNTER.incrementAndGet();
+    }
+
+    private static ScenarioUtils scenarioUtilsOf(Scenario scenario) {
+        ScenarioUtils scenarioUtils = new ScenarioUtils();
+        scenarioUtils.init(scenario);
+        return scenarioUtils;
     }
 
     private List<String> logged(Level level) {
