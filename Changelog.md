@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.2 (2026-09-23)
+- #### Changed
+  - Each evaluated SpEL expression is logged at INFO (`SpEL #{expr} -> result`); an invalid one is logged at WARN with the reason and the value left unparsed.
+  - A scenario variable holding SpEL is evaluated once per `#[var]` reference instead of twice.
+
 ## 10.1 (2026-06-15)
 - #### Changed
   - Updated jtest-utils dependency

@@ -24,8 +24,9 @@ public class ScenarioVarsSubstitutor {
             if (variableNames.isEmpty()) {
                 return source;
             }
+            // containsVariable first: get() evaluates SpEL inside the value, and replacePlaceholders calls get() again
             return StringParser.replacePlaceholders(variableNames, source, PREFIX, SUFFIX, scenarioVars::get,
-                    k -> scenarioVars.get(k) != null || scenarioVars.containsVariable(k));
+                    k -> scenarioVars.containsVariable(k) || scenarioVars.get(k) != null);
         }
         return source;
     }

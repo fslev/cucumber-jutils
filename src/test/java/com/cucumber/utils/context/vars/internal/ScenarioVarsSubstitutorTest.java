@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -14,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ScenarioVarsSubstitutorTest {
+
+    private static final AtomicInteger COUNTER = new AtomicInteger();
 
     private ScenarioVars scenarioVars;
 
@@ -142,5 +145,17 @@ class ScenarioVarsSubstitutorTest {
         String s = "]invalid#[";
         scenarioVars.put("p", "");
         assertEquals("]invalid#[", ScenarioVarsSubstitutor.replace(s, scenarioVars));
+    }
+
+    @Test
+    void testSpelInsideScenarioVarIsEvaluatedOncePerReference() {
+        COUNTER.set(0);
+        scenarioVars.put("counter", "#{T(com.cucumber.utils.context.vars.internal.ScenarioVarsSubstitutorTest).nextCount()}");
+        assertEquals(1, ScenarioVarsSubstitutor.replace("#[counter]", scenarioVars));
+        assertEquals("count: 2", ScenarioVarsSubstitutor.replace("count: #[counter]", scenarioVars));
+    }
+
+    public static int nextCount() {
+        return COUNTER.incrementAndGet();
     }
 }
