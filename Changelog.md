@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.4 (2026-09-24)
+- #### Changed
+  - Update dependencies (jtest-utils 7.3)  
+
 ## 10.3 (2026-09-23)
 - #### Changed
   - Inside a scenario, each evaluated SpEL expression is logged to the scenario log (Cucumber report) instead of Log4j INFO; long results are cropped.
