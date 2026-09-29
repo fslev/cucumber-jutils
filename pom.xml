@@ -7,7 +7,7 @@
     <version>10.5-SNAPSHOT</version>
 
     <name>Cucumber JUtils</name>
-    <description>A little helper for Cucumber Java</description>
+    <description>Cucumber-JVM extension with scenario variables, SpEL templating and JSON/XML/text assertion steps</description>
     <url>https://github.com/fslev/cucumber-jutils</url>
     <developers>
         <developer>

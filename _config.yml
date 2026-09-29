@@ -5,8 +5,9 @@ plugins:
   - jekyll-remote-theme
 
 title: "Cucumber JUtils"
-tagline: "An extension to Cucumber for Java, with scenario variables and assertion support"
+tagline: "Cucumber for Java extension: scenario variables, SpEL templating and JSON/XML assertion steps"
 description: "It augments your Cucumber based test framework with some powerful features like: scenario scoped variables, assertions, SpEL plus some Utilities pre-defined steps and classes"
 author: "Florin Slevoaca"
 url: "https://fslev.github.io/cucumber-jutils"
 permalink: pretty
+google_analytics: G-T93JGK4KGJ

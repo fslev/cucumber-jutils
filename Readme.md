@@ -389,6 +389,11 @@ public void writeSomething(String name, Object value) {
 
 The [Cucumber JUtils Tutorial](https://github.com/fslev/cucumber-jutils-tutorial) walks through a full project setup.
 
-## 7. License
+## 7. Related projects
+
+- [jtest-utils](https://github.com/fslev/jtest-utils) — JSON, XML, text and HTTP response matching with regex and value capture (used by the assertion steps).
+- [json-compare](https://github.com/fslev/json-compare) — Java library for comparing JSONs.
+
+## 8. License
 
 [Apache License 2.0](LICENSE)
