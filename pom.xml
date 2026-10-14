@@ -4,7 +4,7 @@
 
     <groupId>io.github.fslev</groupId>
     <artifactId>cucumber-jutils</artifactId>
-    <version>10.5</version>
+    <version>10.6-SNAPSHOT</version>
 
     <name>Cucumber JUtils</name>
     <description>Cucumber-JVM extension with scenario variables, SpEL templating and JSON/XML/text assertion steps</description>
@@ -356,7 +356,7 @@
         <connection>scm:git:ssh://git@github.com/fslev/cucumber-jutils.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/fslev/cucumber-jutils.git</developerConnection>
         <url>https://github.com/fslev/cucumber-jutils/tree/master</url>
-        <tag>cucumber-jutils-10.5</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <licenses>
