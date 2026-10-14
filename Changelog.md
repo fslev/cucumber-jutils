@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.5 (2026-10-14)
+- #### Changed
+  - Update dependencies (jtest-utils 7.4): JSON diff paths in assertion messages are labelled `EXPECTED` / `ACTUAL`, and nested differences show full expected paths.
+  - Cucumber dependency range capped below 8 (`[6.10.0,8)`); Cucumber 8 is not supported yet.
+
 ## 10.4 (2026-09-24)
 - #### Changed
   - Update dependencies (jtest-utils 7.3)  
