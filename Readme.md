@@ -327,7 +327,19 @@ Steps shipped with the library â€” assertion, date/time arithmetic, and sleep â€
 * [util] Negative match a with b
 ```
 
-#### 4.3.2 Date / time
+#### 4.3.2 Capturing values
+
+A `~[name]` placeholder in the expected value captures that part of the actual value into a scenario variable,
+reusable in later steps as `#[name]`. When the placeholder is the whole value, it also captures a whole JSON object,
+JSON array or XML child elements ([details](https://github.com/fslev/jtest-utils#6-capture-placeholders)).
+
+```gherkin
+* [util] Match {"id":"~[id]","data":{"user":"~[user]"}} with {"id":7,"data":{"user":{"name":"Ann"}}}
+* [util] Match 7 with #[id]
+* [util] Match {"owner":{"name":"Ann"}} with {"owner":#[user]}
+```
+
+#### 4.3.3 Date / time
 
 ```gherkin
 Scenario: Date arithmetic and period checks
@@ -347,7 +359,7 @@ Negative variants (`doesn't match`) and `MINUS` are supported:
 * [time-util] date var pastDate=from millis #[currentMillis] MINUS 31 DAYS with format pattern=yyyy-MM-dd
 ```
 
-#### 4.3.3 Sleep
+#### 4.3.4 Sleep
 
 ```gherkin
 * [util] Wait 10.471s
