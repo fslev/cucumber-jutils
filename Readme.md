@@ -16,7 +16,7 @@ doc string and data table cell, including those of your own steps.
 - **Scenario variables**: set them in Gherkin, Java or from files. Read them with `#[name]`, or read a nested field with `#[name/path]`
 - **SpEL**: `#{ … }` expressions are evaluated in step arguments and resource files
 - **Assertion steps**: match JSON, XML, text and tables with regex support, and capture actual values with `~[name]`
-- **HTTP responses**: check status, reason, headers and body from your own steps, with the expected response written as JSON in Gherkin
+- **HTTP responses**: check status, reason, headers and body from your own steps, with the expected response written as JSON in Gherkin or resource files.
 - **Date/time steps**: shift dates and check the period between two dates
 - **Works in your own steps**: `{}` parameters, doc strings and data tables are resolved and converted to the declared Java type
 
