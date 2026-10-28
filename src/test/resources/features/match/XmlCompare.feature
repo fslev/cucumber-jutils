@@ -208,3 +208,16 @@ Feature: Match XMLs
     # This should log regex related warning messages
     And [util] Negative match <xml><a>[0-9]</a></xml> with <xml><a>[0-9]</a></xml>
     And [util] Negative match #[test1] with <xml><a>[0-9]</a></xml>
+
+  Scenario: Capture XML child elements and reuse them
+    * var expected="<r><a>~[sub]</a></r>"
+    * var actual=
+    """
+<r><a><b>1</b><c x="2"/></a></r>
+    """
+    * [util] Match #[expected] with #[actual]
+    * var copy=
+    """
+<copy><b>1</b><c x="2"/></copy>
+    """
+    * [util] Match #[copy] with <copy>#[sub]</copy>

@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.6 (2026-10-28)
+- #### Changed
+  - Update dependencies (jtest-utils 7.5): a `~[name]` placeholder can capture a whole JSON object, JSON array or XML child elements when it is the only thing in the value, e.g. `{"user": "~[user]"}` or `<a>~[sub]</a>`. The captured value is JSON / XML text, ready to reuse as `#[user]` (in JSON without quotes).
+
 ## 10.5 (2026-10-14)
 - #### Changed
   - Update dependencies (jtest-utils 7.4): JSON diff paths in assertion messages are labelled `EXPECTED` / `ACTUAL`, and nested differences show full expected paths.

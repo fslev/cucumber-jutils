@@ -136,3 +136,8 @@ Feature: Match JSONs
     * [util] Match Nigel Rees with #[author1]
     * [util] Match Herman Melville with #[author2]
 
+  Scenario: Capture a JSON object and reuse it
+    * var expected="{"data":{"user":"~[user]"}}"
+    * var actual="{"data":{"user":{"name":"Ann","roles":["admin"]}}}"
+    * [util] Match #[expected] with #[actual]
+    * [util] Match {"owner":{"name":"Ann","roles":["admin"]}} with {"owner":#[user]}
