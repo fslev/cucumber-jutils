@@ -334,8 +334,11 @@ reusable in later steps as `#[name]`. When the placeholder is the whole value, i
 JSON array or XML child elements ([details](https://github.com/fslev/jtest-utils#6-capture-placeholders)).
 
 ```gherkin
+# Capture id = 7 and user = {"name":"Ann"}
 * [util] Match {"id":"~[id]","data":{"user":"~[user]"}} with {"id":7,"data":{"user":{"name":"Ann"}}}
+# Reuse a captured value
 * [util] Match 7 with #[id]
+# Reuse a captured JSON object (no quotes around #[user])
 * [util] Match {"owner":{"name":"Ann"}} with {"owner":#[user]}
 ```
 
