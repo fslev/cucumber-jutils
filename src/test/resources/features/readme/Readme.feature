@@ -2,31 +2,32 @@ Feature: README examples
   Every Gherkin example from Readme.md, kept here so the README stays correct.
   Scenarios named "README check" verify claims the README makes in prose.
 
-  # 3. Quickstart
-  Scenario: Variables, SpEL and matching
-    # Set two variables. #[uid] is a built-in that generates a random UUID
-    * var user="Ann"
-    * var id="#[uid]"
+  Scenario: Say hello
+    # Save "Ann" in a variable called name
+    * var name="Ann"
+    # #[name] is replaced by "Ann" before the step runs.
+    # Passes: "Hello Ann" matches "Hello Ann"
+    * [util] Match Hello Ann with Hello #[name]
 
-    # Build a value with SpEL: #[user] is replaced first, then #{ ... } is evaluated
-    * var greeting="#{ 'Hello, #[user]'.toUpperCase() }"
-    # Passes: greeting is "HELLO, ANN"
-    * [util] Match HELLO, ANN with #[greeting]
+  Scenario: Save, reuse and check values
+    # Save a value
+    * var name="Ann"
+    # Passes: #[name] is replaced by "Ann"
+    * [util] Match Hello Ann with Hello #[name]
 
-    # Store a JSON document, as one of your own steps would after calling a service
-    * var response=
+    # Save a JSON document, as one of your own steps would after calling a service
+    * var user=
       """
-      {"id": "#[id]", "user": "Ann", "role": "admin", "age": 31}
+      {"id": 42, "name": "Ann", "role": "admin"}
       """
 
-    # Passes: "A.*" is a regex, the extra field "role" is ignored,
-    # and ~[age] captures the actual age into a new variable
-    * [util] Match {"id": "#[id]", "user": "A.*", "age": "~[age]"} with #[response]
-    # Passes: the captured age is 31
-    * [util] Match 31 with #[age]
+    # Passes: the actual JSON has these fields (extra fields such as "role" are allowed),
+    # and ~[userId] saves the actual id in a new variable
+    * [util] Match {"name": "Ann", "id": "~[userId]"} with #[user]
+    # Passes: the captured id is 42
+    * [util] Match 42 with #[userId]
 
-  # 4.1 Setting variables
-  Scenario: Set variables
+  Scenario: Save values
     # From a value
     * var animal="rabbit"
     # Passes: animal is "rabbit"
@@ -36,17 +37,48 @@ Feature: README examples
     * var animals from table
       | feline  | marsupial |
       | lioness | kangaroo  |
-    # Passes: animals holds the row, keyed by header
+    # Passes: animals holds the row, keyed by the header cells
     * [util] Match [{"feline": "lioness", "marsupial": "kangaroo"}] with #[animals]
 
-    # From a directory: drink.yaml contains "beer: Bergenbier", whisky.txt contains "Johnny Walker"
+  Scenario: Load values from a folder
     * load vars from dir "placeholders/properties/drinks"
     # Passes: the YAML key "beer" became a variable
     * [util] Match Bergenbier with #[beer]
     # Passes: whisky.txt became a variable named after the file
     * [util] Match Johnny Walker with #[whisky]
 
-  # 4.2 Reading variables
+  Scenario: Check values
+    # Passes: "\d+" is a regex for digits
+    * [util] Match order-\d+ with order-42
+
+    * var actual=
+      """
+      {"name": "John", "age": 30, "cars": ["BMW", "Ford", "Fiat"]}
+      """
+    # Passes: "J.*n" matches "John". "age" isn't in the expected JSON, so it isn't checked
+    * [util] Match {"name": "J.*n", "cars": ["Fiat", "BMW"]} with #[actual]
+
+    # Passes because the values do NOT match: the names differ
+    * [util] Negative match {"name": "Ann"} with #[actual]
+
+    # Passes because the values do NOT match: JSON_NON_EXTENSIBLE_ARRAY forbids extra array elements
+    # (actual has "Fiat"), and DO_NOT_MATCH turns that mismatch into a pass
+    * [util] Match {"cars": ["BMW", "Ford"]} against #[actual] using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
+
+  Scenario: Capture values
+    * var response=
+      """
+      {"id": 7, "status": "CREATED", "owner": {"name": "Ann"}}
+      """
+
+    # Passes, and saves 7 in id and the whole owner object in owner
+    * [util] Match {"id": "~[id]", "status": "CREATED", "owner": "~[owner]"} with #[response]
+
+    # Passes: the captured id is 7
+    * [util] Match 7 with #[id]
+    # Passes: a captured object is JSON text, so it's used without quotes
+    * [util] Match {"owner": #[owner]} with {"owner": {"name": "Ann"}}
+
   Scenario: Read nested values
     * var book=
       """
@@ -58,72 +90,49 @@ Feature: README examples
     # Passes: book/tags/1 is the second element of "tags"
     * [util] Match sea with #[book/tags/1]
 
-  Scenario: Refer to variables defined later
+  Scenario: Expressions
+    * var number="5"
+
+    # #[number] is replaced first, giving #{ 5 % 2 != 0 }, which is true
+    * var isOdd="#{ #[number] % 2 != 0 }"
+    # Passes: isOdd is true
+    * [util] Match true with #[isOdd]
+
+    # T(...) calls a Java class: format the number with three digits
+    * var code="#{ T(java.lang.String).format('%03d', #[number]) }"
+    # Passes: code is "005"
+    * [util] Match 005 with #[code]
+
+  Scenario: Built-in variables
+    # Save one UUID, so every later #[orderId] gives the same value
+    * var orderId="#[uid]"
+    # Passes: two uses of #[orderId] are equal
+    * [util] Match #[orderId] with #[orderId]
+
+  Scenario: Templates
     # firstName and lastName aren't set yet, so author holds the text "#[firstName] #[lastName]"
     * var author="#[firstName] #[lastName]"
 
     * var firstName="Herman"
     * var lastName="Melville"
 
-    # Passes: author is resolved when it is read, and both names are set by now
+    # Passes: author is filled in when it is read, and both names are set by now
     * [util] Match Herman Melville with #[author]
 
-  # 4.3 From Java
-  Scenario: README check - ScenarioVars from Java
-    * var location="forest"
-    * the story is told
-    * [util] Match wolf with #[animal]
-
-  # 5. SpEL
-  Scenario: SpEL
-    * var number="5"
-
-    # #[number] is replaced first, giving #{ 5 % 2 != 0 }, which evaluates to true
-    * var isOdd="#{ #[number] % 2 != 0 }"
-    # Passes: isOdd is true
-    * [util] Match true with #[isOdd]
-
-    # Call Java: format the number with three digits
-    * var code="#{ T(java.lang.String).format('%03d', #[number]) }"
-    # Passes: code is "005"
-    * [util] Match 005 with #[code]
-
-  # 6. Assertion steps
-  Scenario: Match and capture
-    * var actual=
-      """
-      {"name": "John", "age": 30, "cars": ["BMW", "Ford", "Fiat"], "owner": {"name": "Ann"}}
-      """
-
-    # Passes: "J.*n" matches "John", "age" isn't checked, ~[car] captures "BMW",
-    # and ~[owner] captures the whole object {"name": "Ann"}
-    * [util] Match {"name": "J.*n", "cars": ["Ford", "~[car]", "Fiat"], "owner": "~[owner]"} with #[actual]
-    # Passes: the captured car is BMW
-    * [util] Match BMW with #[car]
-    # Passes: a captured object is JSON text, so use it without quotes
-    * [util] Match {"owner": #[owner]} with {"owner": {"name": "Ann"}}
-
-    # Passes because the values do NOT match: the names differ
-    * [util] Negative match {"name": "Ann"} with #[actual]
-    # Passes because the values do NOT match: JSON_NON_EXTENSIBLE_ARRAY rejects the extra "Fiat",
-    # and DO_NOT_MATCH makes that mismatch a pass
-    * [util] Match {"cars": ["BMW", "Ford"]} against #[actual] using matchConditions=["JSON_NON_EXTENSIBLE_ARRAY", "DO_NOT_MATCH"]
-
-  # 7. Date, time and other steps
   Scenario: Dates
-    # Store today and today + 1 year (from epoch millis), formatted as yyyy-MM-dd
+    # Save today and today + 1 year, formatted as yyyy-MM-dd
     * var millis="#[now]"
     * [time-util] date var today=from millis #[millis] PLUS 0 DAYS with format pattern=yyyy-MM-dd
     * [time-util] date var nextYear=from millis #[millis] PLUS 1 YEARS with format pattern=yyyy-MM-dd
     # Passes: there is one year between them
     * [time-util] Check period from #[today] to #[nextYear] is 1 YEARS using date pattern yyyy-MM-dd
 
-    # Store a date-time minus 15 minutes, in the same format
+    # Save a date-time minus 15 minutes, in the same format
     * [time-util] date var start=from date 2020-04-28 18:05:58 MINUS 15 MINUTES with format pattern=yyyy-MM-dd HH:mm:ss
     # Passes: start is 15 minutes earlier
     * [util] Match 2020-04-28 17:50:58 with #[start]
 
-    # Store a date-time plus 1 hour, as epoch millis
+    # Save a date-time plus 1 hour, as epoch millis
     * [time-util] date millis var ts=from date 2021-03-07 18:44:27.345+0000 PLUS 1 HOURS with format pattern=yyyy-MM-dd HH:mm:ss.SSSZ
     # Passes: 2021-03-07 19:44:27.345 UTC in epoch millis
     * [util] Match 1615146267345 with #[ts]
@@ -138,15 +147,23 @@ Feature: README examples
     * [util] Wait 0.5s
     * [util] Wait 0.01m
 
-    # A step that does nothing: its text shows up in the report as a comment
+    # Steps that do nothing, but show up in the report:
+    # a comment, then a group of steps
     * # Orders are created below
+    * #>> Create the orders
+    * [util] Match 1 with 1
+    * #<<
 
-  # 8. Writing your own steps
   Scenario: Writing your own steps
     * var quantity="3"
     # The step receives the map {id=<random UUID>, quantity=6}
     * I order {"id": "#[uid]", "quantity": #{ #[quantity] * 2 }}
     * README check: the last order has a UUID id and quantity 6
+
+  Scenario: README check - ScenarioVars from Java
+    * var location="forest"
+    * the story is told
+    * [util] Match wolf with #[animal]
 
   Scenario: README check - what the default transformer resolves
     * var animal="rabbit"
@@ -163,3 +180,8 @@ Feature: README examples
     * README check: table cells
       | blank    | empty |
       | [_blank] |       |
+
+  Scenario: README check - Match against NULL
+    # Passes: a variable set to [_null] holds null
+    * var nothing="[_null]"
+    * [util] Match #[nothing] against NULL
