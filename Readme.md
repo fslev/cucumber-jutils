@@ -4,12 +4,14 @@
 ![Java CI with Maven](https://github.com/fslev/cucumber-jutils/actions/workflows/maven.yml/badge.svg?branch=main)
 [![Coverage Status](https://coveralls.io/repos/github/fslev/cucumber-jutils/badge.svg?branch=main)](https://coveralls.io/github/fslev/cucumber-jutils?branch=main)
 
-Variables, expressions and ready-made assertion steps for Cucumber-JVM
+Scenario variables, expressions and JSON/XML assertion steps for Cucumber-JVM
 
 Cucumber JUtils adds three things to your Cucumber tests:
 
-- **Variables**: save a value in one step and use it in any later step of the same scenario.
-- **Ready-made steps**: compare JSON, XML, text and tables, work with dates, and wait, without writing any Java.
+- **Variables**: share data between steps. Save a value in one step and use it in any later step of the same
+  scenario, with no scenario context class to write.
+- **Ready-made steps**: compare JSON, XML, text and tables (including HTTP responses), work with dates, and wait,
+  without writing any Java.
 - **Expressions**: compute values inside your feature files, such as `#{ 2 * 5 }`.
 
 It also works in the steps you write yourself, so they get variables and expressions without extra code.
@@ -29,8 +31,8 @@ Scenario: Say hello
 
 1. [Key ideas](#1-key-ideas)
 2. [Getting started](#2-getting-started)
-3. [Guide](#3-guide): [variables](#31-save-and-reuse-values), [files](#32-load-values-from-files),
-   [checking values](#33-check-values), [capturing](#34-capture-values-from-a-result),
+3. [Guide](#3-guide): [variables](#31-share-data-between-steps), [files](#32-load-values-from-files),
+   [checking values](#33-check-values-compare-json-xml-and-text), [capturing](#34-capture-values-from-a-result),
    [nested values](#35-read-nested-values), [expressions](#36-compute-values-with-expressions),
    [built-in variables](#37-built-in-variables), [templates](#38-templates-variables-that-use-later-variables),
    [dates](#39-dates-and-times), [waits and comments](#310-wait-comment-and-group-steps),
@@ -68,7 +70,7 @@ Steps that start with `[util]` or `[time-util]`, and the `var …` / `load vars 
 Every other step is one you write yourself.
 
 Most examples check a value with `[util] Match <expected> with <actual>`. It passes when the actual value matches
-the expected one, and fails the scenario otherwise. [§3.3](#33-check-values) explains how matching works.
+the expected one, and fails the scenario otherwise. [§3.3](#33-check-values-compare-json-xml-and-text) explains how matching works.
 
 ## 2. Getting started
 
@@ -230,7 +232,7 @@ That's all the setup. The rest of this guide is examples you can paste into `fir
 
 ## 3. Guide
 
-### 3.1 Save and reuse values
+### 3.1 Share data between steps
 
 Use this when several steps need the same value, for example a name you send in one step and check in another.
 
@@ -290,7 +292,7 @@ Scenario: Load values from a folder
   * [util] Match Johnny Walker with #[whisky]
 ```
 
-### 3.3 Check values
+### 3.3 Check values: compare JSON, XML and text
 
 Use this to assert that a value is what you expect. `[util] Match` compares an expected value with an actual
 value and fails the scenario if they differ. It figures out by itself whether the values are JSON, XML or text.
@@ -691,7 +693,7 @@ Scenario: Create a notebook
   # From here on, #[notebookId] can be used in later steps, for example to read or delete the notebook
 ```
 
-Each part of the response is compared with the rules in [§3.3](#33-check-values), and a failure says which part
+Each part of the response is compared with the rules in [§3.3](#33-check-values-compare-json-xml-and-text), and a failure says which part
 differs. To check that one part does **not** match, pass `DO_NOT_MATCH_HTTP_RESPONSE_BY_STATUS`, `_BY_REASON`,
 `_BY_HEADERS` or `_BY_BODY` as extra arguments to `matchHttpResponse`
 ([details](https://github.com/fslev/jtest-utils#matchhttpresponse)).
@@ -733,7 +735,7 @@ with Apache HttpClient, retrying until the response matches, and deleting the da
 
 | Symbol | Where | Meaning |
 |---|---|---|
-| `#[name]` | anywhere | Value of a variable ([§3.1](#31-save-and-reuse-values)) |
+| `#[name]` | anywhere | Value of a variable ([§3.1](#31-share-data-between-steps)) |
 | `#[name/path]` | anywhere | Nested value ([§3.5](#35-read-nested-values)) |
 | `#{ … }` | anywhere | SpEL expression ([§3.6](#36-compute-values-with-expressions)) |
 | `~[name]` | expected value of a match | Capture ([§3.4](#34-capture-values-from-a-result)) |
