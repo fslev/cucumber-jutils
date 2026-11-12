@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.7 (2026-11-12)
+- #### Changed
+  - Update dependencies (jtest-utils 7.6, json-compare 8.6): assertion messages are Markdown safe, so they read correctly when pasted into PR comments, issues or chat. JSON diffs are headed `==== DIFF 1 OF 4 ====` and use `: ` instead of ` -> `; expected and actual values follow under `EXPECTED` / `ACTUAL` labels instead of JUnit's `==> expected: <...> but was: <...>`; XML differences are plain text with their XPaths.
+  - The date step failure reads `DAYS differ: expected 2 but was 3` instead of `==> expected: <2> but was: <3>`.
+
 ## 10.6 (2026-10-28)
 - #### Changed
   - Update dependencies (jtest-utils 7.5): a `~[name]` placeholder can capture a whole JSON object, JSON array or XML child elements when it is the only thing in the value, e.g. `{"user": "~[user]"}` or `<a>~[sub]</a>`. The captured value is JSON / XML text, ready to reuse as `#[user]` (in JSON without quotes).

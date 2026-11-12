@@ -205,7 +205,7 @@ public class SpELParserTest {
         ArgumentCaptor<String> message = ArgumentCaptor.forClass(String.class);
         verify(scenario).log(message.capture());
         assertTrue(message.getValue().startsWith("SpEL #{'a'.repeat(70000)} -> aaa"), message.getValue());
-        assertTrue(message.getValue().contains("<...cropped content...>"));
+        assertTrue(message.getValue().contains("... cropped content ..."));
         assertTrue(message.getValue().length() < 70000);
     }
 

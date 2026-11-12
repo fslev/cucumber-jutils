@@ -97,7 +97,7 @@ public class DateTimeSteps {
 
     private static void assertChronoUnitsBetween(long expected, long actual, ChronoUnit chronoUnit) {
         if (expected != actual) {
-            throw new AssertionError(chronoUnit + " differ ==> expected: <" + expected + "> but was: <" + actual + ">");
+            throw new AssertionError(chronoUnit + " differ: expected " + expected + " but was " + actual);
         }
     }
 
