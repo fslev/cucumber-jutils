@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DateTimeStepsTest {
 
     /**
-     * IntelliJ's Cucumber runner reads only the message text to offer its "Click to see difference" link,
-     * using this pattern (case-insensitive, DOTALL, find).
+     * Cucumber's TeamCity formatter (io.cucumber:teamcity-formatter, used by IntelliJ for Cucumber 7+) gives the
+     * IDE its "Click to see difference" link only when the trimmed message matches this pattern (find).
      */
-    private static final Pattern INTELLIJ_EXPECTED_BUT_WAS =
-            Pattern.compile("expected: (.*)\\s+but was: (.*)", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
+    private static final Pattern CUCUMBER_TEAMCITY_EXPECTED_BUT_WAS =
+            Pattern.compile("expected: (.*)(?:\r\n|\r|\n) but was: (.*)$", Pattern.DOTALL | Pattern.CASE_INSENSITIVE);
 
     @Test
     public void chronoUnitsMismatchGivesBothValuesToIdeDiffPatterns() {
@@ -26,10 +26,10 @@ public class DateTimeStepsTest {
                 () -> DateTimeSteps.assertChronoUnitsBetween(2, 3, ChronoUnit.DAYS));
         String message = e.getMessage();
         assertTrue(message.startsWith("Days differ"), message);
-        Matcher matcher = INTELLIJ_EXPECTED_BUT_WAS.matcher(message);
+        Matcher matcher = CUCUMBER_TEAMCITY_EXPECTED_BUT_WAS.matcher(message.trim());
         assertTrue(matcher.find(), message);
-        assertEquals("2" + System.lineSeparator(), matcher.group(1));
-        assertEquals("3" + System.lineSeparator(), matcher.group(2));
+        assertEquals("2", matcher.group(1));
+        assertEquals("3", matcher.group(2));
     }
 
     @Test

@@ -95,12 +95,12 @@ public class DateTimeSteps {
         return DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
     }
 
-    // Same message shape as jtest-utils: IntelliJ's Cucumber runner builds its diff link only from the message text,
-    // by matching "expected: (.*)\s+but was: (.*)", so the values come last, each on its label's line.
+    // Same message shape as jtest-utils: IDEs that run Cucumber 7+ get their diff link from Cucumber's TeamCity
+    // formatter, which matches "expected: (.*)(?:\r\n|\r|\n) but was: (.*)$" on the trimmed message text.
     static void assertChronoUnitsBetween(long expected, long actual, ChronoUnit chronoUnit) {
         if (expected != actual) {
             String ls = System.lineSeparator();
-            throw new AssertionError(chronoUnit + " differ" + ls + ls + "EXPECTED: " + expected + ls + ls + "BUT WAS: " + actual + ls);
+            throw new AssertionError(chronoUnit + " differ" + ls + ls + "EXPECTED: " + expected + ls + " BUT WAS: " + actual + ls);
         }
     }
 
