@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.10 (2026-11-26)
+- #### Changed
+  - Update dependencies (jtest-utils 7.9, json-compare 8.9): assertion messages end with JUnit's ` ==> expected: <...> but was: <...>` suffix again, instead of the `EXPECTED` / `BUT WAS` labels of 10.7 to 10.9. IntelliJ runs Cucumber 7+ scenarios through Cucumber's TeamCity formatter, which gives the "Click to see difference" link only from the message text, and this is the layout it is built for. It is the one part of the message that is not Markdown safe.
+  - The date step failure reads `Days differ ==> expected: <2> but was: <3>` again.
+
 ## 10.9 (2026-11-26)
 - #### Changed
   - Update dependencies (jtest-utils 7.8, json-compare 8.8): assertion messages put ` BUT WAS: <value>` on the line right after `EXPECTED: <value>`. IntelliJ runs Cucumber 7+ scenarios through Cucumber's TeamCity formatter, which offers the "Click to see difference" link only for that layout, so with 10.8 scenarios still showed no link.
