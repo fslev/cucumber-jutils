@@ -95,9 +95,12 @@ public class DateTimeSteps {
         return DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault());
     }
 
-    private static void assertChronoUnitsBetween(long expected, long actual, ChronoUnit chronoUnit) {
+    // Same message shape as jtest-utils: IntelliJ's Cucumber runner builds its diff link only from the message text,
+    // by matching "expected: (.*)\s+but was: (.*)", so the values come last, each on its label's line.
+    static void assertChronoUnitsBetween(long expected, long actual, ChronoUnit chronoUnit) {
         if (expected != actual) {
-            throw new AssertionError(chronoUnit + " differ: expected " + expected + " but was " + actual);
+            String ls = System.lineSeparator();
+            throw new AssertionError(chronoUnit + " differ" + ls + ls + "EXPECTED: " + expected + ls + ls + "BUT WAS: " + actual + ls);
         }
     }
 

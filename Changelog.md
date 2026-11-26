@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.8 (2026-11-26)
+- #### Changed
+  - Update dependencies (jtest-utils 7.7, json-compare 8.7): assertion messages end with `EXPECTED: <value>` and `BUT WAS: <value>`, each value starting on its label's line, instead of `EXPECTED` / `ACTUAL` (`EXPECTED JSON` / `ACTUAL JSON`) sections. IntelliJ's Cucumber runner builds its "Click to see difference" link only from the message text, by matching `expected: ... but was: ...`, so it showed no link with 10.7.
+  - The date step failure reads `Days differ` followed by `EXPECTED: 2` and `BUT WAS: 3`, so IntelliJ offers the diff link for it too.
+
 ## 10.7 (2026-11-12)
 - #### Changed
   - Update dependencies (jtest-utils 7.6, json-compare 8.6): assertion messages are Markdown safe, so they read correctly when pasted into PR comments, issues or chat. JSON diffs are headed `==== DIFF 1 OF 4 ====` and use `: ` instead of ` -> `; expected and actual values follow under `EXPECTED` / `ACTUAL` labels instead of JUnit's `==> expected: <...> but was: <...>`; XML differences are plain text with their XPaths.
